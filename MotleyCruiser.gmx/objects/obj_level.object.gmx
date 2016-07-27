@@ -33,6 +33,7 @@ room_height = (CELL_HEIGHT/16)*720;
 // Set the grid width and height
 var width = room_width div CELL_WIDTH;
 var height = room_height div CELL_HEIGHT;
+sizeModifier = .5;//.10 .25 .50, .75, 1, 1.25 ... do not exceed 2
 
 // Create the DS grid
 grid = ds_grid_create(width, height);
@@ -71,6 +72,10 @@ core_placed = false;
 //Create the player
 instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_player);
 
+//Create crew
+instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+
 // Give the controller a random direction
 var cdir = irandom(3);
 
@@ -78,7 +83,7 @@ var cdir = irandom(3);
 var odds = 1;
 
 // Create the level using 1000 steps
-repeat (500){
+repeat (1000 * sizeModifier){
     // Place a floor tile a the controller position
     grid[# cx,cy]=FLOOR;
     //ds_grid_set(grid, cx, cy, FLOOR); (alternative)
@@ -150,12 +155,12 @@ for(var yy = 0; yy &lt; height; yy++){
                 if(irandom(oddsMode)==2){
                     with(newEnemy){
                         mode="defend";
-                        image_blend = make_colour_hsv(0,128,192);
+                        //image_blend = make_colour_hsv(0,128,192);
                     }
                 }else if(irandom(oddsMode)==3){
                     with(newEnemy){
-                        mode="fallback";
-                        image_blend = make_colour_hsv(0,64,64);
+                        mode="hold";
+                        //image_blend = make_colour_hsv(0,64,64);
                     }
                 
                 }

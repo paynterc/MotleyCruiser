@@ -3,7 +3,7 @@
 // yy = (obj_player.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2
 var xx = argument[0];
 var yy = argument[1];
-
+var pspeed = argument[2];
 if( mp_grid_path(obj_level.grid_path, path, x, y, xx, yy, true) ){
-    path_start(path, 2, path_action_stop, false);
+    path_start(path, pspeed, path_action_stop, false);
 }
