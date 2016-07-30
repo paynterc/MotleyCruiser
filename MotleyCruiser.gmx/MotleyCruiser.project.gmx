@@ -9,8 +9,9 @@
     <sprite>sprites\spr_hero</sprite>
     <sprite>sprites\spr_captain</sprite>
     <sprite>sprites\spr_captain3</sprite>
-    <sprite>sprites\spr_captain2</sprite>
+    <sprite>sprites\spr_rifle1</sprite>
     <sprite>sprites\spr_enemy</sprite>
+    <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_warchicken</sprite>
     <sprite>sprites\spr_hurgan</sprite>
     <sprite>sprites\spr_hurgan2</sprite>
@@ -49,6 +50,7 @@
     <script>scripts\scr_get_path_to_point.gml</script>
     <script>scripts\scr_generate_star_background.gml</script>
     <script>scripts\scr_gradually_rotate.gml</script>
+    <script>scripts\scr_shoot.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\obj_damager</object>
@@ -71,6 +73,7 @@
       <object>objects\obj_planet</object>
     </objects>
     <object>objects\obj_team</object>
+    <object>objects\obj_gun</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
