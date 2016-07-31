@@ -10,7 +10,29 @@
   <persistent>0</persistent>
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
-  <code>room_goto(rm_room1);</code>
+  <code>global.crew[0] = ds_map_create();
+global.crew[1] = ds_map_create();
+
+
+ds_map_add(global.crew[0], "race", "warchicken");
+ds_map_add(global.crew[0], "name", "SlayBOCK!");
+ds_map_add(global.crew[0], "hp", 20);
+ds_map_add(global.crew[0], "runSpeed", 3);
+ds_map_add(global.crew[0], "spr", spr_warchicken);
+ds_map_add(global.crew[0], "status", "active");//active, inactive, dead
+
+ds_map_add(global.crew[1], "race", "hurgan");
+ds_map_add(global.crew[1], "name", "Fwaaa");
+ds_map_add(global.crew[1], "hp", 30);
+ds_map_add(global.crew[1], "runSpeed", 2);
+ds_map_add(global.crew[1], "spr", spr_hurgan2);
+ds_map_add(global.crew[1], "status", "active");//active, inactive, dead
+
+
+
+
+
+room_goto(rm_room1);</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

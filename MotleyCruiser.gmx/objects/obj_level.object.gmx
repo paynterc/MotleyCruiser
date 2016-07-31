@@ -73,8 +73,18 @@ core_placed = false;
 instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_player);
 
 //Create crew
-instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
-instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+//instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+//instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+var thiscrew = noone;
+var themap = 0;
+for(var i=0; i&lt;array_length_1d(global.crew); i++){
+    thiscrew = instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+    themap = global.crew[i];    
+    thiscrew.sprite_index=themap[? "spr"];
+    thiscrew.hp=themap[? "hp"];
+    thiscrew.hp_current=themap[? "hp"];
+    thiscrew.pspeed=themap[? "runSpeed"];
+}
 
 // Give the controller a random direction
 var cdir = irandom(3);
