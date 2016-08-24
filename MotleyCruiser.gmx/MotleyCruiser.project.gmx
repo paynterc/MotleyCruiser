@@ -6,13 +6,12 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\spr_hero</sprite>
-    <sprite>sprites\spr_captain</sprite>
     <sprite>sprites\spr_captain3</sprite>
     <sprite>sprites\spr_rifle1</sprite>
     <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_warchicken</sprite>
+    <sprite>sprites\spr_flowridian</sprite>
     <sprite>sprites\spr_hurgan</sprite>
     <sprite>sprites\spr_hurgan2</sprite>
     <sprite>sprites\spr_bullet</sprite>
@@ -34,24 +33,35 @@
       <sprite>sprites\spr_shield</sprite>
     </sprites>
     <sprite>sprites\spr_planet</sprite>
+    <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_portrait_wc</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
     <background>background\bg_wall</background>
-    <background>background\bg_wall_tile</background>
     <background>background\bg_walltiles</background>
+    <background>background\bg_counters</background>
     <background>background\bg_star</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\scr_move.gml</script>
+    <script>scripts\scr_grid_place_meeting_old.gml</script>
     <script>scripts\scr_grid_place_meeting.gml</script>
     <script>scripts\scr_save_room.gml</script>
     <script>scripts\scr_get_path_to_point.gml</script>
     <script>scripts\scr_generate_star_background.gml</script>
     <script>scripts\scr_gradually_rotate.gml</script>
     <script>scripts\scr_shoot.gml</script>
+    <script>scripts\scr_make_dialogue_map.gml</script>
+    <script>scripts\scr_text.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
+  </shaders>
+  <fonts name="fonts">
+    <font>fonts\fnt</font>
+  </fonts>
   <objects name="objects">
     <object>objects\obj_damager</object>
     <object>objects\obj_level</object>
@@ -74,11 +84,22 @@
     </objects>
     <object>objects\obj_team</object>
     <object>objects\obj_gun</object>
+    <object>objects\obj_cantina</object>
+    <object>objects\obj_wall_invis</object>
+    <object>objects\obj_sentient</object>
+    <object>objects\obj_portrait</object>
+    <object>objects\obj_dialog_box</object>
+    <object>objects\obj_dialog_control</object>
+    <object>objects\obj_button</object>
+    <object>objects\obj_text</object>
+    <object>objects\obj_textbox</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
     <room>rooms\rm_room1</room>
     <room>rooms\rm_space</room>
+    <room>rooms\rm_cantina1</room>
+    <room>rooms\rm_test_text</room>
   </rooms>
   <constants number="5">
     <constant name="CELL_WIDTH">32</constant>

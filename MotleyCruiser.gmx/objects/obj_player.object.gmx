@@ -31,6 +31,9 @@ hp = 10;
 hp_current = hp;
 ispeed = .5;
 image_speed = ispeed;
+spd = 3;
+hspd=0;
+vsped=0;
 </string>
           </argument>
         </arguments>
@@ -77,9 +80,9 @@ weapon = instance_create(x,y,obj_gun);
           <argument>
             <kind>1</kind>
             <string>/// Get input and move
-var spd = 3;
-var hspd = (keyboard_check(vk_right) - keyboard_check(vk_left)) * spd;
-var vspd = (keyboard_check(vk_down) - keyboard_check(vk_up)) * spd;
+
+hspd = (keyboard_check(vk_right) - keyboard_check(vk_left)) * spd;
+vspd = (keyboard_check(vk_down) - keyboard_check(vk_up)) * spd;
 
 // Move
 scr_move(hspd, vspd);

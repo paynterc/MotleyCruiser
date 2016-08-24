@@ -45,7 +45,8 @@ grid_path = mp_grid_create(0,0,width,height,CELL_WIDTH,CELL_HEIGHT);
 ds_grid_set_region(grid, 0, 0, width-1, height-1, VOID);
 
 // Load a room
-randomize();
+// BE SURE TO CALL randomize() before this.
+
 //if (show_question("Would you like to load a room")){
  
 // var key = get_string("What is the name of the room?", "default");
@@ -76,14 +77,16 @@ instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH
 //instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
 //instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
 var thiscrew = noone;
-var themap = 0;
+var crewMap = 0;
+var raceMap = 0;
 for(var i=0; i&lt;array_length_1d(global.crew); i++){
     thiscrew = instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
-    themap = global.crew[i];    
-    thiscrew.sprite_index=themap[? "spr"];
-    thiscrew.hp=themap[? "hp"];
-    thiscrew.hp_current=themap[? "hp"];
-    thiscrew.pspeed=themap[? "runSpeed"];
+    crewMap = global.crew[i];
+    raceMap = global.races[crewMap[? "race"]];
+    thiscrew.sprite_index=raceMap[? "spr"];
+    thiscrew.hp=raceMap[? "base_hp"];
+    thiscrew.hp_current=raceMap[? "base_hp"];
+    thiscrew.pspeed=raceMap[? "base_spd"];
 }
 
 // Give the controller a random direction

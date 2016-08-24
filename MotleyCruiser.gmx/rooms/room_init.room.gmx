@@ -10,18 +10,46 @@
   <persistent>0</persistent>
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
-  <code>global.crew[0] = ds_map_create();
+  <code>randomize();
+
+global.races = noone;
+
+global.races[0] = ds_map_create();
+ds_map_add(global.races[0], "name", "human");
+ds_map_add(global.races[0], "base_hp", 10);
+ds_map_add(global.races[0], "base_spd", 2);
+ds_map_add(global.races[0], "spr", spr_captain3);
+
+global.races[1] = ds_map_create();
+ds_map_add(global.races[1], "name", "warchicken");
+ds_map_add(global.races[1], "base_hp", 20);
+ds_map_add(global.races[1], "base_spd", 3);
+ds_map_add(global.races[1], "spr", spr_warchicken);
+
+global.races[2] = ds_map_create();
+ds_map_add(global.races[2], "name", "hurgan");
+ds_map_add(global.races[2], "base_hp", 30);
+ds_map_add(global.races[2], "base_spd", 1);
+ds_map_add(global.races[2], "spr", spr_hurgan2);
+
+global.races[3] = ds_map_create();
+ds_map_add(global.races[3], "name", "flowridian");
+ds_map_add(global.races[3], "base_hp", 15);
+ds_map_add(global.races[3], "base_spd", 3);
+ds_map_add(global.races[3], "spr", spr_flowridian);
+
+global.crew[0] = ds_map_create();
 global.crew[1] = ds_map_create();
+global.crew[2] = ds_map_create()
 
-
-ds_map_add(global.crew[0], "race", "warchicken");
+ds_map_add(global.crew[0], "race", 1);
 ds_map_add(global.crew[0], "name", "SlayBOCK!");
 ds_map_add(global.crew[0], "hp", 20);
 ds_map_add(global.crew[0], "runSpeed", 3);
 ds_map_add(global.crew[0], "spr", spr_warchicken);
 ds_map_add(global.crew[0], "status", "active");//active, inactive, dead
 
-ds_map_add(global.crew[1], "race", "hurgan");
+ds_map_add(global.crew[1], "race", 2);
 ds_map_add(global.crew[1], "name", "Fwaaa");
 ds_map_add(global.crew[1], "hp", 30);
 ds_map_add(global.crew[1], "runSpeed", 2);
@@ -29,10 +57,17 @@ ds_map_add(global.crew[1], "spr", spr_hurgan2);
 ds_map_add(global.crew[1], "status", "active");//active, inactive, dead
 
 
+ds_map_add(global.crew[2], "race", 3);
+ds_map_add(global.crew[2], "name", "Cheewa");
+ds_map_add(global.crew[2], "hp", 15);
+ds_map_add(global.crew[2], "runSpeed", 2);
+ds_map_add(global.crew[2], "spr", spr_flowridian);
+ds_map_add(global.crew[2], "status", "active");//active, inactive, dead
 
 
 
-room_goto(rm_room1);</code>
+
+room_goto(rm_cantina1);</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

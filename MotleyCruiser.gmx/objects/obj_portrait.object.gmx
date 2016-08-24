@@ -25,13 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth=-1000;
+            <string>/// Initiailize
+depth=-10000000;
+show = false;
+text = noone;
+portrait=noone;
+
+gui_w = display_get_gui_width();
+gui_h = display_get_gui_height();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -48,18 +55,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update interface. Health bar for player
-//lines are drawn in order, with later lines layered over previous
+            <string>if(show){
+    draw_rectangle_colour(gui_w - 300,gui_h - 200, gui_w, gui_h, c_black, c_black, c_black, c_black, false);
+    
+    if(text != noone){
+        draw_set_alpha(1);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_middle);
+        draw_text_color(gui_w - 295, gui_h - 195, text, c_white, c_white, c_white, c_white,1);
+    }
+    
+    draw_self();
 
-draw_sprite(spr_hbackground,1,view_xview[0]+5+8,view_yview[0]+5+3);
-draw_sprite_ext(spr_hforeground,1,view_xview[0]+5+8,view_yview[0]+5+3,obj_player.hp_current/obj_player.hp,1,0,c_white,1);
-draw_sprite(spr_hframe,1,view_xview[0]+5,view_yview[0]+5);
-
-//draw_set_colour(c_white);
-//draw_text(view_xview[0]+100, view_yview[0]+10, "Health: "+string(obj_player.hp));
-
-if(obj_player.hp_current&lt;1){
-    room_restart();
 }
 </string>
           </argument>
