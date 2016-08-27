@@ -31,6 +31,24 @@
 global.gui_mouse_x = (mouse_x - view_xview[view_current]) * global.display_scale;
 global.gui_mouse_y = (mouse_y - view_yview[view_current]) * global.display_scale;
 
+closest_sentient = noone;
+staged_mission = noone;
+staged_buttons = noone; //This will be an array containing the coordinates for buttons
+
+depth=-100000000;
+
+text_scale = 0.30; // Text has to be scaled down when using views, unless we draw to gui.
+
+// Variables for speach bubble
+popup_width = view_wview[0]*.50;           // The max width of the text inside the messagebox.
+popup_padding = 3;                     // The space between the text and the edge
+text = "";                              // The text to draw in the box.  If empty, the questionmark will not show.
+draw_below = false;                     // Force the box to be drawn below the questionmark
+font = fnt_messagebox;                  // The font to use when drawing the messagebox text
+font_color = c_white;                   // Color to draw the font and the border around messagebox
+bak_color = c_teal;                   // The color for the messagebox background
+draw_message = false;
+// End speach bubble
 </string>
           </argument>
         </arguments>
@@ -84,7 +102,88 @@ if(instance_exists(obj_player) &amp;&amp; instance_exists(obj_text)){
     if(obj_player.hspd!=0 || obj_player.vspd!=0){
         obj_text.show = false;
         obj_button.show = false;
+        closest_sentient = noone;
+        staged_mission = noone;
+        staged_buttons = noone;
     }
+}
+
+// Check to see if mouse is over a button
+var xhover = false;
+var yhover = false;
+var button_x = 0;
+var button_y = 0;
+var button_w = 0;
+var button_h = 0;
+if(staged_buttons != noone){
+    for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
+        if(array_length_2d(staged_buttons,i)==5){
+            button_x = staged_buttons[i,0];
+            button_y = staged_buttons[i,1];
+            button_w = staged_buttons[i,2];
+            button_h = staged_buttons[i,3];
+    
+            xhover = ( mouse_x == median(button_x - button_w/2, mouse_x, button_x + button_w/2) );
+            yhover = ( mouse_y == median(button_y - button_h/2, mouse_y, button_y + button_h/2) );
+            staged_buttons[i,4] = xhover &amp;&amp; yhover;
+        }
+
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(draw_message &amp;&amp; staged_mission!=noone){
+    draw_set_font(font);
+    draw_set_color(font_color);
+    var font_size = font_get_size(font);
+    
+    var bub = scr_draw_messagebox_plus(staged_mission[? "text"], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_mission[? "buttons"]);
+    if(bub != noone){
+        var thebuttons = staged_mission[? "buttons"];
+        var thisbutton = noone;
+        var button_x = bub[0];
+        var button_y = bub[1];
+        var button_w = 0;
+        var button_h = 0;
+        for(var i = 0; i &lt; array_length_1d(thebuttons); i++){
+            thisbutton = thebuttons[i];
+            button_w = round( string_width( thisbutton[? "text"] ) * text_scale );
+            button_h = round( string_height( thisbutton[? "text"] ) * text_scale );           
+            // store the coordinates and state of the button. x, y, width, height, hover
+            if( array_height_2d( staged_buttons ) &lt; array_length_1d(thebuttons) ){
+                staged_buttons[i,0]=button_x;
+                staged_buttons[i,1]=button_y;
+                staged_buttons[i,2]=button_w;
+                staged_buttons[i,3]=button_h;
+                staged_buttons[i,4]=false;
+            }
+            scr_draw_button(thisbutton[? "text"], button_x, button_y, staged_buttons[i,4]);
+            button_y += button_h + 1;
+            
+        }  
+    }
+
+    
 }
 </string>
           </argument>
@@ -109,7 +208,7 @@ if(instance_exists(obj_player) &amp;&amp; instance_exists(obj_text)){
           <argument>
             <kind>1</kind>
             <string>/// Open dialog box if player in range
-var closest_sentient = noone;
+
 var this_sentient = noone;
 var closest_range = 0;
 var this_range = 0;
@@ -128,10 +227,78 @@ for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
 }
 
 if(closest_sentient != noone){
-    //instance_activate_object(obj_portrait);
-    //sprite_index = closest_sentient.sprite_index;
-    scr_text(closest_sentient.mission[? "text"], 2, obj_player.x,obj_player.y);
+    
+    var check_mission = noone;
+    var has_mission = scr_check_mission(closest_sentient.mission);
+
+
+    var all_text = "";
+    var show_button = 1;
+    if(!has_mission){
+        //sprite_index = closest_sentient.sprite_index;
+        staged_mission = closest_sentient.mission;
+        closest_sentient.mission[? "status"]="offered";
+        closest_sentient.mission[? "count_offers"]++;
+        all_text = string(closest_sentient.mission[? "id"]) + " " + closest_sentient.mission[? "text"];
+        staged_buttons = staged_mission[? "buttons"];
+        
+    }else{
+        all_text = "You finish that thing and we'll talk more.";
+        show_button=0;
+    }
+
+    //scr_text(all_text, 2, obj_player.x,obj_player.y,show_button);
+ 
+       draw_message = true;
+    
+    
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="80">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>global.box_height ++;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="79">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>global.box_height --;
 </string>
           </argument>
         </arguments>

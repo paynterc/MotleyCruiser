@@ -1,4 +1,4 @@
-/// scr_text(Text, Speed, X, Y);
+/// scr_text(Text, Speed, X, Y, ShowButton);
 //txt = instance_create(argument2,argument3,obj_text);
 
 with (obj_text)
@@ -31,6 +31,7 @@ with (obj_text)
     
 }
 
+if(argument4){
 with (obj_button)
 {
     display_x = argument2;
@@ -44,4 +45,6 @@ with (obj_button)
     text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
 
 }
+}
+
 
