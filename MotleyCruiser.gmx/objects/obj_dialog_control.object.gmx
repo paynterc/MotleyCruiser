@@ -107,8 +107,27 @@ if(instance_exists(obj_player) &amp;&amp; instance_exists(obj_text)){
         staged_buttons = noone;
     }
 }
-
-// Check to see if mouse is over a button
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check to see if mouse is over a button
 var xhover = false;
 var yhover = false;
 var button_x = 0;
@@ -123,11 +142,43 @@ if(staged_buttons != noone){
             button_w = staged_buttons[i,2];
             button_h = staged_buttons[i,3];
     
-            xhover = ( mouse_x == median(button_x - button_w/2, mouse_x, button_x + button_w/2) );
-            yhover = ( mouse_y == median(button_y - button_h/2, mouse_y, button_y + button_h/2) );
+            xhover = ( mouse_x == median(button_x, mouse_x, button_x + button_w) );
+            yhover = ( mouse_y == median(button_y, mouse_y, button_y + button_h) );
             staged_buttons[i,4] = xhover &amp;&amp; yhover;
         }
 
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if a button was clicked
+if(staged_buttons != noone){
+    for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
+        if(array_length_2d(staged_buttons,i)==5){
+            if( staged_buttons[i,4] ){//hover = true
+                show_message("CLICKED BUTTON " + string(i) );
+            }
+        }
     }
 }
 </string>
@@ -169,8 +220,8 @@ if(staged_buttons != noone){
             thisbutton = thebuttons[i];
             button_w = round( string_width( thisbutton[? "text"] ) * text_scale );
             button_h = round( string_height( thisbutton[? "text"] ) * text_scale );           
-            // store the coordinates and state of the button. x, y, width, height, hover
-            if( array_height_2d( staged_buttons ) &lt; array_length_1d(thebuttons) ){
+            // Store the coordinates and state of the button. x, y, width, height, hover
+            if( array_height_2d( staged_buttons ) &lt; array_length_1d(thebuttons) ){ // Be sure you only do this once for each button
                 staged_buttons[i,0]=button_x;
                 staged_buttons[i,1]=button_y;
                 staged_buttons[i,2]=button_w;
