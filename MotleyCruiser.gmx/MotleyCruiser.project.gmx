@@ -3,9 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <NewExtensions>
-    <extension index="0">extensions\Speech Bubble</extension>
-  </NewExtensions>
+  <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\spr_captain3</sprite>
@@ -103,17 +101,13 @@
     <object>objects\obj_text</object>
     <object>objects\obj_textbox</object>
     <object>objects\obj_mission_log</object>
-    <object>objects\oButtonBasic</object>
     <object>objects\obj_button_basic</object>
-    <object>objects\obj_button_dialog</object>
-    <object>objects\oTutorialClickable</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
     <room>rooms\rm_room1</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
-    <room>rooms\rm_tutorial</room>
   </rooms>
   <constants number="5">
     <constant name="CELL_WIDTH">32</constant>

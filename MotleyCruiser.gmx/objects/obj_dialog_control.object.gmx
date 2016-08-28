@@ -98,10 +98,8 @@ global.gui_mouse_y = device_mouse_y_to_gui(0);
           <argument>
             <kind>1</kind>
             <string>/// Hide box if player moves
-if(instance_exists(obj_player) &amp;&amp; instance_exists(obj_text)){
+if(instance_exists(obj_player)){
     if(obj_player.hspd!=0 || obj_player.vspd!=0){
-        obj_text.show = false;
-        obj_button.show = false;
         closest_sentient = noone;
         staged_mission = noone;
         staged_buttons = noone;
