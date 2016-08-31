@@ -30,7 +30,7 @@
 // Used in cantinas. Can be commincated with.
 
 race_index = noone; //index of race from racemap
-mission = scr_make_dialogue_map();
+dialogue = scr_make_dialogue_tree();
 </string>
           </argument>
         </arguments>

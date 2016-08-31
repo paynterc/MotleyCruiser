@@ -61,6 +61,11 @@
     <script>scripts\scr_draw_messagebox.gml</script>
     <script>scripts\scr_draw_messagebox_plus.gml</script>
     <script>scripts\scr_draw_button.gml</script>
+    <scripts name="dialogue">
+      <script>scripts\scr_make_dialogue_tree.gml</script>
+      <script>scripts\scr_make_dialogue_branch.gml</script>
+      <script>scripts\scr_add_dialogue_button.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>

@@ -32,7 +32,8 @@ global.gui_mouse_x = (mouse_x - view_xview[view_current]) * global.display_scale
 global.gui_mouse_y = (mouse_y - view_yview[view_current]) * global.display_scale;
 
 closest_sentient = noone;
-staged_mission = noone;
+staged_tree = noone;
+staged_branch = noone;
 staged_buttons = noone; //This will be an array containing the coordinates for buttons
 
 depth=-100000000;
@@ -49,32 +50,6 @@ font_color = c_white;                   // Color to draw the font and the border
 bak_color = c_teal;                   // The color for the messagebox background
 draw_message = false;
 // End speach bubble
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Update mouse gui position
-
-global.gui_mouse_x = device_mouse_x_to_gui(0);
-global.gui_mouse_y = device_mouse_y_to_gui(0);
 </string>
           </argument>
         </arguments>
@@ -101,7 +76,8 @@ global.gui_mouse_y = device_mouse_y_to_gui(0);
 if(instance_exists(obj_player)){
     if(obj_player.hspd!=0 || obj_player.vspd!=0){
         closest_sentient = noone;
-        staged_mission = noone;
+        staged_tree = noone;
+        staged_branch = noone;
         staged_buttons = noone;
     }
 }
@@ -174,7 +150,30 @@ if(staged_buttons != noone){
     for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
         if(array_length_2d(staged_buttons,i)==5){
             if( staged_buttons[i,4] ){//hover = true
-                show_message("CLICKED BUTTON " + string(i) );
+                //show_message("CLICKED BUTTON " + string(i) );
+                var thebuttons = staged_branch[? "buttons"];
+                var clicked_button = thebuttons[i];
+                
+                if(clicked_button[? "action"] == "step_down"){
+                    var branches = staged_branch[? "branches"];
+                    if(is_array(branches) &amp;&amp; array_length_1d(branches)&gt;i){
+                        staged_branch = branches[i];
+                        staged_buttons = noone;
+                    }else{
+                        staged_branch = scr_make_dialogue_branch("I have no idea how to respond to that.","exposition");
+                        staged_branch = scr_add_dialogue_button(staged_branch,"Sorry.","intro");
+                        staged_buttons = noone; 
+                    }
+
+                }else if(clicked_button[? "action"] == "intro"){
+                    staged_branch = staged_tree;
+                    staged_buttons = noone;
+                }else if(clicked_button[? "action"] == "exit"){
+                    staged_tree = noone;
+                    staged_branch = noone;
+                    staged_buttons = noone;               
+                }
+                        
             }
         }
     }
@@ -201,14 +200,15 @@ if(staged_buttons != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(draw_message &amp;&amp; staged_mission!=noone){
+            <string>if(staged_branch!=noone){
+    
     draw_set_font(font);
     draw_set_color(font_color);
     var font_size = font_get_size(font);
     
-    var bub = scr_draw_messagebox_plus(staged_mission[? "text"], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_mission[? "buttons"]);
+    var bub = scr_draw_messagebox_plus(staged_branch[? "text"], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_branch[? "buttons"]);
     if(bub != noone){
-        var thebuttons = staged_mission[? "buttons"];
+        var thebuttons = staged_branch[? "buttons"];
         var thisbutton = noone;
         var button_x = bub[0];
         var button_y = bub[1];
@@ -277,77 +277,13 @@ for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
 
 if(closest_sentient != noone){
     
-    var check_mission = noone;
-    var has_mission = scr_check_mission(closest_sentient.mission);
+    //var check_mission = noone;
+    //var has_mission = scr_check_mission(closest_sentient.mission);
 
-
-    var all_text = "";
-    var show_button = 1;
-    if(!has_mission){
-        //sprite_index = closest_sentient.sprite_index;
-        staged_mission = closest_sentient.mission;
-        closest_sentient.mission[? "status"]="offered";
-        closest_sentient.mission[? "count_offers"]++;
-        all_text = string(closest_sentient.mission[? "id"]) + " " + closest_sentient.mission[? "text"];
-        staged_buttons = staged_mission[? "buttons"];
-        
-    }else{
-        all_text = "You finish that thing and we'll talk more.";
-        show_button=0;
-    }
-
-    //scr_text(all_text, 2, obj_player.x,obj_player.y,show_button);
- 
-       draw_message = true;
-    
-    
+    staged_tree = closest_sentient.dialogue;
+    staged_branch = closest_sentient.dialogue;
+       
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="80">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>global.box_height ++;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="79">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>global.box_height --;
 </string>
           </argument>
         </arguments>

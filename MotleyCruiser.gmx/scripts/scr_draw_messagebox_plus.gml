@@ -1,3 +1,4 @@
+
 ///scr_draw_messagebox(string text, real text_length, real padding, real talking_object, color background_color, bool force_text_below_object, array buttons);
 
 var text = argument0;       // Text for the box
@@ -9,17 +10,21 @@ var force = argument5;      // Force box to draw below object
 var buttons = argument6;
 var font = fnt_messagebox;
 var font_color = c_white;
+var text_scale = 0.30
 var result = noone; //return array with coordinates of text box
 
 if(!instance_exists(obj) /* talker died */ || string(text) == "" /* nothing to say */) return result;
 
 draw_set_font(font);
 draw_set_color(font_color);
- 
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+
 var font_size = font_get_size(font);
 var w = len+padding*2;
 
-var height_text = round( string_height_ext(text, (font_size/2), len) * .3 );
+
+var height_text = round( string_height_ext(text, -1, len/text_scale) * text_scale );
 
 // Make space for buttons
 var text_plus = text + "#";
@@ -30,9 +35,9 @@ if(buttons != noone){
     } 
 }
 
-var height = round( string_height_ext(text_plus, (font_size/2), len) * .3 );
+var height = round( string_height_ext(text_plus, -1, len/text_scale) * text_scale);
 
-var h2 = height+padding*2;
+var h2 = height+(padding*2);
 var xx = obj.x;
 var yy = obj.y - padding*4 - obj.sprite_height - height;
 
@@ -52,12 +57,11 @@ else
 draw_roundrect(xx-padding,yy-padding,xx+len+padding*3,yy+height+padding*3,0);
 draw_roundrect_colour(xx,yy,xx+w,yy+h2,bak_color,bak_color,0);
 
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_text_ext_transformed(xx+padding,yy+padding,text,-1,len/0.30,0.30,0.30,0);
+
+draw_text_ext_transformed(xx+padding,yy+padding,text,-1,len/text_scale,text_scale,text_scale,0);
 
 
-//return the bottom point of the bubble
+//return the bottom point of the text. This is where you can place your buttons.
 result[0]=xx+padding;
 result[1]=yy+height_text+padding;
 return result;

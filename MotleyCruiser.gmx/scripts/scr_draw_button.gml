@@ -18,6 +18,6 @@ if(hover){
 //draw_rectangle(display_x - width/2, display_y - height/2, display_x + width/2, display_y + height/2, false);
 //draw_set_alpha(1);
 draw_set_halign(fa_left);
-draw_set_valign(fa_middle);
+draw_set_valign(fa_top);
 //draw_text_color(xx, yy, text, c_white, c_white, c_white, c_white, myAlpha);
 draw_text_transformed_colour(xx,yy,text,0.30,0.30,0,c_white,c_white,c_white,c_white,myAlpha);
