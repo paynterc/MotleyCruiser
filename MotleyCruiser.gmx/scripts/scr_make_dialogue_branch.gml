@@ -6,6 +6,5 @@ var branch = ds_map_create();
 ds_map_add(branch,"text", argument0);
 ds_map_add(branch,"type", argument1);//intro, job, tip, hire, trade, exposition
 ds_map_add(branch,"buttons", noone);
-ds_map_add(branch,"branches", noone);
 
 return branch;

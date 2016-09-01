@@ -1,45 +1,47 @@
  /// Create dialog for an npc so that player can interact. Provide missions, tips, items, etc.
 
+var tree = noone;
 var buttons = noone;
 var branches = noone;
+var i=0;
 
-
-var tree = scr_make_dialogue_branch("I find peace in the solitude of space, but I sometimes enjoy the company of fellow travelers.","intro");
+// Add branch 0
+tree[i] = scr_make_dialogue_branch("I find peace in the solitude of space, but I sometimes enjoy the company of fellow travelers.","intro");
 
 // Add buttons.
-tree = scr_add_dialogue_button(tree,"Do you have any work that needs doing?", "step_down");
-tree = scr_add_dialogue_button(tree,"Do you have any tips?", "step_down");
-tree = scr_add_dialogue_button(tree,"Tell me about your home world.", "step_down");
-tree = scr_add_dialogue_button(tree,"Good Bye.", "exit");
+tree[i] = scr_add_dialogue_button(tree[i],"Do you have any work that needs doing?", "step_to",i+1);
+tree[i] = scr_add_dialogue_button(tree[i],"Do you have any tips?", "step_to",i+2);
+tree[i] = scr_add_dialogue_button(tree[i],"Tell me about your home world.", "step_to",i+3);
+tree[i] = scr_add_dialogue_button(tree[i],"Good Bye.", "exit",noone);
 
-// Add branches
+// Add branch 1
+i++;
+tree[i] = scr_make_dialogue_branch("I need you to take a thing to this guy at this place","job");
+tree[i] = scr_add_dialogue_button(tree[i],"I'll do it","step_to",0);
 
-var branch0 = scr_make_dialogue_branch("I need you to take a thing to this guy at this place","job");
-branch0 = scr_add_dialogue_button(branch0,"I'll do it","intro");
-//branch0 = scr_add_dialogue_button(branch0,"No way.","intro");
+// Add branch 2
+i++;
+tree[i] = scr_make_dialogue_branch("There's a guy one system away selling grain at half the market price","tip");
+tree[i] = scr_add_dialogue_button(tree[i],"Thank you.","step_to",0);
 
-var branch1 = scr_make_dialogue_branch("There's a guy one system away selling grain at half the market price","tip");
-branch1 = scr_add_dialogue_button(branch1,"Thank you.","intro");
-
-var branch2 = scr_make_dialogue_branch("My world is a cold and brutal place. Only the strong survive and do so unhappily. 
+// Add branch 3
+i++
+tree[i] = scr_make_dialogue_branch("My world is a cold and brutal place. Only the strong survive and do so unhappily. 
 I am grateful to that I am able to travel to the stars and am not bound to that unpleasant rock.","exposition");
-branch2 = scr_add_dialogue_button(branch2,"Tell me more.","step_down");
-branch2 = scr_add_dialogue_button(branch2,"What does love mean to you.","step_down");
-branch2 = scr_add_dialogue_button(branch2,"Whatever.","intro");
+tree[i] = scr_add_dialogue_button(tree[i],"Tell me more.","step_to",i+1);
+tree[i] = scr_add_dialogue_button(tree[i],"What does love mean to you.","step_to",i+2);
+tree[i] = scr_add_dialogue_button(tree[i],"Whatever.","step_to",0);
 
 //Add sub-branch
-var branch2_1 = scr_make_dialogue_branch("There is nothing more to tell. May you never need to visit that place.","exposition");
-branch2_1 = scr_add_dialogue_button(branch2_1,"Same to you.","intro");
-var branches2 = noone;
-branches2[0]=branch2_1;
-branch2[? "branches"] = branches2;
+i++;
+tree[i] = scr_make_dialogue_branch("There is nothing more to tell. May you never need to visit that place.","exposition");
+tree[i] = scr_add_dialogue_button(tree[i],"Same to you.","step_to",0);
+tree[i] = scr_add_dialogue_button(tree[i],"I'd like to talk some more about this.","step_to",i-1);
 
-
-branches[0] = branch0;
-branches[1] = branch1;
-branches[2] = branch2;
-
-// Add the branches to the tree
-tree[? "branches"] = branches;
+//Add sub-branch
+i++;
+tree[i] = scr_make_dialogue_branch("Some say love, it is a river that drowns the tender reed.","exposition");
+tree[i] = scr_add_dialogue_button(tree[i],"That's enough of that.","step_to",0);
+tree[i] = scr_add_dialogue_button(tree[i],"Let me ask you something else about this.","step_to",i-2);
 
 return tree;

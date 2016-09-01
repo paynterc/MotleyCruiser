@@ -154,24 +154,25 @@ if(staged_buttons != noone){
                 var thebuttons = staged_branch[? "buttons"];
                 var clicked_button = thebuttons[i];
                 
-                if(clicked_button[? "action"] == "step_down"){
-                    var branches = staged_branch[? "branches"];
-                    if(is_array(branches) &amp;&amp; array_length_1d(branches)&gt;i){
-                        staged_branch = branches[i];
+                if(clicked_button[? "action"] == "step_to"){
+                    var i = clicked_button[? "link_index"];
+                    
+                    if(i!=noone &amp;&amp; array_length_1d(staged_tree)&gt;i){
+                        staged_branch = staged_tree[i];
                         staged_buttons = noone;
                     }else{
                         staged_branch = scr_make_dialogue_branch("I have no idea how to respond to that.","exposition");
-                        staged_branch = scr_add_dialogue_button(staged_branch,"Sorry.","intro");
+                        staged_branch = scr_add_dialogue_button(staged_branch,"Sorry.","step_to",0);
                         staged_buttons = noone; 
                     }
 
                 }else if(clicked_button[? "action"] == "intro"){
-                    staged_branch = staged_tree;
+                    staged_branch = staged_tree[0];
                     staged_buttons = noone;
-                }else if(clicked_button[? "action"] == "exit"){
-                    staged_tree = noone;
+                }else if(clicked_button[? "action"] == "exit"){                  
+                    staged_buttons = noone;
                     staged_branch = noone;
-                    staged_buttons = noone;               
+                    staged_tree = noone;              
                 }
                         
             }
@@ -281,7 +282,7 @@ if(closest_sentient != noone){
     //var has_mission = scr_check_mission(closest_sentient.mission);
 
     staged_tree = closest_sentient.dialogue;
-    staged_branch = closest_sentient.dialogue;
+    staged_branch = staged_tree[0];
        
 }
 </string>
