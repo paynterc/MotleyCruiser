@@ -36,6 +36,8 @@ imgOSy = imgH/2;
 
 shieldW = sprite_get_width(spr_shield);
 shieldH = sprite_get_height(spr_shield);
+
+ls = 15;//line spacing
 </string>
           </argument>
         </arguments>
@@ -64,6 +66,7 @@ if(instance_exists(obj_player_ship)){
     draw_sprite(spr_ship,1,view_xview[0]+guiXoffset + imgOSx,view_yview[0]+imgOSy);  
     draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset,obj_player_ship.shields_current/obj_player_ship.shields,1,0,c_aqua,1);    
     draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset+ sprite_get_height(spr_bar),obj_player_ship.hull_current/obj_player_ship.hull,1,0,c_olive,1);
+    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset+ sprite_get_height(spr_bar) * 2,obj_player_ship.energy_current/obj_player_ship.energy,1,0,c_orange,1);
     //draw_text(view_xview[0]+10, view_yview[0]+10, "Shields: "+string(obj_player_ship.shields));
     //draw_text(view_xview[0]+10, view_yview[0]+30, "Hull: "+string(obj_player_ship.hull));
 }
@@ -74,12 +77,14 @@ if(instance_exists(obj_player_ship)){
 //turn_speed = 15;
 //accuracy = .5;
 if(instance_exists(obj_enemy_ship)){
-draw_text(view_xview[0]+10, view_yview[0]+40, "e top speed: "+string(obj_enemy_ship.top_speed));
-draw_text(view_xview[0]+10, view_yview[0]+50, "e turn speed: "+string(obj_enemy_ship.turn_speed));
-draw_text(view_xview[0]+10, view_yview[0]+60, "e accuracy: "+string(obj_enemy_ship.accuracy));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 4), "e top speed: "+string(obj_enemy_ship.max_spd));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 5), "e turn speed: "+string(obj_enemy_ship.turn_spd));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 6), "e accuracy: "+string(obj_enemy_ship.accuracy));
 
-draw_text(view_xview[0]+10, view_yview[0]+70, "EShields: "+string(obj_enemy_ship.shields));
-draw_text(view_xview[0]+10, view_yview[0]+80, "EHull: "+string(obj_enemy_ship.hull));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 7), "EShields: "+string(obj_enemy_ship.shields_current));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 8), "EHull: "+string(obj_enemy_ship.hull_current));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 9), "EEnergy: "+string(obj_enemy_ship.energy_current));
+
 }
 </string>
           </argument>

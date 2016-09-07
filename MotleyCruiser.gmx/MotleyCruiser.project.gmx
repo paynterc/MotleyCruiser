@@ -4,7 +4,14 @@
     <Config>Configs\Default</Config>
   </Configs>
   <NewExtensions/>
-  <sounds name="sound"/>
+  <sounds name="sound">
+    <sounds name="Weapons">
+      <sound>sound\snd_laser1</sound>
+      <sound>sound\snd_laser2</sound>
+      <sound>sound\snd_laser3</sound>
+      <sound>sound\snd_pulse1</sound>
+    </sounds>
+  </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_captain3</sprite>
     <sprite>sprites\spr_rifle1</sprite>
@@ -57,14 +64,17 @@
     <script>scripts\scr_make_dialogue_map.gml</script>
     <script>scripts\scr_text.gml</script>
     <script>scripts\scr_push_array.gml</script>
-    <script>scripts\scr_check_mission.gml</script>
-    <script>scripts\scr_draw_messagebox.gml</script>
-    <script>scripts\scr_draw_messagebox_plus.gml</script>
-    <script>scripts\scr_draw_button.gml</script>
     <scripts name="dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
       <script>scripts\scr_add_dialogue_button.gml</script>
+      <script>scripts\scr_draw_messagebox_plus.gml</script>
+      <script>scripts\scr_draw_button.gml</script>
+      <script>scripts\scr_draw_messagebox.gml</script>
+    </scripts>
+    <scripts name="mission">
+      <script>scripts\scr_make_mission.gml</script>
+      <script>scripts\scr_has_mission.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -86,10 +96,13 @@
     <object>objects\obj_core</object>
     <object>objects\obj_control</object>
     <objects name="_space_combat">
+      <object>objects\obj_ship</object>
       <object>objects\obj_player_ship</object>
+      <object>objects\obj_player_ship_bu</object>
       <object>objects\obj_laser</object>
       <object>objects\obj_space_level</object>
       <object>objects\obj_enemy_ship</object>
+      <object>objects\obj_enemy_ship_bu</object>
       <object>objects\obj_control_space</object>
       <object>objects\obj_explosion</object>
       <object>objects\obj_planet</object>
@@ -102,11 +115,11 @@
     <object>objects\obj_portrait</object>
     <object>objects\obj_dialog_box</object>
     <object>objects\obj_dialog_control</object>
-    <object>objects\obj_button</object>
     <object>objects\obj_text</object>
     <object>objects\obj_textbox</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
+    <object>objects\obj_game_control</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>

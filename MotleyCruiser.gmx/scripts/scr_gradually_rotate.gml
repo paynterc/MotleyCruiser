@@ -34,7 +34,7 @@ var facingDir = objToTurn.image_angle;
 
 // Calculate the difference between target direction and facing direction
 facingMinusTarget = facingDir - targetDir;
-var angleDiff = facingMinusTarget;
+angleDiff = facingMinusTarget;
 if(abs(facingMinusTarget) > 180)
 {
     if(facingDir > targetDir)

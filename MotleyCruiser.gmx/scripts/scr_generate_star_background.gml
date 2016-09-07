@@ -1,7 +1,7 @@
 /// Create the level
-randomize();
 
-for (var i=1;i<1000;i++){
+
+for (var i=1;i<20000;i++){
     col = make_color_rgb(irandom(255), irandom(255), irandom(255));
     //draw_set_colour(c_yellow);
     //draw_point(irandom(room_width),irandom(room_height));

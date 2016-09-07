@@ -1,4 +1,5 @@
  /// Create dialog for an npc so that player can interact. Provide missions, tips, items, etc.
+ // expects npc to have a "mission" variable, possibly tip. Possibly randomize dialogue or set according to race, personality, level, etc.
 
 var tree = noone;
 var buttons = noone;
@@ -16,8 +17,19 @@ tree[i] = scr_add_dialogue_button(tree[i],"Good Bye.", "exit",noone);
 
 // Add branch 1
 i++;
-tree[i] = scr_make_dialogue_branch("I need you to take a thing to this guy at this place","job");
-tree[i] = scr_add_dialogue_button(tree[i],"I'll do it","step_to",0);
+if(mission != noone){
+    if(scr_has_mission(mission)){
+        tree[i] = scr_make_dialogue_branch("Did you do that thing yet?","exposition");
+        tree[i] = scr_add_dialogue_button(tree[i],"Nope.","step_to",0);
+    }else{
+        tree[i] = scr_make_dialogue_branch(mission[? "text"],"job");
+        tree[i] = scr_add_dialogue_button(tree[i],"I'll do it","accept_mission",0);
+    }
+}else{
+    tree[i] = scr_make_dialogue_branch("I got nothin' for ya.","job");
+    tree[i] = scr_add_dialogue_button(tree[i],"Ooookay","step_to",0);
+}
+
 
 // Add branch 2
 i++;
