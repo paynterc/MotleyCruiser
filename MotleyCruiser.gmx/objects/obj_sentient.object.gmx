@@ -31,6 +31,7 @@
 
 race_index = noone; //index of race from racemap
 mission = noone;
+name = noone;
 
 mission_loc[0]=23;
 mission_loc[1]=14;

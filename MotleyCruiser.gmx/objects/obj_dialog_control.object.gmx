@@ -230,7 +230,7 @@ if(staged_buttons != noone){
     draw_set_color(font_color);
     var font_size = font_get_size(font);
     
-    var bub = scr_draw_messagebox_plus(staged_branch[? "text"], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_branch[? "buttons"]);
+    var bub = scr_draw_messagebox_plus(closest_sentient.name + ": " + staged_branch[? "text"], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_branch[? "buttons"]);
     if(bub != noone){
         var thebuttons = staged_branch[? "buttons"];
         var thisbutton = noone;

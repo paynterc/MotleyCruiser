@@ -58,6 +58,9 @@ shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 alarm[0] = room_speed * weapon_speed;
 alarm[1] = room_speed * energy_regen_speed;
 alarm[2] = room_speed * shields_regen_speed;
+
+
+image_speed=0;
 </string>
           </argument>
         </arguments>

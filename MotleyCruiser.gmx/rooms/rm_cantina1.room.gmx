@@ -11,22 +11,7 @@
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
   <code>/// Initiailize
-
-
-global.room_type="wall";
-
-var sentient = noone;
-var raceMap = noone;
-var rIndex = noone;
-for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
-    //instance_list(obj_sentient)[i].instance_destroy();
-    sentient = instance_find(obj_sentient,i);
-    rIndex = irandom(array_length_1d(global.races) - 1);
-    raceMap = global.races[rIndex];
-    sentient.sprite_index=raceMap[? "spr"];
-    sentient.image_speed = 0;
-    sentient.race_index = rIndex;
-}</code>
+global.room_type="wall";</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

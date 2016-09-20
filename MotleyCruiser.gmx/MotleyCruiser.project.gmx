@@ -3,7 +3,9 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <NewExtensions/>
+  <NewExtensions>
+    <extension index="0">extensions\Totro - Random Name Generator</extension>
+  </NewExtensions>
   <sounds name="sound">
     <sounds name="Weapons">
       <sound>sound\snd_laser1</sound>
@@ -40,9 +42,12 @@
       <sprite>sprites\spr_shield</sprite>
     </sprites>
     <sprite>sprites\spr_planet</sprite>
+    <sprite>sprites\spr_moon</sprite>
+    <sprite>sprites\spr_sun</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_portrait_wc</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
+    <sprite>sprites\spr_station</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -53,6 +58,9 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="_entities">
+      <script>scripts\scr_npc.gml</script>
+    </scripts>
     <script>scripts\scr_move.gml</script>
     <script>scripts\scr_grid_place_meeting_old.gml</script>
     <script>scripts\scr_grid_place_meeting.gml</script>
@@ -76,6 +84,18 @@
       <script>scripts\scr_make_mission.gml</script>
       <script>scripts\scr_has_mission.gml</script>
     </scripts>
+    <scripts name="galaxy">
+      <script>scripts\scr_make_galaxy.gml</script>
+      <script>scripts\scr_make_sun.gml</script>
+      <script>scripts\scr_make_planet.gml</script>
+      <script>scripts\scr_make_moon.gml</script>
+      <script>scripts\scr_make_station.gml</script>
+      <script>scripts\scr_make_npc.gml</script>
+      <script>scripts\scr_populate_sector.gml</script>
+    </scripts>
+    <script>scripts\totro.gml</script>
+    <script>scripts\totro_plus.gml</script>
+    <script>scripts\scr_get_closest.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -85,16 +105,7 @@
     <font>fonts\fnt_messagebox</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_damager</object>
-    <object>objects\obj_level</object>
-    <object>objects\obj_lvl_bu</object>
-    <object>objects\obj_player</object>
-    <object>objects\obj_enemy</object>
-    <object>objects\obj_crew</object>
-    <object>objects\obj_bullet</object>
-    <object>objects\obj_bullet_enemy</object>
-    <object>objects\obj_core</object>
-    <object>objects\obj_control</object>
+    <object>objects\obj_landable</object>
     <objects name="_space_combat">
       <object>objects\obj_ship</object>
       <object>objects\obj_player_ship</object>
@@ -106,7 +117,20 @@
       <object>objects\obj_control_space</object>
       <object>objects\obj_explosion</object>
       <object>objects\obj_planet</object>
+      <object>objects\obj_moon</object>
+      <object>objects\obj_station</object>
+      <object>objects\obj_sun</object>
     </objects>
+    <object>objects\obj_damager</object>
+    <object>objects\obj_level</object>
+    <object>objects\obj_lvl_bu</object>
+    <object>objects\obj_player</object>
+    <object>objects\obj_enemy</object>
+    <object>objects\obj_crew</object>
+    <object>objects\obj_bullet</object>
+    <object>objects\obj_bullet_enemy</object>
+    <object>objects\obj_core</object>
+    <object>objects\obj_control</object>
     <object>objects\obj_team</object>
     <object>objects\obj_gun</object>
     <object>objects\obj_cantina</object>
