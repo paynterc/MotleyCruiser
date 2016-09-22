@@ -1,26 +1,17 @@
-/// Create a dsmap with attributes
-//var map = scr_npc();
-var map = ds_map_create();
+/// Create an array with npc attributes
 
-map[? "race"]=noone;
-map[? "name"]=noone;
-map[? "run_speed"]=noone;
-map[? "hp"]=noone;
-map[? "hp_current"]=noone;
-map[? "status"]='active';
-
+var map = noone;
 
 var race_index = irandom(array_length_1d(global.races) - 1);
 var run_modifier = irandom(4)-2;
 var hp_modifier = irandom(10)-5;
 var names = totro_plus(1,4,2,0,0);
 
-var race = global.races[race_index];
+map[NPC_RACE_INDEX] = race_index;
+map[NPC_NAME] = names[0] + " " + names[1];
+map[NPC_RUN_SPD] =  max(global.min_spd, global.races[race_index,RACE_BASE_SPD] + run_modifier);
+map[NPC_HP] =  max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_modifier);
+map[NPC_HP_CURRENT] =  map[NPC_HP];
 
-map[? "race"]=race_index;
-map[? "name"]=names[0] + " " + names[1];
-map[? "run_speed"] = max(global.min_spd, race[? "base_spd"] + run_modifier);
-map[? "hp"] = max(global.min_hp, race[? "base_hp"] + hp_modifier);
-map[? "hp_current"] = map[? "hp"];
 
 return map;

@@ -151,12 +151,21 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
   </rooms>
-  <constants number="5">
+  <constants number="14">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
     <constant name="WALL">-6</constant>
     <constant name="VOID">-7</constant>
+    <constant name="RACE_NAME">0</constant>
+    <constant name="RACE_BASE_HP">1</constant>
+    <constant name="RACE_BASE_SPD">2</constant>
+    <constant name="RACE_SPR">3</constant>
+    <constant name="NPC_RACE_INDEX">0</constant>
+    <constant name="NPC_NAME">1</constant>
+    <constant name="NPC_RUN_SPD">2</constant>
+    <constant name="NPC_HP">3</constant>
+    <constant name="NPC_HP_CURRENT">4</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

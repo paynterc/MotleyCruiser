@@ -83,11 +83,10 @@ var raceMap = 0;
 for(var i=0; i&lt;array_length_1d(global.crew); i++){
     thiscrew = instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
     crewMap = global.crew[i];
-    raceMap = global.races[crewMap[? "race"]];
-    thiscrew.sprite_index=raceMap[? "spr"];
-    thiscrew.hp=crewMap[? "hp"];
-    thiscrew.hp_current=crewMap[? "hp_current"];
-    thiscrew.pspeed=crewMap[? "run_speed"];
+    thiscrew.sprite_index=global.races[crewMap[NPC_RACE_INDEX],RACE_SPR];
+    thiscrew.hp=crewMap[NPC_HP_CURRENT];
+    thiscrew.hp_current=crewMap[NPC_HP_CURRENT];
+    thiscrew.pspeed=crewMap[NPC_RUN_SPD];
 }
 
 // Give the controller a random direction

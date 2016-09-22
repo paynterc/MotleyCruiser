@@ -23,52 +23,37 @@ global.max_station_npc = 20; //max npcs per station
 
 global.races = noone;
 
-global.races[0] = ds_map_create();
-ds_map_add(global.races[0], "name", "human");
-ds_map_add(global.races[0], "base_hp", 10);
-ds_map_add(global.races[0], "base_spd", 2);
-ds_map_add(global.races[0], "spr", spr_captain3);
+global.races[0,RACE_NAME] = "Human";
+global.races[0,RACE_BASE_HP] = 10;
+global.races[0,RACE_BASE_SPD] = 2;
+global.races[0,RACE_SPR] = spr_captain3;
 
-global.races[1] = ds_map_create();
-ds_map_add(global.races[1], "name", "Warchicken");
-ds_map_add(global.races[1], "base_hp", 20);
-ds_map_add(global.races[1], "base_spd", 3);
-ds_map_add(global.races[1], "spr", spr_warchicken);
+global.races[1,RACE_NAME] = "Warchicken";
+global.races[1,RACE_BASE_HP] = 20;
+global.races[1,RACE_BASE_SPD] = 3;
+global.races[1,RACE_SPR] = spr_warchicken;
 
-global.races[2] = ds_map_create();
-ds_map_add(global.races[2], "name", "Hurgan");
-ds_map_add(global.races[2], "base_hp", 30);
-ds_map_add(global.races[2], "base_spd", 1);
-ds_map_add(global.races[2], "spr", spr_hurgan2);
+global.races[2,RACE_NAME] = "Hurgan";
+global.races[2,RACE_BASE_HP] = 30;
+global.races[2,RACE_BASE_SPD] = 1;
+global.races[2,RACE_SPR] = spr_hurgan2; 
 
-global.races[3] = ds_map_create();
-ds_map_add(global.races[3], "name", "Flowridian");
-ds_map_add(global.races[3], "base_hp", 15);
-ds_map_add(global.races[3], "base_spd", 3);
-ds_map_add(global.races[3], "spr", spr_flowridian);
+global.races[3,RACE_NAME] = "Flowridian";
+global.races[3,RACE_BASE_HP] = 15;
+global.races[3,RACE_BASE_SPD] = 3;
+global.races[3,RACE_SPR] = spr_flowridian;
 
 
-// CREW: An array of maps for crew
+
+// CREW: An array of arrays for crew
 // This creates a random crew at game start. In later version, the player will aquire crew.
-global.crew[0] = scr_make_npc();
-global.crew[1] = scr_make_npc();
-global.crew[2] = scr_make_npc();
-
-/**
-global.crew[0] = ds_map_create();
-global.crew[1] = ds_map_create();
-global.crew[2] = ds_map_create();
-
-ds_map_add(global.crew[0], "race", 1);
-ds_map_add(global.crew[0], "status", "active");//active, inactive, dead
-
-ds_map_add(global.crew[1], "race", 2);
-ds_map_add(global.crew[1], "status", "active");//active, inactive, dead
+global.crew = noone;
+var npc = noone;
+for(var i=0;i&lt;=3;i++){
+    global.crew[i] = scr_make_npc();
+}
 
 
-ds_map_add(global.crew[2], "race", 3);
-ds_map_add(global.crew[2], "status", "active");//active, inactive, dead
-**/
 
 // PLAYER MISSIONS: An array of ds_maps for missions
 global.mission_id = date_current_datetime(); //A number to start mission ids with. Increment this with each mission granted.
@@ -83,10 +68,10 @@ global.room_type="map";//default. can be map or wall
 
 // Make a galaxy
 global.galaxy_width = 20;
-global.galaxy = scr_make_galaxy();
-//global.galaxy = noone;
+//global.galaxy = scr_make_galaxy();
+global.galaxy = noone;
 // Go to first room
-room_goto(rm_space);</code>
+room_goto(rm_room1);</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>
