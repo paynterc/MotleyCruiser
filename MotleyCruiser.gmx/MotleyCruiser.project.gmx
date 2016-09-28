@@ -151,7 +151,7 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
   </rooms>
-  <constants number="14">
+  <constants number="16">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -166,6 +166,8 @@
     <constant name="NPC_RUN_SPD">2</constant>
     <constant name="NPC_HP">3</constant>
     <constant name="NPC_HP_CURRENT">4</constant>
+    <constant name="NPC_NAME_FIRST">5</constant>
+    <constant name="NPC_NAME_LAST">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
