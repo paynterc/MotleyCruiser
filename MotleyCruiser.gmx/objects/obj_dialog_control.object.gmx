@@ -151,18 +151,18 @@ if(staged_buttons != noone){
         if(array_length_2d(staged_buttons,i)==5){
             if( staged_buttons[i,4] ){//hover = true
                 //show_message("CLICKED BUTTON " + string(i) );
-                var thebuttons = staged_branch[? "buttons"];
+                var thebuttons = staged_branch[D_BRANCH_BUTTONS];
                 var clicked_button = thebuttons[i];
                 var next_branch = noone;
-                switch (clicked_button[? "action"]){                
+                switch (clicked_button[D_BUTTON_ACTION]){                
                     case "step_to":
-                        var link = clicked_button[? "link_index"];
+                        var link = clicked_button[D_BUTTON_LINKINDEX];
                         if(link != noone &amp;&amp; array_length_1d(staged_tree)&gt;link){
                             //Look to see if the next step is a job off. Make sure we haven't already accepted.
                             next_branch = staged_tree[link];
-                            if(next_branch[? "type"]=="job" &amp;&amp; closest_sentient.mission &amp;&amp; scr_has_mission(closest_sentient.mission)){
+                            if(next_branch[D_BRANCH_TYPE]=="job" &amp;&amp; closest_sentient.mission &amp;&amp; scr_has_mission(closest_sentient.mission)){
                                  staged_branch = scr_make_dialogue_branch("Have you finished that job yet?","exposition");
-                                 staged_branch = scr_add_dialogue_button(staged_branch,"Nope.","step_to",0);
+                                 scr_add_dialogue_button(staged_branch,"Nope.","step_to",0);
                             }else{
                                 // Move on to the next branch normally.
                                 staged_branch = staged_tree[link];
@@ -171,7 +171,7 @@ if(staged_buttons != noone){
                             staged_buttons = noone;
                         }else{
                             staged_branch = scr_make_dialogue_branch("I have no idea how to respond to that.","exposition");
-                            staged_branch = scr_add_dialogue_button(staged_branch,"Sorry.","step_to",0);
+                            scr_add_dialogue_button(staged_branch,"Sorry.","step_to",0);
                             staged_buttons = noone; 
                         }
                         break;
@@ -193,7 +193,7 @@ if(staged_buttons != noone){
                         break;
                     default:
                         staged_branch = scr_make_dialogue_branch("I don't feel like talking now.","exposition");
-                        staged_branch = scr_add_dialogue_button(staged_branch,"Sorry.","exit",noone);
+                        scr_add_dialogue_button(staged_branch,"Sorry.","exit",noone);
                         staged_buttons = noone; 
                 
                 }
@@ -230,9 +230,9 @@ if(staged_buttons != noone){
     draw_set_color(font_color);
     var font_size = font_get_size(font);
     
-    var bub = scr_draw_messagebox_plus(closest_sentient.name + ": " + staged_branch[? "text"], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_branch[? "buttons"]);
+    var bub = scr_draw_messagebox_plus(closest_sentient.name + ": " + staged_branch[D_BRANCH_TEXT], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_branch[D_BRANCH_BUTTONS]);
     if(bub != noone){
-        var thebuttons = staged_branch[? "buttons"];
+        var thebuttons = staged_branch[D_BRANCH_BUTTONS];
         var thisbutton = noone;
         var button_x = bub[0];
         var button_y = bub[1];
@@ -240,8 +240,8 @@ if(staged_buttons != noone){
         var button_h = 0;
         for(var i = 0; i &lt; array_length_1d(thebuttons); i++){
             thisbutton = thebuttons[i];
-            button_w = round( string_width( thisbutton[? "text"] ) * text_scale );
-            button_h = round( string_height( thisbutton[? "text"] ) * text_scale );           
+            button_w = round( string_width( thisbutton[D_BUTTON_TEXT] ) * text_scale );
+            button_h = round( string_height( thisbutton[D_BUTTON_TEXT] ) * text_scale );           
             // Store the coordinates and state of the button. x, y, width, height, hover
             if( array_height_2d( staged_buttons ) &lt; array_length_1d(thebuttons) ){ // Be sure you only do this once for each button
                 staged_buttons[i,0]=button_x;
@@ -250,7 +250,7 @@ if(staged_buttons != noone){
                 staged_buttons[i,3]=button_h;
                 staged_buttons[i,4]=false;
             }
-            scr_draw_button(thisbutton[? "text"], button_x, button_y, staged_buttons[i,4]);
+            scr_draw_button(thisbutton[D_BUTTON_TEXT], button_x, button_y, staged_buttons[i,4]);
             button_y += button_h + 1;
             
         }  
@@ -308,7 +308,7 @@ if(closest_sentient != noone){
     staged_branch = staged_tree[0];
     
     if(closest_sentient.mission &amp;&amp; scr_has_mission(closest_sentient.mission)){
-        staged_branch = scr_add_dialogue_button(staged_branch,"I did that job for you.","complete_mission",noone);
+        scr_add_dialogue_button(staged_branch,"I did that job for you.","complete_mission",noone);
     }
     
        

@@ -28,25 +28,20 @@
             <string>/// Populate the cantina
 
 var sentient = noone;
-var raceMap = noone;
-var rIndex = noone;
+var raceIndex = noone;
 var name = noone;
-var npcs = global.landed_on[? "npcs"];
+//var npcs = global.landed_on[? "npcs"];
 
 for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
     //instance_list(obj_sentient)[i].instance_destroy();
-    if(i &lt; array_length_1d(npcs)){
-        
         sentient = instance_find(obj_sentient,i);
-        npc = npcs[i];
+        var raceIndex = irandom( array_height_2d(global.races) - 1 );
 
-        raceMap = global.races[npc[? "race"]];
-        sentient.sprite_index=raceMap[? "spr"];
-        sentient.name = npc[? "name"];
+        
+        sentient.sprite_index=global.races[raceIndex, RACE_SPR];
+        sentient.name = "Joe Schmoe";
         sentient.image_speed = 0;
-        sentient.race_index = rIndex;
-    
-    }
+        sentient.race_index = raceIndex;
 
 }
 </string>
@@ -71,7 +66,8 @@ for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_restart();
+            <string>/// Restart the room
+room_restart();
 </string>
           </argument>
         </arguments>
