@@ -53,8 +53,6 @@
   <instances>
     <instance objName="obj_player_ship" x="384" y="256" name="inst_F6182A2D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_space_level" x="64" y="32" name="inst_CCE2AB6E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_control_space" x="96" y="32" name="inst_9DBF5536" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_star_background" x="128" y="32" name="inst_5357D0FC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

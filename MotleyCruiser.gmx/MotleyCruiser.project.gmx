@@ -54,7 +54,6 @@
     <background>background\bg_wall</background>
     <background>background\bg_walltiles</background>
     <background>background\bg_counters</background>
-    <background>background\bg_star</background>
     <background>background\bg_starfield</background>
   </backgrounds>
   <paths name="paths"/>
@@ -66,11 +65,8 @@
     <script>scripts\scr_grid_place_meeting.gml</script>
     <script>scripts\scr_save_room.gml</script>
     <script>scripts\scr_get_path_to_point.gml</script>
-    <script>scripts\scr_generate_star_background.gml</script>
     <script>scripts\scr_gradually_rotate.gml</script>
     <script>scripts\scr_shoot.gml</script>
-    <script>scripts\scr_make_dialogue_map.gml</script>
-    <script>scripts\scr_text.gml</script>
     <script>scripts\scr_push_array.gml</script>
     <script>scripts\scr_push_array_1d.gml</script>
     <scripts name="dialogue">
@@ -79,7 +75,7 @@
       <script>scripts\scr_add_dialogue_button.gml</script>
       <script>scripts\scr_draw_messagebox_plus.gml</script>
       <script>scripts\scr_draw_button.gml</script>
-      <script>scripts\scr_draw_messagebox.gml</script>
+      <script>scripts\scr_draw_messagebox_OLD.gml</script>
     </scripts>
     <scripts name="mission">
       <script>scripts\scr_make_mission.gml</script>
@@ -98,7 +94,6 @@
     <script>scripts\totro.gml</script>
     <script>scripts\totro_plus.gml</script>
     <script>scripts\scr_get_closest.gml</script>
-    <script>scripts\scr_populate_npcs.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -110,14 +105,10 @@
   <objects name="objects">
     <objects name="_space_combat">
       <object>objects\obj_ship</object>
-      <object>objects\obj_star_background</object>
       <object>objects\obj_space_level</object>
       <object>objects\obj_player_ship</object>
-      <object>objects\obj_player_ship_bu</object>
       <object>objects\obj_laser</object>
       <object>objects\obj_enemy_ship</object>
-      <object>objects\obj_enemy_ship_bu</object>
-      <object>objects\obj_control_space</object>
       <object>objects\obj_explosion</object>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
@@ -125,26 +116,23 @@
       <object>objects\obj_landable</object>
       <object>objects\obj_sun</object>
     </objects>
+    <objects name="_people_and_places">
+      <object>objects\obj_player</object>
+      <object>objects\obj_crew</object>
+      <object>objects\obj_cantina</object>
+      <object>objects\obj_team</object>
+      <object>objects\obj_sentient</object>
+      <object>objects\obj_enemy</object>
+      <object>objects\obj_level</object>
+      <object>objects\obj_bullet</object>
+      <object>objects\obj_bullet_enemy</object>
+      <object>objects\obj_core</object>
+      <object>objects\obj_control</object>
+      <object>objects\obj_gun</object>
+      <object>objects\obj_wall_invis</object>
+      <object>objects\obj_dialog_control</object>
+    </objects>
     <object>objects\obj_damager</object>
-    <object>objects\obj_level</object>
-    <object>objects\obj_lvl_bu</object>
-    <object>objects\obj_player</object>
-    <object>objects\obj_crew</object>
-    <object>objects\obj_bullet</object>
-    <object>objects\obj_enemy</object>
-    <object>objects\obj_bullet_enemy</object>
-    <object>objects\obj_core</object>
-    <object>objects\obj_control</object>
-    <object>objects\obj_team</object>
-    <object>objects\obj_gun</object>
-    <object>objects\obj_cantina</object>
-    <object>objects\obj_wall_invis</object>
-    <object>objects\obj_sentient</object>
-    <object>objects\obj_portrait</object>
-    <object>objects\obj_dialog_box</object>
-    <object>objects\obj_dialog_control</object>
-    <object>objects\obj_text</object>
-    <object>objects\obj_textbox</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_game_control</object>

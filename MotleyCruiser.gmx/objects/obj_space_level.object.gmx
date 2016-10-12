@@ -73,8 +73,6 @@ if(instance_exists(obj_player_ship)){
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="9" enumb="90">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -91,12 +89,74 @@ if(instance_exists(obj_player_ship)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>/// Initiate GUI vars
+
+depth=-1000;
+guiXoffset = 12;
+guiYoffset = 3;
+
+imgW = sprite_get_width(spr_ship);
+imgH = sprite_get_height(spr_ship);
+imgOSx = imgW/2;
+imgOSy = imgH/2;
+
+shieldW = sprite_get_width(spr_shield);
+shieldH = sprite_get_height(spr_shield);
+
+ls = 15;//line spacing
+
+npc_count = array_length_1d(global.npcs);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create stars background. Be sure to delete this background on Room End.
+
+surface = noone;
+
+surface = surface_create(1000,1000);
+
+surface_set_target  (surface);
+draw_clear_alpha(c_black,1);
+for (var i=1;i&lt;50;i++){
+    col = make_color_rgb(irandom(255), irandom(255), irandom(255));
+    //theTile = tile_add(bg_star, 0, 0, 3, 3, irandom(1000), irandom(1000), 3000);
+    //tile_set_blend(theTile,col);
+    draw_circle_colour(irandom(1000),irandom(1000),irandom(4),col,col,false);
+} 
+stars = background_create_from_surface(surface,0,0,1000,1000,false,true);
+
+//surface_save(surface,"my_stars.png");
+//var stars = background_add("my_stars.png",false,false);
+
+surface_reset_target();
+surface_free(surface);
+
+background_index[1]=stars;
+background_alpha[1]=1;
+
+</string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="13">
+    <event eventtype="7" enumb="5">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -113,7 +173,61 @@ if(instance_exists(obj_player_ship)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_restart();
+            <string>/// Delete background
+background_delete(stars);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw HUD
+if(view_current != 0){
+    return false;
+}
+draw_set_colour(c_white);
+if(instance_exists(obj_player_ship)){
+
+    draw_sprite(spr_ship,1,view_xview[0]+guiXoffset + imgOSx,view_yview[0]+imgOSy);  
+    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset,obj_player_ship.shields_current/obj_player_ship.shields,1,0,c_aqua,1);    
+    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset+ sprite_get_height(spr_bar),obj_player_ship.hull_current/obj_player_ship.hull,1,0,c_olive,1);
+    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset+ sprite_get_height(spr_bar) * 2,obj_player_ship.energy_current/obj_player_ship.energy,1,0,c_orange,1);
+    //draw_text(view_xview[0]+10, view_yview[0]+10, "Shields: "+string(obj_player_ship.shields));
+    //draw_text(view_xview[0]+10, view_yview[0]+30, "Hull: "+string(obj_player_ship.hull));
+}
+
+
+//top_speed = 10;
+//accelleration = .2;
+//turn_speed = 15;
+//accuracy = .5;
+if(instance_exists(obj_enemy_ship)){
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 4), "e top speed: "+string(obj_enemy_ship.max_spd));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 5), "e turn speed: "+string(obj_enemy_ship.turn_spd));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 6), "e accuracy: "+string(obj_enemy_ship.accuracy));
+
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 7), "EShields: "+string(obj_enemy_ship.shields_current));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 8), "EHull: "+string(obj_enemy_ship.hull_current));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 9), "EEnergy: "+string(obj_enemy_ship.energy_current));
+
+}
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 10), "NPC Count: "+string(npc_count));
 </string>
           </argument>
         </arguments>

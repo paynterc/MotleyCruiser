@@ -19,15 +19,6 @@ for(var i = 0; i < s_count; i++) {
             sentient.name = npc[NPC_NAME];
             sentient.image_speed = 0;
             sentient.race_index = raceIndex;
+            sentient.active = 1;
         }
-}
-
-// Delete the unused sentients.
-s_count = instance_number(obj_sentient);
-for(var j = 0; j < s_count; j+=1) {
-    var sentient2 = instance_find(obj_sentient,j);
-    instance_deactivate_object(sentient2);
-    if(sentient2!=noone && sentient2.race_index == noone){
-        //
-    }
 }

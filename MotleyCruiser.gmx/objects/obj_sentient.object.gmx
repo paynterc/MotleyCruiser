@@ -28,6 +28,7 @@
             <string>/// Base unit for alien being. Communicates with dialog.
 
 // Used in cantinas. Can be commincated with.
+active = 0;// Indicates that this object is a placeholder. If the object is not populated with an NPC, the object will delete itself.
 
 race_index = noone; //index of race from racemap
 mission = noone;
@@ -60,7 +61,8 @@ dialogue = scr_make_dialogue_tree();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(race_index == noone){
+            <string>/// Delete the object if unused
+if(active == 0){
     instance_destroy();
 }
 </string>
