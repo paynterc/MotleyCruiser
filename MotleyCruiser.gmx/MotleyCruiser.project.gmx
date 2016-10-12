@@ -55,6 +55,7 @@
     <background>background\bg_walltiles</background>
     <background>background\bg_counters</background>
     <background>background\bg_star</background>
+    <background>background\bg_starfield</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -62,7 +63,6 @@
       <script>scripts\scr_npc.gml</script>
     </scripts>
     <script>scripts\scr_move.gml</script>
-    <script>scripts\scr_grid_place_meeting_old.gml</script>
     <script>scripts\scr_grid_place_meeting.gml</script>
     <script>scripts\scr_save_room.gml</script>
     <script>scripts\scr_get_path_to_point.gml</script>
@@ -72,6 +72,7 @@
     <script>scripts\scr_make_dialogue_map.gml</script>
     <script>scripts\scr_text.gml</script>
     <script>scripts\scr_push_array.gml</script>
+    <script>scripts\scr_push_array_1d.gml</script>
     <scripts name="dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
@@ -92,10 +93,12 @@
       <script>scripts\scr_make_station.gml</script>
       <script>scripts\scr_make_npc.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
+      <script>scripts\scr_move_to_sector.gml</script>
     </scripts>
     <script>scripts\totro.gml</script>
     <script>scripts\totro_plus.gml</script>
     <script>scripts\scr_get_closest.gml</script>
+    <script>scripts\scr_populate_npcs.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -105,13 +108,13 @@
     <font>fonts\fnt_messagebox</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_landable</object>
     <objects name="_space_combat">
       <object>objects\obj_ship</object>
+      <object>objects\obj_star_background</object>
+      <object>objects\obj_space_level</object>
       <object>objects\obj_player_ship</object>
       <object>objects\obj_player_ship_bu</object>
       <object>objects\obj_laser</object>
-      <object>objects\obj_space_level</object>
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_enemy_ship_bu</object>
       <object>objects\obj_control_space</object>
@@ -119,15 +122,16 @@
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
       <object>objects\obj_station</object>
+      <object>objects\obj_landable</object>
       <object>objects\obj_sun</object>
     </objects>
     <object>objects\obj_damager</object>
     <object>objects\obj_level</object>
     <object>objects\obj_lvl_bu</object>
     <object>objects\obj_player</object>
-    <object>objects\obj_enemy</object>
     <object>objects\obj_crew</object>
     <object>objects\obj_bullet</object>
+    <object>objects\obj_enemy</object>
     <object>objects\obj_bullet_enemy</object>
     <object>objects\obj_core</object>
     <object>objects\obj_control</object>
@@ -151,7 +155,7 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
   </rooms>
-  <constants number="22">
+  <constants number="52">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -174,6 +178,36 @@
     <constant name="D_BUTTON_TEXT">0</constant>
     <constant name="D_BUTTON_ACTION">1</constant>
     <constant name="D_BUTTON_LINKINDEX">2</constant>
+    <constant name="SECTOR_SUNS">0</constant>
+    <constant name="SECTOR_PLANETS">1</constant>
+    <constant name="SECTOR_MOONS">2</constant>
+    <constant name="SECTOR_STATIONS">3</constant>
+    <constant name="SECTOR_SHIPS">4</constant>
+    <constant name="SECTOR_NPCS">5</constant>
+    <constant name="SUN_X1">0</constant>
+    <constant name="SUN_Y1">1</constant>
+    <constant name="SUN_W1">2</constant>
+    <constant name="SUN_COLOR">3</constant>
+    <constant name="SUN_PLANETS">4</constant>
+    <constant name="PLANET_X1">0</constant>
+    <constant name="PLANET_Y1">1</constant>
+    <constant name="PLANET_W1">2</constant>
+    <constant name="PLANET_COLOR">3</constant>
+    <constant name="PLANET_MOONS">4</constant>
+    <constant name="PLANET_SPRITE_INDEX">5</constant>
+    <constant name="PLANET_NPCS">6</constant>
+    <constant name="MOON_X1">0</constant>
+    <constant name="MOON_Y1">1</constant>
+    <constant name="MOON_W1">2</constant>
+    <constant name="MOON_COLOR">3</constant>
+    <constant name="MOON_SPRITE_INDEX">4</constant>
+    <constant name="MOON_NPCS">5</constant>
+    <constant name="STATION_X1">0</constant>
+    <constant name="STATION_Y1">1</constant>
+    <constant name="STATION_W1">2</constant>
+    <constant name="STATION_COLOR">3</constant>
+    <constant name="STATION_SPRITE_INDEX">4</constant>
+    <constant name="STATION_NPCS">5</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

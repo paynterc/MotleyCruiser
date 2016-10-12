@@ -26,15 +26,55 @@
           <argument>
             <kind>1</kind>
             <string>/// Populate sector
-scr_generate_star_background();
-
 scr_populate_sector();
+
+
+// Position the player ship.
+var player_x = room_width/2;
+var player_y = room_height/2;
+
+if(global.landed_on != noone &amp;&amp; global.landed_type!=noone){
+
+    var location = noone;
+    if(global.landed_type=="station"){
+        
+        location = global.stations[global.landed_on];
+        player_x = location[STATION_X1];
+        player_y = location[STATION_Y1];
+        
+    }else if(global.landed_type=="planet"){
+    
+        location = global.planets[global.landed_on];
+        player_x = location[PLANET_X1];
+        player_y = location[PLANET_Y1];
+        
+    }else if(global.landed_type=="moon"){
+    
+        location = global.moons[global.landed_on];
+        player_x = location[MOON_X1];
+        player_y = location[MOON_Y1];
+        
+    }else{
+        location = noone;
+    }
+    
+    global.landed_on = noone;
+    global.landed_type = noone;
+    
+}
+
+if(instance_exists(obj_player_ship)){
+    with(obj_player_ship){
+        x=player_x;
+        y=player_y;
+    }
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="68">
+    <event eventtype="9" enumb="90">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -51,13 +91,7 @@ scr_populate_sector();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Dock
-var closest_landable = scr_get_closest(obj_landable,self,100);
-if(closest_landable){
-    global.landed_on = closest_landable;
-    room_goto(rm_cantina1);
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

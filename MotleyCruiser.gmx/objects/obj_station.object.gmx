@@ -25,13 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>attributes = scr_make_station();
-image_xscale = attributes[? "w1"] / sprite_get_width(spr_station);
-image_yscale = attributes[? "w1"] / sprite_get_width(spr_station);
-image_blend = attributes[? "clr"];
-image_index = attributes[? "idx"];
+            <string>/// Freeze image
 image_speed = 0;
-depth = 700;
 </string>
           </argument>
         </arguments>

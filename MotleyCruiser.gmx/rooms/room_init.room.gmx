@@ -16,8 +16,8 @@
 global.min_spd = 1; //minimum run speed for npc
 global.min_hp = 10; //minimum hp for npc
 
-global.min_station_npc = 5; //minimum npcs per station
-global.max_station_npc = 20; //max npcs per station
+global.min_station_npc = 3; //minimum npcs per station
+global.max_station_npc = 10; //max npcs per station
 
 // RACES
 
@@ -47,12 +47,13 @@ global.races[3,RACE_SPR] = spr_flowridian;
 
 // CREW: An array of arrays for crew
 // This creates a random crew at game start. In later version, the player will aquire crew.
+/***
 global.crew = noone;
 var npc = noone;
 for(var i=0;i&lt;=3;i++){
     global.crew[i] = scr_make_npc();
 }
-
+***/
 
 
 // PLAYER MISSIONS: An array of ds_maps for missions
@@ -68,10 +69,22 @@ global.room_type="map";//default. can be map or wall
 
 // Make a galaxy
 global.galaxy_width = 20;
-//global.galaxy = scr_make_galaxy();
-global.galaxy = noone;
+
+global.suns[0] = -1;
+global.planets[0] = -1;
+global.moons[0] = -1;
+global.stations[0] = -1;
+global.ships[0] = -1;
+global.npcs[0] = -1;
+global.landed_on = noone;
+global.landed_type = noone;
+global.current_sector_row = 10;
+global.current_sector_col = 10;
+
+global.galaxy = scr_make_galaxy();
+
 // Go to first room
-room_goto(rm_cantina1);</code>
+room_goto(rm_space);</code>
   <enableViews>0</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

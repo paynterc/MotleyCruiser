@@ -224,7 +224,7 @@ if(staged_buttons != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(staged_branch!=noone){
+            <string>if(staged_branch!=noone &amp;&amp; closest_sentient.name != noone){
     
     draw_set_font(font);
     draw_set_color(font_color);
@@ -299,7 +299,7 @@ for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
     }
 }
 
-if(closest_sentient != noone){
+if(closest_sentient != noone &amp;&amp; closest_sentient.name != noone){
     
     //var check_mission = noone;
     //var has_mission = scr_check_mission(closest_sentient.mission);

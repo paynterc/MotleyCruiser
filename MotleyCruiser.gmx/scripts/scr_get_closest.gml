@@ -20,6 +20,7 @@ for(var i = 0; i < instance_number(obj_target); i++) {
             closest_range = this_range;
         }
     }
+    
 }
 
 return closest;

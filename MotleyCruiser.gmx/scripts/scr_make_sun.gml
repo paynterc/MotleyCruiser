@@ -1,5 +1,6 @@
 /// Create a dsmap with sun attributes
-var sun = ds_map_create();
+var sun = noone;
+sun[4] = 0;// Initialize array with 5 slots.
 
 var x1=0;
 var y1=0;
@@ -9,7 +10,7 @@ var min_width = sprite_get_width(spr_sun) / 2;
 var max_width = sprite_get_width(spr_sun) * 3;
 
 var planets = noone;
-var planetmax = 5;
+var planetmax = 2;
 
 
 w1 = max(min_width, irandom(max_width));
@@ -21,10 +22,13 @@ for(var i=0; i<planetcount; i++){
     planets[i]=scr_make_planet();
 }
 
-sun[? "x1"]=x1;
-sun[? "y1"]=y1;
-sun[? "w1"]=w1;
-sun[? "clr"]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
-sun[? "planets"]=planets;
+sun[SUN_X1]=x1;
+sun[SUN_Y1]=y1;
+sun[SUN_W1]=w1;
+sun[SUN_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
+sun[SUN_PLANETS]=planets;
 
-return sun;
+var sun_index = scr_push_array_1d(global.suns,sun);
+
+
+return sun_index;

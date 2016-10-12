@@ -2,7 +2,7 @@
 // Attribute names are contained in Macros/All configurations
 var map = noone;
 
-var race_index = irandom(array_length_1d(global.races) - 1);
+var race_index = irandom(array_height_2d(global.races) - 1);
 var run_modifier = irandom(4)-2;
 var hp_modifier = irandom(10)-5;
 var names = totro_plus(1,4,2,0,0);
@@ -15,5 +15,6 @@ map[NPC_RUN_SPD] =  max(global.min_spd, global.races[race_index,RACE_BASE_SPD] +
 map[NPC_HP] =  max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_modifier);
 map[NPC_HP_CURRENT] =  map[NPC_HP];
 
+var npc_index = scr_push_array_1d(global.npcs,map);
 
-return map;
+return npc_index;

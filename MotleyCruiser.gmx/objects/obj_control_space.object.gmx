@@ -38,6 +38,8 @@ shieldW = sprite_get_width(spr_shield);
 shieldH = sprite_get_height(spr_shield);
 
 ls = 15;//line spacing
+
+npc_count = array_length_1d(global.npcs);
 </string>
           </argument>
         </arguments>
@@ -60,7 +62,10 @@ ls = 15;//line spacing
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_colour(c_white);
+            <string>if(view_current != 0){
+    return false;
+}
+draw_set_colour(c_white);
 if(instance_exists(obj_player_ship)){
 
     draw_sprite(spr_ship,1,view_xview[0]+guiXoffset + imgOSx,view_yview[0]+imgOSy);  
@@ -86,6 +91,8 @@ draw_text(view_xview[0]+10, view_yview[0]+( ls * 8), "EHull: "+string(obj_enemy_
 draw_text(view_xview[0]+10, view_yview[0]+( ls * 9), "EEnergy: "+string(obj_enemy_ship.energy_current));
 
 }
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 10), "NPC Count: "+string(npc_count));
+
 </string>
           </argument>
         </arguments>

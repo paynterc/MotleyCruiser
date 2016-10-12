@@ -1,5 +1,6 @@
 /// Create a dsmap with stations attributes
-var map = ds_map_create();
+var map = noone;
+map[5]=0;
 
 var x1=0;
 var y1=0;
@@ -18,15 +19,17 @@ var npcs = noone; // An array full of random NPCs
 var npc_count = irandom_range(global.min_station_npc, global.max_station_npc);
 
 for(var i=0; i < npc_count; i++){
-   // npcs[i]=scr_make_npc();
+   npcs[i]=scr_make_npc();
 }
 
 
-map[? "x1"]=x1;
-map[? "y1"]=y1;
-map[? "w1"]=w1;
-map[? "clr"]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
-map[? "idx"]=floor(random(sprite_get_number(spr_station)));
-map[? "npcs"]=npcs;
+map[STATION_X1]=x1;
+map[STATION_Y1]=y1;
+map[STATION_W1]=w1;
+map[STATION_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
+map[STATION_SPRITE_INDEX]=floor(random(sprite_get_number(spr_station)));
+map[STATION_NPCS]=npcs;
 
-return map;
+var station_index = scr_push_array_1d(global.stations,map);
+
+return station_index;

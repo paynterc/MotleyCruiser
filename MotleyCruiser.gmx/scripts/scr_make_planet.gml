@@ -1,5 +1,6 @@
 /// Create a dsmap with attributes
-var map = ds_map_create();
+var map = noone;
+map[5]=0;
 
 var x1=0;
 var y1=0;
@@ -30,12 +31,21 @@ for(var i=0; i < npc_count; i++){
 }
 ***/
 
-map[? "x1"]=x1;
-map[? "y1"]=y1;
-map[? "w1"]=w1;
-map[? "clr"]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
-map[? "idx"]=floor(random(sprite_get_number(spr_planet)));
-map[? "moons"]=moons;
-//map[? "npcs"]=npcs;
+map[PLANET_X1]=x1;
+map[PLANET_Y1]=y1;
+map[PLANET_W1]=w1;
+map[PLANET_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
+map[PLANET_MOONS]=moons;
+map[PLANET_SPRITE_INDEX]=floor(random(sprite_get_number(spr_planet)));
 
-return map;
+var npcs = noone; // An array full of random NPCs
+var npc_count = irandom_range(global.min_station_npc, global.max_station_npc);
+
+for(var i=0; i < npc_count; i++){
+   npcs[i]=scr_make_npc();
+}
+map[PLANET_NPCS] = npcs;
+
+var planet_index = scr_push_array_1d(global.planets,map);
+
+return planet_index;

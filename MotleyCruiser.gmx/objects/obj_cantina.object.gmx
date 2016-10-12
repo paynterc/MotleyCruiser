@@ -27,29 +27,60 @@
             <kind>1</kind>
             <string>/// Populate the cantina
 
-var sentient = noone;
-var raceIndex = noone;
-var name = noone;
-//var npcs = global.landed_on[? "npcs"];
+location_index = global.landed_on;
+location_type = global.landed_type;
+var npc_index = noone;
 
-for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
-    //instance_list(obj_sentient)[i].instance_destroy();
-        sentient = instance_find(obj_sentient,i);
-        var raceIndex = irandom( array_height_2d(global.races) - 1 );
+if(location_type=="station"){
+    location = global.stations[location_index];
+    npc_index = STATION_NPCS;
+}else if(location_type=="planet"){
+    location = global.planets[location_index];
+    npc_index = PLANET_NPCS;
+}else if(location_type=="moon"){
+    location = global.moons[location_index];
+    npc_index = MOON_NPCS;
+}
 
+
+
+npcs = location[npc_index];
+
+// Place NPCs at sentient positions.
+var s_count = instance_number(obj_sentient);
+for(var i = 0; i &lt; s_count; i++) {
+
+        var sentient = instance_find(obj_sentient,i);
+        if(i &lt; array_length_1d(npcs)){
+            var npc = global.npcs[npcs[i]];
+            var raceIndex = npc[NPC_RACE_INDEX];
+            sentient.sprite_index=global.races[raceIndex, RACE_SPR];
+            sentient.name = npc[NPC_NAME];
+            sentient.image_speed = 0;
+            sentient.race_index = raceIndex;
+        }
         
-        sentient.sprite_index=global.races[raceIndex, RACE_SPR];
-        sentient.name = "Joe Schmoe";
-        sentient.image_speed = 0;
-        sentient.race_index = raceIndex;
+}
 
+// Delete the unused sentients.
+s_count = instance_number(obj_sentient);
+for(var j = 0; j &lt; s_count; j++) {
+    var sentient2 = instance_find(obj_sentient,j);  
+    
+    if(sentient2!=noone &amp;&amp; sentient2.race_index == noone){
+        sentient2.sprite_index=spr_core;
+        with(sentient2){
+            //instance_destroy();
+        }
+        
+    }
 }
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="16">
+    <event eventtype="9" enumb="68">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -66,8 +97,8 @@ for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Restart the room
-room_restart();
+            <string>/// Debark
+room_goto(rm_space);
 </string>
           </argument>
         </arguments>
