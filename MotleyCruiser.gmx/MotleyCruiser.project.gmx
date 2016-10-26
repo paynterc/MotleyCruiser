@@ -40,6 +40,8 @@
       <sprite>sprites\spr_explosion</sprite>
       <sprite>sprites\spr_bar</sprite>
       <sprite>sprites\spr_shield</sprite>
+      <sprite>sprites\spr_ship_2</sprite>
+      <sprite>sprites\spr_ship_2_tmp</sprite>
     </sprites>
     <sprite>sprites\spr_planet</sprite>
     <sprite>sprites\spr_moon</sprite>
@@ -48,6 +50,23 @@
     <sprite>sprites\spr_portrait_wc</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
     <sprite>sprites\spr_station</sprite>
+    <sprite>sprites\spr_person</sprite>
+    <sprite>sprites\spr_person_tmp</sprite>
+    <sprites name="_ship_modules">
+      <sprite>sprites\spr_command</sprite>
+      <sprite>sprites\spr_thruster</sprite>
+      <sprite>sprites\spr_gun</sprite>
+      <sprites name="16">
+        <sprite>sprites\spr_command_16_1</sprite>
+        <sprite>sprites\spr_cargo_16_1</sprite>
+        <sprite>sprites\spr_thrust_16_1</sprite>
+        <sprite>sprites\spr_gun_16_48_1</sprite>
+        <sprite>sprites\spr_command_16_40_1</sprite>
+      </sprites>
+      <sprites name="24">
+        <sprite>sprites\spr_gun_24_64_2</sprite>
+      </sprites>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -59,7 +78,9 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <scripts name="_entities">
-      <script>scripts\scr_npc.gml</script>
+      <script>scripts\scr_ship.gml</script>
+      <script>scripts\scr_scaffolds.gml</script>
+      <script>scripts\scr_ship_module.gml</script>
     </scripts>
     <script>scripts\scr_move.gml</script>
     <script>scripts\scr_grid_place_meeting.gml</script>
@@ -69,6 +90,8 @@
     <script>scripts\scr_shoot.gml</script>
     <script>scripts\scr_push_array.gml</script>
     <script>scripts\scr_push_array_1d.gml</script>
+    <script>scripts\scr_update_array_1d.gml</script>
+    <script>scripts\scr_new_array.gml</script>
     <scripts name="dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
@@ -83,6 +106,7 @@
     </scripts>
     <scripts name="galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
+      <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_sun.gml</script>
       <script>scripts\scr_make_planet.gml</script>
       <script>scripts\scr_make_moon.gml</script>
@@ -90,10 +114,15 @@
       <script>scripts\scr_make_npc.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_move_to_sector.gml</script>
+      <script>scripts\scr_make_ship.gml</script>
     </scripts>
     <script>scripts\totro.gml</script>
     <script>scripts\totro_plus.gml</script>
     <script>scripts\scr_get_closest.gml</script>
+    <script>scripts\scr_assemble_ship.gml</script>
+    <script>scripts\scr_str_split.gml</script>
+    <script>scripts\scr_scaffold_grid.gml</script>
+    <script>scripts\scr_scaffold_offsets.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -105,8 +134,10 @@
   <objects name="objects">
     <objects name="_space_combat">
       <object>objects\obj_ship</object>
-      <object>objects\obj_space_level</object>
       <object>objects\obj_player_ship</object>
+      <object>objects\obj_player_ship_bu</object>
+      <object>objects\obj_npc_ship</object>
+      <object>objects\obj_space_level</object>
       <object>objects\obj_laser</object>
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_explosion</object>
@@ -136,6 +167,7 @@
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_game_control</object>
+    <object>objects\obj_module</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -143,7 +175,7 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
   </rooms>
-  <constants number="52">
+  <constants number="106">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -177,6 +209,7 @@
     <constant name="SUN_W1">2</constant>
     <constant name="SUN_COLOR">3</constant>
     <constant name="SUN_PLANETS">4</constant>
+    <constant name="SUN_SECTOR">5</constant>
     <constant name="PLANET_X1">0</constant>
     <constant name="PLANET_Y1">1</constant>
     <constant name="PLANET_W1">2</constant>
@@ -184,18 +217,71 @@
     <constant name="PLANET_MOONS">4</constant>
     <constant name="PLANET_SPRITE_INDEX">5</constant>
     <constant name="PLANET_NPCS">6</constant>
+    <constant name="PLANET_SECTOR">7</constant>
+    <constant name="PLANET_SUN">8</constant>
     <constant name="MOON_X1">0</constant>
     <constant name="MOON_Y1">1</constant>
     <constant name="MOON_W1">2</constant>
     <constant name="MOON_COLOR">3</constant>
     <constant name="MOON_SPRITE_INDEX">4</constant>
     <constant name="MOON_NPCS">5</constant>
+    <constant name="MOON_SECTOR">6</constant>
+    <constant name="MOON_PLANET">7</constant>
     <constant name="STATION_X1">0</constant>
     <constant name="STATION_Y1">1</constant>
     <constant name="STATION_W1">2</constant>
     <constant name="STATION_COLOR">3</constant>
     <constant name="STATION_SPRITE_INDEX">4</constant>
     <constant name="STATION_NPCS">5</constant>
+    <constant name="STATION_SECTOR">6</constant>
+    <constant name="SHIP_TURN_SPEED">0</constant>
+    <constant name="SHIP_MAX_SPEED">1</constant>
+    <constant name="SHIP_MAX_FWD">2</constant>
+    <constant name="SHIP_MAX_RVS">3</constant>
+    <constant name="SHIP_ACC_FWD">4</constant>
+    <constant name="SHIP_ACC_RVS">5</constant>
+    <constant name="SHIP_SHIELDS">6</constant>
+    <constant name="SHIP_SHIELDS_REGEN_SPD">7</constant>
+    <constant name="SHIP_SHIELDS_REGEN_PTS">8</constant>
+    <constant name="SHIP_HULL">9</constant>
+    <constant name="SHIP_ENERGY">10</constant>
+    <constant name="SHIP_ENERGY_REGEN_SPD">11</constant>
+    <constant name="SHIP_ENERGY_REGEN_PTS">12</constant>
+    <constant name="SHIP_WEAPON_SPD">13</constant>
+    <constant name="SHIP_X1">14</constant>
+    <constant name="SHIP_Y1">15</constant>
+    <constant name="SHIP_IMAGE_INDEX">16</constant>
+    <constant name="SHIP_SECTOR">17</constant>
+    <constant name="SHIP_NPCS">18</constant>
+    <constant name="SHIP_SPRITE_INDEX">19</constant>
+    <constant name="SHIP_MODULES">20</constant>
+    <constant name="SHIP_SCAFFOLD_INDEX">21</constant>
+    <constant name="FACTION_PLAYER">0</constant>
+    <constant name="FACTION_PIRATE">1</constant>
+    <constant name="FACTION_TRADER">2</constant>
+    <constant name="FACTION_EMPIRE">3</constant>
+    <constant name="FACTION_FEDERATION">4</constant>
+    <constant name="FACTION_BOUNTYHUNTER">5</constant>
+    <constant name="FACTION_REBEL">6</constant>
+    <constant name="DISPOSITION_NEUTRAL">0</constant>
+    <constant name="DISPOSITION_HOSTILE">1</constant>
+    <constant name="DISPOSITION_HELPFUL">2</constant>
+    <constant name="MODE_ATTACKING">0</constant>
+    <constant name="MODE_PATROLING">1</constant>
+    <constant name="MODE_FLEEING">2</constant>
+    <constant name="MODE_WAITING">3</constant>
+    <constant name="MODE_LANDING">4</constant>
+    <constant name="SCAFFOLD_ROWS">0</constant>
+    <constant name="SCAFFOLD_COLS">1</constant>
+    <constant name="SCAFFOLD_GRID">2</constant>
+    <constant name="SCAFFOLD_SCALE">3</constant>
+    <constant name="MODULE_TYPE">0</constant>
+    <constant name="MODULE_COORDS">1</constant>
+    <constant name="MODULE_OFFSETS">2</constant>
+    <constant name="MODULE_SPRITE_INDEX">3</constant>
+    <constant name="MODULE_XSCALE">4</constant>
+    <constant name="MODULE_YSCALE">5</constant>
+    <constant name="MODULE_COLOR">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

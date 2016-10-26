@@ -261,37 +261,6 @@ if(weapon != noone){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_team">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Move away from other crew
-if(x == other.x &amp;&amp; y == other.y){
-    scr_move(sign(other.id - id),0);
-}
-
-var dir = point_direction(other.x, other.y, x, y);
-var hspd = lengthdir_x(.5,dir);
-var vspd = lengthdir_y(.5,dir);
-scr_move(hspd, vspd);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="4" ename="obj_bullet_enemy">
       <action>
         <libid>1</libid>
@@ -324,6 +293,37 @@ scr_move(hspd, vspd);
           <argument>
             <kind>1</kind>
             <string>hp_current -= 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_team">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move away from other crew
+if(x == other.x &amp;&amp; y == other.y){
+    scr_move(sign(other.id - id),0);
+}
+
+var dir = point_direction(other.x, other.y, x, y);
+var hspd = lengthdir_x(.5,dir);
+var vspd = lengthdir_y(.5,dir);
+scr_move(hspd, vspd);
 </string>
           </argument>
         </arguments>

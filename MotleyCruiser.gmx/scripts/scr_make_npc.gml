@@ -15,6 +15,4 @@ map[NPC_RUN_SPD] =  max(global.min_spd, global.races[race_index,RACE_BASE_SPD] +
 map[NPC_HP] =  max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_modifier);
 map[NPC_HP_CURRENT] =  map[NPC_HP];
 
-var npc_index = scr_push_array_1d(global.npcs,map);
-
-return npc_index;
+return map;

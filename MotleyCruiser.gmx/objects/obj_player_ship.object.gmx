@@ -40,7 +40,28 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
-faction = 1;
+faction = FACTION_PLAYER;
+
+
+ship_data = scr_ship();
+modules = ship_data[SHIP_MODULES];
+
+scaffold = global.scaffolds[ship_data[SHIP_SCAFFOLD_INDEX]];
+var s = scaffold[SCAFFOLD_SCALE];
+var mag = scaffold[SCAFFOLD_ROWS];// Assume scaffolds are of equal height and width
+
+// Set offsets for each module according to their scaffold coordinates
+for(var m=0; m&lt;array_length_1d(modules); m++){
+    var module = modules[m];
+    var coords = module[MODULE_COORDS];
+    var r = coords[0];
+    var c = coords[1];
+    
+    var offsets = noone;
+    offsets = scr_scaffold_offsets(s,mag,r,c);   
+    module[MODULE_OFFSETS] = offsets;
+    modules[m]=module;    
+}
 </string>
           </argument>
         </arguments>
@@ -107,6 +128,43 @@ if( speed &gt; 0 ){
             <string>/// Center view on player
 view_xview[0]=x-(view_wview[0]/2);
 view_yview[0]=y-(view_hview[0]/2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check for key combo sector jump
+
+if(keyboard_check(vk_shift)){
+
+    if(keyboard_check_pressed(vk_up)){
+        scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);
+    }else if(keyboard_check_pressed(vk_down)){
+        scr_move_to_sector(global.current_sector_row + 1,global.current_sector_col);
+    }else if(keyboard_check_pressed(vk_left)){
+        scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
+    }else if(keyboard_check_pressed(vk_right)){
+        scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
+    }else{
+        // Do nothing
+    }
+
+}
 </string>
           </argument>
         </arguments>
@@ -237,7 +295,7 @@ image_angle += turn_spd;
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="87">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -254,59 +312,16 @@ image_angle += turn_spd;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Move up one sector
-scr_move_to_sector(global.current_sector_row-1,global.current_sector_col);
+            <string>/// Draw the modules
+for(var i=0; i&lt;array_length_1d(modules);i++){
+    var module=modules[i];
+    var offsets=module[MODULE_OFFSETS];
+    var d = offsets[0];
+    var a = offsets[1];
+    draw_sprite_ext(module[MODULE_SPRITE_INDEX],1,x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),module[MODULE_XSCALE],module[MODULE_YSCALE],image_angle,module[MODULE_COLOR],1);
+}
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="83">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Move down one sector
-/// Move up one sector
-scr_move_to_sector(global.current_sector_row+1,global.current_sector_col);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="70">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Move right one sector
-scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
 </string>
           </argument>
         </arguments>
@@ -343,30 +358,6 @@ if(closest_landable != noone){
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="65">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Move left one sector
-scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="10" enumb="32">
       <action>
         <libid>1</libid>
@@ -384,7 +375,8 @@ scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>shooting = false;
+            <string>/// Shoot
+shooting = false;
 </string>
           </argument>
         </arguments>

@@ -5,10 +5,24 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_ship</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -26,103 +40,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
-turn_spd = 2;
-max_spd = 5;
-max_spd_fwd = 5;
-max_spd_rvs = 3;
-acc_spd = 0.2;//acceleration speed
-accelleration = 0;
-
-shields = 100;
-shields_current = shields;
-
-hull = 50;
-hull_current = hull;
-
-energy = 500;
-energy_current = energy;
-energy_regen_speed = 1;//frequency of energy regen ticks.
-energy_regen_points = 5;//energy regenerated on each tick.
-
-weapon_speed = 0.2;//multiplied by 1 second or room_speed
-shooting = false;
-
-
-
-alarm[0] = room_speed * weapon_speed;
-alarm[1] = room_speed * energy_regen_speed;
-
-shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Regen some energy
-energy_current += energy_regen_points;
-if(energy_current&gt;energy){
-    energy_current = energy;
-}
-if(energy_current&lt;0){
-    energy_current = 0;
-}
-alarm[1] = room_speed * energy_regen_speed;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Shoot a bullet
-if(shooting &amp;&amp; energy_current&gt;0){
-bullet = instance_create(x,y,obj_laser);
-bullet.type=1;
-bullet.depth = -200;
-bullet.direction = image_angle;
-bullet.image_angle = image_angle;
-bullet.speed = 20;
-audio_play_sound(snd_pulse1,1,false);
-energy_current -= 2;
-if(energy_current &lt; 0){
-    energy_current = 0;
-}
-
-}
-
-alarm[0] = room_speed * weapon_speed;
+faction = FACTION_PLAYER;
 </string>
           </argument>
         </arguments>
@@ -131,6 +49,20 @@ alarm[0] = room_speed * weapon_speed;
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -145,13 +77,13 @@ alarm[0] = room_speed * weapon_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Auto deceleration
-//Step events are fired every frame.
-//max() chooses the largest of all the comma-separated values.
+            <string>/// Position audio listener
+if( speed &gt; 0 ){
+   audio_listener_position(x, y, 500);
+}
 
 
 
-speed = max(speed - 0.01, 0);
 </string>
           </argument>
         </arguments>
@@ -172,27 +104,13 @@ speed = max(speed - 0.01, 0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Bullet collision
-//var hit_bullet = collision_ellipse( sprite_get_bbox_left(sprite_index), sprite_get_bbox_top(sprite_index), sprite_get_bbox_right(sprite_index), sprite_get_bbox_bottom(sprite_index), obj_damager, false, true );
-
-//if(hit_bullet != noone){
-    //if(shields&gt;0){
-        //shields -= (hit_bullet).damage;
-    //}else if(hull&gt;0){
-        //hull -= (hit_bullet).damage;
-    //}else{
-        //instance_destroy();
-    //}
-    //with(hit_bullet){
-        //instance_destroy();
-    //}
-//}
+            <string>/// Center view on player
+view_xview[0]=x-(view_wview[0]/2);
+view_yview[0]=y-(view_hview[0]/2);
 </string>
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_damager">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -209,49 +127,23 @@ speed = max(speed - 0.01, 0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(other.type==2){
-if(shields_current&gt;0){
-    shields_current -= other.damage;
-}else if(hull_current&gt;0){
-    hull_current -= other.damage;
-}else{
-    instance_create(x,y,obj_explosion);
-    instance_deactivate_object(self);
-}
-with(other){  
-    instance_destroy();
-}
-}
+            <string>/// Check for key combo sector jump
 
+if(keyboard_check(vk_shift)){
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_enemy_ship">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Bounce
-var pdir;
-pdir = point_direction(other.x, other.y, x, y);
-motion_add(pdir, other.speed);
-if speed &gt; 5 speed = 5;
+    if(keyboard_check_pressed(vk_up)){
+        scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);
+    }else if(keyboard_check_pressed(vk_down)){
+        scr_move_to_sector(global.current_sector_row + 1,global.current_sector_col);
+    }else if(keyboard_check_pressed(vk_left)){
+        scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
+    }else if(keyboard_check_pressed(vk_right)){
+        scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
+    }else{
+        // Do nothing
+    }
 
+}
 </string>
           </argument>
         </arguments>
@@ -275,7 +167,7 @@ if speed &gt; 5 speed = 5;
           <argument>
             <kind>1</kind>
             <string>/// Thrust
-motion_add(image_angle,acc_spd *-1);
+motion_add(image_angle,acc_spd_rvs *-1);
 if(speed &gt; max_spd_rvs){
     speed = max_spd_rvs;//clamp
 }
@@ -326,7 +218,7 @@ image_angle -= turn_spd;
           <argument>
             <kind>1</kind>
             <string>/// Thrust
-motion_add(image_angle,acc_spd);
+motion_add(image_angle,acc_spd_fwd);
 if(speed &gt; max_spd_fwd){
     speed = max_spd_fwd;//clamp
 }
@@ -382,29 +274,7 @@ image_angle += turn_spd;
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>112</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_wrap</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>4</kind>
-            <string>2</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="9" enumb="68">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -421,9 +291,15 @@ image_angle += turn_spd;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw shields
-draw_self()
-draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle, c_aqua, shields_current/shields );
+            <string>/// Dock
+/// Dock
+var closest_landable = scr_get_closest(obj_landable,self,1000);
+if(closest_landable != noone){
+    global.landed_on = closest_landable.global_index;
+    global.landed_type = closest_landable.global_type;
+    
+    room_goto(rm_cantina1);
+}
 </string>
           </argument>
         </arguments>
@@ -446,7 +322,8 @@ draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle,
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>shooting = false;
+            <string>/// Shoot
+shooting = false;
 </string>
           </argument>
         </arguments>

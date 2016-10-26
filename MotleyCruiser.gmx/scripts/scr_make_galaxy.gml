@@ -1,4 +1,5 @@
 /// Create a 2d array of the galaxy
+/**
 var galaxy = 0;
 galaxy[0,0]=-1;
 
@@ -50,3 +51,4 @@ for(row=0; row < gwidth; row++){
 }
 
 return galaxy;
+**/

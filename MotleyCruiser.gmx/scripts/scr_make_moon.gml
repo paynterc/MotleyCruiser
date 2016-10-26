@@ -1,6 +1,9 @@
 /// Create a dsmap with attributes
 var map = noone;
-map[4]=0;
+
+var sector = noone;
+sector[0]=argument0;
+sector[1]=argument1;
 
 var x1=0;
 var y1=0;
@@ -18,16 +21,8 @@ map[MOON_Y1]=y1;
 map[MOON_W1]=w1;
 map[MOON_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
 map[MOON_SPRITE_INDEX]=floor(random(sprite_get_number(spr_moon)));
+map[MOON_SECTOR]=sector;
+map[MOON_NPCS] = noone;
+map[MOON_PLANET]=noone;
 
-var npcs = noone; // An array full of random NPCs
-var npc_count = irandom_range(global.min_station_npc, global.max_station_npc);
-
-for(var i=0; i < npc_count; i++){
-   npcs[i]=scr_make_npc();
-}
-map[MOON_NPCS] = npcs;
-
-
-var moon_index = scr_push_array_1d(global.moons,map);
-
-return moon_index;
+return map;

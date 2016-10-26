@@ -227,7 +227,7 @@ draw_text(view_xview[0]+10, view_yview[0]+( ls * 8), "EHull: "+string(obj_enemy_
 draw_text(view_xview[0]+10, view_yview[0]+( ls * 9), "EEnergy: "+string(obj_enemy_ship.energy_current));
 
 }
-draw_text(view_xview[0]+10, view_yview[0]+( ls * 10), "NPC Count: "+string(npc_count));
+draw_text(view_xview[0]+10, view_yview[0]+( ls * 10), "NPC Count: "+string(instance_number(obj_npc_ship)));
 </string>
           </argument>
         </arguments>

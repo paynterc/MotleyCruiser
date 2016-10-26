@@ -99,14 +99,23 @@ for(var i = 0; i < array_length_1d(stations); i++){
     
     
 }
-/**
+
 var max_ships = 5;
 var min_ships = 1;
 var num_ships = irandom_range(min_ships,max_ships);
 for(var i=1; i<=num_ships; i++){
-    var ship_obj = instance_create(irandom(global.sector_width),irandom(global.sector_width),obj_enemy_ship);
-    with(ship_obj){
-        image_index = floor( random( sprite_get_number(spr_ship_en) ) );
+    var ship_map = scr_make_ship(g_row,g_col);
+    var ship_obj = instance_create(100,100,obj_npc_ship);
+    with(ship_obj){  
+        x = ship_map[SHIP_X1];
+        y = ship_map[SHIP_Y1];
+        
+        sprite_index = ship_map[SHIP_SPRITE_INDEX];
+        image_index = ship_map[SHIP_IMAGE_INDEX];
+        shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
+        faction = FACTION_PIRATE;
+        disposition = DISPOSITION_HOSTILE;
+        
     } 
 }
-**/
+
