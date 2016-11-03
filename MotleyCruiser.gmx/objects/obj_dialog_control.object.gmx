@@ -31,10 +31,16 @@
 global.gui_mouse_x = (mouse_x - view_xview[view_current]) * global.display_scale;
 global.gui_mouse_y = (mouse_y - view_yview[view_current]) * global.display_scale;
 
+show_dialog = false;
+
 closest_sentient = noone;
 staged_tree = noone;
 staged_branch = noone;
 staged_buttons = noone; //This will be an array containing the coordinates for buttons
+player_has_mission = false; // Set this to true if his npc has granted the player a mission
+npc_is_mission_target = false;
+staged_objectives = noone; //Hold all the objectives that pertain to this npc
+ready_complete_mission = false;
 
 depth=-100000000;
 
@@ -75,10 +81,8 @@ draw_message = false;
             <string>/// Hide box if player moves
 if(instance_exists(obj_player)){
     if(obj_player.hspd!=0 || obj_player.vspd!=0){
-        closest_sentient = noone;
-        staged_tree = noone;
-        staged_branch = noone;
-        staged_buttons = noone;
+        show_dialog = false;
+        scr_reset_dialog();       
     }
 }
 </string>
@@ -160,15 +164,16 @@ if(staged_buttons != noone){
                         if(link != noone &amp;&amp; array_length_1d(staged_tree)&gt;link){
                             //Look to see if the next step is a job off. Make sure we haven't already accepted.
                             next_branch = staged_tree[link];
-                            if(next_branch[D_BRANCH_TYPE]=="job" &amp;&amp; closest_sentient.mission &amp;&amp; scr_has_mission(closest_sentient.mission)){
+                            if(next_branch[D_BRANCH_TYPE]=="job" &amp;&amp; closest_sentient.mission != noone &amp;&amp; scr_has_mission(closest_sentient.mission)){
                                  staged_branch = scr_make_dialogue_branch("Have you finished that job yet?","exposition");
                                  scr_add_dialogue_button(staged_branch,"Nope.","step_to",0);
+                                 
                             }else{
                                 // Move on to the next branch normally.
                                 staged_branch = staged_tree[link];
                             }
 
-                            staged_buttons = noone;
+                            staged_buttons = noone; // CLEAR CURRENT BUTTONS FOR THE NEXT BRANCH
                         }else{
                             staged_branch = scr_make_dialogue_branch("I have no idea how to respond to that.","exposition");
                             scr_add_dialogue_button(staged_branch,"Sorry.","step_to",0);
@@ -177,19 +182,39 @@ if(staged_buttons != noone){
                         break;
                     case "accept_mission":
                         if( !scr_has_mission(closest_sentient.mission) ){
-                            global.missions = scr_push_array(global.missions,closest_sentient.mission);
+                            //global.missions = scr_push_array(global.missions,closest_sentient.mission);
+                            scr_accept_mission(closest_sentient.mission);
                         }
+                        scr_delete_button(staged_tree[0],i);
                         staged_branch = staged_tree[0];
                         staged_buttons = noone;
+                        
                         break;
+                    case "complete_objective":
+                        
+                        if(clicked_button[D_BUTTON_RECORD]!=noone){
+                            var complete = scr_complete_objective(clicked_button[D_BUTTON_RECORD],closest_sentient.global_index,"npc");
+                            if(complete){
+                                staged_branch = scr_make_dialogue_branch("Thank you.","exposition");
+                                scr_add_dialogue_button(staged_branch,"You are most welcome.","step_to",0);
+                                scr_delete_button(staged_tree[0],i);
+                            }else{
+                                staged_branch = scr_make_dialogue_branch("You have not done what was asked of you.","exposition");
+                                scr_add_dialogue_button(staged_branch,"Oops.","step_to",0);
+                            }
+                            staged_buttons = noone;
+                        }
+                        
+                        break;
+                        
+                        
                     case "intro":
                         staged_branch = staged_tree[0];
                         staged_buttons = noone;
                         break;
                     case "exit":
-                        staged_buttons = noone;
-                        staged_branch = noone;
-                        staged_tree = noone; 
+                        show_dialog = false;
+                        scr_reset_dialog();
                         break;
                     default:
                         staged_branch = scr_make_dialogue_branch("I don't feel like talking now.","exposition");
@@ -224,7 +249,7 @@ if(staged_buttons != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(staged_branch!=noone &amp;&amp; closest_sentient.name != noone){
+            <string>if(show_dialog &amp;&amp; staged_branch!=noone &amp;&amp; closest_sentient.name != noone){
     
     draw_set_font(font);
     draw_set_color(font_color);
@@ -240,6 +265,7 @@ if(staged_buttons != noone){
         var button_h = 0;
         for(var i = 0; i &lt; array_length_1d(thebuttons); i++){
             thisbutton = thebuttons[i];
+            
             button_w = round( string_width( thisbutton[D_BUTTON_TEXT] ) * text_scale );
             button_h = round( string_height( thisbutton[D_BUTTON_TEXT] ) * text_scale );           
             // Store the coordinates and state of the button. x, y, width, height, hover
@@ -282,37 +308,64 @@ if(staged_buttons != noone){
             <kind>1</kind>
             <string>/// Open dialog box if player in range
 
+show_dialog = !show_dialog;
+scr_reset_dialog();
 var this_sentient = noone;
 var closest_range = 0;
 var this_range = 0;
-for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
-    this_sentient = instance_find(obj_sentient,i);
-    this_range = point_distance(obj_player.x,obj_player.y,this_sentient.x,this_sentient.y);
-    if(this_range&lt;50){
-        if(closest_sentient==noone){
-            closest_sentient = this_sentient;
-            closest_range = this_range;
-        }else if(this_range&lt;closest_range){
-            closest_sentient = this_sentient;
-            closest_range = this_range;
+staged_buttons = noone;
+
+if(show_dialog){
+
+    for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
+        this_sentient = instance_find(obj_sentient,i);
+        this_range = point_distance(obj_player.x,obj_player.y,this_sentient.x,this_sentient.y);
+        if(this_range&lt;50){
+            if(closest_sentient==noone){
+                closest_sentient = this_sentient;
+                closest_range = this_range;
+            }else if(this_range&lt;closest_range){
+                closest_sentient = this_sentient;
+                closest_range = this_range;
+            }
         }
     }
-}
-
-if(closest_sentient != noone &amp;&amp; closest_sentient.name != noone){
     
-    //var check_mission = noone;
-    //var has_mission = scr_check_mission(closest_sentient.mission);
+    if(closest_sentient != noone &amp;&amp; closest_sentient.name != noone){
+          
+        staged_tree = closest_sentient.dialogue;
+        staged_branch = staged_tree[0];    
+        
+        if(scr_has_mission(closest_sentient.mission)){
 
-    staged_tree = closest_sentient.dialogue;
-    staged_branch = staged_tree[0];
-    
-    if(closest_sentient.mission &amp;&amp; scr_has_mission(closest_sentient.mission)){
-        scr_add_dialogue_button(staged_branch,"I did that job for you.","complete_mission",noone);
+            player_has_mission = true;
+            
+        }
+        
+         
+        staged_objectives = scr_get_entity_objectives("npc",closest_sentient.global_index);// npc must be target of an ACTIVE objective
+        
+        if(staged_objectives != noone){
+
+            for(var ob = 0; ob&lt;array_length_1d(staged_objectives); ob++){
+                objv=staged_objectives[ob];
+                var button = scr_make_dialogue_button("I have business with you (mission id: "+ string(objv[OBJECTIVE_MISSION_ID])+").","complete_objective",0,noone,objv[OBJECTIVE_ID]);
+                
+                staged_branch[D_BRANCH_BUTTONS]= scr_push_dialogue_button(staged_branch[D_BRANCH_BUTTONS],button);
+                staged_tree[0]=staged_branch;
+            }
+            
+        }
+                
+
+   
     }
-    
-       
+
+
 }
+
+
+
 </string>
           </argument>
         </arguments>

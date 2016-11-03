@@ -31,7 +31,7 @@ var text_plus = text + "#";
 if(buttons != noone){
     for(var i = 0; i < array_length_1d(buttons); i++){
         thisbutton = buttons[i];
-        text_plus = text_plus + "#" + thisbutton[? "text"];
+        text_plus = text_plus + "#" + thisbutton[D_BUTTON_TEXT];
     } 
 }
 

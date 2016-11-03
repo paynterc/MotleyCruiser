@@ -11,5 +11,6 @@ module[MODULE_SPRITE_INDEX] = noone;
 module[MODULE_XSCALE]=1;
 module[MODULE_YSCALE]=1;
 module[MODULE_COLOR]=c_white;
-
+module[MODULE_GUN_OFFSETS]=noone;
+module[MODULE_DATA]=noone;
 return module;

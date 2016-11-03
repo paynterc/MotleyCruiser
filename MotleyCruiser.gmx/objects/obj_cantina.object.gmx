@@ -48,6 +48,7 @@ npcs = location[npc_index];
 
 // Place NPCs at sentient positions.
 var s_count = instance_number(obj_sentient);
+var last_id = noone;
 for(var i = 0; i &lt; s_count; i++) {
 
         var sentient = instance_find(obj_sentient,i);
@@ -59,6 +60,35 @@ for(var i = 0; i &lt; s_count; i++) {
             sentient.image_speed = 0;
             sentient.race_index = raceIndex;
             sentient.active = 1;//Set to active so the placeholder object won't delete itself. See obj_sentient.
+            sentient.global_index = npcs[i];
+            
+            if(i &gt; 0){
+                
+
+                if(npc[NPC_MISSION]==noone){
+                    mission_target = npcs[i-1];
+                    var mission = scr_generate_mission(mission_target, npcs[i]);
+                    sentient.mission=mission;
+                    npc[NPC_MISSION]=mission;
+                    global.npcs[npcs[i]]=npc;
+                }else{
+                    sentient.mission=npc[NPC_MISSION];
+                }
+                
+                with(sentient){
+                    dialogue = scr_make_dialogue_tree();
+                }
+
+
+            }else{
+                with(sentient){
+                    sentient.dialogue = scr_make_dialogue_tree();
+                }
+                     
+            }
+            
+            
+
         }
         
 }

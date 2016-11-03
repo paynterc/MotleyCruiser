@@ -12,90 +12,6 @@
   <showcolour>-1</showcolour>
   <code>randomize();
 
-// Baseline npc settings.
-global.min_spd = 1; //minimum run speed for npc
-global.min_hp = 10; //minimum hp for npc
-
-global.min_station_npc = 3; //minimum npcs per station
-global.max_station_npc = 10; //max npcs per station
-
-// Basesline ship settings
-global.ship_min_turn_spd=1;
-global.ship_max_turn_spd=10;
-global.ship_min_spd=1;
-global.ship_max_spd=10;
-global.ship_min_acc=0.1;
-global.ship_max_acc=1;
-global.ship_min_shields=0;
-global.ship_max_shields=200;
-global.ship_min_hull=10;
-global.ship_max_hull=100;
-global.ship_min_energy = 100;
-global.ship_max_energy = 1000;
-global.ship_min_weapon_spd = 3;
-global.ship_max_weapon_spd = 0.1;
-
-
-// RACES
-
-global.races = noone;
-
-global.races[0,RACE_NAME] = "Human";
-global.races[0,RACE_BASE_HP] = 10;
-global.races[0,RACE_BASE_SPD] = 2;
-global.races[0,RACE_SPR] = spr_captain3;
-
-global.races[1,RACE_NAME] = "Warchicken";
-global.races[1,RACE_BASE_HP] = 20;
-global.races[1,RACE_BASE_SPD] = 3;
-global.races[1,RACE_SPR] = spr_warchicken;
-
-global.races[2,RACE_NAME] = "Hurgan";
-global.races[2,RACE_BASE_HP] = 30;
-global.races[2,RACE_BASE_SPD] = 1;
-global.races[2,RACE_SPR] = spr_hurgan2; 
-
-global.races[3,RACE_NAME] = "Flowridian";
-global.races[3,RACE_BASE_HP] = 15;
-global.races[3,RACE_BASE_SPD] = 3;
-global.races[3,RACE_SPR] = spr_flowridian;
-
-
-
-// PLAYER MISSIONS: An array of ds_maps for missions
-global.mission_id = date_current_datetime(); //A number to start mission ids with. Increment this with each mission granted.
-global.missions = noone;
-
-global.box_height = 100;
-
-global.sector_width = 10000;//width in pixels of space combat room
-
-global.room_type="map";//default. can be map or wall
-
-//Scaffolds
-global.scaffolds = scr_scaffolds();
-
-
-// Make a galaxy
-global.galaxy_width = 20;
-
-global.suns[0] = -1;
-global.planets[0] = -1;
-global.moons[0] = -1;
-global.stations[0] = -1;
-global.ships[0] = -1;
-global.npcs[0] = -1;
-global.landed_on = noone;
-global.landed_type = noone;
-global.current_sector_row = 10;
-global.current_sector_col = 10;
-
-global.galaxy = scr_make_galaxy_NEW();
-
-
-// CREW: An array of arrays for crew
-// This creates a random crew at game start. In later version, the player will aquire crew.
-global.crew = noone;
 
 /**
 for(var i=0;i&lt;=3;i++){
@@ -147,6 +63,7 @@ room_goto(rm_space);</code>
   </views>
   <instances>
     <instance objName="obj_game_control" x="32" y="32" name="inst_243AEEBF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_inventory" x="64" y="32" name="inst_D23EA22D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

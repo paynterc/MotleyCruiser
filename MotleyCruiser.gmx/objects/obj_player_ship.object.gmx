@@ -47,6 +47,8 @@ ship_data = scr_ship();
 modules = ship_data[SHIP_MODULES];
 
 scaffold = global.scaffolds[ship_data[SHIP_SCAFFOLD_INDEX]];
+guns = noone;
+
 var s = scaffold[SCAFFOLD_SCALE];
 var mag = scaffold[SCAFFOLD_ROWS];// Assume scaffolds are of equal height and width
 
@@ -58,10 +60,88 @@ for(var m=0; m&lt;array_length_1d(modules); m++){
     var c = coords[1];
     
     var offsets = noone;
-    offsets = scr_scaffold_offsets(s,mag,r,c);   
+    var gunoffsets = noone;
+    
+    offsets = scr_scaffold_offsets(s,mag,r,c,0);   
     module[MODULE_OFFSETS] = offsets;
-    modules[m]=module;    
+    
+    var guntrack=noone;
+    guntrack[0]=0;//timer
+    guntrack[1]=noone;//module index
+    if(module[MODULE_TYPE]=="gun"){
+        gunoffsets = scr_scaffold_offsets(s,mag,r,c,sprite_get_width(module[MODULE_SPRITE_INDEX])/2);
+        guntrack[1] = m;
+        guns = scr_push_array(guns,guntrack);
+        module[MODULE_GUN_OFFSETS]=gunoffsets;
+    }
+    modules[m]=module;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Shoot a bullet
+if(shooting &amp;&amp; energy_current&gt;0){
+    
+    for(var g=0; g&lt;array_length_1d(guns);g++){
+        var guntrack = guns[g];
+        
+        if(current_time&gt;guntrack[0]){
+            var gmod = modules[guntrack[1]];
+            var offsets = gmod[MODULE_GUN_OFFSETS];
+            var gundata = gmod[MODULE_DATA];
+            var d = offsets[0];
+            var a = offsets[1];
+        
+            bullet = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_laser);
+            bullet.type=faction;
+            bullet.sprite_index = gundata[GUN_SPRITE];
+            bullet.depth = -200;
+            bullet.direction = image_angle;
+            bullet.image_angle = image_angle;
+            bullet.speed = 10;
+            bullet.damage = gundata[GUN_DAMAGE];
+
+            
+            //audio_play_sound(snd_pulse1,1,false);
+            
+            energy_current -= 2;
+            if(energy_current &lt; 0){
+                energy_current = 0;
+            }
+            
+            guntrack[0]=current_time + (room_speed * gundata[GUN_SPEED]);
+            guns[g]=guntrack;
+            
+            audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+        }
+        
+    }
+    
+    
+    
+
+}
+
+alarm[0] = room_speed * weapon_speed;
 </string>
           </argument>
         </arguments>

@@ -5,6 +5,7 @@
   </Configs>
   <NewExtensions>
     <extension index="0">extensions\Totro - Random Name Generator</extension>
+    <extension index="1">extensions\Hule Inventory System</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Weapons">
@@ -37,6 +38,7 @@
       <sprite>sprites\spr_ship_en</sprite>
       <sprite>sprites\spr_stars</sprite>
       <sprite>sprites\spr_laser</sprite>
+      <sprite>sprites\spr_bolt</sprite>
       <sprite>sprites\spr_explosion</sprite>
       <sprite>sprites\spr_bar</sprite>
       <sprite>sprites\spr_shield</sprite>
@@ -58,13 +60,77 @@
       <sprite>sprites\spr_gun</sprite>
       <sprites name="16">
         <sprite>sprites\spr_command_16_1</sprite>
+        <sprite>sprites\spr_command_16_2</sprite>
         <sprite>sprites\spr_cargo_16_1</sprite>
         <sprite>sprites\spr_thrust_16_1</sprite>
+        <sprite>sprites\spr_thrust_16_2</sprite>
+        <sprite>sprites\spr_thrust_16_3</sprite>
         <sprite>sprites\spr_gun_16_48_1</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
       </sprites>
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
+      </sprites>
+    </sprites>
+    <sprites name="HuleInventorySprites">
+      <sprites name="HuleInventoryGUI">
+        <sprite>sprites\spr_slot</sprite>
+        <sprite>sprites\spr_background</sprite>
+      </sprites>
+      <sprites name="HuleInventoryItem">
+        <sprite>sprites\spr_ItemIcon_Default</sprite>
+        <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
+        <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
+        <sprite>sprites\spr_ItemIcon_BigDefPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_BigHealPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_BigManaPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_BigRegPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Bone</sprite>
+        <sprite>sprites\spr_ItemIcon_Bottle</sprite>
+        <sprite>sprites\spr_ItemIcon_Bottle2</sprite>
+        <sprite>sprites\spr_ItemIcon_Claw</sprite>
+        <sprite>sprites\spr_ItemIcon_Coal</sprite>
+        <sprite>sprites\spr_ItemIcon_Copper</sprite>
+        <sprite>sprites\spr_ItemIcon_CrystalGoldStone</sprite>
+        <sprite>sprites\spr_ItemIcon_CutWood</sprite>
+        <sprite>sprites\spr_ItemIcon_DefPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Diamant</sprite>
+        <sprite>sprites\spr_ItemIcon_EmptyBucket</sprite>
+        <sprite>sprites\spr_ItemIcon_EmptyIronBucket</sprite>
+        <sprite>sprites\spr_ItemIcon_Feather</sprite>
+        <sprite>sprites\spr_ItemIcon_Glas</sprite>
+        <sprite>sprites\spr_ItemIcon_Gold</sprite>
+        <sprite>sprites\spr_ItemIcon_HealPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Iron</sprite>
+        <sprite>sprites\spr_ItemIcon_LavaIronBucket</sprite>
+        <sprite>sprites\spr_ItemIcon_Leaf</sprite>
+        <sprite>sprites\spr_ItemIcon_Leather</sprite>
+        <sprite>sprites\spr_ItemIcon_LegMeat</sprite>
+        <sprite>sprites\spr_ItemIcon_LegMeatCooked</sprite>
+        <sprite>sprites\spr_ItemIcon_ManaPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Meat</sprite>
+        <sprite>sprites\spr_ItemIcon_MeatCooked</sprite>
+        <sprite>sprites\spr_ItemIcon_Oil</sprite>
+        <sprite>sprites\spr_ItemIcon_OreCopper</sprite>
+        <sprite>sprites\spr_ItemIcon_OreDiamant</sprite>
+        <sprite>sprites\spr_ItemIcon_OreGold</sprite>
+        <sprite>sprites\spr_ItemIcon_OreIron</sprite>
+        <sprite>sprites\spr_ItemIcon_OreSand</sprite>
+        <sprite>sprites\spr_ItemIcon_OreStone</sprite>
+        <sprite>sprites\spr_ItemIcon_RawWood</sprite>
+        <sprite>sprites\spr_ItemIcon_RegPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Sand</sprite>
+        <sprite>sprites\spr_ItemIcon_Slime</sprite>
+        <sprite>sprites\spr_ItemIcon_SmallBottle</sprite>
+        <sprite>sprites\spr_ItemIcon_SmallHealPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_SmallManaPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_SoulDust</sprite>
+        <sprite>sprites\spr_ItemIcon_Sticky</sprite>
+        <sprite>sprites\spr_ItemIcon_Stone</sprite>
+        <sprite>sprites\spr_ItemIcon_WaterBucket</sprite>
+        <sprite>sprites\spr_ItemIcon_XPTrank</sprite>
       </sprites>
     </sprites>
   </sprites>
@@ -77,10 +143,18 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <scripts name="_libraries">
+      <script>scripts\scr_guns.gml</script>
+      <script>scripts\scr_scaffolds.gml</script>
+      <script>scripts\scr_races.gml</script>
+    </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
-      <script>scripts\scr_scaffolds.gml</script>
       <script>scripts\scr_ship_module.gml</script>
+      <script>scripts\scr_gun.gml</script>
+      <script>scripts\scr_mission.gml</script>
+      <script>scripts\scr_mission_objective.gml</script>
+      <script>scripts\scr_dialogue_button.gml</script>
     </scripts>
     <script>scripts\scr_move.gml</script>
     <script>scripts\scr_grid_place_meeting.gml</script>
@@ -96,13 +170,28 @@
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
       <script>scripts\scr_add_dialogue_button.gml</script>
+      <script>scripts\scr_push_dialogue_button.gml</script>
       <script>scripts\scr_draw_messagebox_plus.gml</script>
       <script>scripts\scr_draw_button.gml</script>
       <script>scripts\scr_draw_messagebox_OLD.gml</script>
+      <script>scripts\scr_reset_dialog.gml</script>
+      <script>scripts\scr_make_dialogue_button.gml</script>
+      <script>scripts\scr_delete_button.gml</script>
     </scripts>
     <scripts name="mission">
       <script>scripts\scr_make_mission.gml</script>
+      <script>scripts\scr_generate_mission.gml</script>
       <script>scripts\scr_has_mission.gml</script>
+      <script>scripts\scr_accept_mission.gml</script>
+      <script>scripts\scr_is_mission_target.gml</script>
+      <script>scripts\scr_get_entity_objectives.gml</script>
+      <script>scripts\scr_complete_objective.gml</script>
+      <script>scripts\scr_complete_mission.gml</script>
+      <script>scripts\scr_find_objective.gml</script>
+      <script>scripts\scr_find_mission.gml</script>
+      <script>scripts\scr_get_objective_index.gml</script>
+      <script>scripts\scr_get_next_objective.gml</script>
+      <script>scripts\scr_grant_reward.gml</script>
     </scripts>
     <scripts name="galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
@@ -115,6 +204,8 @@
       <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_move_to_sector.gml</script>
       <script>scripts\scr_make_ship.gml</script>
+      <script>scripts\scr_test_dsmap.gml</script>
+      <script>scripts\scr_get_location.gml</script>
     </scripts>
     <script>scripts\totro.gml</script>
     <script>scripts\totro_plus.gml</script>
@@ -123,6 +214,48 @@
     <script>scripts\scr_str_split.gml</script>
     <script>scripts\scr_scaffold_grid.gml</script>
     <script>scripts\scr_scaffold_offsets.gml</script>
+    <scripts name="HuleInventoryScript">
+      <scripts name="Inventory">
+        <scripts name="Inventory System">
+          <script>scripts\inventory_int.gml</script>
+          <script>scripts\inventory_draw.gml</script>
+          <script>scripts\inventory_draw_BACKUP.gml</script>
+          <script>scripts\inventory_clear.gml</script>
+          <script>scripts\inventory_load.gml</script>
+          <script>scripts\inventory_save.gml</script>
+          <script>scripts\inventory_read.gml</script>
+          <script>scripts\inventory_select.gml</script>
+          <script>scripts\inventory_sort.gml</script>
+          <script>scripts\inventory_delete_item.gml</script>
+          <script>scripts\inventory_write.gml</script>
+          <script>scripts\inventory_last_select.gml</script>
+        </scripts>
+        <scripts name="Inventory Item Command">
+          <script>scripts\inventory_item_add.gml</script>
+          <script>scripts\inventory_item_clear.gml</script>
+          <script>scripts\inventory_item_delete.gml</script>
+          <script>scripts\inventory_item_drop.gml</script>
+          <script>scripts\inventory_item_exchange.gml</script>
+          <script>scripts\inventory_item_find.gml</script>
+          <script>scripts\inventory_item_use.gml</script>
+        </scripts>
+      </scripts>
+      <scripts name="Item - ADDING">
+        <scripts name="EDITING ITEMS HERE!">
+          <script>scripts\item_int.gml</script>
+          <scripts name="Item Command">
+            <script>scripts\item_add.gml</script>
+            <script>scripts\item_id_read.gml</script>
+          </scripts>
+        </scripts>
+      </scripts>
+      <scripts name="Some usefully script">
+        <script>scripts\draw_panel.gml</script>
+        <script>scripts\draw_shadow.gml</script>
+      </scripts>
+    </scripts>
+    <script>scripts\scr_example_leaf.gml</script>
+    <script>scripts\scr_script_parse.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -168,6 +301,10 @@
     <object>objects\obj_button_basic</object>
     <object>objects\obj_game_control</object>
     <object>objects\obj_module</object>
+    <objects name="_inventory">
+      <object>objects\obj_drop</object>
+      <object>objects\obj_inventory</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -175,7 +312,7 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
   </rooms>
-  <constants number="106">
+  <constants number="140">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -192,12 +329,15 @@
     <constant name="NPC_HP_CURRENT">4</constant>
     <constant name="NPC_NAME_FIRST">5</constant>
     <constant name="NPC_NAME_LAST">6</constant>
+    <constant name="NPC_MISSION">7</constant>
     <constant name="D_BRANCH_TEXT">0</constant>
     <constant name="D_BRANCH_TYPE">1</constant>
     <constant name="D_BRANCH_BUTTONS">2</constant>
     <constant name="D_BUTTON_TEXT">0</constant>
     <constant name="D_BUTTON_ACTION">1</constant>
     <constant name="D_BUTTON_LINKINDEX">2</constant>
+    <constant name="D_BUTTON_SCRIPT">3</constant>
+    <constant name="D_BUTTON_RECORD">4</constant>
     <constant name="SECTOR_SUNS">0</constant>
     <constant name="SECTOR_PLANETS">1</constant>
     <constant name="SECTOR_MOONS">2</constant>
@@ -282,6 +422,37 @@
     <constant name="MODULE_XSCALE">4</constant>
     <constant name="MODULE_YSCALE">5</constant>
     <constant name="MODULE_COLOR">6</constant>
+    <constant name="MODULE_GUN_OFFSETS">7</constant>
+    <constant name="MODULE_DATA">8</constant>
+    <constant name="GUN_DAMAGE">0</constant>
+    <constant name="GUN_SPEED">1</constant>
+    <constant name="GUN_SPRITE">2</constant>
+    <constant name="GUN_BULLET_SPRITE">3</constant>
+    <constant name="MISSION_ID">0</constant>
+    <constant name="MISSION_NAME">1</constant>
+    <constant name="MISSION_DESCRIP">2</constant>
+    <constant name="MISSION_TYPE">3</constant>
+    <constant name="MISSION_START_LOCATION">4</constant>
+    <constant name="MISSION_END_LOCATION">5</constant>
+    <constant name="MISSION_REWARD">6</constant>
+    <constant name="MISSION_OBJECTIVES">7</constant>
+    <constant name="MISSION_STATE">8</constant>
+    <constant name="MISSION_TEXT">9</constant>
+    <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
+    <constant name="MISSION_SCRIPT_START">11</constant>
+    <constant name="OBJECTIVE_DESCRIPTION">0</constant>
+    <constant name="OBJECTIVE_ACHIEVED">1</constant>
+    <constant name="OBJECTIVE_TYPE">2</constant>
+    <constant name="OBJECTIVE_TARGET_TYPE">3</constant>
+    <constant name="OBJECTIVE_TARGET_INDEX">4</constant>
+    <constant name="OBJECTIVE_TARGET_COUNT">5</constant>
+    <constant name="OBJECTIVE_REQUIRED_INVENTORY">6</constant>
+    <constant name="OBJECTIVE_REQUIRED_INVENTORY_COUNT">7</constant>
+    <constant name="OBJECTIVE_TARGET_COUNT_CURRENT">8</constant>
+    <constant name="OBJECTIVE_STATE">9</constant>
+    <constant name="OBJECTIVE_SCRIPT_END">10</constant>
+    <constant name="OBJECTIVE_MISSION_ID">11</constant>
+    <constant name="OBJECTIVE_ID">12</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

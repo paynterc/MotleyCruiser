@@ -51,8 +51,8 @@ energy_current = energy;
 energy_regen_speed = 1;//frequency of energy regen ticks.
 energy_regen_points = 5;//energy regenerated on each tick.
 
-weapon_speed = 0.2;//multiplied by 1 second or room_speed
-weapon_range = 200;
+weapon_speed = 0.1;//multiplied by 1 second or room_speed
+weapon_range = 400;
 shooting = false;
 target = noone;
 
@@ -155,7 +155,7 @@ if(shooting &amp;&amp; energy_current&gt;0){
     bullet.depth = -200;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
-    bullet.speed = 20;
+    bullet.speed = 10;
     //audio_play_sound(snd_pulse1,1,false);
     audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
     energy_current -= 2;

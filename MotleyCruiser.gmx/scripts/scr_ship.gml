@@ -11,9 +11,9 @@ var mod_command = scr_ship_module();
 mod_command[MODULE_TYPE]="command";
 var anchors=noone;
 anchors[0]=1;//scaffold row
-anchors[1]=1;//scaffold column
+anchors[1]=2;//scaffold column
 mod_command[MODULE_COORDS] = anchors;
-mod_command[MODULE_SPRITE_INDEX] = spr_command_16_40_1;
+mod_command[MODULE_SPRITE_INDEX] = spr_command_16_2;
 
 
 
@@ -44,8 +44,9 @@ anchors = noone;
 anchors[0]=0;//scaffold row
 anchors[1]=1;//scaffold column
 mod_gun[MODULE_COORDS]=anchors;
-mod_gun[3]=spr_gun_16_48_1;
+mod_gun[MODULE_SPRITE_INDEX]=spr_gun_16_48_1;
 mod_gun[MODULE_COLOR]=c_red;
+mod_gun[MODULE_DATA]=global.guns[0];
 
 var mod_gun2 = scr_ship_module();
 mod_gun2[MODULE_TYPE]="gun";
@@ -56,12 +57,13 @@ mod_gun2[MODULE_COORDS]=anchors;
 mod_gun2[MODULE_SPRITE_INDEX]=spr_gun_16_48_1;
 mod_gun2[MODULE_YSCALE]=-1;
 mod_gun2 [MODULE_COLOR]=c_red;
+mod_gun2[MODULE_DATA]=global.guns[0];
 
 modules[0]=mod_command;
 modules[1]=mod_thrust;
 modules[2]=mod_gun;
 modules[3]=mod_gun2;
-//modules[4]=mod_cargo;
+modules[4]=mod_cargo;
 
 ship[SHIP_MODULES]=modules;
 

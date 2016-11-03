@@ -32,13 +32,15 @@ active = 0;// Indicates that this object is a placeholder. If the object is not 
 
 race_index = noone; //index of race from racemap
 mission = noone;
+dialogue = noone;
 name = noone;
+global_index=noone; //index in global npc directory
+
 
 mission_loc[0]=23;
 mission_loc[1]=14;
 
-mission = scr_make_mission("Go to Planet X at sector x,y and get me a blankxx. Bring it back here in xx days.","obtain",mission_loc,100,"credits");
-dialogue = scr_make_dialogue_tree();
+
 </string>
           </argument>
         </arguments>

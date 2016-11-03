@@ -14,5 +14,6 @@ map[NPC_NAME_LAST] = names[1];
 map[NPC_RUN_SPD] =  max(global.min_spd, global.races[race_index,RACE_BASE_SPD] + run_modifier);
 map[NPC_HP] =  max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_modifier);
 map[NPC_HP_CURRENT] =  map[NPC_HP];
+map[NPC_MISSION]=noone;
 
 return map;

@@ -22,7 +22,7 @@ if(mission != noone){
         tree[i] = scr_make_dialogue_branch("Did you do that thing yet?","exposition");
         scr_add_dialogue_button(tree[i],"Nope.","step_to",0);
     }else{
-        tree[i] = scr_make_dialogue_branch(mission[? "text"],"job");
+        tree[i] = scr_make_dialogue_branch(mission[MISSION_TEXT],"job");
         scr_add_dialogue_button(tree[i],"I'll do it","accept_mission",0);
     }
 }else{

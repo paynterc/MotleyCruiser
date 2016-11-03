@@ -25,6 +25,89 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Initiate GUI vars
+
+depth=-1000;
+guiXoffset = 12;
+guiYoffset = 3;
+
+imgW = sprite_get_width(spr_ship);
+imgH = sprite_get_height(spr_ship);
+imgOSx = imgW/2;
+imgOSy = imgH/2;
+
+shieldW = sprite_get_width(spr_shield);
+shieldH = sprite_get_height(spr_shield);
+
+ls = 15;//line spacing
+
+npc_count = array_length_1d(global.npcs);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create stars background. Be sure to delete this background on Room End.
+
+
+surface = noone;
+
+surface = surface_create(1000,1000);
+
+surface_set_target  (surface);
+draw_clear_alpha(c_black,1);
+for (var i=1;i&lt;50;i++){
+    col = make_color_rgb(irandom(255), irandom(255), irandom(255));
+    //theTile = tile_add(bg_star, 0, 0, 3, 3, irandom(1000), irandom(1000), 3000);
+    //tile_set_blend(theTile,col);
+    draw_circle_colour(irandom(1000),irandom(1000),irandom(4),col,col,false);
+} 
+stars = background_create_from_surface(surface,0,0,1000,1000,false,true);
+
+//surface_save(surface,"my_stars.png");
+//var stars = background_add("my_stars.png",false,false);
+
+surface_reset_target();
+surface_free(surface);
+
+background_index[1]=stars;
+background_alpha[1]=1;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Populate sector
 scr_populate_sector();
 
@@ -73,88 +156,6 @@ if(instance_exists(obj_player_ship)){
           </argument>
         </arguments>
       </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Initiate GUI vars
-
-depth=-1000;
-guiXoffset = 12;
-guiYoffset = 3;
-
-imgW = sprite_get_width(spr_ship);
-imgH = sprite_get_height(spr_ship);
-imgOSx = imgW/2;
-imgOSy = imgH/2;
-
-shieldW = sprite_get_width(spr_shield);
-shieldH = sprite_get_height(spr_shield);
-
-ls = 15;//line spacing
-
-npc_count = array_length_1d(global.npcs);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Create stars background. Be sure to delete this background on Room End.
-
-surface = noone;
-
-surface = surface_create(1000,1000);
-
-surface_set_target  (surface);
-draw_clear_alpha(c_black,1);
-for (var i=1;i&lt;50;i++){
-    col = make_color_rgb(irandom(255), irandom(255), irandom(255));
-    //theTile = tile_add(bg_star, 0, 0, 3, 3, irandom(1000), irandom(1000), 3000);
-    //tile_set_blend(theTile,col);
-    draw_circle_colour(irandom(1000),irandom(1000),irandom(4),col,col,false);
-} 
-stars = background_create_from_surface(surface,0,0,1000,1000,false,true);
-
-//surface_save(surface,"my_stars.png");
-//var stars = background_add("my_stars.png",false,false);
-
-surface_reset_target();
-surface_free(surface);
-
-background_index[1]=stars;
-background_alpha[1]=1;
-
-</string>
-          </argument>
-        </arguments>
-      </action>
     </event>
     <event eventtype="7" enumb="5">
       <action>
@@ -174,7 +175,10 @@ background_alpha[1]=1;
           <argument>
             <kind>1</kind>
             <string>/// Delete background
-background_delete(stars);
+if(background_exists(stars)){
+    background_delete(stars);
+}
+
 </string>
           </argument>
         </arguments>

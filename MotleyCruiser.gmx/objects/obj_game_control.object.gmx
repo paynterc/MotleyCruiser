@@ -25,8 +25,242 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Comments
+            <string>/// Set GUI size
+
+var base_w = 896;
+var base_h = 504;
+var aspect = display_get_width() / display_get_height();
+if (aspect &gt; 1)
+    {
+    //landscape
+    display_set_gui_size(base_h * aspect, base_h);
+    }
+else
+{
+    //portrait
+    display_set_gui_size(base_w, base_w / aspect);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Init
 // This object is placed in rm_init. It is persistant and enables things like game settings
+
+// Baseline npc settings.
+global.min_spd = 1; //minimum run speed for npc
+global.min_hp = 10; //minimum hp for npc
+
+global.min_station_npc = 3; //minimum npcs per station
+global.max_station_npc = 10; //max npcs per station
+
+// Basesline ship settings
+global.ship_min_turn_spd=1;
+global.ship_max_turn_spd=10;
+global.ship_min_spd=1;
+global.ship_max_spd=10;
+global.ship_min_acc=0.1;
+global.ship_max_acc=1;
+global.ship_min_shields=0;
+global.ship_max_shields=200;
+global.ship_min_hull=10;
+global.ship_max_hull=100;
+global.ship_min_energy = 100;
+global.ship_max_energy = 1000;
+global.ship_min_weapon_spd = 3;
+global.ship_max_weapon_spd = 0.1;
+
+
+// RACES
+
+global.races = scr_races();
+
+
+global.box_height = 100;
+
+global.sector_width = 10000;//width in pixels of space combat room
+
+global.room_type="map";//default. can be map or wall
+
+/****************************************************************/
+/*                      LIBRARIES                               */
+/****************************************************************/
+
+//Scaffolds
+global.scaffolds = scr_scaffolds();
+
+//Ship Guns
+global.guns = scr_guns();
+
+
+
+/****************************************************************/
+/*                      DYNAMIC PLAYER SETTINGS                 */
+/****************************************************************/
+
+// PLAYER MISSIONS: An array of ds_maps for missions
+global.mission_id = date_current_datetime(); //A number to start mission ids with. Increment this with each mission granted.
+global.missions = noone;
+
+global.objective_inc = date_current_datetime();//start increment for objective ids
+
+// PLAYER CREW: An array of arrays for crew. Maybe a dsmap or dslist.
+global.crew = noone;
+
+
+// Money
+global.credits = 1000;
+
+// Make a galaxy
+global.galaxy_width = 20;
+
+global.suns[0] = -1;
+global.planets[0] = -1;
+global.moons[0] = -1;
+global.stations[0] = -1;
+global.ships[0] = -1;
+global.npcs[0] = -1;
+global.landed_on = noone;
+global.landed_type = noone;
+global.current_sector_row = global.galaxy_width/2;
+global.current_sector_col = global.galaxy_width/2;
+
+
+global.galaxy = scr_make_galaxy_NEW();
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Destroy stuff
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="85">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string> /// Load game
+if(!file_exists("save.ini")) exit;
+
+ini_open("save.ini");
+global.current_sector_row = ini_read_real("location","current_sector_row",global.galaxy_width/2);
+global.current_sector_col = ini_read_real("location","current_sector_col",global.galaxy_width/2);
+var px=ini_read_real("location","player_x",100);
+var py=ini_read_real("location","player_y",100);
+ini_close();
+room_goto(rm_space);
+with(obj_player_ship){
+    x=px;
+    y=py;
+}
+show_message("game loaded");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="83">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Save game
+ini_open("save.ini");
+ini_write_real("location","current_sector_row",global.current_sector_row);
+ini_write_real("location","current_sector_col",global.current_sector_col);
+ini_write_real("location","player_x",obj_player_ship.x);
+ini_write_real("location","player_y",obj_player_ship.y);
+ini_close();
+
+show_message("game saved");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="82">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Restart
+game_restart();
 </string>
           </argument>
         </arguments>
@@ -49,7 +283,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!window_get_fullscreen()){
+            <string>/// Fullscreen
+if (!window_get_fullscreen()){
    window_set_fullscreen(true);
 }else{
    window_set_fullscreen(false);

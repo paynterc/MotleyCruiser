@@ -80,10 +80,25 @@ boxheight = maxheight + (padding*2);
     draw_set_color(c_white);
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
+    
+    text = "CREDITS: " + string(global.credits);
+    text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
+    text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
+    
+    draw_text_ext
+    (
+        x + padding,
+        y + padding + offset,
+        text,
+        font_size + (font_size/2),
+        maxlength
+    );
+    offset += text_height + padding;
+    
     for (var i = array_length_1d(global.missions) - 1; i &gt; -1; i--)
     {
         this_mission = global.missions[i];
-        text = string(this_mission[? "id"]) + " " + this_mission[? "text"];
+        text = string(this_mission[MISSION_ID]) + " " + this_mission[MISSION_TEXT] + " : " + this_mission[MISSION_STATE];
         text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
         text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
         
