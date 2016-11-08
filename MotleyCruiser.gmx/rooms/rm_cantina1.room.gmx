@@ -250,7 +250,6 @@ global.room_type="wall";</code>
     <instance objName="obj_sentient" x="392" y="168" name="inst_66C1586C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_sentient" x="516" y="280" name="inst_37000CBA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_dialog_control" x="516" y="52" name="inst_E6C8033D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_mission_log" x="568" y="52" name="inst_C4BC1B38" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_sentient" x="260" y="204" name="inst_973219CB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_sentient" x="324" y="204" name="inst_1DB9087D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_sentient" x="392" y="204" name="inst_5EE6176B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

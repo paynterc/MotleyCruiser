@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,15 +25,88 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show = false;
+            <string>/// Init
+show = false;
 depth = -1000000;
-    
-padding = 16;
-maxlength= display_get_gui_width()/2;
-maxheight= display_get_gui_height()/2;
 
+tx=10;//top of rectangle
+ty=10;
+padding = 5;
+margin = 10;
+boxwidth = display_get_gui_width() - (margin * 2);
+boxheight = display_get_gui_height() - (margin * 2);
+
+maxlength= boxwidth - (padding*2);
+maxheight= boxheight - (padding*2);
+maxlines = 20;
+
+event_user(0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Keyboard input
+// STEP
+var alength = array_length_1d(alltext);
+if (keyboard_check_pressed(vk_anykey) == true)
+{
+    switch (keyboard_key)
+    {
+        case vk_down:
+        scroll = min( scroll + 1, (alength - min(alength, maxlines) ) );
+        break;
+        case vk_up:
+        scroll = max(scroll - 1, 0);
+        break;
+        /**
+        case vk_space:
+        alltext = scr_push_array(alltext,"MORE TEXT " + string(current_time));
+        break;
+        **/
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reset defaults
 text = "";
-spd = 3;
 font = fnt;
     
 text_length = string_length(text);
@@ -43,9 +116,24 @@ draw_set_font(font);
     
 text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
 text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
+
+scroll = 0;
+alltext = noone;
+for(var i = 0; i &lt; array_length_1d(global.missions); i++){
+    this_mission = global.missions[i];
+    if(this_mission[MISSION_STATE]=="complete") continue;// Skip the completed missions.
+    var mtext = string(this_mission[MISSION_ID]) + " " + this_mission[MISSION_TEXT] + " : " + this_mission[MISSION_STATE];
+    alltext = scr_push_array(alltext,mtext);
     
-boxwidth = maxlength + (padding*2);
-boxheight = maxheight + (padding*2);
+    var objectives = this_mission[MISSION_OBJECTIVES];
+    for(var t = 0; t&lt;array_length_1d(objectives); t++){
+        this_objective = objectives[t];
+        var otext = " - " + string(this_objective[OBJECTIVE_DESCRIPTION]) + " : " + this_objective[OBJECTIVE_STATE];
+        alltext = scr_push_array(alltext,otext);
+    }
+    
+}
+
 </string>
           </argument>
         </arguments>
@@ -69,17 +157,20 @@ boxheight = maxheight + (padding*2);
           <argument>
             <kind>1</kind>
             <string>if(show){
-    x = obj_player.x;y=obj_player.y;
-    draw_set_color(c_gray);
-    draw_rectangle(x,y,x+boxwidth,y+boxheight,0);
+    //draw_panel(spr_background,0,5,5,view_wview[0]-10,view_hview[0]-10,32);
+    //x = obj_player.x;y=obj_player.y;
     draw_set_color(c_black);
-    draw_rectangle(x,y,x+boxwidth,y+boxheight,1);
+    draw_set_alpha(.85);
+    draw_rectangle(tx,ty,boxwidth,boxheight,0);
+    draw_set_color(c_white);
+    draw_rectangle(tx,ty,boxwidth,boxheight,1);
 
     var offset = 0;
     var this_mission = noone;
-    draw_set_color(c_white);
+    draw_set_color(c_lime);
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
+    draw_set_alpha(1);
     
     text = "CREDITS: " + string(global.credits);
     text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
@@ -87,32 +178,67 @@ boxheight = maxheight + (padding*2);
     
     draw_text_ext
     (
-        x + padding,
-        y + padding + offset,
+        tx + padding,
+        ty + padding + offset,
         text,
         font_size + (font_size/2),
         maxlength
     );
     offset += text_height + padding;
     
-    for (var i = array_length_1d(global.missions) - 1; i &gt; -1; i--)
-    {
-        this_mission = global.missions[i];
-        text = string(this_mission[MISSION_ID]) + " " + this_mission[MISSION_TEXT] + " : " + this_mission[MISSION_STATE];
+    text = "Sector " + " " + string(global.current_sector_row) + "," + string(global.current_sector_col);
+    if(global.landed_type != noone){
+        text = text + " " + string(global.landed_type) + " " + string(global.landed_on);
+    }
+    text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
+    text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
+    draw_text_ext
+    (
+        tx + padding,
+        ty + padding + offset,
+        text,
+        font_size + (font_size/2),
+        maxlength
+    );
+    offset += text_height + padding;
+    
+    text = "Scroll " + " " + string(scroll);
+    text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
+    text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
+    draw_text_ext
+    (
+        tx + padding,
+        ty + padding + offset,
+        text,
+        font_size + (font_size/2),
+        maxlength
+    );   
+    offset += text_height + padding;
+    
+    /**
+    maxlines  = 10;
+    totallines = 12;
+    maxindex = 11;
+    scroll = 5;
+    scroll + maxlines = 15;  
+    **/
+    
+    for(var i = scroll; i&lt; min(scroll + maxlines, array_length_1d(alltext)); i++){
+
+        text = alltext[i];
         text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
         text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
-        
         draw_text_ext
         (
-            x + padding,
-            y + padding + offset,
+            tx + padding,
+            ty + padding + offset,
             text,
             font_size + (font_size/2),
             maxlength
         );
-        
         offset += text_height + padding;
     }
+    
 }
 </string>
           </argument>
@@ -136,7 +262,10 @@ boxheight = maxheight + (padding*2);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show = !show;
+            <string>///Show box
+
+show = !show;
+event_user(0);//Set defaults
 </string>
           </argument>
         </arguments>

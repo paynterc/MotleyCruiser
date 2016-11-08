@@ -5,22 +5,57 @@ var tree = noone;
 var buttons = noone;
 var branches = noone;
 var i=0;
+var obj_for_mission = noone;
 
 // Add branch 0
 tree[i] = scr_make_dialogue_branch("I find peace in the solitude of space, but I sometimes enjoy the company of fellow travelers.","intro");
 
 // Add buttons.
-scr_add_dialogue_button(tree[i],"Do you have any work that needs doing?", "step_to",i+1);
+
+
+staged_objectives = scr_get_entity_objectives("npc",global_index);// npc must be target of an ACTIVE objective
+
+if(staged_objectives != noone){
+
+    for(var ob = 0; ob<array_length_1d(staged_objectives); ob++){
+        objv=staged_objectives[ob];
+        if(mission!=noone && objv[OBJECTIVE_MISSION_ID] == mission[MISSION_ID]){
+            obj_for_mission = objv;//player has this npc's mission and the npc is the target of the ACTIVE objective (probably to complete mission).
+        }    
+        scr_add_dialogue_button(tree[i],"I have business with you (mission id: "+ string(objv[OBJECTIVE_MISSION_ID])+").","complete_objective",0,noone,objv[OBJECTIVE_ID]);
+
+    }
+    
+}
+
+if(obj_for_mission==noone){
+    scr_add_dialogue_button(tree[i],"Do you have any work that needs doing?", "step_to",i+1);
+}
+
 scr_add_dialogue_button(tree[i],"Do you have any tips?", "step_to",i+2);
 scr_add_dialogue_button(tree[i],"Tell me about your home world.", "step_to",i+3);
 scr_add_dialogue_button(tree[i],"Good Bye.", "exit",noone);
+
+
 
 // Add branch 1
 i++;
 if(mission != noone){
     if(scr_has_mission(mission)){
-        tree[i] = scr_make_dialogue_branch("Did you do that thing yet?","exposition");
-        scr_add_dialogue_button(tree[i],"Nope.","step_to",0);
+        mission = scr_find_mission(mission[MISSION_ID]);// Update the npc mission to the player's version
+        if(mission[MISSION_STATE]=="complete"){
+            tree[i] = scr_make_dialogue_branch("I have no more work for you now.","exposition");
+            scr_add_dialogue_button(tree[i],"Ok.","step_to",0);
+        }else{
+            tree[i] = scr_make_dialogue_branch("Did you do that thing yet?","exposition");
+            if(obj_for_mission != noone){
+                scr_add_dialogue_button(tree[i],"I have have an update (mission id: "+ string(obj_for_mission[OBJECTIVE_MISSION_ID])+").","complete_objective",0,noone,obj_for_mission[OBJECTIVE_ID]);
+            }else{
+                scr_add_dialogue_button(tree[i],"Nope.","step_to",0);
+            }
+            
+        }
+
     }else{
         tree[i] = scr_make_dialogue_branch(mission[MISSION_TEXT],"job");
         scr_add_dialogue_button(tree[i],"I'll do it","accept_mission",0);

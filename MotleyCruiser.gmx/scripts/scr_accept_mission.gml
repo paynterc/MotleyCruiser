@@ -3,6 +3,8 @@
 
 var m = argument0;
 
+m[MISSION_STATE]="active";
+
 if(m[MISSION_SCRIPT_START]!=noone){
     scr_script_parse(m[MISSION_SCRIPT_START]);     
 }

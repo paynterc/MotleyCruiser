@@ -197,7 +197,7 @@ if(ds_exists(global.ChestList,ds_type_list)){
             <kind>1</kind>
             <string>//Now you can draw Inventory here:
 if(show_inventory){
-    draw_panel(spr_background,0,5,5,view_wview[0]-10,view_hview[0]-10,32)
+    draw_panel(spr_background,0,5,5,view_wview[0]-10,view_hview[0]-10,32);
     
     draw_text(270,40,"Key Q: Add random Item#Key W: Clear Inventory#Key E: Save Inventory#Key R: Load Inventory#Key T: Sort Inventory#Key Y: Clear a Item from Selecting Slot#Key U: Delete Item by Stack Amount#Key I: Drop a Item#Key O: Find Item on Inventory#Key P: Run the script of item with effect#Key A: Exchange Items from #       'ItemOverMouse' to Selecting");
     

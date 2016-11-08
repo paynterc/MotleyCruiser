@@ -14,6 +14,10 @@
       <sound>sound\snd_laser3</sound>
       <sound>sound\snd_pulse1</sound>
     </sounds>
+    <sounds name="Music">
+      <sound>sound\snd_theme1</sound>
+      <sound>sound\snd_theme2</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_captain3</sprite>
@@ -44,6 +48,9 @@
       <sprite>sprites\spr_shield</sprite>
       <sprite>sprites\spr_ship_2</sprite>
       <sprite>sprites\spr_ship_2_tmp</sprite>
+      <sprites name="_space_radar">
+        <sprite>sprites\spr_indicator</sprite>
+      </sprites>
     </sprites>
     <sprite>sprites\spr_planet</sprite>
     <sprite>sprites\spr_moon</sprite>
@@ -156,6 +163,9 @@
       <script>scripts\scr_mission_objective.gml</script>
       <script>scripts\scr_dialogue_button.gml</script>
     </scripts>
+    <scripts name="_service">
+      <script>scripts\scr_get_random_item.gml</script>
+    </scripts>
     <script>scripts\scr_move.gml</script>
     <script>scripts\scr_grid_place_meeting.gml</script>
     <script>scripts\scr_save_room.gml</script>
@@ -206,6 +216,7 @@
       <script>scripts\scr_make_ship.gml</script>
       <script>scripts\scr_test_dsmap.gml</script>
       <script>scripts\scr_get_location.gml</script>
+      <script>scripts\scr_find_random_mission_target.gml</script>
     </scripts>
     <script>scripts\totro.gml</script>
     <script>scripts\totro_plus.gml</script>
@@ -256,6 +267,9 @@
     </scripts>
     <script>scripts\scr_example_leaf.gml</script>
     <script>scripts\scr_script_parse.gml</script>
+    <script>scripts\scr_array_concat.gml</script>
+    <script>scripts\scr_array_random.gml</script>
+    <script>scripts\scr_instance_in_view.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -279,6 +293,7 @@
       <object>objects\obj_station</object>
       <object>objects\obj_landable</object>
       <object>objects\obj_sun</object>
+      <object>objects\obj_radar</object>
     </objects>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
@@ -312,7 +327,7 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
   </rooms>
-  <constants number="140">
+  <constants number="141">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -330,6 +345,7 @@
     <constant name="NPC_NAME_FIRST">5</constant>
     <constant name="NPC_NAME_LAST">6</constant>
     <constant name="NPC_MISSION">7</constant>
+    <constant name="NPC_LOCATION">8</constant>
     <constant name="D_BRANCH_TEXT">0</constant>
     <constant name="D_BRANCH_TYPE">1</constant>
     <constant name="D_BRANCH_BUTTONS">2</constant>

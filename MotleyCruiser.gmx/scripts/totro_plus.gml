@@ -188,9 +188,9 @@ for (j=0;j<n;j++) {
     var leng = random_range(minsyl, maxsyl); // Compute number of syllables in the name
     var isvowel = irandom_range(0, 1); // randomly start with vowel or consonant
     if(force_vowel){
-        isvowl=0;
-    }else if(force_cons){
         isvowl=1;
+    }else if(force_cons){
+        isvowl=0;
     }
     
     

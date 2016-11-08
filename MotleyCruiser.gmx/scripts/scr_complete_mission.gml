@@ -3,6 +3,8 @@
 
 var mission = scr_find_mission(argument0);
 var complete = false;
+
+
 if(mission==noone) return false;
 
 if(mission[MISSION_STATE]=="complete") return false;//Can't complete a mission twice.
@@ -10,7 +12,7 @@ if(mission[MISSION_STATE]=="complete") return false;//Can't complete a mission t
 var objectives = mission[MISSION_OBJECTIVES];
 var obcount = array_length_1d(objectives);
 var complete_count = 0;
-if(obcount>1){
+if(obcount>0){
     for(var i = 0; i<obcount; i++){
         var obchx = objectives[i];
         if(obchx[OBJECTIVE_STATE]=="complete"){

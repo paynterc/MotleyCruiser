@@ -25,41 +25,6 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set GUI size
-
-var base_w = 896;
-var base_h = 504;
-var aspect = display_get_width() / display_get_height();
-if (aspect &gt; 1)
-    {
-    //landscape
-    display_set_gui_size(base_h * aspect, base_h);
-    }
-else
-{
-    //portrait
-    display_set_gui_size(base_w, base_w / aspect);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Init
 // This object is placed in rm_init. It is persistant and enables things like game settings
 
@@ -86,6 +51,8 @@ global.ship_max_energy = 1000;
 global.ship_min_weapon_spd = 3;
 global.ship_max_weapon_spd = 0.1;
 
+
+global.radar_range=500;
 
 // RACES
 
@@ -145,6 +112,41 @@ global.current_sector_col = global.galaxy_width/2;
 global.galaxy = scr_make_galaxy_NEW();
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set GUI size
+
+var base_w = 896;
+var base_h = 504;
+var aspect = display_get_width() / display_get_height();
+if (aspect &gt; 1)
+    {
+    //landscape
+    display_set_gui_size(base_h * aspect, base_h);
+    }
+else
+{
+    //portrait
+    display_set_gui_size(base_w, base_w / aspect);
+}
 </string>
           </argument>
         </arguments>
@@ -260,7 +262,7 @@ show_message("game saved");
           <argument>
             <kind>1</kind>
             <string>/// Restart
-game_restart();
+//game_restart();
 </string>
           </argument>
         </arguments>

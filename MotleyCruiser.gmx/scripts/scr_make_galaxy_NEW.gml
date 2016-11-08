@@ -74,7 +74,8 @@ for(row=0; row < gwidth; row++){
                 npccount = irandom_range(0,npcmax);
                 location_npcs = noone;
                 for(var n=0; n < npccount; n++){
-                    npc = scr_make_npc();
+
+                    npc = scr_make_npc("planet" + "," + string(planet_index) + "," + string(row) + "," + string(col));
                     npc_index = scr_push_array_1d(global.npcs,npc);
                     location_npcs[n]=npc_index;
                     scr_push_array_1d(npcs,npc_index);
@@ -98,7 +99,7 @@ for(row=0; row < gwidth; row++){
                     npccount = irandom_range(0,npcmax);
                     location_npcs = noone;
                     for(var n=0; n < npccount; n++){
-                        npc = scr_make_npc();
+                        npc = scr_make_npc("moon" + "," + string(moon_index) + "," + string(row) + "," + string(col));
                         npc_index = scr_push_array_1d(global.npcs,npc);
                         location_npcs[n]=npc_index;
                         scr_push_array_1d(npcs,npc_index);
@@ -126,7 +127,7 @@ for(row=0; row < gwidth; row++){
             npccount = irandom_range(0,npcmax);
             location_npcs = noone;
             for(var n=0; n < npccount; n++){
-                npc = scr_make_npc();
+                npc = scr_make_npc("station" + "," + string(station_index) + "," + string(row) + "," + string(col));
                 npc_index = scr_push_array_1d(global.npcs,npc);
                 location_npcs[n]=npc_index;
                 scr_push_array_1d(npcs,npc_index);
