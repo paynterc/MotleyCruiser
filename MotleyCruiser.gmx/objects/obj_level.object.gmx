@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Create the level
+texture_set_interpolation(false);
 
 // Resize
 room_width=(CELL_WIDTH/16)*720;
@@ -164,19 +165,20 @@ for(var yy = 0; yy &lt; height; yy++){
 
             if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
                 var newEnemy = instance_create(ex,ey,obj_enemy);
-                var oddsMode = 3;
-                if(irandom(oddsMode)==2){
-                    with(newEnemy){
-                        mode="defend";
-                        //image_blend = make_colour_hsv(0,128,192);
-                    }
-                }else if(irandom(oddsMode)==3){
-                    with(newEnemy){
-                        mode="hold";
-                        //image_blend = make_colour_hsv(0,64,64);
-                    }
+                var set_mode = "hold";
                 
+                var oddsMode = 3;
+                if(irandom(oddsMode)==0){
+                    set_mode = "hunt";
+                }else if(irandom(oddsMode)==2){
+                    set_mode = "defend";                
+                }else{
+                    set_mode = "hold";           
                 }
+                newEnemy.mode = set_mode;
+                
+                var race_index = irandom(array_height_2d(global.races)-1);
+                newEnemy.sprite_index = global.races[race_index,RACE_SPR];
             }
 
             
@@ -208,9 +210,16 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             var bottom_right = grid[# (xx+1) div 2, (yy+1) div 2] != FLOOR;
             var bottom_left = grid[# (xx-1) div 2, (yy+1) div 2] != FLOOR;
             
+
+            
+            
             if (right) {
                 if (bottom) {
-                    tile_add(bg_walltiles, tw*4, th*1, tw, th, tx+tw, ty, -ty);
+                    tile_add(bg_walltiles, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                    if(bottom_right){
+                        tile_add(bg_walltiles, tw*4, th*1, tw, th, tx+tw, ty+th, -ty-tw*2);
+                    }
+                    
                 } else if (top) {
                     if (top_right) {
                         tile_add(bg_walltiles, tw*4, th*0, tw, th, tx+tw, ty-th, -ty);
@@ -225,7 +234,11 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             
             if (left) {
                 if (bottom) {
-                    tile_add(bg_walltiles, tw*3, th*1, tw, th, tx-tw, ty, -ty);
+                    tile_add(bg_walltiles, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                    if(bottom_left){
+                        tile_add(bg_walltiles, tw*3, th*1, tw, th, tx-tw, ty+th, -ty-tw*2);
+                    }
+                    
                 } else if (top) {
                     if (top_left) {
                         tile_add(bg_walltiles, tw*3, th*0, tw, th, tx-tw, ty-th, -ty);
@@ -249,14 +262,21 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             }
             
             if (bottom) {
+            
+
                 if (!bottom_right) {
-                    tile_add(bg_walltiles, tw*2, th*0, tw, th, tx, ty, -ty-tw);
+                    tile_add(bg_walltiles, tw*2, th*0, tw, th, tx, ty+th, -ty-tw*2);
                 } else if (!bottom_left) {
-                    tile_add(bg_walltiles, tw*0, th*0, tw, th, tx, ty, -ty-tw);
+                    tile_add(bg_walltiles, tw*0, th*0, tw, th, tx, ty+th, -ty-tw*2);
                 } else {
-                    tile_add(bg_walltiles, tw*1, th*0, tw, th, tx, ty, -ty-tw);
+                    tile_add(bg_walltiles, tw*1, th*0, tw, th, tx, ty+th, -ty-tw);
                 }
+                
+
             }
+            
+
+
         }
     }
 }

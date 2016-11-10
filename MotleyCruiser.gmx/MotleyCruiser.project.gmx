@@ -21,6 +21,11 @@
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_captain3</sprite>
+    <sprite>sprites\spr_human</sprite>
+    <sprite>sprites\spr_pudning</sprite>
+    <sprite>sprites\spr_androne</sprite>
+    <sprite>sprites\spr_arcnid</sprite>
+    <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_rifle1</sprite>
     <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_bot1</sprite>
@@ -28,6 +33,7 @@
     <sprite>sprites\spr_flowridian</sprite>
     <sprite>sprites\spr_hurgan</sprite>
     <sprite>sprites\spr_hurgan2</sprite>
+    <sprite>sprites\spr_hurgan3</sprite>
     <sprite>sprites\spr_bullet</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
     <sprite>sprites\spr_core</sprite>
@@ -145,6 +151,7 @@
     <background>background\bg_floor</background>
     <background>background\bg_wall</background>
     <background>background\bg_walltiles</background>
+    <background>background\bg_walltile_bu</background>
     <background>background\bg_counters</background>
     <background>background\bg_starfield</background>
   </backgrounds>
