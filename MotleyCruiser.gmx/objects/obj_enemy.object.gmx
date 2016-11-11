@@ -64,6 +64,8 @@ image_speed = .25;
             <string>/// Equip weapon
 /// Equip weapon
 weapon = instance_create(x,y,obj_gun);
+weapon.myBullet = obj_bullet_enemy;
+weapon.weaponSpeed = .5;
 
 </string>
           </argument>
@@ -88,6 +90,7 @@ weapon = instance_create(x,y,obj_gun);
           <argument>
             <kind>1</kind>
             <string>/// Cleanup
+weapon.shooting = false;
 if(path_exists(path)) {
     path_delete(path);
 }
@@ -124,7 +127,7 @@ if(mode=="hunt" &amp;&amp; hp_current&lt;hp/2){
 }else if(mode=="hold" &amp;&amp; hp_current&lt;hp/4){
     mode = "defend";
 }
-
+var inview = scr_instance_in_view(self);
 /***
 Find closest member of the player's boarding team. This includes the player.
 ***/
@@ -162,7 +165,7 @@ if( target!=noone &amp;&amp; instance_exists(target)){
         }
 
         
-        if(point_distance(x,y,px,py) &lt; 200){
+        if(inview){
             /// Start shooting
             /**
             bullet = instance_create(x,y,obj_bullet_enemy);
@@ -175,6 +178,10 @@ if( target!=noone &amp;&amp; instance_exists(target)){
                 weapon.shooting = true;
             }
             
+        }else{
+                weapon.image_angle =  direction;
+                weapon.shooting = false;
+        
         }
         
     }else if(mode == "hunt"){
@@ -184,13 +191,20 @@ if( target!=noone &amp;&amp; instance_exists(target)){
         if(path_get_number(path)&lt;5){
             path_end();
         
-            /// Shoot a bullet
-            if(weapon != noone){
-                weapon.image_angle =  point_direction(x, y, px, py);
-                weapon.shooting = true;
-            }
+
+        
+        }else{
+                weapon.image_angle =  direction;
+                weapon.shooting = false;
         
         }
+        
+        /// Shoot a bullet
+        if(weapon != noone &amp;&amp; inview){
+            weapon.image_angle =  point_direction(x, y, px, py);
+            weapon.shooting = true;
+        }
+        
 
     
     }
