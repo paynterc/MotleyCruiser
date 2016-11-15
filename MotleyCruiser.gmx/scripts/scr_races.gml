@@ -20,7 +20,7 @@ races[2,RACE_SPR] = spr_hurgan3;
 races[3,RACE_NAME] = "Flowridian";
 races[3,RACE_BASE_HP] = 15;
 races[3,RACE_BASE_SPD] = 3;
-races[3,RACE_SPR] = spr_flowridian;
+races[3,RACE_SPR] = spr_flowridian2;
 
 races[4,RACE_NAME] = "Androne";
 races[4,RACE_BASE_HP] = 10;
@@ -32,9 +32,9 @@ races[5,RACE_BASE_HP] = 12;
 races[5,RACE_BASE_SPD] = 2;
 races[5,RACE_SPR] = spr_pudning;
 
-races[5,RACE_NAME] = "Arcnid";
-races[5,RACE_BASE_HP] = 8;
-races[5,RACE_BASE_SPD] = 4;
-races[5,RACE_SPR] = spr_arcnid;
+races[6,RACE_NAME] = "Arcnid";
+races[6,RACE_BASE_HP] = 8;
+races[6,RACE_BASE_SPD] = 4;
+races[6,RACE_SPR] = spr_arcnid;
 
 return races;

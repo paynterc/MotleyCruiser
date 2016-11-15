@@ -77,6 +77,7 @@ for(row=0; row < gwidth; row++){
 
                     npc = scr_make_npc("planet" + "," + string(planet_index) + "," + string(row) + "," + string(col));
                     npc_index = scr_push_array_1d(global.npcs,npc);
+                    var gnpc = global.npcs[npc_index];
                     location_npcs[n]=npc_index;
                     scr_push_array_1d(npcs,npc_index);
                 }
@@ -149,6 +150,10 @@ for(row=0; row < gwidth; row++){
         
     }
 }
-
+//Index the npcs
+for(var i=0; i<array_length_1d(global.npcs); i++){
+    var gnpc = global.npcs[i];
+    gnpc[@ NPC_GLOBAL_INDEX]=i;
+}
 
 return galaxy;

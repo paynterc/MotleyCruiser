@@ -12,14 +12,6 @@
   <showcolour>-1</showcolour>
   <code>randomize();
 
-
-/**
-for(var i=0;i&lt;=3;i++){
-    global.crew[i] = global.npcs[i];
-}
-**/
-
-
 // Go to first room
 room_goto(rm_room1);</code>
   <enableViews>0</enableViews>

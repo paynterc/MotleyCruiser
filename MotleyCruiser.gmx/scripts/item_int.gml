@@ -356,3 +356,24 @@ item_add(50,2,spr_ItemIcon_SoulDust)
 item_add(50,3,false)
 item_add(50,4,"")
 item_add(50,5,"a dust from soul")
+
+item_add(51,0,"Blaster Rifle A") //Title
+item_add(51,1,4) //Max Stack
+item_add(51,2,spr_rifle2) //Sprite
+item_add(51,3,false) //Does have effect?
+item_add(51,4,"")  //If yes, put script here on string, if not, just put ""
+item_add(51,5,"Your basic space gun") //Description
+
+item_add(52,0,"Crate Master Card")
+item_add(52,1,16)
+item_add(52,2,spr_keycard)
+item_add(52,3,true)
+item_add(52,4,"scr_break_crates")
+item_add(52,5,"Bust the crates!")
+
+item_add(53,0,"Grenade")
+item_add(53,1,8)
+item_add(53,2,spr_grenade)
+item_add(53,3,false)
+item_add(53,4,"")
+item_add(53,5,"A powerful bomb. Amazingly, still safe to use on spaceships.")

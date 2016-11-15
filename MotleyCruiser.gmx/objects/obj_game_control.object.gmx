@@ -55,15 +55,19 @@ global.ship_max_weapon_spd = 0.1;
 global.radar_range=500;
 
 // RACES
-
 global.races = scr_races();
 
-
 global.box_height = 100;
-
 global.sector_width = 10000;//width in pixels of space combat room
 
-global.room_type="map";//default. can be map or wall
+
+/****************************************************************/
+/*                      RANDOM CREW LEVELS                      */
+/****************************************************************/
+global.room_type="random";//default. can be random, custom or control
+global.room_seed=noone;
+global.door_index = noone; // Which door to we place you at when returning to room
+
 
 /****************************************************************/
 /*                      LIBRARIES                               */
@@ -111,6 +115,9 @@ global.current_sector_col = global.galaxy_width/2;
 
 global.galaxy = scr_make_galaxy_NEW();
 
+for(var i=0; i&lt;2; i++){
+    global.crew[i]=scr_array_random(global.npcs);
+}
 
 </string>
           </argument>

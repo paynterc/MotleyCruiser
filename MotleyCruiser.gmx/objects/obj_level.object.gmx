@@ -25,7 +25,30 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Create the level
+            <string>/// Grant some inventory
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create the random level
+if(global.room_type=="random"){
+
 texture_set_interpolation(false);
 
 // Resize
@@ -35,7 +58,7 @@ room_height = (CELL_HEIGHT/16)*720;
 // Set the grid width and height
 var width = room_width div CELL_WIDTH;
 var height = room_height div CELL_HEIGHT;
-sizeModifier = .5;//.10 .25 .50, .75, 1, 1.25 ... do not exceed 2
+sizeModifier = .50;//.10 .25 .50, .75, 1, 1.25 ... do not exceed 2. This is for the overall size of the grid. Larger ships.
 
 // Create the DS grid
 grid = ds_grid_create(width, height);
@@ -60,7 +83,11 @@ ds_grid_set_region(grid, 0, 0, width-1, height-1, VOID);
 // Randomize the world
 //    randomize();
 //}
-
+if(global.room_seed!=noone){
+    random_set_seed(global.room_seed);
+}else{
+    global.room_seed = random_get_seed();
+}
 
 
 // Create the controller in the center of the grid
@@ -70,25 +97,15 @@ var cy = height div 2;
 var cx2 = cx;
 var cy2 = cy;
 
-core_placed = false;
+var px1 = cx;
+var py1 = cy;
 
-//Create the player
-instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_player);
 
-//Create crew
-//instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
-//instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
-var thiscrew = noone;
-var crewMap = 0;
-var raceMap = 0;
-for(var i=0; i&lt;array_length_1d(global.crew); i++){
-    thiscrew = instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
-    crewMap = global.crew[i];
-    thiscrew.sprite_index=global.races[crewMap[NPC_RACE_INDEX],RACE_SPR];
-    thiscrew.hp=crewMap[NPC_HP_CURRENT];
-    thiscrew.hp_current=crewMap[NPC_HP_CURRENT];
-    thiscrew.pspeed=crewMap[NPC_RUN_SPD];
-}
+
+
+door_reactor_placed = false;
+
+
 
 // Give the controller a random direction
 var cdir = irandom(3);
@@ -147,41 +164,9 @@ for(var yy = 1; yy &lt; height-1; yy++){
 // Draw the level
 for(var yy = 0; yy &lt; height; yy++){
     for(var xx = 0; xx &lt; width; xx++){
-        if(grid[# xx, yy] == FLOOR){
-            
+        if(grid[# xx, yy] == FLOOR){            
             tile_add(bg_floor, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, 0);
-            
-            var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
-            var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
-            
-            // Place a core
-            if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 300 &amp;&amp; !core_placed){
-                instance_create(ex,ey,obj_core);
-                core_placed = true;
-            }  
-
-            // Maybe put an enemy here
-            var odds = 30;
-
-            if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
-                var newEnemy = instance_create(ex,ey,obj_enemy);
-                var set_mode = "hold";
-                
-                var oddsMode = 3;
-                if(irandom(oddsMode)==0){
-                    set_mode = "hunt";
-                }else if(irandom(oddsMode)==2){
-                    set_mode = "defend";                
-                }else{
-                    set_mode = "hold";           
-                }
-                newEnemy.mode = set_mode;
-                
-                var race_index = irandom(array_height_2d(global.races)-1);
-                newEnemy.sprite_index = global.races[race_index,RACE_SPR];
-            }
-
-            
+              
         }else{
             //This is a wall or void. Add a solid cell to the pathfinding grid.
             mp_grid_add_cell(grid_path,xx,yy);
@@ -210,14 +195,29 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             var bottom_right = grid[# (xx+1) div 2, (yy+1) div 2] != FLOOR;
             var bottom_left = grid[# (xx-1) div 2, (yy+1) div 2] != FLOOR;
             
-
+             // Maybe place some cover
+             var cOdds = 60;
+             if( !top &amp;&amp; !bottom &amp;&amp; !right &amp;&amp; !left &amp;&amp; irandom(cOdds) == cOdds){
+                var cover = instance_create(tx,ty,obj_crate);
+                cover.depth = -ty;         
+             }
             
+             //Place a door
+             if(!door_reactor_placed &amp;&amp; (left &amp;&amp; top ) ){
+                var reactor_door = instance_create(tx + (CELL_WIDTH/2),ty + + (CELL_WIDTH/2),obj_door);
+                reactor_door.depth = -ty;
+                reactor_door.room_to = room_get_name(room);
+                reactor_door.room_type = "control";
+                reactor_door.door_type = "goto";
+                reactor_door.door_index = 0;
+                door_reactor_placed = true;
+             }
             
             if (right) {
                 if (bottom) {
                     tile_add(bg_walltiles, tw*0, th*1, tw, th, tx+tw, ty, -ty);
                     if(bottom_right){
-                        tile_add(bg_walltiles, tw*4, th*1, tw, th, tx+tw, ty+th, -ty-tw*2);
+                        tile_add(bg_walltiles, tw*4, th*1, tw, th, tx+tw, ty+th, -ty);
                     }
                     
                 } else if (top) {
@@ -236,7 +236,7 @@ for (var yy = 0; yy &lt; height*2; yy++) {
                 if (bottom) {
                     tile_add(bg_walltiles, tw*2, th*1, tw, th, tx-tw, ty, -ty);
                     if(bottom_left){
-                        tile_add(bg_walltiles, tw*3, th*1, tw, th, tx-tw, ty+th, -ty-tw*2);
+                        tile_add(bg_walltiles, tw*3, th*1, tw, th, tx-tw, ty+th, -ty);
                     }
                     
                 } else if (top) {
@@ -280,6 +280,524 @@ for (var yy = 0; yy &lt; height*2; yy++) {
         }
     }
 }
+
+
+// Set these in the door object
+if(global.door_index == noone){
+    px_start = px1 * CELL_WIDTH + (CELL_WIDTH/2);
+    py_start = py1 * CELL_HEIGHT + (CELL_HEIGHT/2);
+}else{
+    
+    for(var i = 0; i &lt; instance_number(obj_door); i++) {
+        var door = instance_find(obj_door,i);
+        if(i==global.door_index){
+            px_start = door.x;
+            py_start = door.y + (CELL_HEIGHT*2);
+            break;
+        }
+    }
+
+}
+
+// NO NO NO. Here's what you do.
+// Make the map, place the doors, place the player where it belongs, then loop
+// back through and place the enemies.
+
+//Create the player
+instance_create(px_start, py_start, obj_player);
+
+//Create crew
+//instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+//instance_create(cx * CELL_WIDTH + (CELL_WIDTH/2), cy * CELL_HEIGHT + (CELL_WIDTH/2), obj_crew);
+scr_instantiate_all_crew(px_start,py_start);
+
+// Place a core
+instance_create(px_start,py_start,obj_core);
+
+// Place enemies
+for(var yy = 0; yy &lt; height; yy++){
+    for(var xx = 0; xx &lt; width; xx++){
+        if(grid[# xx, yy] == FLOOR){
+        
+
+            var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
+            var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
+            // Maybe put an enemy here
+            var odds = 30;
+            
+            if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
+  
+            
+                var newEnemy = instance_create(ex,ey,obj_enemy);
+                var set_mode = "hold";
+                
+                var oddsMode = 3;
+                var modRnm = irandom(oddsMode);
+                if(modRnm==0){
+                    set_mode = "hunt";
+                }else if(modRnm==1){
+                    set_mode = "defend";                
+                }else{
+                    set_mode = "hold";           
+                }
+                newEnemy.mode = set_mode;
+                
+                var race_index = irandom(array_height_2d(global.races)-1);
+                newEnemy.sprite_index = global.races[race_index,RACE_SPR];
+
+            }
+
+        
+        
+        }
+    }
+}
+
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create ship control room
+// A basic room with a ship component in the middle
+if(global.room_type=="control"){
+    
+    
+    texture_set_interpolation(false);
+    
+    // Resize
+    room_width = 740;
+    room_height = 740;
+    
+    var wall_bg = bg_walltiles;
+    
+    // Set the grid width and height
+    var width = room_width div CELL_WIDTH;
+    var height = room_height div CELL_HEIGHT;
+    sizeModifier = .15;//.10 .25 .50, .75, 1, 1.25 ... do not exceed 2. This is for the overall size of the grid. Larger ships.
+    
+    // Create the DS grid
+    grid = ds_grid_create(width, height);
+    
+    // Create the pathfinding grid
+    grid_path = mp_grid_create(0,0,width,height,CELL_WIDTH,CELL_HEIGHT);
+    
+    // Fill the grid with VOID
+    ds_grid_set_region(grid, 0, 0, width, height, VOID);
+    
+    // Build floor
+    ds_grid_set_region(grid, width/4, height/4, width-(width/4), height-(height/4), FLOOR);
+    
+    // Void in the middle
+    var boxX1 = (width/2) - 2;
+    var boxX2 = (width/2) + 2;
+    ds_grid_set_region(grid, boxX1, boxX1, boxX2, boxX2, WALL);
+    
+    
+    // Place a master panel. Player will need to click this to beat the room.
+    core = instance_create(room_width/2,(boxX2 * CELL_HEIGHT) + CELL_HEIGHT,obj_master_panel);
+    
+    // Place a couple of big turrets.
+    t1 = instance_create(room_width/2 - (CELL_WIDTH*2),(boxX2 * CELL_HEIGHT) + (CELL_HEIGHT*2),obj_turret);
+    t2 = instance_create(room_width/2 + (CELL_WIDTH*2),(boxX2 * CELL_HEIGHT) + (CELL_HEIGHT*2),obj_turret);
+    
+    t1.depth = -1* t1.y;
+    t2.depth = -1* t2.y;
+    
+    //Place a door
+
+   var reactor_door = instance_create(room_width/2, room_height/4,obj_door);
+   reactor_door.room_to = room_get_name(room);
+   reactor_door.room_type = "random";
+   reactor_door.room_seed = global.room_seed;
+   reactor_door.door_type = "goback";
+        
+    //Create the player
+    instance_create(room_width/2, room_height/4 + (CELL_HEIGHT*2), obj_player);
+    
+    //Intantiate crew
+    scr_instantiate_all_crew(room_width/2,room_height/4 + (CELL_HEIGHT*2));
+    
+    //Place a ship part
+    instance_create(room_width/2, room_height/2, obj_room_reactor);   
+    
+    // Add the walls
+    for(var yy = 1; yy &lt; height-1; yy++){
+        for(var xx=1; xx &lt; width-1; xx++){
+            if(grid[# xx,yy] == FLOOR){
+                // Check for walls
+                if(grid[# xx+1, yy] != FLOOR){
+                    grid[# xx+1, yy] = WALL;
+                }
+                if(grid[# xx-1, yy] != FLOOR){
+                    grid[# xx-1, yy] = WALL;
+                }
+                if(grid[# xx, yy+1] != FLOOR){
+                    grid[# xx, yy+1] = WALL;
+                }
+                if(grid[# xx, yy-1] != FLOOR){
+                    grid[# xx, yy-1] = WALL;
+                }          
+            }    
+        }
+    }
+    
+    // Draw the level
+    for(var yy = 0; yy &lt; height; yy++){
+        for(var xx = 0; xx &lt; width; xx++){
+            if(grid[# xx, yy] == FLOOR){
+                
+                tile_add(bg_floor, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, 0);
+                
+                var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
+                var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
+                
+                // Maybe put an enemy here
+                var odds = 30;
+            
+                if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
+                    var newEnemy = instance_create(ex,ey,obj_enemy);
+                    var set_mode = "hold";
+                    
+                    var oddsMode = 3;
+                    var modRnm = irandom(oddsMode);
+                    if(modRnm==0){
+                        set_mode = "hunt";
+                    }else if(modRnm==1){
+                        set_mode = "defend";                
+                    }else{
+                        set_mode = "hold";           
+                    }
+                    newEnemy.mode = set_mode;
+                    
+                    var race_index = irandom(array_height_2d(global.races)-1);
+                    newEnemy.sprite_index = global.races[race_index,RACE_SPR];
+    
+                }
+                
+                
+    
+                          
+            }else{
+                //This is a wall or void. Add a solid cell to the pathfinding grid.
+                mp_grid_add_cell(grid_path,xx,yy);
+            }
+        }
+    }
+    
+    var tw = CELL_WIDTH/2;
+    var th = CELL_HEIGHT/2;
+    
+    // Add the tiles
+    for (var yy = 0; yy &lt; height*2; yy++) {
+        for (var xx = 0; xx &lt; width*2; xx++) {
+            if (grid[# xx div 2, yy div 2] == FLOOR) {
+                // Get the tile's x and y
+                var tx = xx*tw;
+                var ty = yy*th;
+                
+                var right = grid[# (xx+1) div 2, yy div 2] != FLOOR;
+                var left = grid[# (xx-1) div 2, yy div 2] != FLOOR;
+                var top = grid[# xx div 2, (yy-1) div 2] != FLOOR;
+                var bottom = grid[# xx div 2, (yy+1) div 2] != FLOOR;
+                
+                var top_right = grid[# (xx+1) div 2, (yy-1) div 2] != FLOOR;
+                var top_left = grid[# (xx-1) div 2, (yy-1) div 2] != FLOOR;
+                var bottom_right = grid[# (xx+1) div 2, (yy+1) div 2] != FLOOR;
+                var bottom_left = grid[# (xx-1) div 2, (yy+1) div 2] != FLOOR;
+                
+                 // Maybe place some cover
+                 var cOdds = 60;
+                 if( !top &amp;&amp; !bottom &amp;&amp; !right &amp;&amp; !left &amp;&amp; irandom(cOdds) == cOdds){
+                    var cover = instance_create(tx,ty,obj_crate);
+                    cover.depth = -ty;         
+                 }
+                
+                
+                if (right) {
+                    if (bottom) {
+                        tile_add(wall_bg, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                        if(bottom_right){
+                            tile_add(wall_bg, tw*4, th*1, tw, th, tx+tw, ty+th, -ty);
+                        }
+                        
+                    } else if (top) {
+                        if (top_right) {
+                            tile_add(wall_bg, tw*4, th*0, tw, th, tx+tw, ty-th, -ty);
+                        } else {
+                            tile_add(wall_bg, tw*3, th*0, tw, th, tx, ty-th, -ty);
+                        }
+                        tile_add(wall_bg, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                    } else {
+                        tile_add(wall_bg, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                    }
+                }
+                
+                if (left) {
+                    if (bottom) {
+                        tile_add(wall_bg, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                        if(bottom_left){
+                            tile_add(wall_bg, tw*3, th*1, tw, th, tx-tw, ty+th, -ty);
+                        }
+                        
+                    } else if (top) {
+                        if (top_left) {
+                            tile_add(wall_bg, tw*3, th*0, tw, th, tx-tw, ty-th, -ty);
+                        } else {
+                            tile_add(wall_bg, tw*4, th*0, tw, th, tx, ty-th, -ty);
+                        }
+                        tile_add(wall_bg, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                    } else {
+                        tile_add(wall_bg, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                    }
+                }
+                
+                if (top) {
+                    if (!top_right) {
+                        tile_add(wall_bg, tw*2, th*2, tw, th, tx, ty-th, -ty);
+                    } else if (!top_left) {
+                        tile_add(wall_bg, tw*0, th*2, tw, th, tx, ty-th, -ty);
+                    } else {
+                        tile_add(wall_bg, tw*1, th*2, tw, th, tx, ty-th, -ty);
+                    }
+                }
+                
+                if (bottom) {
+                
+    
+                    if (!bottom_right) {
+                        tile_add(wall_bg, tw*2, th*0, tw, th, tx, ty+th, -ty-tw*2);
+                    } else if (!bottom_left) {
+                        tile_add(wall_bg, tw*0, th*0, tw, th, tx, ty+th, -ty-tw*2);
+                    } else {
+                        tile_add(wall_bg, tw*1, th*0, tw, th, tx, ty+th, -ty-tw);
+                    }
+                    
+    
+                }
+                
+    
+    
+            }
+        }
+    }
+    
+}//End room type check
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create custom level
+if(global.room_type=="custom"){
+
+texture_set_interpolation(false);
+
+// Resize
+room_width = 740;
+room_height = 740;
+
+var wall_bg = bg_walltiles;
+
+// Set the grid width and height
+var width = room_width div CELL_WIDTH;
+var height = room_height div CELL_HEIGHT;
+sizeModifier = .15;//.10 .25 .50, .75, 1, 1.25 ... do not exceed 2. This is for the overall size of the grid. Larger ships.
+
+// Create the DS grid
+grid = ds_grid_create(width, height);
+
+// Create the pathfinding grid
+grid_path = mp_grid_create(0,0,width,height,CELL_WIDTH,CELL_HEIGHT);
+
+// Fill the grid with VOID
+ds_grid_set_region(grid, 0, 0, width, height, VOID);
+
+// Build floor
+ds_grid_set_region(grid, width/4, height/4, width-(width/4), height-(height/4), FLOOR);
+
+
+// Find wall objects that were placed and update the grid with their location.
+for(var i = 0; i &lt; instance_number(obj_wall); i++) {
+    var wall = instance_find(obj_wall,i);
+    wx = wall.x / CELL_WIDTH;
+    wy = wall.y / CELL_HEIGHT;
+    grid[# wx, wy] = WALL;
+}
+
+
+//Create the player
+instance_create(room_width/2, room_height/4, obj_player);
+
+
+// Add the walls
+for(var yy = 1; yy &lt; height-1; yy++){
+    for(var xx=1; xx &lt; width-1; xx++){
+        if(grid[# xx,yy] == FLOOR){
+            // Check for walls
+            if(grid[# xx+1, yy] != FLOOR){
+                grid[# xx+1, yy] = WALL;
+            }
+            if(grid[# xx-1, yy] != FLOOR){
+                grid[# xx-1, yy] = WALL;
+            }
+            if(grid[# xx, yy+1] != FLOOR){
+                grid[# xx, yy+1] = WALL;
+            }
+            if(grid[# xx, yy-1] != FLOOR){
+                grid[# xx, yy-1] = WALL;
+            }          
+        }    
+    }
+}
+
+// Draw the level
+for(var yy = 0; yy &lt; height; yy++){
+    for(var xx = 0; xx &lt; width; xx++){
+        if(grid[# xx, yy] == FLOOR){
+            
+            tile_add(bg_floor, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, 0);
+            
+            var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
+            var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
+
+                      
+        }else{
+            //This is a wall or void. Add a solid cell to the pathfinding grid.
+            mp_grid_add_cell(grid_path,xx,yy);
+        }
+    }
+}
+
+var tw = CELL_WIDTH/2;
+var th = CELL_HEIGHT/2;
+
+// Add the tiles
+for (var yy = 0; yy &lt; height*2; yy++) {
+    for (var xx = 0; xx &lt; width*2; xx++) {
+        if (grid[# xx div 2, yy div 2] == FLOOR) {
+            // Get the tile's x and y
+            var tx = xx*tw;
+            var ty = yy*th;
+            
+            var right = grid[# (xx+1) div 2, yy div 2] != FLOOR;
+            var left = grid[# (xx-1) div 2, yy div 2] != FLOOR;
+            var top = grid[# xx div 2, (yy-1) div 2] != FLOOR;
+            var bottom = grid[# xx div 2, (yy+1) div 2] != FLOOR;
+            
+            var top_right = grid[# (xx+1) div 2, (yy-1) div 2] != FLOOR;
+            var top_left = grid[# (xx-1) div 2, (yy-1) div 2] != FLOOR;
+            var bottom_right = grid[# (xx+1) div 2, (yy+1) div 2] != FLOOR;
+            var bottom_left = grid[# (xx-1) div 2, (yy+1) div 2] != FLOOR;
+            
+             // Maybe place some cover
+             var cOdds = 60;
+             if( !top &amp;&amp; !bottom &amp;&amp; !right &amp;&amp; !left &amp;&amp; irandom(cOdds) == cOdds){
+                var cover = instance_create(tx,ty,obj_crate);
+                cover.depth = -ty;         
+             }
+            
+            
+            if (right) {
+                if (bottom) {
+                    tile_add(wall_bg, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                    if(bottom_right){
+                        tile_add(wall_bg, tw*4, th*1, tw, th, tx+tw, ty+th, -ty);
+                    }
+                    
+                } else if (top) {
+                    if (top_right) {
+                        tile_add(wall_bg, tw*4, th*0, tw, th, tx+tw, ty-th, -ty);
+                    } else {
+                        tile_add(wall_bg, tw*3, th*0, tw, th, tx, ty-th, -ty);
+                    }
+                    tile_add(wall_bg, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                } else {
+                    tile_add(wall_bg, tw*0, th*1, tw, th, tx+tw, ty, -ty);
+                }
+            }
+            
+            if (left) {
+                if (bottom) {
+                    tile_add(wall_bg, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                    if(bottom_left){
+                        tile_add(wall_bg, tw*3, th*1, tw, th, tx-tw, ty+th, -ty);
+                    }
+                    
+                } else if (top) {
+                    if (top_left) {
+                        tile_add(wall_bg, tw*3, th*0, tw, th, tx-tw, ty-th, -ty);
+                    } else {
+                        tile_add(wall_bg, tw*4, th*0, tw, th, tx, ty-th, -ty);
+                    }
+                    tile_add(wall_bg, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                } else {
+                    tile_add(wall_bg, tw*2, th*1, tw, th, tx-tw, ty, -ty);
+                }
+            }
+            
+            if (top) {
+                if (!top_right) {
+                    tile_add(wall_bg, tw*2, th*2, tw, th, tx, ty-th, -ty);
+                } else if (!top_left) {
+                    tile_add(wall_bg, tw*0, th*2, tw, th, tx, ty-th, -ty);
+                } else {
+                    tile_add(wall_bg, tw*1, th*2, tw, th, tx, ty-th, -ty);
+                }
+            }
+            
+            if (bottom) {
+            
+
+                if (!bottom_right) {
+                    tile_add(wall_bg, tw*2, th*0, tw, th, tx, ty+th, -ty-tw*2);
+                } else if (!bottom_left) {
+                    tile_add(wall_bg, tw*0, th*0, tw, th, tx, ty+th, -ty-tw*2);
+                } else {
+                    tile_add(wall_bg, tw*1, th*0, tw, th, tx, ty+th, -ty-tw);
+                }
+                
+
+            }
+            
+
+
+        }
+    }
+}
+}
 </string>
           </argument>
         </arguments>
@@ -306,6 +824,32 @@ for (var yy = 0; yy &lt; height*2; yy++) {
 
 ds_grid_destroy(grid);
 mp_grid_destroy(grid_path);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Music
+
+audio_stop_all();
+audio_play_sound(snd_theme2,1,1);
 </string>
           </argument>
         </arguments>

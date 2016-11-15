@@ -42,6 +42,7 @@ map[NPC_HP] =  max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_mod
 map[NPC_HP_CURRENT] =  map[NPC_HP];
 map[NPC_MISSION]=noone;
 map[NPC_LOCATION]=location;// string "type,index,sector_row,sector_col"
+map[NPC_ACTIVE]=true;
 
 
 return map;

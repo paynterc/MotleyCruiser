@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
+type = 1//player team
 facing = 0;
 hp = 10;
 hp_current = hp;
@@ -34,6 +35,8 @@ image_speed = ispeed;
 spd = 3;
 hspd=0;
 vsped=0;
+health_y = sprite_get_height(sprite_index) - 5;
+
 </string>
           </argument>
         </arguments>
@@ -56,6 +59,7 @@ vsped=0;
             <kind>1</kind>
             <string>/// Equip weapon
 weapon = instance_create(x,y,obj_gun);
+weapon.type = type;
 
 </string>
           </argument>
@@ -133,8 +137,6 @@ if(weapon != noone){
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_bullet_enemy">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -151,25 +153,39 @@ if(weapon != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set health
-hp_current --;
+            <string>/// Audio listener
+audio_listener_position(x, y, 500);
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="6" enumb="57">
       <action>
         <libid>1</libid>
-        <id>203</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
         <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_kill_object</functionname>
+        <exetype>2</exetype>
+        <functionname></functionname>
         <codestring></codestring>
-        <whoName>other</whoName>
+        <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Grenade
+var grenade = instance_create(x,y,obj_grenade);
+grenade.depth = -200;
+grenade.direction = point_direction(x,y,mouse_x,mouse_y);
+grenade.speed = 4;
+
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
     <event eventtype="6" enumb="56">

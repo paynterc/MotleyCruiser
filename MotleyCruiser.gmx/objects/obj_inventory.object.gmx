@@ -115,7 +115,7 @@ if keyboard_check_pressed(ord("U")){
    show_message("Selected Item was deleted (1 Amount less)");
 }
 
-if keyboard_check_pressed(ord("I")){
+if keyboard_check_pressed(ord("D")){
    //Drop a Item (object is needed);
    inventory_item_drop(inventory_last_select(),1,view_wview[0]-64+random(48),view_hview[0]/2-random(64)+random(64),obj_drop);
    //show_message("Selected Item was dropped");

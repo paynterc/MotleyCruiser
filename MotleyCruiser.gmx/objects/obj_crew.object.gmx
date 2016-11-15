@@ -26,8 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
-
+type=1//player team
 depth = -y;
+
+// data indexes
+global_index = noone;
+crew_index = noone;
+team_index = noone;
 
 path = path_add();
 
@@ -47,7 +52,12 @@ image_speed = .5;
 
 // Equip weapon
 weapon = instance_create(x,y,obj_gun);
+weapon.type = type;
 
+sprite_default = spr_default;
+sprite_index = sprite_default;
+health_y = sprite_get_height(sprite_index) + 5;
+hyset = false;
 </string>
           </argument>
         </arguments>
@@ -71,6 +81,11 @@ weapon = instance_create(x,y,obj_gun);
           <argument>
             <kind>1</kind>
             <string>/// Cleanup
+if(weapon != noone){
+    weapon.shooting = false;
+    weapon.destroy = true;
+}
+
 if(path_exists(path)) {
     path_delete(path);
 }
@@ -102,7 +117,7 @@ if(path_exists(path)) {
 //"hold" holds position then falls back to core when player gets near
 // hunt will find closest enemy and find a path to it while shooting
 var stopPath = false;
-
+var inview = false;//target in game view
 if(instance_exists(obj_enemy)){
     
     if(target==noone || !instance_exists(target) || point_distance(x,y,target.x,target.y) &gt; 200){
@@ -111,9 +126,13 @@ if(instance_exists(obj_enemy)){
 
     var px = (target.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
     var py = (target.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
+    
+    inview = scr_instance_in_view(target);
 
 }else{
     target = noone;
+    weapon.shooting = false;
+    weapon.image_angle = direction;
 }
 
 if(instance_exists(obj_player) &amp;&amp; (mode=="defend" || mode=="fallback")){
@@ -137,12 +156,10 @@ if(instance_exists(obj_player) &amp;&amp; (mode=="defend" || mode=="fallback")){
             }
         
         
-            if(point_distance(x,y,px,py) &lt; 200){
+            if(inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y)){
                 // Start shooting
-                if(weapon != noone){
-                    weapon.image_angle =  point_direction(x, y, px, py);
-                    weapon.shooting = true;
-                }
+                weapon.image_angle =  point_direction(x, y, px, py);
+                weapon.shooting = true;
 
             }else{
                 if(weapon != noone){
@@ -158,14 +175,13 @@ if(instance_exists(obj_player) &amp;&amp; (mode=="defend" || mode=="fallback")){
         // Get path to player
         scr_get_path_to_point(px,py,pspeed);
  
-        if(path_get_number(path)&lt;5){
+        if(inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y)){
             //path_end();
             stopPath=true;
             // Start shooting
-            if(weapon != noone){
-                weapon.image_angle =  point_direction(x, y, px, py);
-                weapon.shooting = true;
-            }
+            weapon.image_angle =  point_direction(x, y, px, py);
+            weapon.shooting = true;
+
         
         }else{
             if(weapon != noone){
@@ -177,10 +193,12 @@ if(instance_exists(obj_player) &amp;&amp; (mode=="defend" || mode=="fallback")){
     
 }else{
 
-                if(weapon != noone){
-                    weapon.shooting = false;
-                }
+    if(weapon != noone){
+        weapon.shooting = false;
+    }
 }
+
+
 
 if(stopPath){
     path_end();
@@ -215,15 +233,21 @@ alarm[0] = room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = -y;
+            <string>/// Check hp
+depth = -y;
 
-/// Check hp_current
 if(hp_current&lt;1){
-
-    if(weapon != noone)weapon.shooting = false;
+    corpse = instance_create(x,y,obj_corpse);
+    corpse.sprite = sprite_index;
+    //update data so we know this npc is dead
+    scr_global_update(global.crew,crew_index,NPC_ACTIVE,false);
+    scr_global_update(global.npcs,global_index,NPC_ACTIVE,false);
+    
     instance_destroy();
     
 }
+
+
 
 if(direction &gt;=180){
     image_xscale = -1;
@@ -260,22 +284,6 @@ if(weapon != noone){
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="4" ename="obj_bullet_enemy">
-      <action>
-        <libid>1</libid>
-        <id>203</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_kill_object</functionname>
-        <codestring></codestring>
-        <whoName>other</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -292,7 +300,11 @@ if(weapon != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>hp_current -= 1;
+            <string>/// Update sprite
+if(sprite_index != sprite_default &amp;&amp; !hyset){
+    health_y = sprite_get_height(sprite_index) - 5;
+    hyset = true;
+}
 </string>
           </argument>
         </arguments>
@@ -373,7 +385,7 @@ if(path_exists(path)) {
           <argument>
             <kind>1</kind>
             <string>draw_self();
-draw_healthbar(x-10,y-23,x+10,y-20, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
+draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
 </string>
           </argument>
         </arguments>

@@ -27,16 +27,19 @@
     <sprite>sprites\spr_arcnid</sprite>
     <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_rifle1</sprite>
+    <sprite>sprites\spr_rifle2</sprite>
     <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_warchicken</sprite>
     <sprite>sprites\spr_flowridian</sprite>
+    <sprite>sprites\spr_flowridian2</sprite>
     <sprite>sprites\spr_hurgan</sprite>
     <sprite>sprites\spr_hurgan2</sprite>
     <sprite>sprites\spr_hurgan3</sprite>
     <sprite>sprites\spr_bullet</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
     <sprite>sprites\spr_core</sprite>
+    <sprite>sprites\spr_panel_1</sprite>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
       <sprite>sprites\spr_hforeground</sprite>
@@ -114,6 +117,7 @@
         <sprite>sprites\spr_ItemIcon_EmptyBucket</sprite>
         <sprite>sprites\spr_ItemIcon_EmptyIronBucket</sprite>
         <sprite>sprites\spr_ItemIcon_Feather</sprite>
+        <sprite>sprites\spr_keycard</sprite>
         <sprite>sprites\spr_ItemIcon_Glas</sprite>
         <sprite>sprites\spr_ItemIcon_Gold</sprite>
         <sprite>sprites\spr_ItemIcon_HealPotion</sprite>
@@ -147,11 +151,21 @@
         <sprite>sprites\spr_ItemIcon_XPTrank</sprite>
       </sprites>
     </sprites>
+    <sprite>sprites\spr_default</sprite>
+    <sprite>sprites\spr_boom</sprite>
+    <sprite>sprites\spr_desk</sprite>
+    <sprite>sprites\spr_crate</sprite>
+    <sprite>sprites\spr_grenade</sprite>
+    <sprite>sprites\spr_room_reactor</sprite>
+    <sprite>sprites\spr_door_reactor</sprite>
+    <sprite>sprites\spr_turret_base_large</sprite>
+    <sprite>sprites\spr_gun_large</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
     <background>background\bg_wall</background>
     <background>background\bg_walltiles</background>
+    <background>background\bg_wall_solid</background>
     <background>background\bg_walltile_bu</background>
     <background>background\bg_counters</background>
     <background>background\bg_starfield</background>
@@ -173,12 +187,19 @@
     </scripts>
     <scripts name="_service">
       <script>scripts\scr_get_random_item.gml</script>
+      <script>scripts\scr_global_update.gml</script>
     </scripts>
-    <script>scripts\scr_move.gml</script>
-    <script>scripts\scr_grid_place_meeting.gml</script>
+    <scripts name="_grids_and_collision">
+      <script>scripts\scr_grid_place_meeting.gml</script>
+      <script>scripts\scr_move.gml</script>
+      <script>scripts\scr_gridcol_point.gml</script>
+      <script>scripts\scr_gridcol_line.gml</script>
+      <script>scripts\scr_instantiate_all_crew.gml</script>
+    </scripts>
     <script>scripts\scr_save_room.gml</script>
     <script>scripts\scr_get_path_to_point.gml</script>
     <script>scripts\scr_gradually_rotate.gml</script>
+    <script>scripts\scr_gradually_rotate_2.gml</script>
     <script>scripts\scr_shoot.gml</script>
     <script>scripts\scr_push_array.gml</script>
     <script>scripts\scr_push_array_1d.gml</script>
@@ -278,6 +299,10 @@
     <script>scripts\scr_array_concat.gml</script>
     <script>scripts\scr_array_random.gml</script>
     <script>scripts\scr_instance_in_view.gml</script>
+    <script>scripts\scr_drop_loot.gml</script>
+    <script>scripts\scr_simple_timer.gml</script>
+    <script>scripts\scr_break_crates.gml</script>
+    <script>scripts\scr_user_input.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -288,13 +313,12 @@
   </fonts>
   <objects name="objects">
     <objects name="_space_combat">
+      <object>objects\obj_space_level</object>
       <object>objects\obj_ship</object>
       <object>objects\obj_player_ship</object>
-      <object>objects\obj_player_ship_bu</object>
-      <object>objects\obj_npc_ship</object>
-      <object>objects\obj_space_level</object>
-      <object>objects\obj_laser</object>
       <object>objects\obj_enemy_ship</object>
+      <object>objects\obj_npc_ship</object>
+      <object>objects\obj_laser</object>
       <object>objects\obj_explosion</object>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
@@ -306,20 +330,33 @@
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
-      <object>objects\obj_cantina</object>
       <object>objects\obj_team</object>
-      <object>objects\obj_sentient</object>
       <object>objects\obj_enemy</object>
+      <object>objects\obj_mortal</object>
+      <object>objects\obj_cantina</object>
+      <object>objects\obj_sentient</object>
       <object>objects\obj_level</object>
+      <object>objects\obj_level_BACKUP</object>
       <object>objects\obj_bullet</object>
+      <object>objects\obj_grenade</object>
       <object>objects\obj_bullet_enemy</object>
       <object>objects\obj_core</object>
+      <object>objects\obj_master_panel</object>
       <object>objects\obj_control</object>
       <object>objects\obj_gun</object>
       <object>objects\obj_wall_invis</object>
+      <object>objects\obj_wall</object>
       <object>objects\obj_dialog_control</object>
+      <object>objects\obj_da_loot</object>
+      <object>objects\obj_corpse</object>
+      <object>objects\obj_cover</object>
+      <object>objects\obj_crate</object>
+      <object>objects\obj_room_reactor</object>
+      <object>objects\obj_door</object>
+      <object>objects\obj_turret</object>
     </objects>
     <object>objects\obj_damager</object>
+    <object>objects\obj_aoe</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_game_control</object>
@@ -334,8 +371,9 @@
     <room>rooms\rm_room1</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
+    <room>rooms\rm_template</room>
   </rooms>
-  <constants number="141">
+  <constants number="143">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -354,6 +392,8 @@
     <constant name="NPC_NAME_LAST">6</constant>
     <constant name="NPC_MISSION">7</constant>
     <constant name="NPC_LOCATION">8</constant>
+    <constant name="NPC_ACTIVE">9</constant>
+    <constant name="NPC_GLOBAL_INDEX">10</constant>
     <constant name="D_BRANCH_TEXT">0</constant>
     <constant name="D_BRANCH_TYPE">1</constant>
     <constant name="D_BRANCH_BUTTONS">2</constant>
