@@ -24,14 +24,14 @@
     <sprite>sprites\spr_human</sprite>
     <sprite>sprites\spr_pudning</sprite>
     <sprite>sprites\spr_androne</sprite>
+    <sprite>sprites\spr_cryptolid</sprite>
+    <sprite>sprites\spr_zomboid</sprite>
     <sprite>sprites\spr_arcnid</sprite>
     <sprite>sprites\spr_chicken</sprite>
     <sprite>sprites\spr_rifle1</sprite>
     <sprite>sprites\spr_rifle2</sprite>
     <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_bot1</sprite>
-    <sprite>sprites\spr_warchicken</sprite>
-    <sprite>sprites\spr_flowridian</sprite>
     <sprite>sprites\spr_flowridian2</sprite>
     <sprite>sprites\spr_hurgan</sprite>
     <sprite>sprites\spr_hurgan2</sprite>
@@ -189,22 +189,23 @@
       <script>scripts\scr_get_random_item.gml</script>
       <script>scripts\scr_global_update.gml</script>
     </scripts>
-    <scripts name="_grids_and_collision">
-      <script>scripts\scr_grid_place_meeting.gml</script>
-      <script>scripts\scr_move.gml</script>
-      <script>scripts\scr_gridcol_point.gml</script>
-      <script>scripts\scr_gridcol_line.gml</script>
+    <scripts name="map">
+      <scripts name="_grids_and_collision">
+        <script>scripts\scr_get_path_to_point.gml</script>
+        <script>scripts\scr_grid_place_meeting.gml</script>
+        <script>scripts\scr_move.gml</script>
+        <script>scripts\scr_gridcol_point.gml</script>
+        <script>scripts\scr_gridcol_line.gml</script>
+      </scripts>
+      <script>scripts\scr_break_crates.gml</script>
       <script>scripts\scr_instantiate_all_crew.gml</script>
+      <script>scripts\scr_drop_loot.gml</script>
+      <script>scripts\scr_save_room.gml</script>
+      <script>scripts\scr_stamp_rectangle.gml</script>
     </scripts>
-    <script>scripts\scr_save_room.gml</script>
-    <script>scripts\scr_get_path_to_point.gml</script>
     <script>scripts\scr_gradually_rotate.gml</script>
     <script>scripts\scr_gradually_rotate_2.gml</script>
     <script>scripts\scr_shoot.gml</script>
-    <script>scripts\scr_push_array.gml</script>
-    <script>scripts\scr_push_array_1d.gml</script>
-    <script>scripts\scr_update_array_1d.gml</script>
-    <script>scripts\scr_new_array.gml</script>
     <scripts name="dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
@@ -251,7 +252,6 @@
     <script>scripts\totro_plus.gml</script>
     <script>scripts\scr_get_closest.gml</script>
     <script>scripts\scr_assemble_ship.gml</script>
-    <script>scripts\scr_str_split.gml</script>
     <script>scripts\scr_scaffold_grid.gml</script>
     <script>scripts\scr_scaffold_offsets.gml</script>
     <scripts name="HuleInventoryScript">
@@ -293,16 +293,21 @@
         <script>scripts\draw_panel.gml</script>
         <script>scripts\draw_shadow.gml</script>
       </scripts>
+      <script>scripts\scr_example_leaf.gml</script>
     </scripts>
-    <script>scripts\scr_example_leaf.gml</script>
     <script>scripts\scr_script_parse.gml</script>
-    <script>scripts\scr_array_concat.gml</script>
-    <script>scripts\scr_array_random.gml</script>
     <script>scripts\scr_instance_in_view.gml</script>
-    <script>scripts\scr_drop_loot.gml</script>
     <script>scripts\scr_simple_timer.gml</script>
-    <script>scripts\scr_break_crates.gml</script>
     <script>scripts\scr_user_input.gml</script>
+    <scripts name="_arrays">
+      <script>scripts\scr_str_split.gml</script>
+      <script>scripts\scr_array_random.gml</script>
+      <script>scripts\scr_new_array.gml</script>
+      <script>scripts\scr_push_array.gml</script>
+      <script>scripts\scr_push_array_1d.gml</script>
+      <script>scripts\scr_array_concat.gml</script>
+      <script>scripts\scr_update_array_1d.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -312,21 +317,12 @@
     <font>fonts\fnt_messagebox</font>
   </fonts>
   <objects name="objects">
-    <objects name="_space_combat">
-      <object>objects\obj_space_level</object>
-      <object>objects\obj_ship</object>
-      <object>objects\obj_player_ship</object>
-      <object>objects\obj_enemy_ship</object>
-      <object>objects\obj_npc_ship</object>
-      <object>objects\obj_laser</object>
-      <object>objects\obj_explosion</object>
-      <object>objects\obj_planet</object>
-      <object>objects\obj_moon</object>
-      <object>objects\obj_station</object>
-      <object>objects\obj_landable</object>
-      <object>objects\obj_sun</object>
-      <object>objects\obj_radar</object>
-    </objects>
+    <object>objects\obj_game_control</object>
+    <object>objects\obj_damager</object>
+    <object>objects\obj_aoe</object>
+    <object>objects\obj_mission_log</object>
+    <object>objects\obj_button_basic</object>
+    <object>objects\obj_module</object>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
@@ -355,12 +351,21 @@
       <object>objects\obj_door</object>
       <object>objects\obj_turret</object>
     </objects>
-    <object>objects\obj_damager</object>
-    <object>objects\obj_aoe</object>
-    <object>objects\obj_mission_log</object>
-    <object>objects\obj_button_basic</object>
-    <object>objects\obj_game_control</object>
-    <object>objects\obj_module</object>
+    <objects name="_space_combat">
+      <object>objects\obj_space_level</object>
+      <object>objects\obj_ship</object>
+      <object>objects\obj_player_ship</object>
+      <object>objects\obj_enemy_ship</object>
+      <object>objects\obj_npc_ship</object>
+      <object>objects\obj_laser</object>
+      <object>objects\obj_explosion</object>
+      <object>objects\obj_planet</object>
+      <object>objects\obj_moon</object>
+      <object>objects\obj_station</object>
+      <object>objects\obj_landable</object>
+      <object>objects\obj_sun</object>
+      <object>objects\obj_radar</object>
+    </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
       <object>objects\obj_inventory</object>

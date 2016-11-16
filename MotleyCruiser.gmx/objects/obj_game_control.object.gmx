@@ -67,7 +67,8 @@ global.sector_width = 10000;//width in pixels of space combat room
 global.room_type="random";//default. can be random, custom or control
 global.room_seed=noone;
 global.door_index = noone; // Which door to we place you at when returning to room
-
+global.controls_total = 3; // Control rooms. Priority is Helm, Engine, Shields
+global.controls_remaining = global.controls_total; // Control rooms remaining to capture
 
 /****************************************************************/
 /*                      LIBRARIES                               */
