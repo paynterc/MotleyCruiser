@@ -57,7 +57,13 @@ image_speed = .10;
 // No hp check for this guy
 if(scr_user_input("interact")){
     if( instance_exists(obj_player) &amp;&amp; distance_to_object(obj_player)&lt;10){
-        show_message("INTERACT KEY WAS PRESSED");
+        global.controls_remaining --;
+        if(scr_check_ship_capture()){
+            show_message("SHIP CAPTURED");
+        }
+        var expld = instance_create(x,y,obj_explosion);
+        expld.depth=-10000;
+        instance_destroy();
     }
     
 }

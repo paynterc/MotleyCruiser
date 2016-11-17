@@ -57,10 +57,6 @@ draw_sprite(spr_hframe,1,view_xview[0]+5,view_yview[0]+5);
 
 //draw_set_colour(c_white);
 //draw_text(view_xview[0]+100, view_yview[0]+10, "Health: "+string(obj_player.hp));
-
-if(obj_player.hp_current&lt;1){
-    room_restart();
-}
 </string>
           </argument>
         </arguments>

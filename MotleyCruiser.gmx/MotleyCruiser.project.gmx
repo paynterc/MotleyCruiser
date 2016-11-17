@@ -172,41 +172,16 @@
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <scripts name="_libraries">
-      <script>scripts\scr_guns.gml</script>
-      <script>scripts\scr_scaffolds.gml</script>
-      <script>scripts\scr_races.gml</script>
+    <scripts name="_arrays">
+      <script>scripts\scr_str_split.gml</script>
+      <script>scripts\scr_array_random.gml</script>
+      <script>scripts\scr_new_array.gml</script>
+      <script>scripts\scr_push_array.gml</script>
+      <script>scripts\scr_push_array_1d.gml</script>
+      <script>scripts\scr_array_concat.gml</script>
+      <script>scripts\scr_update_array_1d.gml</script>
     </scripts>
-    <scripts name="_entities">
-      <script>scripts\scr_ship.gml</script>
-      <script>scripts\scr_ship_module.gml</script>
-      <script>scripts\scr_gun.gml</script>
-      <script>scripts\scr_mission.gml</script>
-      <script>scripts\scr_mission_objective.gml</script>
-      <script>scripts\scr_dialogue_button.gml</script>
-    </scripts>
-    <scripts name="_service">
-      <script>scripts\scr_get_random_item.gml</script>
-      <script>scripts\scr_global_update.gml</script>
-    </scripts>
-    <scripts name="map">
-      <scripts name="_grids_and_collision">
-        <script>scripts\scr_get_path_to_point.gml</script>
-        <script>scripts\scr_grid_place_meeting.gml</script>
-        <script>scripts\scr_move.gml</script>
-        <script>scripts\scr_gridcol_point.gml</script>
-        <script>scripts\scr_gridcol_line.gml</script>
-      </scripts>
-      <script>scripts\scr_break_crates.gml</script>
-      <script>scripts\scr_instantiate_all_crew.gml</script>
-      <script>scripts\scr_drop_loot.gml</script>
-      <script>scripts\scr_save_room.gml</script>
-      <script>scripts\scr_stamp_rectangle.gml</script>
-    </scripts>
-    <script>scripts\scr_gradually_rotate.gml</script>
-    <script>scripts\scr_gradually_rotate_2.gml</script>
-    <script>scripts\scr_shoot.gml</script>
-    <scripts name="dialogue">
+    <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
       <script>scripts\scr_add_dialogue_button.gml</script>
@@ -218,22 +193,15 @@
       <script>scripts\scr_make_dialogue_button.gml</script>
       <script>scripts\scr_delete_button.gml</script>
     </scripts>
-    <scripts name="mission">
-      <script>scripts\scr_make_mission.gml</script>
-      <script>scripts\scr_generate_mission.gml</script>
-      <script>scripts\scr_has_mission.gml</script>
-      <script>scripts\scr_accept_mission.gml</script>
-      <script>scripts\scr_is_mission_target.gml</script>
-      <script>scripts\scr_get_entity_objectives.gml</script>
-      <script>scripts\scr_complete_objective.gml</script>
-      <script>scripts\scr_complete_mission.gml</script>
-      <script>scripts\scr_find_objective.gml</script>
-      <script>scripts\scr_find_mission.gml</script>
-      <script>scripts\scr_get_objective_index.gml</script>
-      <script>scripts\scr_get_next_objective.gml</script>
-      <script>scripts\scr_grant_reward.gml</script>
+    <scripts name="_entities">
+      <script>scripts\scr_ship.gml</script>
+      <script>scripts\scr_ship_module.gml</script>
+      <script>scripts\scr_gun.gml</script>
+      <script>scripts\scr_mission.gml</script>
+      <script>scripts\scr_mission_objective.gml</script>
+      <script>scripts\scr_dialogue_button.gml</script>
     </scripts>
-    <scripts name="galaxy">
+    <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_sun.gml</script>
@@ -247,14 +215,10 @@
       <script>scripts\scr_test_dsmap.gml</script>
       <script>scripts\scr_get_location.gml</script>
       <script>scripts\scr_find_random_mission_target.gml</script>
+      <script>scripts\totro_plus.gml</script>
+      <script>scripts\totro.gml</script>
     </scripts>
-    <script>scripts\totro.gml</script>
-    <script>scripts\totro_plus.gml</script>
-    <script>scripts\scr_get_closest.gml</script>
-    <script>scripts\scr_assemble_ship.gml</script>
-    <script>scripts\scr_scaffold_grid.gml</script>
-    <script>scripts\scr_scaffold_offsets.gml</script>
-    <scripts name="HuleInventoryScript">
+    <scripts name="_hule_inventory">
       <scripts name="Inventory">
         <scripts name="Inventory System">
           <script>scripts\inventory_int.gml</script>
@@ -295,18 +259,63 @@
       </scripts>
       <script>scripts\scr_example_leaf.gml</script>
     </scripts>
-    <script>scripts\scr_script_parse.gml</script>
-    <script>scripts\scr_instance_in_view.gml</script>
-    <script>scripts\scr_simple_timer.gml</script>
-    <script>scripts\scr_user_input.gml</script>
-    <scripts name="_arrays">
-      <script>scripts\scr_str_split.gml</script>
-      <script>scripts\scr_array_random.gml</script>
-      <script>scripts\scr_new_array.gml</script>
-      <script>scripts\scr_push_array.gml</script>
-      <script>scripts\scr_push_array_1d.gml</script>
-      <script>scripts\scr_array_concat.gml</script>
-      <script>scripts\scr_update_array_1d.gml</script>
+    <scripts name="_libraries">
+      <script>scripts\scr_guns.gml</script>
+      <script>scripts\scr_scaffolds.gml</script>
+      <script>scripts\scr_races.gml</script>
+    </scripts>
+    <scripts name="_map">
+      <scripts name="_grids_and_collision">
+        <script>scripts\scr_get_path_to_point.gml</script>
+        <script>scripts\scr_grid_place_meeting.gml</script>
+        <script>scripts\scr_move.gml</script>
+        <script>scripts\scr_gridcol_point.gml</script>
+        <script>scripts\scr_gridcol_line.gml</script>
+      </scripts>
+      <script>scripts\scr_stamp_rectangle.gml</script>
+    </scripts>
+    <scripts name="_mission">
+      <script>scripts\scr_make_mission.gml</script>
+      <script>scripts\scr_generate_mission.gml</script>
+      <script>scripts\scr_has_mission.gml</script>
+      <script>scripts\scr_accept_mission.gml</script>
+      <script>scripts\scr_is_mission_target.gml</script>
+      <script>scripts\scr_get_entity_objectives.gml</script>
+      <script>scripts\scr_complete_objective.gml</script>
+      <script>scripts\scr_complete_mission.gml</script>
+      <script>scripts\scr_find_objective.gml</script>
+      <script>scripts\scr_find_mission.gml</script>
+      <script>scripts\scr_get_objective_index.gml</script>
+      <script>scripts\scr_get_next_objective.gml</script>
+      <script>scripts\scr_grant_reward.gml</script>
+    </scripts>
+    <scripts name="_room">
+      <script>scripts\scr_reset_room_random.gml</script>
+      <script>scripts\scr_instantiate_all_crew.gml</script>
+      <script>scripts\scr_save_room.gml</script>
+      <script>scripts\scr_player_died_in_room.gml</script>
+      <script>scripts\scr_check_ship_capture.gml</script>
+      <script>scripts\scr_shoot.gml</script>
+      <script>scripts\scr_break_crates.gml</script>
+      <script>scripts\scr_drop_loot.gml</script>
+    </scripts>
+    <scripts name="_service">
+      <script>scripts\scr_get_random_item.gml</script>
+      <script>scripts\scr_global_update.gml</script>
+      <script>scripts\scr_user_input.gml</script>
+    </scripts>
+    <scripts name="_utility">
+      <script>scripts\scr_get_closest.gml</script>
+      <script>scripts\scr_gradually_rotate.gml</script>
+      <script>scripts\scr_gradually_rotate_2.gml</script>
+      <script>scripts\scr_script_parse.gml</script>
+      <script>scripts\scr_instance_in_view.gml</script>
+    </scripts>
+    <scripts name="_ship_modules">
+      <script>scripts\scr_assemble_ship.gml</script>
+      <script>scripts\scr_simple_timer.gml</script>
+      <script>scripts\scr_scaffold_offsets.gml</script>
+      <script>scripts\scr_scaffold_grid.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -319,11 +328,11 @@
   <objects name="objects">
     <object>objects\obj_game_control</object>
     <object>objects\obj_damager</object>
-    <object>objects\obj_aoe</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_module</object>
     <objects name="_people_and_places">
+      <object>objects\obj_level</object>
       <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_team</object>
@@ -331,7 +340,6 @@
       <object>objects\obj_mortal</object>
       <object>objects\obj_cantina</object>
       <object>objects\obj_sentient</object>
-      <object>objects\obj_level</object>
       <object>objects\obj_level_BACKUP</object>
       <object>objects\obj_bullet</object>
       <object>objects\obj_grenade</object>
@@ -341,7 +349,7 @@
       <object>objects\obj_control</object>
       <object>objects\obj_gun</object>
       <object>objects\obj_wall_invis</object>
-      <object>objects\obj_wall</object>
+      <object>objects\obj_floor</object>
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_da_loot</object>
       <object>objects\obj_corpse</object>
@@ -370,6 +378,9 @@
       <object>objects\obj_drop</object>
       <object>objects\obj_inventory</object>
     </objects>
+    <objects name="_room_combat">
+      <object>objects\obj_aoe</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -377,6 +388,8 @@
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
     <room>rooms\rm_template</room>
+    <room>rooms\rm_custom1</room>
+    <room>rooms\rm_cantina2</room>
   </rooms>
   <constants number="143">
     <constant name="CELL_WIDTH">32</constant>
