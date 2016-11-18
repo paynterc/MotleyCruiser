@@ -1,5 +1,5 @@
 /// Reset globals for random room
-global.room_type="custom";//default. can be random, custom or control
+global.room_type="random";//default. can be random, custom or control
 global.room_seed=noone;
 global.door_index = noone; // Which door to we place you at when returning to room
 global.controls_total = 3; // Control rooms. Priority is Helm, Engine, Shields

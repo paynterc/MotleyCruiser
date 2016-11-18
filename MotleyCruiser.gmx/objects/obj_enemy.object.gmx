@@ -316,35 +316,6 @@ if(sprite_index != sprite_default &amp;&amp; !hyset){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_damager">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(other.type!=type){
-    hp_current -= other.damage;
-    with(other){
-        instance_destroy();
-    }
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="4" ename="obj_enemy">
       <action>
         <libid>1</libid>
@@ -371,6 +342,35 @@ var dir = point_direction(other.x, other.y, x, y);
 var hspd = lengthdir_x(.5,dir);
 var vspd = lengthdir_y(.5,dir);
 scr_move(hspd, vspd);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_damager">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(other.type!=type){
+    hp_current -= other.damage;
+    with(other){
+        instance_destroy();
+    }
+}
+
 </string>
           </argument>
         </arguments>

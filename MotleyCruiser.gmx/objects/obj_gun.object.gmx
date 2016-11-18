@@ -27,14 +27,43 @@
             <kind>1</kind>
             <string>myBullet = obj_bullet;
 damage = 1;
-weaponSpeed = .5;
+weaponSpeed = .15;
 shooting = false;
 destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
 
 image_speed = .05;
 
+llight = glr_light_create(spr_glr_light_mask_9, 0, x, y, c_red, 5);
+glr_light_set_static(llight, true);
+glr_lightsimple_set_active(llight,false);
+
 alarm[0] = room_speed * weaponSpeed;
+alarm[1]=room_speed * .10;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>glr_lightsimple_set_active(llight,false);
+alarm[1]=room_speed * .10;
 </string>
           </argument>
         </arguments>
@@ -58,15 +87,17 @@ alarm[0] = room_speed * weaponSpeed;
           <argument>
             <kind>1</kind>
             <string>/// Shoot a bullet
+
 if(shooting){
+    glr_lightsimple_set_active(llight,true);
     bullet = instance_create(x,y,myBullet);
     bullet.type = type;
     bullet.depth = -200;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
-    bullet.speed = 8;
+    bullet.speed = 16;
     bullet.damage = damage;
-    audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+    audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2); 
 }
 
 
@@ -94,7 +125,10 @@ alarm[0] = room_speed * weaponSpeed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(destroy){
+            <string>glr_light_set_position(llight, x + lengthdir_x(0,image_angle), y + lengthdir_y(0,image_angle));
+glr_light_set_rotation(llight,image_angle);
+if(destroy){
+    glr_light_destroy(llight);
     instance_destroy();
 }
 </string>
