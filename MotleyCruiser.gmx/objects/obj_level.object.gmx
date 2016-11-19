@@ -25,9 +25,31 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Grant some inventory
-// Clear all light, shadows, etc...
+            <string>/// Init Some variables
 glr_clear_all();
+shadows_on = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Grant some inventory
+
 </string>
           </argument>
         </arguments>
@@ -366,13 +388,17 @@ scr_instantiate_all_crew(px_start,py_start);
 instance_create(px_start,py_start,obj_core);
 
 // Place enemies
+var mesh_id = noone;
+if(shadows_on){
+    mesh_id = glr_mesh_create(0, 0, false);
+}
+
 for(var yy = 0; yy &lt; height; yy++){
     for(var xx = 0; xx &lt; width; xx++){
+        var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
+        var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
         if(grid[# xx, yy] == FLOOR){
         
-
-            var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
-            var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
             // Maybe put an enemy here
             var odds = 30;
             
@@ -407,6 +433,11 @@ for(var yy = 0; yy &lt; height; yy++){
             }
         
         
+        }else if(grid[# xx, yy] == WALL &amp;&amp; mesh_id != noone){
+            // Add a mesh.
+            
+            glr_mesh_submesh_add_box(mesh_id,CELL_WIDTH,CELL_HEIGHT,xx * CELL_WIDTH,yy * CELL_HEIGHT);
+            glr_mesh_update(mesh_id);
         }
     }
 }
@@ -908,55 +939,7 @@ mp_grid_destroy(grid_path);
             <string>/// Music
 
 audio_stop_all();
-audio_play_sound(snd_theme2,1,1);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="83">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Save the room
-scr_save_room();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="16">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// restart level
-room_restart();
+audio_play_sound(snd_theme1,1,1);
 </string>
           </argument>
         </arguments>
