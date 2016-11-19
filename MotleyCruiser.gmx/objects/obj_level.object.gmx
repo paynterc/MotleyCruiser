@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>/// Grant some inventory
+// Clear all light, shadows, etc...
+glr_clear_all();
 </string>
           </argument>
         </arguments>
@@ -548,7 +550,13 @@ if(global.room_type=="control"){
     
                 }
                 
-                
+            // Place light
+            llods = 10;
+            if(irandom(llods)==llods){
+                var clr = choose(c_red,c_green,c_blue,c_yellow,c_orange,c_white,c_lime);
+                var my_light = glr_light_create(spr_glr_light_mask_point, 0, ex, ey, clr, .05);
+                glr_light_set_static(my_light, true);
+            }
     
                           
             }else{

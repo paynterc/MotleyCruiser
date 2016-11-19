@@ -15,4 +15,5 @@ for(var i=0; i<array_length_1d(global.crew); i++){
     thiscrew.pspeed=crewMap[NPC_RUN_SPD];
     thiscrew.crew_index = i;
     thiscrew.global_index = crewMap[NPC_GLOBAL_INDEX];
+
 }

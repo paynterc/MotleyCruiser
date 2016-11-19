@@ -198,8 +198,12 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_lime);
-draw_text(32, 32, "FPS: " + string(fps_real));
+            <string>/// Debug text
+
+    draw_set_color(c_lime);
+    draw_text(32, 32, "FPS: " + string(fps_real));
+
+
 </string>
           </argument>
         </arguments>
