@@ -62,7 +62,8 @@ alarm[1]=room_speed * .10;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>glr_lightsimple_set_active(llight,false);
+            <string>/// Light
+glr_lightsimple_set_active(llight,false);
 alarm[1]=room_speed * .10;
 </string>
           </argument>
@@ -125,7 +126,8 @@ alarm[0] = room_speed * weaponSpeed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>glr_light_set_position(llight, x + lengthdir_x(0,image_angle), y + lengthdir_y(0,image_angle));
+            <string>/// Set position, destroy
+glr_light_set_position(llight, x + lengthdir_x(0,image_angle), y + lengthdir_y(0,image_angle));
 glr_light_set_rotation(llight,image_angle);
 if(destroy){
     glr_light_destroy(llight);

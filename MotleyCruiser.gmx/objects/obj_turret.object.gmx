@@ -169,7 +169,7 @@ if(hp_current&lt;1){
     expld.depth = -10000;
     if(weapon!=noone){
         with(weapon){
-            instance_destroy();
+            destroy = true;
         }
     }
 

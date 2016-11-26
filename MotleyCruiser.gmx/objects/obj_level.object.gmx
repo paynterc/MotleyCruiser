@@ -28,6 +28,7 @@
             <string>/// Init Some variables
 glr_clear_all();
 shadows_on = false;
+door = noone;
 </string>
           </argument>
         </arguments>
@@ -74,6 +75,7 @@ shadows_on = false;
 if(global.room_type=="random"){
 
 texture_set_interpolation(false);
+
 
 // Resize
 room_width=(CELL_WIDTH/16)*720;
@@ -124,7 +126,7 @@ var cy2 = cy;
 var px1 = cx;
 var py1 = cy;
 
-door_reactor_placed = false;
+
 
 // Give the controller a random direction
 var cdir = irandom(3);
@@ -171,54 +173,31 @@ repeat (1000 * sizeModifier){
 }
 
 
-if(global.controls_total&gt;0){
-    // Make a hallway and alcove
-    grid[# px1,py1-1]=FLOOR;
-    grid[# px1,py1-2]=FLOOR;
-    grid[# px1,py1-3]=FLOOR;
-    scr_stamp_rectangle(px1-1,py1-6,3,3);
-    
-    //Make a helm room door
-    var reactor_door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
-    reactor_door.depth = -10000;
-    reactor_door.room_to = room_get_name(room);
-    reactor_door.room_type = "control";
-    reactor_door.door_type = "goto";
-    reactor_door.door_index = 0;
-    door_reactor_placed = true;
-    
-    if(global.controls_total&gt;1){
-    
-        // Make an engine room door
-        var rf = scr_array_random(floors);
-        scr_stamp_rectangle(rf[0]-1,rf[2]-1,3,3);
-        var e_door = instance_create( ( (rf[0]+1)*CELL_WIDTH) - (CELL_WIDTH/2),( (rf[2]+1)* CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
-        e_door.depth = -10000;
-        e_door.room_to = room_get_name(room);
-        e_door.room_type = "control";
-        e_door.door_type = "goto";
-        e_door.door_index = 1;
-        e_door = true;
-        
-    }
-    
-    if(global.controls_total&gt;2){
-    
-        // Make a shield room
-        scr_stamp_rectangle(rf[1]-1,rf[2]-1,3,3);
-        var e_door = instance_create( ( (rf[1]+1)*CELL_WIDTH) - (CELL_WIDTH/2),( (rf[2]+1)* CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
-        e_door.depth = -10000;
-        e_door.room_to = room_get_name(room);
-        e_door.room_type = "control";
-        e_door.door_type = "goto";
-        e_door.door_index = 2;
-        e_door = true;  
-         
-    }
-    
-    
-}
+/**************************
+DOOR TO NEXT DECK OR CONTROL ROOM
+***************************/
+// Make a hallway and alcove
+grid[# px1,py1-1]=FLOOR;
+grid[# px1,py1-2]=FLOOR;
+grid[# px1,py1-3]=FLOOR;
+scr_stamp_rectangle(px1-1,py1-6,3,3);
 
+//Make a  door
+door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
+door.depth = -10000;
+
+var my_light1 = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, ((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2), c_white, 0);
+glr_light_set_static(my_light1, true)
+
+// This part will depend on the number of decks.
+// Sequence will be: deck, deck, deck, control
+door.room_to = room_get_name(room);
+door.room_type = "random";
+door.open = 0;
+door.image_speed = 0;
+
+// Deactivate the door for now. Activate when all enemies are neutralized.
+//instance_deactivate_object(door);
 
 
 
@@ -355,26 +334,8 @@ for (var yy = 0; yy &lt; height*2; yy++) {
     }
 }
 
-// Which door do we start at?
-
 px_start = px1 * CELL_WIDTH + (CELL_WIDTH/2);
 py_start = py1 * CELL_HEIGHT + (CELL_HEIGHT/2);
-
-    
-for(var i = 0; i &lt; instance_number(obj_door); i++) {
-    var door = instance_find(obj_door,i);
-    if(i==global.door_index){
-        px_start = door.x;
-        py_start = door.y + (CELL_HEIGHT);
-        global.doors_active[i]=0;
-    }
-    if(global.doors_active[i]==0){
-        
-        instance_deactivate_object(door);
-
-    }
-}
-
 
 //Create the player
 instance_create(px_start, py_start, obj_player);
@@ -400,7 +361,7 @@ for(var yy = 0; yy &lt; height; yy++){
         if(grid[# xx, yy] == FLOOR){
         
             // Maybe put an enemy here
-            var odds = 30;
+            var odds = 100;
             
             if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
   
@@ -428,7 +389,7 @@ for(var yy = 0; yy &lt; height; yy++){
             llods = 10;
             if(irandom(llods)==llods){
                 var clr = choose(c_red,c_green,c_blue,c_yellow,c_orange,c_white,c_lime);
-                var my_light = glr_light_create(spr_glr_light_mask_point, 0, ex, ey, clr, .05);
+                var my_light = glr_light_create(spr_glr_light_mask_point, 0, ex, ey, clr, random(.05));
                 glr_light_set_static(my_light, true);
             }
         
@@ -442,6 +403,8 @@ for(var yy = 0; yy &lt; height; yy++){
     }
 }
 
+// Start checking for victory condition.
+alarm[0]=room_speed;
 
 }
 </string>
@@ -503,6 +466,9 @@ if(global.room_type=="control"){
     // Place a master panel. Player will need to click this to beat the room.
     core = instance_create(room_width/2,(boxX2 * CELL_HEIGHT) + CELL_HEIGHT,obj_master_panel);
     
+    var my_light1 = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, (boxX2 * CELL_HEIGHT) + CELL_HEIGHT, c_white, 0);
+    glr_light_set_static(my_light1, true)
+    
     // Place a couple of big turrets.
     t1 = instance_create(room_width/2 - (CELL_WIDTH*2),(boxX2 * CELL_HEIGHT) + (CELL_HEIGHT*2),obj_turret);
     t2 = instance_create(room_width/2 + (CELL_WIDTH*2),(boxX2 * CELL_HEIGHT) + (CELL_HEIGHT*2),obj_turret);
@@ -510,13 +476,6 @@ if(global.room_type=="control"){
     t1.depth = -1* t1.y;
     t2.depth = -1* t2.y;
     
-    //Place a door
-
-   var reactor_door = instance_create(room_width/2, room_height/4,obj_door);
-   reactor_door.room_to = room_get_name(room);
-   reactor_door.room_type = "random";
-   reactor_door.room_seed = global.room_seed;
-   reactor_door.door_type = "goback";
         
     //Create the player
     instance_create(room_width/2, room_height/4 + (CELL_HEIGHT*2), obj_player);
@@ -888,6 +847,45 @@ for (var yy = 0; yy &lt; height*2; yy++) {
     }
 }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check to see if all enemies were eliminated on this deck
+/// See if all enemies defeated on this deck
+if(instance_number(obj_enemy)&lt;1){
+   // if done, activate door to next deck.
+   show_message("DECK COMPLETE");
+   global.decks_remaining -=1;
+   if(door != noone &amp;&amp; instance_exists(door)){
+        if(global.decks_remaining &lt; 1){
+            door.room_type = "control";
+        }
+        door.open=1;
+        door.image_speed = .20;
+   }   
+}else{
+    alarm[0]=room_speed;
+}
+
 </string>
           </argument>
         </arguments>

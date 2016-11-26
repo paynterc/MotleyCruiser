@@ -202,7 +202,7 @@ else
 
     draw_set_color(c_lime);
     draw_text(32, 32, "FPS: " + string(fps_real));
-
+    draw_text(32, 64, "Decks Remaining: " + string(global.decks_remaining));
 
 </string>
           </argument>

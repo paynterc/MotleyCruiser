@@ -30,6 +30,53 @@
 // This allows them to defend this object.
 depth = -y;
 image_speed = .10;
+hacker = noone;
+hacking = 0;
+hacktime = 100;
+hackremaining = hacktime;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Hack countdown
+if(hacking == 1){
+    if(!instance_exists(hacker) || hacker.hp_current&lt;1 || distance_to_object(hacker)&gt;20){
+        // Reset
+        hacker=noone;
+        hackremaining = hacktime;
+        hacking = 0;
+    }else{
+        hackremaining -=1;
+        if(hackremaining&lt;1){
+            show_message("SHIP CAPTURED");
+            var expld = instance_create(x,y,obj_explosion);
+            expld.depth=-10000;
+            instance_destroy();
+        }else{
+            alarm[0]=room_speed *.5;       
+        }
+    
+    }
+}
+
 
 </string>
           </argument>
@@ -55,15 +102,11 @@ image_speed = .10;
             <kind>1</kind>
             <string>/// Click me
 // No hp check for this guy
-if(scr_user_input("interact")){
+if(scr_user_input("interact") &amp;&amp; hacking==0){
     if( instance_exists(obj_player) &amp;&amp; distance_to_object(obj_player)&lt;10){
-        global.controls_remaining --;
-        if(scr_check_ship_capture()){
-            show_message("SHIP CAPTURED");
-        }
-        var expld = instance_create(x,y,obj_explosion);
-        expld.depth=-10000;
-        instance_destroy();
+        hacking = 1;
+        hacker = obj_player;
+        alarm[0]=room_speed;
     }
     
 }
@@ -88,7 +131,7 @@ if(scr_user_input("interact")){
         <isnot>0</isnot>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -105,7 +148,15 @@ if(scr_user_input("interact")){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>if(hacking == 1){
+    var xx = display_get_gui_width() / 2; var yy = display_get_gui_height() / 2;
+    
+    draw_healthbar(xx-64,yy-24,xx+64,yy-16, (hackremaining/hacktime) * 100,c_black,c_aqua,c_aqua,0,false,false);    
+    draw_set_color(c_lime);
+    draw_set_halign(fa_center);
+    draw_text(xx, yy, "HACKING: " + string(hackremaining));
+}
+
 </string>
           </argument>
         </arguments>
