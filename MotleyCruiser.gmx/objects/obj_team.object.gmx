@@ -26,11 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>llight=noone
-/***
-llight = glr_light_create(spr_glr_light_mask_point, 0, x, y, c_white, .01);
-glr_light_set_scaling(llight,.25,.25);
+
+llight = glr_light_create(spr_glr_light_mask_point, 0, x, y, c_white, 0);
+glr_light_set_scaling(llight,.35,.35);
 glr_light_set_static(llight, true);/// Light
-***/
+
 </string>
           </argument>
         </arguments>
@@ -54,8 +54,16 @@ glr_light_set_static(llight, true);/// Light
           <argument>
             <kind>1</kind>
             <string>/// Update light
-if(llight!=noone)
+if(llight!=noone){
     glr_light_set_position(llight,x,y);
+    
+    if(weapon != noone &amp;&amp; weapon.shooting){
+        glr_light_set_active(llight,false);
+    }else if(!glr_light_get_active(llight)){
+        glr_light_set_active(llight,true);
+    }
+
+}
 </string>
           </argument>
         </arguments>

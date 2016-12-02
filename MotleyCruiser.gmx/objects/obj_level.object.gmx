@@ -29,6 +29,34 @@
 glr_clear_all();
 shadows_on = false;
 door = noone;
+level_complete = false;
+grid = noone;
+grid_path = noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check room type
+var thing = 0;
+if(global.room_type != "random" &amp;&amp; global.room_type != "custom"){
+    show_message("ROOM TYPE " + string(global.room_type) + " NOT FOUND.");
+}
 </string>
           </argument>
         </arguments>
@@ -184,22 +212,18 @@ scr_stamp_rectangle(px1-1,py1-6,3,3);
 
 //Make a  door
 door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
-door.depth = -10000;
+
 
 var my_light1 = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, ((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2), c_white, 0);
 glr_light_set_static(my_light1, true)
 
 // This part will depend on the number of decks.
 // Sequence will be: deck, deck, deck, control
+// See the Alarm 0 event in this object and the obj_door object for more detail on level progression.
 door.room_to = room_get_name(room);
 door.room_type = "random";
 door.open = 0;
 door.image_speed = 0;
-
-// Deactivate the door for now. Activate when all enemies are neutralized.
-//instance_deactivate_object(door);
-
-
 
 
 
@@ -361,7 +385,7 @@ for(var yy = 0; yy &lt; height; yy++){
         if(grid[# xx, yy] == FLOOR){
         
             // Maybe put an enemy here
-            var odds = 100;
+            var odds = 30;
             
             if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
   
@@ -708,6 +732,10 @@ for(var i = 0; i &lt; instance_number(obj_floor); i++) {
 }
 
 
+if(instance_exists(obj_player)){
+    //Intantiate crew
+    scr_instantiate_all_crew(obj_player.x,obj_player.y);
+}
 
 
 
@@ -772,12 +800,13 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             var bottom_left = grid[# (xx-1) div 2, (yy+1) div 2] != FLOOR;
             
              // Maybe place some cover
+             /**
              var cOdds = 60;
              if( !top &amp;&amp; !bottom &amp;&amp; !right &amp;&amp; !left &amp;&amp; irandom(cOdds) == cOdds){
                 var cover = instance_create(tx,ty,obj_crate);
                 cover.depth = -ty;         
              }
-            
+            **/
             
             if (right) {
                 if (bottom) {
@@ -873,14 +902,15 @@ for (var yy = 0; yy &lt; height*2; yy++) {
 /// See if all enemies defeated on this deck
 if(instance_number(obj_enemy)&lt;1){
    // if done, activate door to next deck.
-   show_message("DECK COMPLETE");
    global.decks_remaining -=1;
    if(door != noone &amp;&amp; instance_exists(door)){
         if(global.decks_remaining &lt; 1){
-            door.room_type = "control";
+            door.room_type = "custom";
+            door.room_to = "rm_ship_control";
         }
         door.open=1;
-        door.image_speed = .20;
+        door.image_index = 1;
+        level_complete = true;
    }   
 }else{
     alarm[0]=room_speed;
@@ -938,6 +968,36 @@ mp_grid_destroy(grid_path);
 
 audio_stop_all();
 audio_play_sound(snd_theme1,1,1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(level_complete){
+    var xx = display_get_gui_width() / 2; var yy = display_get_gui_height() / 2;
+    draw_set_color(c_lime);
+    draw_set_halign(fa_center);
+    draw_text(xx, yy, "DECK CLEAR");
+    draw_text(xx, yy+16, "Find the door to the next deck.");
+}
+
 </string>
           </argument>
         </arguments>

@@ -44,6 +44,9 @@
     <sprite>sprites\spr_bullet_2</sprite>
     <sprite>sprites\spr_core</sprite>
     <sprite>sprites\spr_panel_1</sprite>
+    <sprite>sprites\spr_panel_2</sprite>
+    <sprite>sprites\spr_work_station</sprite>
+    <sprite>sprites\spr_panel_decor</sprite>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
       <sprite>sprites\spr_hforeground</sprite>
@@ -92,6 +95,8 @@
     <sprites name="_light">
       <sprite>sprites\spr_batman</sprite>
       <sprite>sprites\spr_glr_light_mask_tv</sprite>
+      <sprite>sprites\spr_glr_tv_sml</sprite>
+      <sprite>sprites\spr_tv</sprite>
     </sprites>
     <sprite>sprites\spr_person</sprite>
     <sprite>sprites\spr_person_tmp</sprite>
@@ -182,6 +187,7 @@
     <sprite>sprites\spr_grenade</sprite>
     <sprite>sprites\spr_room_reactor</sprite>
     <sprite>sprites\spr_door_reactor</sprite>
+    <sprite>sprites\spr_jefferies</sprite>
     <sprite>sprites\spr_turret_base_large</sprite>
     <sprite>sprites\spr_glr_torch</sprite>
     <sprite>sprites\spr_gun_large</sprite>
@@ -236,6 +242,7 @@
         <sprite>sprites\spr_glr_icon_glare</sprite>
       </sprites>
     </sprites>
+    <sprite>sprites\spr_viewscreen</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -377,6 +384,7 @@
     <scripts name="_room">
       <script>scripts\scr_reset_room_random.gml</script>
       <script>scripts\scr_instantiate_all_crew.gml</script>
+      <script>scripts\scr_instantiate_enemy.gml</script>
       <script>scripts\scr_save_room.gml</script>
       <script>scripts\scr_player_died_in_room.gml</script>
       <script>scripts\scr_check_ship_capture.gml</script>
@@ -384,6 +392,7 @@
       <script>scripts\scr_break_crates.gml</script>
       <script>scripts\scr_check_deck_complete.gml</script>
       <script>scripts\scr_drop_loot.gml</script>
+      <script>scripts\scr_make_control_room.gml</script>
     </scripts>
     <scripts name="_service">
       <script>scripts\scr_get_random_item.gml</script>
@@ -724,7 +733,7 @@
       <object>objects\obj_bullet_enemy</object>
       <object>objects\obj_core</object>
       <object>objects\obj_master_panel</object>
-      <object>objects\obj_control</object>
+      <object>objects\obj_health_bar</object>
       <object>objects\obj_gun</object>
       <object>objects\obj_wall_invis</object>
       <object>objects\obj_floor</object>
@@ -735,7 +744,14 @@
       <object>objects\obj_crate</object>
       <object>objects\obj_room_reactor</object>
       <object>objects\obj_door</object>
+      <object>objects\obj_jefferies</object>
       <object>objects\obj_turret</object>
+      <objects name="_furniture">
+        <object>objects\obj_workstation</object>
+        <object>objects\obj_panel_decor</object>
+        <object>objects\obj_viewscreen_decor</object>
+      </objects>
+      <object>objects\obj_spawner</object>
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
@@ -762,13 +778,16 @@
     <object>objects\obj_glare_controller</object>
     <objects name="_light">
       <object>objects\obj_light</object>
+      <object>objects\obj_light_white</object>
       <object>objects\obj_light_random</object>
       <object>objects\obj_light_laser</object>
+      <object>objects\obj_light_tv_random</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
     <room>rooms\rm_room1</room>
+    <room>rooms\rm_ship_control</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
     <room>rooms\rm_template</room>
@@ -777,6 +796,7 @@
     <rooms name="Glare">
       <room>rooms\room_glare_init</room>
     </rooms>
+    <room>rooms\room8</room>
   </rooms>
   <constants number="143">
     <constant name="CELL_WIDTH">32</constant>

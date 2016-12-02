@@ -31,6 +31,7 @@ weaponSpeed = .15;
 shooting = false;
 destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
+bullet_speed = 16;
 
 image_speed = .05;
 
@@ -96,7 +97,7 @@ if(shooting){
     bullet.depth = -200;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
-    bullet.speed = 16;
+    bullet.speed = bullet_speed;
     bullet.damage = damage;
     audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2); 
 }

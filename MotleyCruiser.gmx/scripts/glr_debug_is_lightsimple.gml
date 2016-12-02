@@ -1,5 +1,5 @@
 ///glr_debug_is_lightsimple(light)
-
+return 1;
 /*
     <=============== DESCRIPTION ===============>
         Check if the argument0 is a valid

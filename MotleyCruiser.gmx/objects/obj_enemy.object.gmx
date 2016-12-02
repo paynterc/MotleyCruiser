@@ -71,6 +71,7 @@ hyset = false;
 weapon = instance_create(x,y,obj_gun);
 weapon.weaponSpeed = .5;
 weapon.type = type;
+weapon.bullet_speed = 10;
 
 </string>
           </argument>
@@ -124,7 +125,7 @@ if(path_exists(path)) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Move
+            <string>/// Move &amp; Shoot
 
 // "defend" continues all the way to core unless encounters player
 // "hold" holds position then falls back to core when target gets near
@@ -147,6 +148,7 @@ if(instance_exists(obj_team)){
 
     var px = (target.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
     var py = (target.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
+    var pd = distance_to_object(target);
 
 }else{
     target = noone;
@@ -166,39 +168,35 @@ if( target!=noone &amp;&amp; instance_exists(target)){
             path_end();  
         }
         
-        if(mode=="defend" &amp;&amp; point_distance(x,y,px,py) &lt; 200){
+        //point_distance(x,y,px,py)
+        if(mode=="defend" &amp;&amp; pd &lt; 200){
             path_end();
-        }else if(mode=="hold" &amp;&amp; point_distance(x,y,px,py) &gt; 120){
+        }else if(mode=="hold" &amp;&amp; pd &gt; 120){
             path_end();
         }
 
-        
-        if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) ){
-            /// Start shooting
-            /**
-            bullet = instance_create(x,y,obj_bullet_enemy);
-            bullet.depth = -200;
-            bullet.direction = point_direction(x, y, px, py);
-            bullet.speed = 5; 
-            **/
-
-            weapon.image_angle =  point_direction(x, y, px, py);
-            weapon.shooting = true;
-
-        }else{
-                
+        if(weapon!=noone){
+            if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) ){
+                /// Start shooting
+    
+                weapon.image_angle =  point_direction(x, y, px, py);
+                weapon.shooting = true;
+    
+            }else{
+                    
                 weapon.image_angle =  direction;
                 weapon.shooting = false;
-        
+            
+            }
         }
         
     }else if(mode == "hunt"){
         // Get path to player
         scr_get_path_to_point(px,py,pspeed);
         //path_get_number(path)&lt;5
-        if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) ){
+        if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; inview ){
             path_end();
-            if(inview &amp;&amp; weapon!=noone){
+            if(weapon!=noone){
                 weapon.image_angle =  point_direction(x, y, px, py);
                 weapon.shooting = true;
             }      
