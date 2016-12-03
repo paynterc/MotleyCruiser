@@ -38,6 +38,9 @@ image_speed = 0.025;
 r = random(400);
 
 time = 60;
+
+lootlight = glr_lightsimple_create(spr_glr_light_mask_point,0,x,y,c_white,1,0);
+glr_lightsimple_set_scaling(lootlight,.35,.35);
 </string>
           </argument>
         </arguments>
@@ -95,6 +98,8 @@ if(credits!=noone){
 if(inv_id != noone){
     inventory_item_add(inv_id,inv_amount);
 }
+
+glr_lightsimple_destroy(lootlight);
 
 instance_destroy();
 </string>

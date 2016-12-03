@@ -4,5 +4,5 @@
 var cell = CELL_WIDTH;
 var tx = argument0;
 var ty = argument1;
-var result = obj_level.grid[# tx div cell, ty div cell];
+var result = global.grid[# tx div cell, ty div cell];
 return result != FLOOR;

@@ -8,6 +8,6 @@ var ww=argument3;
 var thing = 1;
 for(var yc=yy; yc < yy+hh; yc++){
     for(var xc=xx; xc<xx+ww; xc++){
-        grid[# xc,yc]=FLOOR;
+        global.grid[# xc,yc]=FLOOR;
     }
 }

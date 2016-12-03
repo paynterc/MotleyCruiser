@@ -19,15 +19,15 @@ if(global.room_type=='wall'){
 
 }else{
     // Check for x meeting
-    x_meeting = (obj_level.grid[# bbox_right div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR) || 
-                (obj_level.grid[# bbox_left div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR);
+    x_meeting = (global.grid[# bbox_right div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR) || 
+                (global.grid[# bbox_left div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR);
                 
     // Check for y meeting
-    y_meeting = (obj_level.grid[# bbox_right div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR) || 
-                (obj_level.grid[# bbox_left div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR);
+    y_meeting = (global.grid[# bbox_right div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR) || 
+                (global.grid[# bbox_left div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR);
 
     // Check for center meeting                
-    center_meeting = (obj_level.grid[# xx div CELL_WIDTH, yy div CELL_HEIGHT] != FLOOR);
+    center_meeting = (global.grid[# xx div CELL_WIDTH, yy div CELL_HEIGHT] != FLOOR);
 
 }
 

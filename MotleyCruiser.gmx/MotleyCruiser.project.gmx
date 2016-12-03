@@ -356,16 +356,6 @@
       <script>scripts\scr_scaffolds.gml</script>
       <script>scripts\scr_races.gml</script>
     </scripts>
-    <scripts name="_map">
-      <scripts name="_grids_and_collision">
-        <script>scripts\scr_get_path_to_point.gml</script>
-        <script>scripts\scr_grid_place_meeting.gml</script>
-        <script>scripts\scr_move.gml</script>
-        <script>scripts\scr_gridcol_point.gml</script>
-        <script>scripts\scr_gridcol_line.gml</script>
-      </scripts>
-      <script>scripts\scr_stamp_rectangle.gml</script>
-    </scripts>
     <scripts name="_mission">
       <script>scripts\scr_make_mission.gml</script>
       <script>scripts\scr_generate_mission.gml</script>
@@ -382,6 +372,18 @@
       <script>scripts\scr_grant_reward.gml</script>
     </scripts>
     <scripts name="_room">
+      <scripts name="_draw_room">
+        <script>scripts\scr_stamp_rectangle.gml</script>
+        <script>scripts\scr_build_room_custom.gml</script>
+        <script>scripts\scr_add_wall_tiles.gml</script>
+      </scripts>
+      <scripts name="_grids_and_collision">
+        <script>scripts\scr_move.gml</script>
+        <script>scripts\scr_get_path_to_point.gml</script>
+        <script>scripts\scr_grid_place_meeting.gml</script>
+        <script>scripts\scr_gridcol_point.gml</script>
+        <script>scripts\scr_gridcol_line.gml</script>
+      </scripts>
       <script>scripts\scr_reset_room_random.gml</script>
       <script>scripts\scr_instantiate_all_crew.gml</script>
       <script>scripts\scr_instantiate_enemy.gml</script>
@@ -720,6 +722,8 @@
     <object>objects\obj_module</object>
     <objects name="_people_and_places">
       <object>objects\obj_level</object>
+      <object>objects\obj_lvl_ship_deck_rnd</object>
+      <object>objects\obj_lvl_ship_control</object>
       <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_team</object>
@@ -786,17 +790,15 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
-    <room>rooms\rm_room1</room>
+    <room>rooms\rm_ship_deck_rnd</room>
     <room>rooms\rm_ship_control</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_cantina1</room>
-    <room>rooms\rm_template</room>
     <room>rooms\rm_custom1</room>
     <room>rooms\rm_cantina2</room>
     <rooms name="Glare">
       <room>rooms\room_glare_init</room>
     </rooms>
-    <room>rooms\room8</room>
   </rooms>
   <constants number="143">
     <constant name="CELL_WIDTH">32</constant>

@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>llight=noone
+            <string>/// Add a light
+llight=noone
 
 llight = glr_light_create(spr_glr_light_mask_point, 0, x, y, c_white, 0);
 glr_light_set_scaling(llight,.35,.35);
