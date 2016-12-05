@@ -400,6 +400,7 @@
       <script>scripts\scr_get_random_item.gml</script>
       <script>scripts\scr_global_update.gml</script>
       <script>scripts\scr_user_input.gml</script>
+      <script>scripts\scr_view_zoom.gml</script>
     </scripts>
     <scripts name="_utility">
       <script>scripts\scr_get_closest.gml</script>
@@ -715,13 +716,12 @@
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
-    <object>objects\obj_glare_control</object>
     <object>objects\obj_damager</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_module</object>
     <objects name="_people_and_places">
-      <object>objects\obj_level</object>
+      <object>objects\obj_room_level</object>
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
       <object>objects\obj_player</object>
@@ -761,6 +761,7 @@
       <object>objects\obj_space_level</object>
       <object>objects\obj_ship</object>
       <object>objects\obj_player_ship</object>
+      <object>objects\obj_player_ship_BACKUP</object>
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_npc_ship</object>
       <object>objects\obj_laser</object>
@@ -781,6 +782,7 @@
     </objects>
     <object>objects\obj_glare_controller</object>
     <objects name="_light">
+      <object>objects\obj_glare_control</object>
       <object>objects\obj_light</object>
       <object>objects\obj_light_white</object>
       <object>objects\obj_light_random</object>
@@ -800,7 +802,7 @@
       <room>rooms\room_glare_init</room>
     </rooms>
   </rooms>
-  <constants number="143">
+  <constants number="144">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -887,6 +889,7 @@
     <constant name="SHIP_SPRITE_INDEX">19</constant>
     <constant name="SHIP_MODULES">20</constant>
     <constant name="SHIP_SCAFFOLD_INDEX">21</constant>
+    <constant name="SHIP_ANGLE">22</constant>
     <constant name="FACTION_PLAYER">0</constant>
     <constant name="FACTION_PIRATE">1</constant>
     <constant name="FACTION_TRADER">2</constant>

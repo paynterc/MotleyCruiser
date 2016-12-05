@@ -99,7 +99,7 @@ for(var m=0; m&lt;array_length_1d(modules); m++){
           <argument>
             <kind>1</kind>
             <string>/// Shoot a bullet
-if(shooting &amp;&amp; energy_current&gt;0){
+if(shooting &amp;&amp; energy_current&gt;0 &amp;&amp; !global.paused){
     
     for(var g=0; g&lt;array_length_1d(guns);g++){
         var guntrack = guns[g];
@@ -228,8 +228,61 @@ view_yview[0]=y-(view_hview[0]/2);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check for key combo sector jump
+            <string>/// User input
+if(global.paused){
+    if(speed != 0){
+        saved_speed = speed;
+        speed = 0;
+    }
+    exit;
+}else{
+    if(saved_speed != noone){
+        speed = saved_speed;
+        saved_speed = noone;
+    } 
+}
 
+if(scr_user_input("fire")){
+    shooting = true;
+}else{
+    shooting = false;
+}
+
+if(scr_user_input("thrust")){
+    motion_add(image_angle,acc_spd_fwd);
+    if(speed &gt; max_spd_fwd){
+        speed = max_spd_fwd;//clamp
+    }
+}
+
+if(scr_user_input("turn_left")){
+    image_angle += turn_spd;
+}
+
+if(scr_user_input("turn_right")){
+    image_angle -= turn_spd;
+}
+
+
+if(scr_user_input("thrust_reverse")){
+    motion_add(image_angle,acc_spd_rvs *-1);
+    if(speed &gt; max_spd_rvs){
+        speed = max_spd_rvs;//clamp
+    }
+}
+
+if(scr_user_input("dock")){
+    var closest_landable = scr_get_closest(obj_landable,self,1000);
+    if(closest_landable != noone){
+        global.landed_on = closest_landable.global_index;
+        global.landed_type = closest_landable.global_type;
+        
+        room_goto(rm_cantina1);
+    }
+}
+
+
+// Check for key combo sector jump
 if(keyboard_check(vk_shift)){
 
     if(keyboard_check_pressed(vk_up)){
@@ -245,131 +298,24 @@ if(keyboard_check(vk_shift)){
     }
 
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="40">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Thrust
-motion_add(image_angle,acc_spd_rvs *-1);
-if(speed &gt; max_spd_rvs){
-    speed = max_spd_rvs;//clamp
+
+
+// Board ship
+if(scr_user_input("board_ship")){
+    ce = instance_nearest(x,y,obj_npc_ship);
+    if(ce != noone){
+        if( distance_to_point(ce.x,ce.y) &lt; 100 &amp;&amp; ce.disabled &amp;&amp; ce.boardable ){
+            global.ship_boarded = ce.ship_data;
+            global.ship_boarded[SHIP_X1] = ce.x;
+            global.ship_boarded[SHIP_Y1] = ce.y;
+            global.ship_boarded[SHIP_ANGLE] = ce.image_angle;
+            //room_goto(rm_ship_deck_rnd);
+            global.paused = true;
+            view_object[0]=ce;
+            obj_space_level.zoom=true;
+        }
+    }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="39">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Turn right
-image_angle -= turn_spd;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="38">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Thrust
-motion_add(image_angle,acc_spd_fwd);
-if(speed &gt; max_spd_fwd){
-    speed = max_spd_fwd;//clamp
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="37">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Turn left
-image_angle += turn_spd;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="5" enumb="32">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>shooting = true;
 </string>
           </argument>
         </arguments>
@@ -402,61 +348,6 @@ for(var i=0; i&lt;array_length_1d(modules);i++){
 }
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="68">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Dock
-/// Dock
-var closest_landable = scr_get_closest(obj_landable,self,1000);
-if(closest_landable != noone){
-    global.landed_on = closest_landable.global_index;
-    global.landed_type = closest_landable.global_type;
-    
-    room_goto(rm_cantina1);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="32">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Shoot
-shooting = false;
 </string>
           </argument>
         </arguments>

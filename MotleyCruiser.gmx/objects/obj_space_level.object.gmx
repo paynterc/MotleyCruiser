@@ -26,10 +26,12 @@
           <argument>
             <kind>1</kind>
             <string>/// Initiate GUI vars
-
+texture_set_interpolation(true);
 depth=-1000;
 guiXoffset = 12;
 guiYoffset = 3;
+zoom = false;
+global.paused = false;
 
 imgW = sprite_get_width(spr_ship);
 imgH = sprite_get_height(spr_ship);
@@ -112,44 +114,59 @@ background_alpha[1]=1;
 scr_populate_sector();
 
 
-// Position the player ship.
-var player_x = room_width/2;
-var player_y = room_height/2;
 
-if(global.landed_on != noone &amp;&amp; global.landed_type!=noone){
-
-    var location = noone;
-    if(global.landed_type=="station"){
-        
-        location = global.stations[global.landed_on];
-        player_x = location[STATION_X1];
-        player_y = location[STATION_Y1];
-        
-    }else if(global.landed_type=="planet"){
-    
-        location = global.planets[global.landed_on];
-        player_x = location[PLANET_X1];
-        player_y = location[PLANET_Y1];
-        
-    }else if(global.landed_type=="moon"){
-    
-        location = global.moons[global.landed_on];
-        player_x = location[MOON_X1];
-        player_y = location[MOON_Y1];
-        
-    }else{
-        location = noone;
-    }
-    
-    global.landed_on = noone;
-    global.landed_type = noone;
-    
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check keyboard input
+if(scr_user_input("spawn_player_ship")){
+    instance_create(view_hport[0]/2,view_wport[0]/2,obj_player_ship);
 }
-
-if(instance_exists(obj_player_ship)){
-    with(obj_player_ship){
-        x=player_x;
-        y=player_y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Zoom in to board
+if(zoom){
+    global.paused = true;
+    scr_view_zoom(-.10,0);
+    if(view_wview[0]&lt;100){
+        room_goto(rm_ship_deck_rnd);
     }
 }
 </string>
@@ -249,7 +266,7 @@ audio_play_sound(snd_theme2,1,1);
           <argument>
             <kind>1</kind>
             <string>/// Draw HUD
-if(view_current != 0){
+if(view_current != 0 || zoom){
     return false;
 }
 draw_set_colour(c_white);

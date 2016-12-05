@@ -37,6 +37,7 @@ map[SHIP_ENERGY_REGEN_SPD]=1;
 map[SHIP_ENERGY_REGEN_PTS]=1;
 map[SHIP_X1]=x1;
 map[SHIP_Y1]=y1;
+map[SHIP_ANGLE]=0;
 map[SHIP_WEAPON_SPD]=weapon_speed;
 map[SHIP_SPRITE_INDEX]=sprite;
 map[SHIP_IMAGE_INDEX]=floor(random(sprite_get_number(sprite)-1));

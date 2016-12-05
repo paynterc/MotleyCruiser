@@ -49,6 +49,7 @@ turn_spd = 7;
 dispostion = DISPOSITION_NEUTRAL;
 mode = MODE_WAITING;//attack, flee, wait, patrol
 accuracy = .9;
+boardable = true; // May be boardable in some circumstances
 
 //Animation speed is zero. Stay on one frame.
 image_speed = 0;
@@ -67,6 +68,31 @@ facingMinusTarget = 100;
 angleDiff = 100;
 
 alarm[3] = room_speed * 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Self-destruct
+instance_create(x,y,obj_explosion);
+instance_deactivate_object(self);
 </string>
           </argument>
         </arguments>
@@ -167,7 +193,7 @@ alarm[3] = room_speed * 1;
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
-shooting = abs(angleDiff) &lt; 5 &amp;&amp; mode == MODE_ATTACKING &amp;&amp; energy_current &gt; 0 &amp;&amp; tgt_dist &lt;= weapon_range;
+shooting = can_fire &amp;&amp; abs(angleDiff) &lt; 5 &amp;&amp; mode == MODE_ATTACKING &amp;&amp; energy_current &gt; 0 &amp;&amp; tgt_dist &lt;= weapon_range;
 
 </string>
           </argument>
@@ -206,6 +232,18 @@ shooting = abs(angleDiff) &lt; 5 &amp;&amp; mode == MODE_ATTACKING &amp;&amp; en
           <argument>
             <kind>1</kind>
             <string>/// Turn and Move (in step)
+if(global.paused){
+    if(speed != 0){
+        saved_speed = speed;
+        speed = 0;
+    }
+    exit;
+}else{
+    if(saved_speed != noone){
+        speed = saved_speed;
+        saved_speed = noone;
+    } 
+}
 var tgt_dist = distance_to_object(target);
 var amod = 0;
 

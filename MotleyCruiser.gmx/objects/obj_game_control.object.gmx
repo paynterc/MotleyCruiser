@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 // This object is placed in rm_init. It is persistant and enables things like game settings
+global.paused = false;
 
 // Baseline npc settings.
 global.min_spd = 1; //minimum run speed for npc
@@ -62,9 +63,14 @@ global.sector_width = 10000;//width in pixels of space combat room
 
 
 /****************************************************************/
-/*                      RANDOM CREW LEVELS                      */
+/*                      ROOM LEVELS                      */
 /****************************************************************/
 scr_reset_room_random();
+
+/****************************************************************/
+/*                      SPACE LEVELS                      */
+/****************************************************************/
+global.ship_boarded = noone; // Should be an array of ship data from scr_make_ship;
 
 
 /****************************************************************/
@@ -151,6 +157,32 @@ else
 {
     //portrait
     display_set_gui_size(base_w, base_w / aspect);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// User input
+if(scr_user_input("pause")){
+    global.paused = !global.paused;
 }
 </string>
           </argument>
@@ -264,14 +296,15 @@ show_message("game loaded");
           <argument>
             <kind>1</kind>
             <string>/// Save game
+/***
 ini_open("save.ini");
 ini_write_real("location","current_sector_row",global.current_sector_row);
 ini_write_real("location","current_sector_col",global.current_sector_col);
 ini_write_real("location","player_x",obj_player_ship.x);
 ini_write_real("location","player_y",obj_player_ship.y);
 ini_close();
-
 show_message("game saved");
+***/
 </string>
           </argument>
         </arguments>

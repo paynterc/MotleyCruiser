@@ -26,8 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
-faction = noone;///FACTION_PIRATE, FACTION_TRADER
+saved_speed = noone;
 
+faction = noone; //FACTION_PIRATE, FACTION_TRADER
 
 turn_spd = 2;
 max_spd = 5;
@@ -36,7 +37,11 @@ max_spd_rvs = 3;
 acc_spd_fwd = 0.2;//acceleration speed forward
 acc_spd_rvs = 0.2;//acceleration speed reverse
 
+// Ship state
+disabled = false;
 can_move = true;
+can_fire = true;
+
 
 shields = 100;
 shields_current = shields;
@@ -149,7 +154,7 @@ alarm[1] = room_speed * energy_regen_speed;
           <argument>
             <kind>1</kind>
             <string>/// Shoot a bullet
-if(shooting &amp;&amp; energy_current&gt;0){
+if(shooting &amp;&amp; energy_current&gt;0 &amp;&amp; !global.paused){
     bullet = instance_create(x,y,obj_laser);
     bullet.type=faction;
     bullet.depth = -200;
@@ -191,7 +196,9 @@ alarm[0] = room_speed * weapon_speed;
             <string>/// Auto deceleration
 //Step events are fired every frame.
 //max() chooses the largest of all the comma-separated values.
-
+if(global.paused){
+    exit;
+}
 speed = max(speed - 0.01, 0);
 </string>
           </argument>
@@ -248,6 +255,19 @@ if speed &gt; 5 speed = 5;
         shields_current -= other.damage;
     }else if(hull_current&gt;0){
         hull_current -= other.damage;
+        
+        if(!disabled){
+            var dchance = round( (hull_current/hull) * 100 );
+            if(irandom(dchance)==dchance){
+                disabled = true;
+                can_move = false;
+                can_fire = false;
+            }
+        }
+
+        
+        
+        
     }else{
         instance_create(x,y,obj_explosion);
         instance_deactivate_object(self);

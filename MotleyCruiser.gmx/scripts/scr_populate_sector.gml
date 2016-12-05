@@ -106,16 +106,90 @@ var num_ships = irandom_range(min_ships,max_ships);
 for(var i=1; i<=num_ships; i++){
     var ship_map = scr_make_ship(g_row,g_col);
     var ship_obj = instance_create(100,100,obj_npc_ship);
+    ship_obj.ship_data = ship_map;
     with(ship_obj){  
-        x = ship_map[SHIP_X1];
-        y = ship_map[SHIP_Y1];
+        x = ship_data[SHIP_X1];
+        y = ship_data[SHIP_Y1];
         
-        sprite_index = ship_map[SHIP_SPRITE_INDEX];
-        image_index = ship_map[SHIP_IMAGE_INDEX];
+        sprite_index = ship_data[SHIP_SPRITE_INDEX];
+        image_index = ship_data[SHIP_IMAGE_INDEX];
         shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
         faction = FACTION_PIRATE;
         disposition = DISPOSITION_HOSTILE;
+      
+    } 
+}
+
+
+// Position the player ship.
+var player_x = room_width/2;
+var player_y = room_height/2;
+var player_angle = 0;
+
+if(global.ship_boarded != noone){
+    player_x = global.ship_boarded[SHIP_X1];
+    player_y = global.ship_boarded[SHIP_Y1]-100 ;
+    player_angle = global.ship_boarded[SHIP_ANGLE];
+    
+    var ship_obj = instance_create(100,100,obj_npc_ship);
+    ship_obj.ship_data = global.ship_boarded;
+    global.ship_boarded=noone;
+    with(ship_obj){  
+        can_move = false;
+        can_fire = false;
+        x = ship_data[SHIP_X1];
+        y = ship_data[SHIP_Y1];
+        image_angle = ship_data[SHIP_ANGLE];
+        
+        sprite_index = ship_data[SHIP_SPRITE_INDEX];
+        image_index = ship_data[SHIP_IMAGE_INDEX];
+        shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
+        faction = FACTION_PIRATE;
+        disposition = DISPOSITION_HOSTILE;
+        boardable = false;
+        alarm[4]=room_speed * 4;//self destruct
         
     } 
+
+}
+
+
+
+if(global.landed_on != noone && global.landed_type!=noone){
+
+    var location = noone;
+    if(global.landed_type=="station"){
+        
+        location = global.stations[global.landed_on];
+        player_x = location[STATION_X1];
+        player_y = location[STATION_Y1];
+        
+    }else if(global.landed_type=="planet"){
+    
+        location = global.planets[global.landed_on];
+        player_x = location[PLANET_X1];
+        player_y = location[PLANET_Y1];
+        
+    }else if(global.landed_type=="moon"){
+    
+        location = global.moons[global.landed_on];
+        player_x = location[MOON_X1];
+        player_y = location[MOON_Y1];
+        
+    }else{
+        location = noone;
+    }
+    
+    global.landed_on = noone;
+    global.landed_type = noone;
+    
+}
+
+if(instance_exists(obj_player_ship)){
+    with(obj_player_ship){
+        x=player_x;
+        y=player_y;
+        image_angle = player_angle;
+    }
 }
 
