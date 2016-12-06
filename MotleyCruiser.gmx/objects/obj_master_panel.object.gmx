@@ -32,7 +32,7 @@ depth = -y;
 image_speed = .10;
 hacker = noone;
 hacking = 0;
-hacktime = 100;
+hacktime = 25;
 hackremaining = hacktime;
 </string>
           </argument>
@@ -66,9 +66,11 @@ if(hacking == 1){
     }else{
         hackremaining -=1;
         if(hackremaining&lt;1){
-            show_message("SHIP CAPTURED");
             var expld = instance_create(x,y,obj_explosion);
             expld.depth=-10000;
+            if(instance_exists(obj_room_level)){
+                obj_room_level.level_complete = true;
+            }
             instance_destroy();
         }else{
             alarm[0]=room_speed *.5;       

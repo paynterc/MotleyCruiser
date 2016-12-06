@@ -71,7 +71,8 @@ scr_reset_room_random();
 /*                      SPACE LEVELS                      */
 /****************************************************************/
 global.ship_boarded = noone; // Should be an array of ship data from scr_make_ship;
-
+global.fleet = noone; // An array of ships in the fleet
+global.fleet[0] = scr_make_ship(0,0);
 
 /****************************************************************/
 /*                      LIBRARIES                               */

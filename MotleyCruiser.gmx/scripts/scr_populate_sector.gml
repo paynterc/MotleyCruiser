@@ -127,6 +127,8 @@ var player_y = room_height/2;
 var player_angle = 0;
 
 if(global.ship_boarded != noone){
+    
+    // This should only happen if we are bugging out and failed to capture the ship.
     player_x = global.ship_boarded[SHIP_X1];
     player_y = global.ship_boarded[SHIP_Y1]-100 ;
     player_angle = global.ship_boarded[SHIP_ANGLE];
@@ -191,5 +193,25 @@ if(instance_exists(obj_player_ship)){
         y=player_y;
         image_angle = player_angle;
     }
+}
+
+// Add the fleet ships
+for(var i=0; i<array_length_1d(global.fleet); i++){
+    
+    var ship_obj = instance_create(100,100,obj_npc_ship);
+    ship_obj.ship_data = global.fleet[i];
+    with(ship_obj){  
+        x = player_x;
+        y = player_y - 100
+        image_angle = player_angle;        
+        sprite_index = ship_data[SHIP_SPRITE_INDEX];
+        image_index = ship_data[SHIP_IMAGE_INDEX];
+        shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
+        faction = FACTION_PLAYER;
+        disposition = DISPOSITION_HELPFUL;
+        mode = MODE_DEFENDING;
+        target = obj_player_ship;     
+    }
+    
 }
 

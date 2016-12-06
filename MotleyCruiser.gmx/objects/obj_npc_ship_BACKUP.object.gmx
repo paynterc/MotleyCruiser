@@ -122,30 +122,6 @@ if(disposition == DISPOSITION_HOSTILE){
         tgt_dist = distance_to_object(target);
         mode = MODE_ATTACKING;
     }
-}else if(disposition == DISPOSITION_HELPFUL){
-
-    if(mode==MODE_DEFENDING &amp;&amp; instance_exists(obj_player_ship)){        
-        var s_count = instance_number(obj_npc_ship);
-        var cdist = noone;
-        var closest = noone;
-        for(var i = 0; i &lt; s_count; i++) {
-            var s_ship = instance_find(obj_npc_ship,i);
-            if(s_ship.disposition == DISPOSITION_HOSTILE &amp;&amp; scr_instance_in_view(s_ship)){
-                var pdist = point_distance(s_ship.x,s_ship.y,obj_player_ship.x,obj_player_ship.y);
-                if(cdist==noone || pdist&lt;cdist){
-                    closest = s_ship;
-                }
-            }
-        }
-        if(closest != noone){
-            target = closest;
-        }else{
-            target = obj_player_ship;
-        }
-        
-        
-    }
-
 }
 </string>
           </argument>
@@ -217,15 +193,7 @@ alarm[3] = room_speed * 1;
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
-shooting = can_fire
-&amp;&amp; instance_exists(target)
-&amp;&amp; target != noone 
-&amp;&amp; abs(angleDiff) &lt; 5 
-&amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING)
-&amp;&amp; !target.disabled
-&amp;&amp; target.faction != faction
-&amp;&amp; energy_current &gt; 0 
-&amp;&amp; tgt_dist &lt;= weapon_range;
+shooting = can_fire &amp;&amp; abs(angleDiff) &lt; 5 &amp;&amp; mode == MODE_ATTACKING &amp;&amp; energy_current &gt; 0 &amp;&amp; tgt_dist &lt;= weapon_range;
 
 </string>
           </argument>
@@ -286,7 +254,7 @@ if(target != noone &amp;&amp; instance_exists(target)){
     if(can_move &amp;&amp; mode!=MODE_WAITING){
         
         //var amod = top_speed / max(0.001,tgt_dist);
-        if( ( mode==MODE_FOLLOWING || (mode==MODE_DEFENDING &amp;&amp; target==obj_player_ship) ) &amp;&amp; tgt_dist&lt;200){           
+        if(mode==MODE_FOLLOWING &amp;&amp; tgt_dist&lt;200){           
             //image_angle = target.image_angle;
             var dd = angle_difference(target.image_angle, image_angle);
             image_angle += sin(degtorad(dd)) * turn_spd;
