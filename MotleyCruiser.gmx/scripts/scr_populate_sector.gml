@@ -196,6 +196,7 @@ if(instance_exists(obj_player_ship)){
 }
 
 // Add the fleet ships
+/**
 for(var i=0; i<array_length_1d(global.fleet); i++){
     
     var ship_obj = instance_create(100,100,obj_npc_ship);
@@ -214,4 +215,4 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
     }
     
 }
-
+**/

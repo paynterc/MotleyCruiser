@@ -44,37 +44,47 @@ faction = FACTION_PLAYER;
 
 
 ship_data = scr_ship();
-modules = ship_data[SHIP_MODULES];
+module_data = ship_data[SHIP_MODULES];
+modules = noone;
 
-scaffold = global.scaffolds[ship_data[SHIP_SCAFFOLD_INDEX]];
-guns = noone;
-
-var s = scaffold[SCAFFOLD_SCALE];
-var mag = scaffold[SCAFFOLD_ROWS];// Assume scaffolds are of equal height and width
-
-// Set offsets for each module according to their scaffold coordinates
-for(var m=0; m&lt;array_length_1d(modules); m++){
-    var module = modules[m];
-    var coords = module[MODULE_COORDS];
+var mag = ship_data[SHIP_SCAFFOLD_SIZE];// Assume scaffolds are of equal height and width
+var m_object = noone;
+// Set offsets for each module_record according to their scaffold coordinates
+for(var m=0; m&lt;array_length_1d(module_data); m++){
+    
+    var module_record = module_data[m];
+    var coords = module_record[MODULE_COORDS];
     var r = coords[0];
     var c = coords[1];
     
     var offsets = noone;
     var gunoffsets = noone;
     
-    offsets = scr_scaffold_offsets(s,mag,r,c,0);   
-    module[MODULE_OFFSETS] = offsets;
+    offsets = scr_scaffold_offsets(mag,r,c);   
+    module_record[MODULE_OFFSETS] = offsets;
     
-    var guntrack=noone;
-    guntrack[0]=0;//timer
-    guntrack[1]=noone;//module index
-    if(module[MODULE_TYPE]=="gun"){
-        gunoffsets = scr_scaffold_offsets(s,mag,r,c,sprite_get_width(module[MODULE_SPRITE_INDEX])/2);
-        guntrack[1] = m;
-        guns = scr_push_array(guns,guntrack);
-        module[MODULE_GUN_OFFSETS]=gunoffsets;
+    var d = offsets[0]; // distance
+    var a = offsets[1]; // angle
+
+    if(module_record[MODULE_TYPE]=="gun"){
+        m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module_gun);
+    }else{
+        m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module);
     }
-    modules[m]=module;
+    
+    m_object.sprite_index = module_record[MODULE_SPRITE_INDEX];
+    m_object.image_blend = module_record[MODULE_COLOR];
+    m_object.image_xscale = module_record[MODULE_XSCALE];
+    m_object.image_yscale = module_record[MODULE_YSCALE];
+    m_object.faction = faction;
+    m_object.module_data = module_record;
+    
+    modules[m]=m_object.id;
+    
+    m_object.parent_obj = id;
+    
+    module_data[m]=module_record;
+
 }
 </string>
           </argument>
@@ -98,50 +108,8 @@ for(var m=0; m&lt;array_length_1d(modules); m++){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Shoot a bullet
-if(shooting &amp;&amp; energy_current&gt;0 &amp;&amp; !global.paused){
-    
-    for(var g=0; g&lt;array_length_1d(guns);g++){
-        var guntrack = guns[g];
-        
-        if(current_time&gt;guntrack[0]){
-            var gmod = modules[guntrack[1]];
-            var offsets = gmod[MODULE_GUN_OFFSETS];
-            var gundata = gmod[MODULE_DATA];
-            var d = offsets[0];
-            var a = offsets[1];
-        
-            bullet = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_laser);
-            bullet.type=faction;
-            bullet.sprite_index = gundata[GUN_SPRITE];
-            bullet.depth = -200;
-            bullet.direction = image_angle;
-            bullet.image_angle = image_angle;
-            bullet.speed = 10;
-            bullet.damage = gundata[GUN_DAMAGE];
+            <string>/// Do nothing
 
-            
-            //audio_play_sound(snd_pulse1,1,false);
-            
-            energy_current -= 2;
-            if(energy_current &lt; 0){
-                energy_current = 0;
-            }
-            
-            guntrack[0]=current_time + (room_speed * gundata[GUN_SPEED]);
-            guns[g]=guntrack;
-            
-            audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
-        }
-        
-    }
-    
-    
-    
-
-}
-
-alarm[0] = room_speed * weapon_speed;
 </string>
           </argument>
         </arguments>
@@ -320,6 +288,68 @@ if(scr_user_input("board_ship")){
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update module positions
+if(modules != noone)
+for(var m=0; m&lt;array_length_1d(modules); m++){
+    var module = modules[m];   
+    var offsets = module.module_data[MODULE_OFFSETS];
+    var d = offsets[0]; // distance
+    var a = offsets[1]; // angle
+    
+    module.x = x + lengthdir_x(d, image_angle + a);
+    module.y = y + lengthdir_y(d, image_angle + a);
+    module.image_angle = image_angle;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check for dead
+if(hull_current &lt; 1){
+    // Destroy modules
+    for(var m=0; m&lt;array_length_1d(modules); m++){
+        var m_object = modules[m];
+        instance_create(m_object.x,m_object.y,obj_explosion);
+        instance_deactivate_object(m_object);
+    }
+    instance_deactivate_object(self);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>
@@ -338,16 +368,7 @@ if(scr_user_input("board_ship")){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the modules
-for(var i=0; i&lt;array_length_1d(modules);i++){
-    var module=modules[i];
-    var offsets=module[MODULE_OFFSETS];
-    var d = offsets[0];
-    var a = offsets[1];
-    draw_sprite_ext(module[MODULE_SPRITE_INDEX],1,x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),module[MODULE_XSCALE],module[MODULE_YSCALE],image_angle,module[MODULE_COLOR],1);
-}
-
-
+            <string>/// Do nothing
 </string>
           </argument>
         </arguments>

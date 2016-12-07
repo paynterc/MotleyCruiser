@@ -760,8 +760,9 @@
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
       <object>objects\obj_ship</object>
+      <object>objects\obj_ship_module</object>
+      <object>objects\obj_ship_module_gun</object>
       <object>objects\obj_player_ship</object>
-      <object>objects\obj_player_ship_BACKUP</object>
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_npc_ship</object>
       <object>objects\obj_npc_ship_BACKUP</object>
@@ -889,7 +890,7 @@
     <constant name="SHIP_NPCS">18</constant>
     <constant name="SHIP_SPRITE_INDEX">19</constant>
     <constant name="SHIP_MODULES">20</constant>
-    <constant name="SHIP_SCAFFOLD_INDEX">21</constant>
+    <constant name="SHIP_SCAFFOLD_SIZE">21</constant>
     <constant name="SHIP_ANGLE">22</constant>
     <constant name="FACTION_PLAYER">0</constant>
     <constant name="FACTION_PIRATE">1</constant>
@@ -920,7 +921,7 @@
     <constant name="MODULE_YSCALE">5</constant>
     <constant name="MODULE_COLOR">6</constant>
     <constant name="MODULE_GUN_OFFSETS">7</constant>
-    <constant name="MODULE_DATA">8</constant>
+    <constant name="MODULE_TYPE_DATA">8</constant>
     <constant name="GUN_DAMAGE">0</constant>
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>

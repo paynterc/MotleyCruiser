@@ -2,7 +2,7 @@
 
 var ship = noone;
 
-ship[SHIP_SCAFFOLD_INDEX]=0;
+ship[SHIP_SCAFFOLD_SIZE]=3;
 
 
 var modules = noone;
@@ -37,6 +37,7 @@ mod_thrust[MODULE_COORDS]=anchors;
 mod_thrust[MODULE_SPRITE_INDEX]=spr_thrust_16_1;
 
 
+var gdata = global.guns[0];
 
 var mod_gun = scr_ship_module();
 mod_gun[MODULE_TYPE]="gun";
@@ -44,9 +45,9 @@ anchors = noone;
 anchors[0]=0;//scaffold row
 anchors[1]=1;//scaffold column
 mod_gun[MODULE_COORDS]=anchors;
-mod_gun[MODULE_SPRITE_INDEX]=spr_gun_16_48_1;
+mod_gun[MODULE_SPRITE_INDEX]=gdata[GUN_SPRITE];
 mod_gun[MODULE_COLOR]=c_red;
-mod_gun[MODULE_DATA]=global.guns[0];
+mod_gun[MODULE_TYPE_DATA]=gdata;
 
 var mod_gun2 = scr_ship_module();
 mod_gun2[MODULE_TYPE]="gun";
@@ -54,10 +55,10 @@ anchors = noone;
 anchors[0]=2;//scaffold row
 anchors[1]=1;//scaffold column
 mod_gun2[MODULE_COORDS]=anchors;
-mod_gun2[MODULE_SPRITE_INDEX]=spr_gun_16_48_1;
+mod_gun2[MODULE_SPRITE_INDEX]=gdata[GUN_SPRITE];
 mod_gun2[MODULE_YSCALE]=-1;
-mod_gun2 [MODULE_COLOR]=c_red;
-mod_gun2[MODULE_DATA]=global.guns[0];
+mod_gun2[MODULE_COLOR]=c_red;
+mod_gun2[MODULE_TYPE_DATA]=gdata;
 
 modules[0]=mod_command;
 modules[1]=mod_thrust;
