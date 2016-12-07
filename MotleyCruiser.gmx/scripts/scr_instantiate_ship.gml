@@ -31,6 +31,7 @@ for(var m=0; m<array_length_1d(module_data); m++){
     m_object.image_blend = module_record[MODULE_COLOR];
     m_object.image_xscale = module_record[MODULE_XSCALE];
     m_object.image_yscale = module_record[MODULE_YSCALE];
+    m_object.depth = depth - module_record[MODULE_DEPTH];
     m_object.faction = faction;
     m_object.module_data = module_record;
     

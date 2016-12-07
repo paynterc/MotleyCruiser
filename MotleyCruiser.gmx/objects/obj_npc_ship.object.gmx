@@ -365,7 +365,7 @@ shooting = can_fire
             <kind>1</kind>
             <string>/// Draw target status indicators
 
-if(target==noone) exit;
+if(target==noone || !instance_exists(target)) exit;
 if(!can_fire){
     //draw red
     draw_set_color(c_red);

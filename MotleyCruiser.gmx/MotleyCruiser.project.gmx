@@ -48,6 +48,8 @@
         <sprite>sprites\spr_gun_16_48_1</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
         <sprite>sprites\spr_gun_16_32_1</sprite>
+        <sprite>sprites\spr_gun_16_32_2</sprite>
+        <sprite>sprites\spr_gun_16_16_1</sprite>
       </sprites>
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
@@ -290,6 +292,7 @@
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
       <script>scripts\scr_ship_2.gml</script>
+      <script>scripts\scr_ship_3.gml</script>
       <script>scripts\scr_ship_module.gml</script>
       <script>scripts\scr_gun.gml</script>
       <script>scripts\scr_mission.gml</script>
@@ -809,7 +812,7 @@
       <room>rooms\room_glare_init</room>
     </rooms>
   </rooms>
-  <constants number="146">
+  <constants number="147">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -927,6 +930,7 @@
     <constant name="MODULE_COLOR">6</constant>
     <constant name="MODULE_GUN_OFFSETS">7</constant>
     <constant name="MODULE_TYPE_DATA">8</constant>
+    <constant name="MODULE_DEPTH">9</constant>
     <constant name="GUN_DAMAGE">0</constant>
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>

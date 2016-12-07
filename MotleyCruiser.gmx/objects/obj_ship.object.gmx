@@ -27,6 +27,10 @@
             <kind>1</kind>
             <string>/// Initialize
 saved_speed = noone;
+modules = noone;
+ship_data = noone;
+hitrad=noone;// colision radius
+
 
 faction = noone; //FACTION_PIRATE, FACTION_TRADER
 
@@ -64,7 +68,7 @@ weapon_range = 400;
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 
-modules = noone;
+
 
 // Start alarms
 
@@ -199,6 +203,71 @@ for(var m=0; m&lt;array_length_1d(modules); m++){
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Bullet collision
+var inst;
+// Bounding  box
+var bx1 = noone;
+var by1 = noone;
+var bx2 = noone;
+var by2 = noone;
+
+if(ship_data!=noone){
+    if(hitrad==noone){
+        hitrad = (ship_data[SHIP_SCAFFOLD_SIZE] * 16) / 2;
+    }
+        
+    inst = collision_circle(x, y, hitrad, obj_damager, false, true);
+    
+    if inst != noone
+    {
+        
+        if(inst.type != faction){
+            if(shields_current&gt;0){
+                shields_current -= inst.damage;
+            }else if(hull_current&gt;0){
+                hull_current -= inst.damage;
+                
+                if(!disabled){
+                    var dchance = round( (hull_current/hull) * 100 );
+                    if(irandom(dchance)==dchance){
+                        disabled = true;
+                        can_move = false;
+                        can_fire = false;
+                    }
+                }
+        
+            }
+            // Handle death in child object
+            with(inst){  
+                instance_destroy();
+            }
+        }
+
+    }
+    
+}
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obj_ship">
       <action>
@@ -222,51 +291,6 @@ var pdir;
 pdir = point_direction(other.x, other.y, x, y);
 motion_add(pdir, other.speed);
 if speed &gt; 5 speed = 5;
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_damager">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(other.type != faction){
-    if(shields_current&gt;0){
-        shields_current -= other.damage;
-    }else if(hull_current&gt;0){
-        hull_current -= other.damage;
-        
-        if(!disabled){
-            var dchance = round( (hull_current/hull) * 100 );
-            if(irandom(dchance)==dchance){
-                disabled = true;
-                can_move = false;
-                can_fire = false;
-            }
-        }
-
-    }
-    // Handle death in child object
-    with(other){  
-        instance_destroy();
-    }
-}
-
 
 </string>
           </argument>

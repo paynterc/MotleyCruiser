@@ -113,7 +113,7 @@ for(var i=1; i<=num_ships; i++){
         faction = FACTION_PIRATE; 
         disposition = DISPOSITION_HOSTILE;
         
-        ship_data = scr_ship_2();
+        ship_data = choose(scr_ship_2(),scr_ship_3());
         scr_instantiate_ship();
      
     } 

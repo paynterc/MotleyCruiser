@@ -1,3 +1,4 @@
+/// Ship-mounted guns
 var guns = noone;
 
 var gun = noone;
