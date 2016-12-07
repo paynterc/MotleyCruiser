@@ -104,19 +104,18 @@ var max_ships = 5;
 var min_ships = 1;
 var num_ships = irandom_range(min_ships,max_ships);
 for(var i=1; i<=num_ships; i++){
-    var ship_map = scr_make_ship(g_row,g_col);
+    
     var ship_obj = instance_create(100,100,obj_npc_ship);
-    ship_obj.ship_data = ship_map;
     with(ship_obj){  
-        x = ship_data[SHIP_X1];
-        y = ship_data[SHIP_Y1];
-        
-        sprite_index = ship_data[SHIP_SPRITE_INDEX];
-        image_index = ship_data[SHIP_IMAGE_INDEX];
-        shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
-        faction = FACTION_PIRATE;
+        var ship_map = scr_make_ship(g_row,g_col); 
+        x = ship_map[SHIP_X1];
+        y = ship_map[SHIP_Y1];   
+        faction = FACTION_PIRATE; 
         disposition = DISPOSITION_HOSTILE;
-      
+        
+        ship_data = scr_ship_2();
+        scr_instantiate_ship();
+     
     } 
 }
 
@@ -134,25 +133,28 @@ if(global.ship_boarded != noone){
     player_angle = global.ship_boarded[SHIP_ANGLE];
     
     var ship_obj = instance_create(100,100,obj_npc_ship);
-    ship_obj.ship_data = global.ship_boarded;
-    global.ship_boarded=noone;
-    with(ship_obj){  
+
+    with(ship_obj){
+    
+        ship_data = global.ship_boarded;
+        
         can_move = false;
         can_fire = false;
+        
         x = ship_data[SHIP_X1];
         y = ship_data[SHIP_Y1];
         image_angle = ship_data[SHIP_ANGLE];
-        
-        sprite_index = ship_data[SHIP_SPRITE_INDEX];
-        image_index = ship_data[SHIP_IMAGE_INDEX];
-        shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
         faction = FACTION_PIRATE;
         disposition = DISPOSITION_HOSTILE;
         boardable = false;
+        
+        scr_instantiate_ship();
+
+
         alarm[4]=room_speed * 4;//self destruct
         
     } 
-
+    global.ship_boarded=noone;
 }
 
 
@@ -192,6 +194,8 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
+        ship_data = scr_ship();
+        scr_instantiate_ship();
     }
 }
 

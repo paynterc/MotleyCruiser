@@ -22,38 +22,37 @@
     </sounds>
   </sounds>
   <sprites name="sprites">
-    <sprite>sprites\spr_captain3</sprite>
-    <sprite>sprites\spr_human</sprite>
-    <sprite>sprites\spr_pudning</sprite>
-    <sprite>sprites\spr_androne</sprite>
-    <sprite>sprites\spr_androne_eyes</sprite>
-    <sprite>sprites\spr_cryptolid</sprite>
-    <sprite>sprites\spr_zomboid</sprite>
-    <sprite>sprites\spr_arcnid</sprite>
-    <sprite>sprites\spr_chicken</sprite>
-    <sprite>sprites\spr_rifle1</sprite>
-    <sprite>sprites\spr_rifle2</sprite>
-    <sprite>sprites\spr_enemy</sprite>
-    <sprite>sprites\spr_bot1</sprite>
-    <sprite>sprites\spr_flowridian2</sprite>
-    <sprite>sprites\spr_hurgan</sprite>
-    <sprite>sprites\spr_hurgan2</sprite>
-    <sprite>sprites\spr_hurgan3</sprite>
-    <sprite>sprites\spr_bullet</sprite>
-    <sprite>sprites\spr_bullet_enemy</sprite>
-    <sprite>sprites\spr_bullet_2</sprite>
-    <sprite>sprites\spr_core</sprite>
-    <sprite>sprites\spr_panel_1</sprite>
-    <sprite>sprites\spr_panel_2</sprite>
-    <sprite>sprites\spr_work_station</sprite>
-    <sprite>sprites\spr_panel_decor</sprite>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
       <sprite>sprites\spr_hforeground</sprite>
       <sprite>sprites\spr_hframe</sprite>
     </sprites>
-    <sprite>sprites\spr_bolt1</sprite>
-    <sprite>sprites\spr_bolt2</sprite>
+    <sprites name="_light">
+      <sprite>sprites\spr_batman</sprite>
+      <sprite>sprites\spr_glr_light_mask_tv</sprite>
+      <sprite>sprites\spr_glr_tv_sml</sprite>
+      <sprite>sprites\spr_tv</sprite>
+    </sprites>
+    <sprites name="_ship_modules">
+      <sprite>sprites\spr_command</sprite>
+      <sprite>sprites\spr_thruster</sprite>
+      <sprite>sprites\spr_gun</sprite>
+      <sprites name="16">
+        <sprite>sprites\spr_command_16_1</sprite>
+        <sprite>sprites\spr_command_16_3</sprite>
+        <sprite>sprites\spr_command_16_2</sprite>
+        <sprite>sprites\spr_cargo_16_1</sprite>
+        <sprite>sprites\spr_thrust_16_1</sprite>
+        <sprite>sprites\spr_thrust_16_2</sprite>
+        <sprite>sprites\spr_thrust_16_3</sprite>
+        <sprite>sprites\spr_gun_16_48_1</sprite>
+        <sprite>sprites\spr_command_16_40_1</sprite>
+        <sprite>sprites\spr_gun_16_32_1</sprite>
+      </sprites>
+      <sprites name="24">
+        <sprite>sprites\spr_gun_24_64_2</sprite>
+      </sprites>
+    </sprites>
     <sprites name="_space_combat">
       <sprite>sprites\spr_ship</sprite>
       <sprite>sprites\spr_ship_en</sprite>
@@ -69,53 +68,55 @@
         <sprite>sprites\spr_indicator</sprite>
       </sprites>
     </sprites>
-    <sprite>sprites\spr_planet</sprite>
-    <sprite>sprites\spr_moon</sprite>
-    <sprite>sprites\spr_sun</sprite>
-    <sprite>sprites\spr_wall</sprite>
-    <sprite>sprites\spr_portrait_wc</sprite>
-    <sprite>sprites\spr_questionmark_button</sprite>
-    <sprite>sprites\spr_station</sprite>
-    <sprites name="Lights">
-      <sprite>sprites\spr_glr_light_mask_0</sprite>
-      <sprite>sprites\spr_glr_light_mask_1</sprite>
-      <sprite>sprites\spr_glr_light_mask_2</sprite>
-      <sprite>sprites\spr_glr_light_mask_3</sprite>
-      <sprite>sprites\spr_glr_light_mask_8</sprite>
-      <sprite>sprites\spr_glr_light_mask_9</sprite>
-      <sprite>sprites\spr_glr_light_mask_4</sprite>
-      <sprite>sprites\spr_glr_light_mask_5</sprite>
-      <sprite>sprites\spr_glr_light_mask_6</sprite>
-      <sprite>sprites\spr_glr_light_mask_7</sprite>
-      <sprite>sprites\spr_glr_light_mask_point</sprite>
-      <sprite>sprites\spr_glr_light_mask_point_hd</sprite>
-      <sprite>sprites\spr_glr_light_mask_spot</sprite>
-      <sprite>sprites\spr_glr_light_test</sprite>
-    </sprites>
-    <sprites name="_light">
-      <sprite>sprites\spr_batman</sprite>
-      <sprite>sprites\spr_glr_light_mask_tv</sprite>
-      <sprite>sprites\spr_glr_tv_sml</sprite>
-      <sprite>sprites\spr_tv</sprite>
-    </sprites>
-    <sprite>sprites\spr_person</sprite>
-    <sprite>sprites\spr_person_tmp</sprite>
-    <sprites name="_ship_modules">
-      <sprite>sprites\spr_command</sprite>
-      <sprite>sprites\spr_thruster</sprite>
-      <sprite>sprites\spr_gun</sprite>
-      <sprites name="16">
-        <sprite>sprites\spr_command_16_1</sprite>
-        <sprite>sprites\spr_command_16_2</sprite>
-        <sprite>sprites\spr_cargo_16_1</sprite>
-        <sprite>sprites\spr_thrust_16_1</sprite>
-        <sprite>sprites\spr_thrust_16_2</sprite>
-        <sprite>sprites\spr_thrust_16_3</sprite>
-        <sprite>sprites\spr_gun_16_48_1</sprite>
-        <sprite>sprites\spr_command_16_40_1</sprite>
+    <sprites name="Glare">
+      <sprites name="Icons">
+        <sprite>sprites\glr_icon_camera</sprite>
+        <sprite>sprites\glr_icon_controller</sprite>
+        <sprite>sprites\glr_icon_group</sprite>
+        <sprite>sprites\glr_icon_light</sprite>
+        <sprite>sprites\glr_icon_parent</sprite>
+        <sprite>sprites\spr_glr_icon_glare</sprite>
       </sprites>
-      <sprites name="24">
-        <sprite>sprites\spr_gun_24_64_2</sprite>
+    </sprites>
+    <sprites name="Glare demo">
+      <sprites name="Top Down Shooter">
+        <sprites name="Characters">
+          <sprite>sprites\spr_glr_player_leg</sprite>
+          <sprite>sprites\spr_glr_spider_glare</sprite>
+          <sprite>sprites\spr_glr_player</sprite>
+        </sprites>
+        <sprites name="Furnitures">
+          <sprite>sprites\spr_glr_crate</sprite>
+          <sprite>sprites\spr_glr_sofa2</sprite>
+          <sprite>sprites\spr_glr_sofa</sprite>
+          <sprite>sprites\spr_glr_tree</sprite>
+          <sprite>sprites\spr_glr_tree_shadow</sprite>
+          <sprite>sprites\spr_glr_berrel</sprite>
+          <sprite>sprites\spr_glr_box16</sprite>
+          <sprite>sprites\spr_glr_box</sprite>
+          <sprite>sprites\spr_glr_lamp</sprite>
+          <sprite>sprites\spr_glr_desk_tv</sprite>
+          <sprite>sprites\spr_glr_bath_sink</sprite>
+          <sprite>sprites\spr_glr_bed</sprite>
+          <sprite>sprites\spr_glr_tub</sprite>
+          <sprite>sprites\spr_glr_toilet</sprite>
+        </sprites>
+        <sprites name="Misc">
+          <sprite>sprites\spr_glr_glare_text</sprite>
+          <sprite>sprites\spr_glr_player_mask</sprite>
+          <sprite>sprites\spr_glr_arrow</sprite>
+          <sprite>sprites\spr_glr_glare_sun</sprite>
+          <sprite>sprites\spr_glr_shadow_area</sprite>
+        </sprites>
+        <sprites name="Walls and Fixtures">
+          <sprite>sprites\spr_glr_black</sprite>
+          <sprite>sprites\spr_glr_wall_corner</sprite>
+          <sprite>sprites\spr_glr_wall_ver</sprite>
+          <sprite>sprites\spr_glr_door_ver</sprite>
+          <sprite>sprites\spr_glr_door_hor</sprite>
+          <sprite>sprites\spr_glr_wall_hor</sprite>
+          <sprite>sprites\spr_glr_roof</sprite>
+        </sprites>
       </sprites>
     </sprites>
     <sprites name="HuleInventorySprites">
@@ -180,69 +181,70 @@
         <sprite>sprites\spr_ItemIcon_XPTrank</sprite>
       </sprites>
     </sprites>
-    <sprite>sprites\spr_default</sprite>
+    <sprites name="Lights">
+      <sprite>sprites\spr_glr_light_mask_0</sprite>
+      <sprite>sprites\spr_glr_light_mask_1</sprite>
+      <sprite>sprites\spr_glr_light_mask_2</sprite>
+      <sprite>sprites\spr_glr_light_mask_3</sprite>
+      <sprite>sprites\spr_glr_light_mask_8</sprite>
+      <sprite>sprites\spr_glr_light_mask_9</sprite>
+      <sprite>sprites\spr_glr_light_mask_4</sprite>
+      <sprite>sprites\spr_glr_light_mask_5</sprite>
+      <sprite>sprites\spr_glr_light_mask_6</sprite>
+      <sprite>sprites\spr_glr_light_mask_7</sprite>
+      <sprite>sprites\spr_glr_light_mask_point</sprite>
+      <sprite>sprites\spr_glr_light_mask_point_hd</sprite>
+      <sprite>sprites\spr_glr_light_mask_spot</sprite>
+      <sprite>sprites\spr_glr_light_test</sprite>
+    </sprites>
+    <sprite>sprites\spr_androne</sprite>
+    <sprite>sprites\spr_androne_eyes</sprite>
+    <sprite>sprites\spr_arcnid</sprite>
+    <sprite>sprites\spr_bolt1</sprite>
+    <sprite>sprites\spr_bolt2</sprite>
     <sprite>sprites\spr_boom</sprite>
-    <sprite>sprites\spr_desk</sprite>
+    <sprite>sprites\spr_bot1</sprite>
+    <sprite>sprites\spr_bullet</sprite>
+    <sprite>sprites\spr_bullet_2</sprite>
+    <sprite>sprites\spr_bullet_enemy</sprite>
+    <sprite>sprites\spr_captain3</sprite>
+    <sprite>sprites\spr_chicken</sprite>
+    <sprite>sprites\spr_core</sprite>
     <sprite>sprites\spr_crate</sprite>
-    <sprite>sprites\spr_grenade</sprite>
-    <sprite>sprites\spr_room_reactor</sprite>
+    <sprite>sprites\spr_cryptolid</sprite>
+    <sprite>sprites\spr_default</sprite>
+    <sprite>sprites\spr_desk</sprite>
     <sprite>sprites\spr_door_reactor</sprite>
-    <sprite>sprites\spr_jefferies</sprite>
-    <sprite>sprites\spr_turret_base_large</sprite>
+    <sprite>sprites\spr_enemy</sprite>
+    <sprite>sprites\spr_flowridian2</sprite>
     <sprite>sprites\spr_glr_torch</sprite>
+    <sprite>sprites\spr_grenade</sprite>
     <sprite>sprites\spr_gun_large</sprite>
-    <sprites name="Glare demo">
-      <sprites name="Top Down Shooter">
-        <sprites name="Characters">
-          <sprite>sprites\spr_glr_player_leg</sprite>
-          <sprite>sprites\spr_glr_spider_glare</sprite>
-          <sprite>sprites\spr_glr_player</sprite>
-        </sprites>
-        <sprites name="Furnitures">
-          <sprite>sprites\spr_glr_crate</sprite>
-          <sprite>sprites\spr_glr_sofa2</sprite>
-          <sprite>sprites\spr_glr_sofa</sprite>
-          <sprite>sprites\spr_glr_tree</sprite>
-          <sprite>sprites\spr_glr_tree_shadow</sprite>
-          <sprite>sprites\spr_glr_berrel</sprite>
-          <sprite>sprites\spr_glr_box16</sprite>
-          <sprite>sprites\spr_glr_box</sprite>
-          <sprite>sprites\spr_glr_lamp</sprite>
-          <sprite>sprites\spr_glr_desk_tv</sprite>
-          <sprite>sprites\spr_glr_bath_sink</sprite>
-          <sprite>sprites\spr_glr_bed</sprite>
-          <sprite>sprites\spr_glr_tub</sprite>
-          <sprite>sprites\spr_glr_toilet</sprite>
-        </sprites>
-        <sprites name="Misc">
-          <sprite>sprites\spr_glr_glare_text</sprite>
-          <sprite>sprites\spr_glr_player_mask</sprite>
-          <sprite>sprites\spr_glr_arrow</sprite>
-          <sprite>sprites\spr_glr_glare_sun</sprite>
-          <sprite>sprites\spr_glr_shadow_area</sprite>
-        </sprites>
-        <sprites name="Walls and Fixtures">
-          <sprite>sprites\spr_glr_black</sprite>
-          <sprite>sprites\spr_glr_wall_corner</sprite>
-          <sprite>sprites\spr_glr_wall_ver</sprite>
-          <sprite>sprites\spr_glr_door_ver</sprite>
-          <sprite>sprites\spr_glr_door_hor</sprite>
-          <sprite>sprites\spr_glr_wall_hor</sprite>
-          <sprite>sprites\spr_glr_roof</sprite>
-        </sprites>
-      </sprites>
-    </sprites>
-    <sprites name="Glare">
-      <sprites name="Icons">
-        <sprite>sprites\glr_icon_camera</sprite>
-        <sprite>sprites\glr_icon_controller</sprite>
-        <sprite>sprites\glr_icon_group</sprite>
-        <sprite>sprites\glr_icon_light</sprite>
-        <sprite>sprites\glr_icon_parent</sprite>
-        <sprite>sprites\spr_glr_icon_glare</sprite>
-      </sprites>
-    </sprites>
+    <sprite>sprites\spr_human</sprite>
+    <sprite>sprites\spr_hurgan</sprite>
+    <sprite>sprites\spr_hurgan2</sprite>
+    <sprite>sprites\spr_hurgan3</sprite>
+    <sprite>sprites\spr_jefferies</sprite>
+    <sprite>sprites\spr_moon</sprite>
+    <sprite>sprites\spr_panel_1</sprite>
+    <sprite>sprites\spr_panel_2</sprite>
+    <sprite>sprites\spr_panel_decor</sprite>
+    <sprite>sprites\spr_person</sprite>
+    <sprite>sprites\spr_person_tmp</sprite>
+    <sprite>sprites\spr_planet</sprite>
+    <sprite>sprites\spr_portrait_wc</sprite>
+    <sprite>sprites\spr_pudning</sprite>
+    <sprite>sprites\spr_questionmark_button</sprite>
+    <sprite>sprites\spr_rifle1</sprite>
+    <sprite>sprites\spr_rifle2</sprite>
+    <sprite>sprites\spr_room_reactor</sprite>
+    <sprite>sprites\spr_station</sprite>
+    <sprite>sprites\spr_sun</sprite>
+    <sprite>sprites\spr_turret_base_large</sprite>
     <sprite>sprites\spr_viewscreen</sprite>
+    <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_work_station</sprite>
+    <sprite>sprites\spr_zomboid</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -287,6 +289,7 @@
     </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
+      <script>scripts\scr_ship_2.gml</script>
       <script>scripts\scr_ship_module.gml</script>
       <script>scripts\scr_gun.gml</script>
       <script>scripts\scr_mission.gml</script>
@@ -301,7 +304,6 @@
       <script>scripts\scr_make_moon.gml</script>
       <script>scripts\scr_make_station.gml</script>
       <script>scripts\scr_make_npc.gml</script>
-      <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_move_to_sector.gml</script>
       <script>scripts\scr_make_ship.gml</script>
       <script>scripts\scr_test_dsmap.gml</script>
@@ -309,6 +311,7 @@
       <script>scripts\scr_find_random_mission_target.gml</script>
       <script>scripts\totro_plus.gml</script>
       <script>scripts\totro.gml</script>
+      <script>scripts\scr_populate_sector.gml</script>
     </scripts>
     <scripts name="_hule_inventory">
       <scripts name="Inventory">
@@ -414,6 +417,7 @@
       <script>scripts\scr_simple_timer.gml</script>
       <script>scripts\scr_scaffold_offsets.gml</script>
       <script>scripts\scr_scaffold_grid.gml</script>
+      <script>scripts\scr_instantiate_ship.gml</script>
     </scripts>
     <scripts name="Glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -760,6 +764,7 @@
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
       <object>objects\obj_ship</object>
+      <object>objects\obj_ship_BACKUP</object>
       <object>objects\obj_ship_module</object>
       <object>objects\obj_ship_module_gun</object>
       <object>objects\obj_player_ship</object>

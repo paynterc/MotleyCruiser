@@ -91,8 +91,7 @@ alarm[3] = room_speed * 1;
           <argument>
             <kind>1</kind>
             <string>/// Self-destruct
-instance_create(x,y,obj_explosion);
-instance_deactivate_object(self);
+hull_current = 0;
 </string>
           </argument>
         </arguments>
@@ -199,38 +198,7 @@ alarm[3] = room_speed * 1;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Set shooting status
-shooting = can_fire
-&amp;&amp; instance_exists(target)
-&amp;&amp; target != noone 
-&amp;&amp; abs(angleDiff) &lt; 5 
-&amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING)
-&amp;&amp; !target.disabled
-&amp;&amp; target.faction != faction
-&amp;&amp; energy_current &gt; 0 
-&amp;&amp; tgt_dist &lt;= weapon_range;
-
-</string>
-          </argument>
-        </arguments>
-      </action>
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>604</id>
@@ -245,8 +213,6 @@ shooting = can_fire
         <relative>0</relative>
         <isnot>0</isnot>
       </action>
-    </event>
-    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -311,7 +277,7 @@ if(speed &gt; max_spd){
 }
 
 // Auto decelerate
-speed = max(speed - (0.01 + amod), 0);
+//speed = max(speed - (0.01 + amod), 0);
 
 
 </string>
@@ -335,9 +301,101 @@ speed = max(speed - (0.01 + amod), 0);
           <argument>
             <kind>1</kind>
             <string>/// Check for dead
-if(hull_current&lt;1){
-    instance_create(x,y,obj_explosion);
+if(hull_current &lt; 1){
+    // Destroy modules
+    for(var m=0; m&lt;array_length_1d(modules); m++){
+        var m_object = modules[m];
+        instance_create(m_object.x,m_object.y,obj_explosion);
+        instance_deactivate_object(m_object);
+    }
     instance_deactivate_object(self);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set shooting status
+shooting = can_fire
+&amp;&amp; instance_exists(target)
+&amp;&amp; target != noone 
+&amp;&amp; abs(angleDiff) &lt; 5 
+&amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING)
+&amp;&amp; !target.disabled
+&amp;&amp; target.faction != faction
+&amp;&amp; energy_current &gt; 0 
+&amp;&amp; tgt_dist &lt;= weapon_range;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw target status indicators
+
+if(target==noone) exit;
+if(!can_fire){
+    //draw red
+    draw_set_color(c_red);
+    draw_rectangle(x-32,y-55,x-30,y-53,0);
+}
+
+if(abs(angleDiff&gt;5)){
+    //draw blue
+    draw_set_color(c_blue);
+    draw_rectangle(x-28,y-55,x-26,y-53,0);
+    
+}
+
+if(target.disabled){
+    //draw yellow
+    draw_set_color(c_yellow);
+    draw_rectangle(x-24,y-55,x-22,y-53,0);
+}
+
+if(energy_current&lt;1){
+    //draw green
+    draw_set_color(c_lime);
+    draw_rectangle(x-20,y-55,x-18,y-53,0);
+    
+}
+
+if(tgt_dist &gt; weapon_range){
+    //draw cyan
+    draw_set_color(c_fuchsia);
+    draw_rectangle(x-16,y-55,x-14,y-53,0);
 }
 </string>
           </argument>

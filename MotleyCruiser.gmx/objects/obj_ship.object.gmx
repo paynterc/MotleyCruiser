@@ -30,18 +30,20 @@ saved_speed = noone;
 
 faction = noone; //FACTION_PIRATE, FACTION_TRADER
 
+// Ship state
+disabled = false;
+can_move = true;
+can_fire = true;
+target = noone;
+shooting = false;
+
+// Ship stats
 turn_spd = 2;
 max_spd = 5;
 max_spd_fwd = 5;
 max_spd_rvs = 3;
 acc_spd_fwd = 0.2;//acceleration speed forward
 acc_spd_rvs = 0.2;//acceleration speed reverse
-
-// Ship state
-disabled = false;
-can_move = true;
-can_fire = true;
-
 
 shields = 100;
 shields_current = shields;
@@ -58,13 +60,14 @@ energy_regen_points = 5;//energy regenerated on each tick.
 
 weapon_speed = 0.1;//multiplied by 1 second or room_speed
 weapon_range = 400;
-shooting = false;
-target = noone;
+
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 
+modules = noone;
+
 // Start alarms
-alarm[0] = room_speed * weapon_speed;
+
 alarm[1] = room_speed * energy_regen_speed;
 alarm[2] = room_speed * shields_regen_speed;
 
@@ -136,46 +139,6 @@ alarm[1] = room_speed * energy_regen_speed;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Shoot a bullet
-if(shooting &amp;&amp; energy_current&gt;0 &amp;&amp; !global.paused){
-    bullet = instance_create(x,y,obj_laser);
-    bullet.type=faction;
-    bullet.depth = -200;
-    bullet.direction = image_angle;
-    bullet.image_angle = image_angle;
-    bullet.speed = 10;
-    //audio_play_sound(snd_pulse1,1,false);
-    audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
-    energy_current -= 2;
-    if(energy_current &lt; 0){
-        energy_current = 0;
-    }
-
-}
-
-alarm[0] = room_speed * weapon_speed;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -200,6 +163,38 @@ if(global.paused){
     exit;
 }
 speed = max(speed - 0.01, 0);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update module positions
+if(modules != noone)
+for(var m=0; m&lt;array_length_1d(modules); m++){
+    var module = modules[m];   
+    var offsets = module.module_data[MODULE_OFFSETS];
+    var d = offsets[0]; // distance
+    var a = offsets[1]; // angle
+    
+    module.x = x + lengthdir_x(d, image_angle + a);
+    module.y = y + lengthdir_y(d, image_angle + a);
+    module.image_angle = image_angle;
+}
 </string>
           </argument>
         </arguments>
@@ -296,8 +291,11 @@ if speed &gt; 5 speed = 5;
           <argument>
             <kind>1</kind>
             <string>/// Draw shields
-draw_self()
-draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle, c_aqua, shields_current/shields );
+//draw_self()
+//draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle, c_aqua, shields_current/shields );
+draw_healthbar(x-32,y-50,x+32,y-48, (shields_current/shields) * 100,c_black,c_aqua,c_aqua,0,false,false);
+draw_healthbar(x-32,y-47,x+32,y-45, (hull_current/hull) * 100,c_black,c_red,c_red,0,false,false);
+draw_healthbar(x-32,y-44,x+32,y-42, (energy_current/energy) * 100,c_yellow,c_yellow,c_yellow,0,false,false);
 </string>
           </argument>
         </arguments>

@@ -5,24 +5,10 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_ship</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -40,7 +26,111 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
-faction = FACTION_PLAYER;
+saved_speed = noone;
+
+faction = noone; //FACTION_PIRATE, FACTION_TRADER
+
+turn_spd = 2;
+max_spd = 5;
+max_spd_fwd = 5;
+max_spd_rvs = 3;
+acc_spd_fwd = 0.2;//acceleration speed forward
+acc_spd_rvs = 0.2;//acceleration speed reverse
+
+// Ship state
+disabled = false;
+can_move = true;
+can_fire = true;
+
+
+shields = 100;
+shields_current = shields;
+shields_regen_speed = 3;//frequency of shield regen ticks.
+shields_regen_points = 5;//shield regenerated on each tick.
+
+hull = 50;
+hull_current = hull;
+
+energy = 500;
+energy_current = energy;
+energy_regen_speed = 1;//frequency of energy regen ticks.
+energy_regen_points = 5;//energy regenerated on each tick.
+
+weapon_speed = 0.1;//multiplied by 1 second or room_speed
+weapon_range = 400;
+shooting = false;
+target = noone;
+
+shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
+
+// Start alarms
+alarm[0] = room_speed * weapon_speed;
+alarm[1] = room_speed * energy_regen_speed;
+alarm[2] = room_speed * shields_regen_speed;
+
+image_speed=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Regen some shields
+shields_current += shields_regen_points;
+if(shields_current&gt;shields){
+    shields_current = shields;
+}
+if(shields_current&lt;0){
+    shields_current = 0;
+}
+alarm[2] = room_speed * shields_regen_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Regen some energy
+energy_current += energy_regen_points;
+if(energy_current&gt;energy){
+    energy_current = energy;
+}
+if(energy_current&lt;0){
+    energy_current = 0;
+}
+alarm[1] = room_speed * energy_regen_speed;
 </string>
           </argument>
         </arguments>
@@ -63,8 +153,24 @@ faction = FACTION_PLAYER;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Do nothing
+            <string>/// Shoot a bullet
+if(shooting &amp;&amp; energy_current&gt;0 &amp;&amp; !global.paused){
+    bullet = instance_create(x,y,obj_laser);
+    bullet.type=faction;
+    bullet.depth = -200;
+    bullet.direction = image_angle;
+    bullet.image_angle = image_angle;
+    bullet.speed = 10;
+    //audio_play_sound(snd_pulse1,1,false);
+    audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+    energy_current -= 2;
+    if(energy_current &lt; 0){
+        energy_current = 0;
+    }
 
+}
+
+alarm[0] = room_speed * weapon_speed;
 </string>
           </argument>
         </arguments>
@@ -73,20 +179,6 @@ faction = FACTION_PLAYER;
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-      </action>
-      <action>
-        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -101,148 +193,19 @@ faction = FACTION_PLAYER;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Position audio listener
-if( speed &gt; 0 ){
-   audio_listener_position(x, y, 500);
-}
-
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Center view on player
-view_xview[0]=x-(view_wview[0]/2);
-view_yview[0]=y-(view_hview[0]/2);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// User input
+            <string>/// Auto deceleration
+//Step events are fired every frame.
+//max() chooses the largest of all the comma-separated values.
 if(global.paused){
-    if(speed != 0){
-        saved_speed = speed;
-        speed = 0;
-    }
     exit;
-}else{
-    if(saved_speed != noone){
-        speed = saved_speed;
-        saved_speed = noone;
-    } 
 }
-
-if(scr_user_input("fire")){
-    shooting = true;
-}else{
-    shooting = false;
-}
-
-if(scr_user_input("thrust")){
-    motion_add(image_angle,acc_spd_fwd);
-    if(speed &gt; max_spd_fwd){
-        speed = max_spd_fwd;//clamp
-    }
-}
-
-if(scr_user_input("turn_left")){
-    image_angle += turn_spd;
-}
-
-if(scr_user_input("turn_right")){
-    image_angle -= turn_spd;
-}
-
-
-if(scr_user_input("thrust_reverse")){
-    motion_add(image_angle,acc_spd_rvs *-1);
-    if(speed &gt; max_spd_rvs){
-        speed = max_spd_rvs;//clamp
-    }
-}
-
-if(scr_user_input("dock")){
-    var closest_landable = scr_get_closest(obj_landable,self,1000);
-    if(closest_landable != noone){
-        global.landed_on = closest_landable.global_index;
-        global.landed_type = closest_landable.global_type;
-        
-        room_goto(rm_cantina1);
-    }
-}
-
-
-// Check for key combo sector jump
-if(keyboard_check(vk_shift)){
-
-    if(keyboard_check_pressed(vk_up)){
-        scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);
-    }else if(keyboard_check_pressed(vk_down)){
-        scr_move_to_sector(global.current_sector_row + 1,global.current_sector_col);
-    }else if(keyboard_check_pressed(vk_left)){
-        scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
-    }else if(keyboard_check_pressed(vk_right)){
-        scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
-    }else{
-        // Do nothing
-    }
-
-}
-
-
-// Board ship
-if(scr_user_input("board_ship")){
-    ce = instance_nearest(x,y,obj_npc_ship);
-    if(ce != noone){
-        if( distance_to_point(ce.x,ce.y) &lt; 100 &amp;&amp; ce.disabled &amp;&amp; ce.boardable ){
-            global.ship_boarded = ce.ship_data;
-            global.ship_boarded[SHIP_X1] = ce.x;
-            global.ship_boarded[SHIP_Y1] = ce.y;
-            global.ship_boarded[SHIP_ANGLE] = ce.image_angle;
-            //room_goto(rm_ship_deck_rnd);
-            global.paused = true;
-            view_object[0]=ce;
-            obj_space_level.zoom=true;
-        }
-    }
-}
+speed = max(speed - 0.01, 0);
 </string>
           </argument>
         </arguments>
       </action>
+    </event>
+    <event eventtype="4" ename="obj_ship">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -259,16 +222,82 @@ if(scr_user_input("board_ship")){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check for dead
-if(hull_current &lt; 1){
-    // Destroy modules
-    for(var m=0; m&lt;array_length_1d(modules); m++){
-        var m_object = modules[m];
-        instance_create(m_object.x,m_object.y,obj_explosion);
-        instance_deactivate_object(m_object);
+            <string>/// Bounce
+var pdir;
+pdir = point_direction(other.x, other.y, x, y);
+motion_add(pdir, other.speed);
+if speed &gt; 5 speed = 5;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_damager">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(other.type != faction){
+    if(shields_current&gt;0){
+        shields_current -= other.damage;
+    }else if(hull_current&gt;0){
+        hull_current -= other.damage;
+        
+        if(!disabled){
+            var dchance = round( (hull_current/hull) * 100 );
+            if(irandom(dchance)==dchance){
+                disabled = true;
+                can_move = false;
+                can_fire = false;
+            }
+        }
+
     }
-    instance_deactivate_object(self);
+    // Handle death in child object
+    with(other){  
+        instance_destroy();
+    }
 }
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw shields
+draw_self()
+draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle, c_aqua, shields_current/shields );
 </string>
           </argument>
         </arguments>

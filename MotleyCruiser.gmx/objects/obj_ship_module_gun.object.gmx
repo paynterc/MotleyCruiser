@@ -125,11 +125,10 @@ alarm[0] = room_speed * weapon_speed;
           <argument>
             <kind>1</kind>
             <string>/// Check user input
-if(scr_user_input("fire")){
-    shooting = true;
-}else{
-    shooting = false;
+if(parent_obj!=noone){
+    shooting = parent_obj.shooting;
 }
+
 </string>
           </argument>
         </arguments>

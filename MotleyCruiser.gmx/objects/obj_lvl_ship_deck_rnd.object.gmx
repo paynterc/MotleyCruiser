@@ -63,7 +63,12 @@ room_height = (CELL_HEIGHT/16)*720;
 var width = room_width div CELL_WIDTH;
 var height = room_height div CELL_HEIGHT;
 sizeModifier = .50;//.10 .25 .50, .75, 1, 1.25 ... do not exceed 2. This is for the overall size of the global.grid. Larger ships.
+if(global.ship_boarded != noone){
+    if(global.ship_boarded[SHIP_SCAFFOLD_SIZE]&lt;=3){   
+        sizeModifier = .15;
+    }
 
+}
 // Create the DS global.grid
 global.grid = ds_grid_create(width, height);
 
