@@ -13,5 +13,8 @@ module[MODULE_YSCALE]=1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_GUN_OFFSETS]=noone;
 module[MODULE_TYPE_DATA]=noone;
+module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_DEPTH]=0;
+module[MODULE_NAME]="default";
+module[MODULE_DESCRIPTION]="";
 return module;

@@ -82,8 +82,7 @@ global.fleet = noone; // An array of ships in the fleet
 global.scaffolds = scr_scaffolds();
 
 //Ship Guns
-global.guns = scr_guns();
-
+scr_guns();
 
 
 /****************************************************************/

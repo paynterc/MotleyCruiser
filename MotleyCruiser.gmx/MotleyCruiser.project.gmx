@@ -361,6 +361,7 @@
       <script>scripts\scr_guns.gml</script>
       <script>scripts\scr_scaffolds.gml</script>
       <script>scripts\scr_races.gml</script>
+      <script>scripts\scr_modules.gml</script>
     </scripts>
     <scripts name="_mission">
       <script>scripts\scr_make_mission.gml</script>
@@ -799,6 +800,11 @@
       <object>objects\obj_light_laser</object>
       <object>objects\obj_light_tv_random</object>
     </objects>
+    <objects name="_ship_edit">
+      <object>objects\obj_ship_editor</object>
+      <object>objects\obj_menu_module</object>
+      <object>objects\obj_place_module</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -811,8 +817,9 @@
     <rooms name="Glare">
       <room>rooms\room_glare_init</room>
     </rooms>
+    <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="147">
+  <constants number="151">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -931,6 +938,9 @@
     <constant name="MODULE_GUN_OFFSETS">7</constant>
     <constant name="MODULE_TYPE_DATA">8</constant>
     <constant name="MODULE_DEPTH">9</constant>
+    <constant name="MODULE_NAME">10</constant>
+    <constant name="MODULE_DESCRIPTION">11</constant>
+    <constant name="MODULE_TYPE_INDEX">12</constant>
     <constant name="GUN_DAMAGE">0</constant>
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>
@@ -960,6 +970,7 @@
     <constant name="OBJECTIVE_SCRIPT_END">10</constant>
     <constant name="OBJECTIVE_MISSION_ID">11</constant>
     <constant name="OBJECTIVE_ID">12</constant>
+    <constant name="SCAFF_CELL_SIZE">16</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
