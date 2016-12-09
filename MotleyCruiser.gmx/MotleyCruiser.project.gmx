@@ -247,6 +247,10 @@
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_work_station</sprite>
     <sprite>sprites\spr_zomboid</sprite>
+    <sprite>sprites\spr_paintbrush</sprite>
+    <sprites name="_buttons">
+      <sprite>sprites\spr_btn</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -291,6 +295,7 @@
     </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
+      <script>scripts\scr_ship_entity.gml</script>
       <script>scripts\scr_ship_2.gml</script>
       <script>scripts\scr_ship_3.gml</script>
       <script>scripts\scr_ship_module.gml</script>
@@ -298,6 +303,7 @@
       <script>scripts\scr_mission.gml</script>
       <script>scripts\scr_mission_objective.gml</script>
       <script>scripts\scr_dialogue_button.gml</script>
+      <script>scripts\scr_write_array.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
@@ -421,6 +427,7 @@
       <script>scripts\scr_simple_timer.gml</script>
       <script>scripts\scr_scaffold_offsets.gml</script>
       <script>scripts\scr_scaffold_grid.gml</script>
+      <script>scripts\scr_save_ship.gml</script>
       <script>scripts\scr_instantiate_ship.gml</script>
     </scripts>
     <scripts name="Glare">
@@ -804,6 +811,9 @@
       <object>objects\obj_ship_editor</object>
       <object>objects\obj_menu_module</object>
       <object>objects\obj_place_module</object>
+      <object>objects\obj_paintbrush</object>
+      <object>objects\obj_paint_drag</object>
+      <object>objects\obj_btn_save</object>
     </objects>
   </objects>
   <rooms name="rooms">

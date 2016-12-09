@@ -79,6 +79,8 @@ dragging=false;
           <argument>
             <kind>1</kind>
             <string>/// Drop or pickup
+if(!obj_ship_editor.painting){
+
 var d = point_distance(mouse_x, mouse_y, x, y);
 var m_object;
 var hit_rad = SCAFF_CELL_SIZE/2;
@@ -94,35 +96,75 @@ if (!dragging){
 
 //Drop me into cell if i'm the one selected
 if(d&lt;hit_rad &amp;&amp; instance_exists(obj_ship_editor) &amp;&amp; obj_ship_editor.scaffold_size!=noone &amp;&amp; obj_ship_editor.grid_centers!=noone){
-    for(var r=0;r&lt;obj_ship_editor.scaffold_size;r++){
-        for(var c=0;c&lt;obj_ship_editor.scaffold_size;c++){           
-            
-            var coords = obj_ship_editor.grid_centers[r,c];       
-            var drop = point_distance(mouse_x, mouse_y, coords[0],coords[1]);
-            if(drop&lt;SCAFF_CELL_SIZE/2 &amp;&amp; !dragging){
+    
+    for(var g = 0; g&lt;array_length_1d(obj_ship_editor.grid_centers);g++){
+        var grid = obj_ship_editor.grid_centers[g];
+        
+        for(var r=0;r&lt;obj_ship_editor.scaffold_size;r++){
+            for(var c=0;c&lt;obj_ship_editor.scaffold_size;c++){           
                 
-                x=coords[0];
-                y=coords[1];
-                
-                e_center = obj_ship_editor.center;
-                if(c&gt;obj_ship_editor.center){
-                    image_yscale *= -1;
-                }else{
-                    image_yscale = 1;
+                var coords = grid[r,c];       
+                var drop = point_distance(mouse_x, mouse_y, coords[0],coords[1]);
+                if(drop&lt;SCAFF_CELL_SIZE/2 &amp;&amp; !dragging){                
+                    x=coords[0];
+                    y=coords[1];             
+                    e_center = obj_ship_editor.center;
+                    if(c&gt;obj_ship_editor.center){
+                        image_yscale *= -1;
+                    }else{
+                        image_yscale = 1;
+                    }               
+                    // Record the cell you dropped it into. This will need to be 'rotated' when ship is saved.
+                    cell=noone;
+                    cell[0]=r;
+                    cell[1]=c;
+                    module_data[MODULE_COORDS]=cell;
+                    module_data[MODULE_DEPTH]=g;
                 }
                 
-                // Record the cell you dropped it into. This will need to be 'rotated' when ship is saved.
-                cell=noone;
-                cell[0]=r;
-                cell[1]=c;
-                module_data[MODULE_COORDS]=cell;
             }
-        }
+        }   
     }
+  
 }
 
 if( !dragging &amp;&amp; module_data[MODULE_COORDS] == noone ){
     instance_destroy();
+}
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Paint
+if(obj_ship_editor.painting &amp;&amp; instance_exists(obj_paint_drag)){
+
+var d = point_distance(mouse_x, mouse_y, x, y);
+var m_object;
+var hit_rad = SCAFF_CELL_SIZE/2;
+
+if(d&lt;hit_rad){
+    image_blend = obj_paint_drag.image_blend;
+    module_data[MODULE_COLOR] = image_blend;
+}
+
 }
 </string>
           </argument>

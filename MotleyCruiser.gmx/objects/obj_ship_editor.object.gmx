@@ -26,19 +26,42 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+
+//Global module library
 scr_modules();
 
 scaffold_size = 3;
 center=noone;
+grid_centers0 = noone;
+grid_centers1 = noone;
+grid_centers2 = noone;
 grid_centers = noone;
+painting = false;
+
+// Load ship library
+ship_library = noone;
+read_list = ds_list_create();
+ini_open("motleyships.ini");
+var str = ini_read_string("libraries", "ships", "");
+ds_list_read(read_list,str);
+ship_library = read_list[| 0];
+ds_list_destroy(read_list);
+ini_close();
+
+// Hide the paint brush
+instance_deactivate_object(obj_paint_drag);
+
+//Center view
+view_xview[0]=x-(view_wview[0]/2);
+view_yview[0]=y-(view_hview[0]/2);
 
 var mx=x-(5*SCAFF_CELL_SIZE);
 var my=y-(2*SCAFF_CELL_SIZE);
 
+//Instantiate module selection
 for(var m=0; m&lt;array_length_1d(global.module_library); m++){
 
     module_record = global.module_library[m];
-
     m_object = instance_create(mx, my ,obj_menu_module);  
     m_object.sprite_index = module_record[MODULE_SPRITE_INDEX];
     m_object.image_blend = module_record[MODULE_COLOR];
@@ -51,18 +74,105 @@ for(var m=0; m&lt;array_length_1d(global.module_library); m++){
 
 }
 
-grid_x= view_xview[0] - (view_wview[0]/4);
-grid_y= view_yview[0] - ((view_hview[0]/6)*2);
 
+//Create scaffold grids
+var grid_xstart = view_xview[0] + (view_wview[0]/8);
+var grid_x = grid_xstart;
+var grid_y= view_yview[0] + ((view_hview[0]/6));
 
 for(var r=0;r&lt;scaffold_size;r++){
     for(var c=0;c&lt;scaffold_size;c++){
         var coords=noone;
-        coords[0] = x +(SCAFF_CELL_SIZE * c) + (SCAFF_CELL_SIZE/2);
-        coords[1] = y +(SCAFF_CELL_SIZE * r) + (SCAFF_CELL_SIZE/2);
-        grid_centers[r,c]=coords;
+        coords[0] = grid_x;
+        coords[1] = grid_y;
+        grid_centers2[r,c]=coords;
+        grid_x += SCAFF_CELL_SIZE;
     }
+    grid_y += SCAFF_CELL_SIZE;
+    grid_x = grid_xstart;
 }
+
+grid_x= grid_xstart;
+grid_y += SCAFF_CELL_SIZE;
+
+for(var r=0;r&lt;scaffold_size;r++){
+    for(var c=0;c&lt;scaffold_size;c++){
+        var coords=noone;
+        coords[0] = grid_x;
+        coords[1] = grid_y;
+        grid_centers1[r,c]=coords;
+        grid_x += SCAFF_CELL_SIZE;
+    }
+    grid_y += SCAFF_CELL_SIZE;
+    grid_x = grid_xstart;
+}
+
+grid_x= grid_xstart;
+grid_y += SCAFF_CELL_SIZE;
+
+for(var r=0;r&lt;scaffold_size;r++){
+    for(var c=0;c&lt;scaffold_size;c++){
+        var coords=noone;
+        coords[0] = grid_x;
+        coords[1] = grid_y;
+        grid_centers0[r,c]=coords;
+        grid_x += SCAFF_CELL_SIZE;
+    }
+    grid_y += SCAFF_CELL_SIZE;
+    grid_x = grid_xstart;
+}
+
+grid_centers[0]=grid_centers0;
+grid_centers[1]=grid_centers1;
+grid_centers[2]=grid_centers2;
+
+// Color grid
+colorgrid_centers = noone;
+sqrsize = 8;
+grid_xstart = obj_paintbrush.x  - (sqrsize * 8);
+grid_ystart = (obj_paintbrush.y + (obj_paintbrush.sprite_height/2)) - (sqrsize * 3);
+grid_x = grid_xstart;
+grid_y = grid_ystart;
+
+colors = noone;
+colors[0,0]=c_aqua;
+colors[0,1]=c_black;
+colors[0,2]=c_blue;
+colors[0,3]=c_dkgray;
+colors[0,4]=c_fuchsia;
+colors[0,5]=c_gray;
+colors[0,6]=c_green;
+
+colors[1,0]=c_lime;
+colors[1,1]=c_ltgray;
+colors[1,2]=c_maroon;
+colors[1,3]=c_navy;
+colors[1,4]=c_olive;
+colors[1,5]=c_orange;
+colors[1,6]=c_purple;
+
+colors[2,0]=c_white;
+colors[2,1]=c_red;
+colors[2,2]=c_silver;
+colors[2,3]=c_teal;
+colors[2,4]=c_yellow;
+colors[2,5]=c_black;
+colors[2,6]=c_black;
+
+for(var r = 0; r&lt;array_height_2d(colors); r++){
+    for(c = 0; c &lt; array_length_2d(colors,0); c++){
+        var coords = noone;
+        coords[0] = grid_x;
+        coords[1] = grid_y;
+        coords[2] = colors[r,c];
+        colorgrid_centers[r,c]=coords;
+        grid_x += sqrsize;
+    }
+    grid_x = grid_xstart;
+    grid_y += sqrsize;
+}
+
+
 </string>
           </argument>
         </arguments>
@@ -85,32 +195,13 @@ for(var r=0;r&lt;scaffold_size;r++){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Center view
-view_xview[0]=x-(view_wview[0]/2);
-view_yview[0]=y-(view_hview[0]/2);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Update vars
 if(center==noone){
     center = (scaffold_size-1)/2
+}
+
+if(!painting){
+    instance_deactivate_object(obj_paint_drag);
 }
 </string>
           </argument>
@@ -134,15 +225,60 @@ if(center==noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw scaffold
+            <string>/// Draw scaffold layers
 draw_set_color(c_lime); 
+/***
 for(var r=0;r&lt;scaffold_size;r++){
     for(var c=0;c&lt;scaffold_size;c++){
         var x1 = x+(SCAFF_CELL_SIZE * c);
         var y1 = y+(SCAFF_CELL_SIZE * r);
         var x2 = x1+SCAFF_CELL_SIZE;
         var y2 = y1+SCAFF_CELL_SIZE;
-       draw_rectangle(x1, y1, x2, y2, true);
+
+        draw_rectangle(x1, y1, x2, y2, true);
+    }
+}
+***/
+
+for(var r=0;r&lt;scaffold_size;r++){
+    for(var c=0;c&lt;scaffold_size;c++){
+        
+        var coords = grid_centers2[r,c]
+        var x1 = coords[0] - (SCAFF_CELL_SIZE/2);
+        var y1 = coords[1] - (SCAFF_CELL_SIZE/2);
+        var x2 = x1+SCAFF_CELL_SIZE;
+        var y2 = y1+SCAFF_CELL_SIZE;
+        draw_rectangle(x1, y1, x2, y2, true);
+        //draw_point(coords[0],coords[1]);
+        
+        coords = grid_centers1[r,c]
+        x1 = coords[0] - (SCAFF_CELL_SIZE/2);
+        y1 = coords[1] - (SCAFF_CELL_SIZE/2);
+        x2 = x1+SCAFF_CELL_SIZE;
+        y2 = y1+SCAFF_CELL_SIZE;
+        draw_rectangle(x1, y1, x2, y2, true);
+        //draw_point(coords[0],coords[1]);
+        
+        coords = grid_centers0[r,c]
+        x1 = coords[0] - (SCAFF_CELL_SIZE/2);
+        y1 = coords[1] - (SCAFF_CELL_SIZE/2);
+        x2 = x1+SCAFF_CELL_SIZE;
+        y2 = y1+SCAFF_CELL_SIZE;
+        draw_rectangle(x1, y1, x2, y2, true);     
+        //draw_point(coords[0],coords[1]);
+    }
+}
+
+// Draw color picker
+for(var r = 0; r&lt;array_height_2d(colors); r++){
+    for(c = 0; c &lt; array_length_2d(colors,0); c++){
+        coords = colorgrid_centers[r,c];
+        var x1 = coords[0] - (sqrsize/2);
+        var y1 = coords[1] - (sqrsize/2);
+        var x2 = x1+sqrsize;
+        var y2 = y1+sqrsize;
+        draw_set_color(colors[r,c]);
+        draw_rectangle(x1, y1, x2, y2, false);       
     }
 }
 </string>
