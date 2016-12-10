@@ -54,7 +54,12 @@
     <instance objName="obj_ship_editor" x="320" y="256" name="inst_D54F8029" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_paintbrush" x="480" y="320" name="inst_9B5001CB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_paint_drag" x="480" y="288" name="inst_04284CCB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_btn_save" x="320" y="320" name="inst_A614195B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_btn_save" x="256" y="320" name="inst_A614195B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button_load" x="224" y="320" name="inst_FDF2C65D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_button_delete" x="320" y="320" name="inst_9214026D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_btn_update" x="288" y="320" name="inst_B6421E75" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_nuke_library" x="192" y="320" name="inst_8E008635" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_nuke_library" x="256" y="480" name="inst_37F431E0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

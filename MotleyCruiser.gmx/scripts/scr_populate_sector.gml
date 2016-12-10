@@ -113,7 +113,8 @@ for(var i=1; i<=num_ships; i++){
         faction = FACTION_PIRATE; 
         disposition = DISPOSITION_HOSTILE;
         
-        ship_data = choose(scr_ship_2(),scr_ship_3());
+        //ship_data = choose(scr_ship_2(),scr_ship_3());
+        ship_data = scr_array_random(global.ship_library);
         scr_instantiate_ship();
      
     } 
@@ -194,7 +195,7 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
-        ship_data = scr_ship();
+        ship_data = global.ship_library[6];
         scr_instantiate_ship();
     }
 }

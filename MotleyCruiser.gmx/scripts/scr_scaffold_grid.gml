@@ -1,4 +1,4 @@
-/// Saved scaffold offsets in a 2d array
+/// Save scaffold offsets in a 2d array
 // scr_scaffold_grid(scale, magnitude);
 var grid = noone;
 var s = argument0;// Scale. This is the size of each cell in pixels.  16, 32, 48, etc.

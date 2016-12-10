@@ -89,12 +89,12 @@ scr_push_array_1d(global.module_library, module);
 
 
 module = scr_ship_module();
-module[MODULE_NAME]="Pulse Repeater 2";
-module[MODULE_DESCRIPTION]="Fast energy weapon.";
+module[MODULE_NAME]="Rail 1";
+module[MODULE_DESCRIPTION]="Slow mass projector.";
 module[MODULE_TYPE]="gun";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_gun_16_32_2;
 module[MODULE_COLOR]=c_white;
-module[MODULE_TYPE_INDEX]=1;// index in library
+module[MODULE_TYPE_INDEX]=2;// index in library
 scr_push_array_1d(global.module_library, module);
 
 module = scr_ship_module();

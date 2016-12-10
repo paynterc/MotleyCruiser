@@ -41,12 +41,15 @@ painting = false;
 // Load ship library
 ship_library = noone;
 read_list = ds_list_create();
-ini_open("motleyships.ini");
+ini_open(DATA_FILE);
 var str = ini_read_string("libraries", "ships", "");
 ds_list_read(read_list,str);
 ship_library = read_list[| 0];
 ds_list_destroy(read_list);
 ini_close();
+
+loaded_ship = noone;
+loaded_ship_index = noone;
 
 // Hide the paint brush
 instance_deactivate_object(obj_paint_drag);
@@ -280,6 +283,15 @@ for(var r = 0; r&lt;array_height_2d(colors); r++){
         draw_set_color(colors[r,c]);
         draw_rectangle(x1, y1, x2, y2, false);       
     }
+}
+
+// Draw ship id
+if(loaded_ship_index!=noone){
+    draw_set_color(c_lime);
+    draw_rectangle(x-10, y-10, x+10, y+10, true);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_text(x,y,string(loaded_ship_index));
 }
 </string>
           </argument>

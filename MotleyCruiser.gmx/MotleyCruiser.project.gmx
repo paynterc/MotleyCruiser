@@ -61,6 +61,7 @@
       <sprite>sprites\spr_stars</sprite>
       <sprite>sprites\spr_laser</sprite>
       <sprite>sprites\spr_bolt</sprite>
+      <sprite>sprites\spr_rail</sprite>
       <sprite>sprites\spr_explosion</sprite>
       <sprite>sprites\spr_bar</sprite>
       <sprite>sprites\spr_shield</sprite>
@@ -423,12 +424,11 @@
       <script>scripts\scr_instance_in_view.gml</script>
     </scripts>
     <scripts name="_ship_modules">
-      <script>scripts\scr_assemble_ship.gml</script>
       <script>scripts\scr_simple_timer.gml</script>
       <script>scripts\scr_scaffold_offsets.gml</script>
       <script>scripts\scr_scaffold_grid.gml</script>
-      <script>scripts\scr_save_ship.gml</script>
       <script>scripts\scr_instantiate_ship.gml</script>
+      <script>scripts\scr_rotate_coords.gml</script>
     </scripts>
     <scripts name="Glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -674,6 +674,13 @@
       <script>scripts\glrtest_string_onoff.gml</script>
       <script>scripts\enable_roof.gml</script>
     </scripts>
+    <scripts name="_ship_editor">
+      <script>scripts\scr_save_ship.gml</script>
+      <script>scripts\scr_load_ship.gml</script>
+      <script>scripts\scr_clear_editor.gml</script>
+      <script>scripts\scr_clear_modules.gml</script>
+      <script>scripts\scr_clear_library.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -814,6 +821,10 @@
       <object>objects\obj_paintbrush</object>
       <object>objects\obj_paint_drag</object>
       <object>objects\obj_btn_save</object>
+      <object>objects\obj_button_load</object>
+      <object>objects\obj_button_delete</object>
+      <object>objects\obj_btn_update</object>
+      <object>objects\obj_nuke_library</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -829,7 +840,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="151">
+  <constants number="152">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -981,6 +992,7 @@
     <constant name="OBJECTIVE_MISSION_ID">11</constant>
     <constant name="OBJECTIVE_ID">12</constant>
     <constant name="SCAFF_CELL_SIZE">16</constant>
+    <constant name="DATA_FILE">"motleydata.ini"</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -2,13 +2,17 @@
 
 module_data = ship_data[SHIP_MODULES];
 modules = noone;
-var mag = ship_data[SHIP_SCAFFOLD_SIZE];// Assume scaffolds are of equal height and width
+var mag = ship_data[SHIP_SCAFFOLD_SIZE];// Assume scaffolds are of equal height and width. 3x3,5x5,7x7
 var m_object = noone;
 // Set offsets for each module_record according to their scaffold coordinates
 for(var m=0; m<array_length_1d(module_data); m++){
     
     var module_record = module_data[m];
     var coords = module_record[MODULE_COORDS];
+    
+    //ROTATE COORDS 90 degrees
+    coords = scr_rotate_coords(coords,mag);
+    
     var r = coords[0];
     var c = coords[1];
     
