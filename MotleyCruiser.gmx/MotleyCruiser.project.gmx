@@ -305,6 +305,7 @@
       <script>scripts\scr_mission_objective.gml</script>
       <script>scripts\scr_dialogue_button.gml</script>
       <script>scripts\scr_write_array.gml</script>
+      <script>scripts\scr_ship_module_installed.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
@@ -840,7 +841,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="152">
+  <constants number="159">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -993,6 +994,13 @@
     <constant name="OBJECTIVE_ID">12</constant>
     <constant name="SCAFF_CELL_SIZE">16</constant>
     <constant name="DATA_FILE">"motleydata.ini"</constant>
+    <constant name="I_MODULE_INDEX">0</constant>
+    <constant name="I_MODULE_COORDS">1</constant>
+    <constant name="I_MODULE_OFFSETS">2</constant>
+    <constant name="I_MODULE_XSCALE">3</constant>
+    <constant name="I_MODULE_YSCALE">4</constant>
+    <constant name="I_MODULE_COLOR">5</constant>
+    <constant name="I_MODULE_DEPTH">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

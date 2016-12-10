@@ -195,7 +195,7 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
-        ship_data = global.ship_library[6];
+        ship_data = global.ship_library[0];
         scr_instantiate_ship();
     }
 }

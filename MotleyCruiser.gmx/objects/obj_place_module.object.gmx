@@ -114,7 +114,7 @@ var hit_rad = SCAFF_CELL_SIZE/2;
 if (!dragging){
     if(d&lt;hit_rad){
         dragging = true;
-        module_data[MODULE_COORDS] = noone;
+        module_data[I_MODULE_COORDS] = noone;
     }
 }else{
     dragging = false;
@@ -140,13 +140,13 @@ if(d&lt;hit_rad &amp;&amp; instance_exists(obj_ship_editor) &amp;&amp; obj_ship_
                     }else{
                         image_yscale = 1;
                     }          
-                    module_data[MODULE_YSCALE] = image_yscale;  
+                    module_data[I_MODULE_YSCALE] = image_yscale;  
                     // Record the cell you dropped it into. This will need to be 'rotated' when ship is saved.
                     cell=noone;
                     cell[0]=r;
                     cell[1]=c;
-                    module_data[MODULE_COORDS]=cell;
-                    module_data[MODULE_DEPTH]=g;
+                    module_data[I_MODULE_COORDS]=cell;
+                    module_data[I_MODULE_DEPTH]=g;
                 }
                 
             }
@@ -155,7 +155,7 @@ if(d&lt;hit_rad &amp;&amp; instance_exists(obj_ship_editor) &amp;&amp; obj_ship_
   
 }
 
-if( !dragging &amp;&amp; module_data[MODULE_COORDS] == noone ){
+if( !dragging &amp;&amp; module_data[I_MODULE_COORDS] == noone ){
     instance_destroy();
 }
 
@@ -189,7 +189,7 @@ var hit_rad = SCAFF_CELL_SIZE/2;
 
 if(d&lt;hit_rad){
     image_blend = obj_paint_drag.image_blend;
-    module_data[MODULE_COLOR] = image_blend;
+    module_data[I_MODULE_COLOR] = image_blend;
 }
 
 }

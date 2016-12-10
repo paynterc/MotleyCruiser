@@ -60,8 +60,13 @@ if (d &lt;  sprite_width/2)
 
     m_object.sprite_index = module_data[MODULE_SPRITE_INDEX];
     m_object.image_blend = module_data[MODULE_COLOR];
-    m_object.module_data = module_data;
-    m_object.module_data[MODULE_COORDS]=noone;//Clear this out so we know it hasn't been placed
+    
+    var m_installed_data = scr_ship_module_installed();
+    m_installed_data[I_MODULE_INDEX] = module_index;
+    m_installed_data[I_MODULE_COLOR] = module_data[MODULE_COLOR];
+    
+    m_object.module_data = m_installed_data;
+    m_object.module_data[I_MODULE_COORDS]=noone;//Clear this out so we know it hasn't been placed
     
     m_object.image_angle = image_angle;
     m_object.start_x = x;

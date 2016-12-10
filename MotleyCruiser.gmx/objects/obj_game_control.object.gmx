@@ -88,6 +88,9 @@ global.ship_library = read_list[| 0];
 ds_list_destroy(read_list);
 ini_close();
 
+// Ship Modules
+scr_modules();
+
 //Scaffolds
 global.scaffolds = scr_scaffolds();
 

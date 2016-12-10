@@ -63,9 +63,10 @@ var my=y-(2*SCAFF_CELL_SIZE);
 
 //Instantiate module selection
 for(var m=0; m&lt;array_length_1d(global.module_library); m++){
-
-    module_record = global.module_library[m];
-    m_object = instance_create(mx, my ,obj_menu_module);  
+    
+    module_record = global.module_library[m];   
+    m_object = instance_create(mx, my ,obj_menu_module); 
+    m_object.module_index = m; 
     m_object.sprite_index = module_record[MODULE_SPRITE_INDEX];
     m_object.image_blend = module_record[MODULE_COLOR];
     m_object.module_data = module_record;
@@ -74,7 +75,6 @@ for(var m=0; m&lt;array_length_1d(global.module_library); m++){
     m_object.start_y = m_object.y;
     m_object.depth = depth-1;
     mx+= SCAFF_CELL_SIZE + (SCAFF_CELL_SIZE/2);
-
 }
 
 

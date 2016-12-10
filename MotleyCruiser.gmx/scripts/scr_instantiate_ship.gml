@@ -8,7 +8,7 @@ var m_object = noone;
 for(var m=0; m<array_length_1d(module_data); m++){
     
     var module_record = module_data[m];
-    var coords = module_record[MODULE_COORDS];
+    var coords = module_record[I_MODULE_COORDS];
     
     //ROTATE COORDS 90 degrees
     coords = scr_rotate_coords(coords,mag);
@@ -20,24 +20,27 @@ for(var m=0; m<array_length_1d(module_data); m++){
     var gunoffsets = noone;
     
     offsets = scr_scaffold_offsets(mag,r,c);   
-    module_record[MODULE_OFFSETS] = offsets;
+    module_record[I_MODULE_OFFSETS] = offsets;
     
     var d = offsets[0]; // distance
     var a = offsets[1]; // angle
 
-    if(module_record[MODULE_TYPE]=="gun"){
+    // Get module prototype
+    var m_proto = global.module_library[module_record[I_MODULE_INDEX]];
+    if(m_proto[MODULE_TYPE]=="gun"){
         m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module_gun);
     }else{
         m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module);
     }
     
-    m_object.sprite_index = module_record[MODULE_SPRITE_INDEX];
-    m_object.image_blend = module_record[MODULE_COLOR];
-    m_object.image_xscale = module_record[MODULE_XSCALE];
-    m_object.image_yscale = module_record[MODULE_YSCALE];
-    m_object.depth = depth - module_record[MODULE_DEPTH];
+    m_object.sprite_index = m_proto[MODULE_SPRITE_INDEX];
+    m_object.image_blend = module_record[I_MODULE_COLOR];
+    m_object.image_xscale = module_record[I_MODULE_XSCALE];
+    m_object.image_yscale = module_record[I_MODULE_YSCALE];
+    m_object.depth = depth - module_record[I_MODULE_DEPTH];
     m_object.faction = faction;
     m_object.module_data = module_record;
+    m_object.m_proto = m_proto;
     
     modules[m]=m_object.id;
     

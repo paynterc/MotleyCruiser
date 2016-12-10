@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>/// Init
 parent_obj = noone;
+module_data = noone; // Installed module data
+m_proto = noone; // Module prototype
 </string>
           </argument>
         </arguments>
