@@ -72,9 +72,7 @@ alarm[0]=room_speed;
 //First populate the gun data using the module prototype
 if(gundata==noone){
 
-    if(m_proto!=noone &amp;&amp; m_proto[MODULE_TYPE_DATA]!=noone){
-        gundata = m_proto[MODULE_TYPE_DATA];
-    }else if(m_proto!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]&lt;array_length_1d(global.guns)){
+    if(m_proto!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]&lt;array_length_1d(global.guns)){
         gundata = global.guns[m_proto[MODULE_TYPE_INDEX]];
     }else{
         gundata = global.guns[0];

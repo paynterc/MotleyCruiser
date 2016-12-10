@@ -32,7 +32,7 @@ for(var m=0; m<array_length_1d(module_data); m++){
     }else{
         m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module);
     }
-    
+    m_object.offsets = offsets;
     m_object.sprite_index = m_proto[MODULE_SPRITE_INDEX];
     m_object.image_blend = module_record[I_MODULE_COLOR];
     m_object.image_xscale = module_record[I_MODULE_XSCALE];
