@@ -1,4 +1,4 @@
-/// Save the ship you're currently editing. Export to file.
+/// Load a ship to editor.
 if(obj_ship_editor.loaded_ship == noone){
     show_message("No ship loaded");
 }

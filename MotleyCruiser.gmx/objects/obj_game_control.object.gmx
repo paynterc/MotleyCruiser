@@ -97,6 +97,9 @@ global.scaffolds = scr_scaffolds();
 //Ship Guns
 scr_guns();
 
+//Ship Turrets
+scr_ship_turrets();
+
 
 /****************************************************************/
 /*                      DYNAMIC PLAYER SETTINGS                 */
@@ -197,6 +200,14 @@ else
 if(scr_user_input("pause")){
     global.paused = !global.paused;
 }
+
+if(scr_user_input("goto_ship_edit")){
+    room_goto(rm_ship_edit);
+}
+
+if(scr_user_input("goto_space")){
+    room_goto("rm_space");
+}
 </string>
           </argument>
         </arguments>
@@ -247,7 +258,15 @@ if(scr_user_input("pause")){
 
     draw_set_color(c_lime);
     draw_text(32, 32, "FPS: " + string(fps_real));
-    draw_text(32, 64, "Decks Remaining: " + string(global.decks_remaining));
+    /***
+    if(instance_exists(obj_player_ship)){
+        draw_text(32, 64, "Decks Remaining: " + string(global.decks_remaining));
+        draw_text(32, 96, "Mass: " + string(obj_player_ship.mass));
+        draw_text(32, 128, "MaxFwd: " + string(obj_player_ship.max_spd_fwd));
+        draw_text(32, 140, "EN: " + string(obj_player_ship.energy_regen_points));
+    }
+    ***/
+   
 
 </string>
           </argument>

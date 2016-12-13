@@ -95,7 +95,7 @@ if(shooting
     bullet.depth = -200;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
-    bullet.speed = 10;
+    bullet.speed = BULLET_BASE_SPEED;
     bullet.damage = gundata[GUN_DAMAGE];
 
     

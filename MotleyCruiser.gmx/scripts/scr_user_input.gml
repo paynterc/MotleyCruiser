@@ -38,6 +38,18 @@ switch(argument0){
         && !instance_exists(obj_player_ship)
         && debug_mode;
         break;
+    case "goto_ship_edit":
+        return  
+        keyboard_check_pressed(ord("E")) 
+        && keyboard_check(vk_shift)
+        && debug_mode;
+        break;
+    case "goto_space":
+        return  
+        keyboard_check_pressed(ord("W")) 
+        && keyboard_check(vk_shift)
+        && debug_mode;
+        break;       
     case "pause":
         return keyboard_check_pressed(vk_escape);
     case "inventory":

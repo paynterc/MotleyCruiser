@@ -115,12 +115,28 @@ hull_current = 0;
           <argument>
             <kind>1</kind>
             <string>/// Update target
+
 if(disposition == DISPOSITION_HOSTILE){
-    if(instance_exists(obj_player_ship)){
-        target = obj_player_ship;
+    var s_count = instance_number(obj_ship);
+    var cdist = noone;
+    var closest = noone;
+    for(var i = 0; i &lt; s_count; i++) {
+        var s_ship = instance_find(obj_ship,i);
+        if(s_ship.faction == FACTION_PLAYER){
+            var pdist = point_distance(s_ship.x,s_ship.y,x,y);
+            if(cdist==noone || pdist&lt;cdist){
+                closest = s_ship;
+                cdist = pdist;
+            }
+        }
+    }
+    
+    if(closest != noone){
+        target = closest;
         tgt_dist = distance_to_object(target);
         mode = MODE_ATTACKING;
     }
+
 }else if(disposition == DISPOSITION_HELPFUL){
 
     if(mode==MODE_DEFENDING &amp;&amp; instance_exists(obj_player_ship)){        
@@ -133,6 +149,7 @@ if(disposition == DISPOSITION_HOSTILE){
                 var pdist = point_distance(s_ship.x,s_ship.y,obj_player_ship.x,obj_player_ship.y);
                 if(cdist==noone || pdist&lt;cdist){
                     closest = s_ship;
+                    cdist=pdist;
                 }
             }
         }
@@ -146,31 +163,6 @@ if(disposition == DISPOSITION_HOSTILE){
     }
 
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Update distance to target
-if(target != noone &amp;&amp; instance_exists(target)){
-    tgt_dist = distance_to_object(target);
-}
-
 </string>
           </argument>
         </arguments>
@@ -229,6 +221,30 @@ alarm[3] = room_speed * 1;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Update distance to target
+if(target != noone &amp;&amp; instance_exists(target)){
+    tgt_dist = distance_to_object(target);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Turn and Move (in step)
 if(global.paused){
     if(speed != 0){
@@ -245,10 +261,7 @@ if(global.paused){
 
 var amod = 0;
 if(target != noone &amp;&amp; instance_exists(target)){
-    
-    var tgt_dist = distance_to_object(target);
-
-    
+  
     if(can_move &amp;&amp; mode!=MODE_WAITING){
         
         //var amod = top_speed / max(0.001,tgt_dist);
@@ -259,21 +272,21 @@ if(target != noone &amp;&amp; instance_exists(target)){
              
             speed = target.speed;       
         }else{
-           scr_gradually_rotate(self.id,target,turn_spd,accuracy);
+           angleDiff = scr_gradually_rotate_2(self.id,target,turn_spd*.5,accuracy);
         }
         
-        if(tgt_dist&gt;50){         
+        if(tgt_dist&gt;300){
+            //Stop accelerating when we get close      
             motion_add(image_angle,acc_spd_fwd);
-        } 
-        
+        }       
     
     }
 
 }
 
 
-if(speed &gt; max_spd){
-    speed = max_spd;
+if(speed &gt; max_spd_fwd){
+    speed = max_spd_fwd;
 }
 
 // Auto decelerate
@@ -331,6 +344,7 @@ if(hull_current &lt; 1){
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
+
 shooting = can_fire
 &amp;&amp; instance_exists(target)
 &amp;&amp; target != noone 
@@ -364,6 +378,7 @@ shooting = can_fire
           <argument>
             <kind>1</kind>
             <string>/// Draw target status indicators
+exit;
 
 if(target==noone || !instance_exists(target)) exit;
 if(!can_fire){

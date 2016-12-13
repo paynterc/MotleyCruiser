@@ -1,5 +1,6 @@
-/// Create data for random npc ship
+/// DEPRECATED: Create data for random npc ship
 // scr_make_ship(sector_row, sector_column)
+
 var map = noone;
 var sector = noone;
 sector[0]=argument0;

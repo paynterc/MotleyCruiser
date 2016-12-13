@@ -266,6 +266,7 @@ audio_play_sound(snd_theme2,1,1);
           <argument>
             <kind>1</kind>
             <string>/// Draw HUD
+return false;
 if(view_current != 0 || zoom){
     return false;
 }

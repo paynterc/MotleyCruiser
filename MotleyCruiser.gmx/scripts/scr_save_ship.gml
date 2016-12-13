@@ -3,7 +3,7 @@ var ship_index = argument0;
 var ship = noone;
 if(ship_index!=noone){
     // Update a ship    
-    if(ship_index<0 || ship_index>array_length_1d(obj_ship_editor.ship_library)){
+    if(ship_index<0 || ship_index>array_length_1d(global.ship_library)){
         show_message("Invalid ship index.");
         exit;
     }
@@ -24,12 +24,12 @@ for(var i = 0; i < s_count; i++) {
 ship[SHIP_MODULES]=module_records;
 
 if(ship_index==noone){
-    obj_ship_editor.ship_library = scr_push_array(obj_ship_editor.ship_library,ship);
+    global.ship_library = scr_push_array(global.ship_library,ship);
 }else{
-    obj_ship_editor.ship_library[ship_index]=ship;
+    global.ship_library[ship_index]=ship;
 }
 
 
-scr_write_array(obj_ship_editor.ship_library,"libraries","ships",DATA_FILE);
+scr_write_array(global.ship_library,"libraries","ships",DATA_FILE);
 
 

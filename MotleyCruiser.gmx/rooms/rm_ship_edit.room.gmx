@@ -58,8 +58,6 @@
     <instance objName="obj_button_load" x="224" y="320" name="inst_FDF2C65D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_button_delete" x="320" y="320" name="inst_9214026D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_btn_update" x="288" y="320" name="inst_B6421E75" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_nuke_library" x="192" y="320" name="inst_8E008635" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_nuke_library" x="256" y="480" name="inst_37F431E0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

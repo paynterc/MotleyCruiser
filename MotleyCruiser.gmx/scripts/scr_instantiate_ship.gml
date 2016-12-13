@@ -9,7 +9,7 @@ for(var m=0; m<array_length_1d(module_data); m++){
     
     var module_record = module_data[m];
     var coords = module_record[I_MODULE_COORDS];
-    
+    if(coords==noone) continue;;
     //ROTATE COORDS 90 degrees
     coords = scr_rotate_coords(coords,mag);
     
@@ -29,6 +29,8 @@ for(var m=0; m<array_length_1d(module_data); m++){
     var m_proto = global.module_library[module_record[I_MODULE_INDEX]];
     if(m_proto[MODULE_TYPE]=="gun"){
         m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module_gun);
+    }else if(m_proto[MODULE_TYPE]=="turret"){
+        m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module_turret);
     }else{
         m_object = instance_create(x + lengthdir_x(d, image_angle + a),y + lengthdir_y(d, image_angle + a),obj_ship_module);
     }
@@ -40,6 +42,7 @@ for(var m=0; m<array_length_1d(module_data); m++){
     m_object.depth = depth - module_record[I_MODULE_DEPTH];
     m_object.faction = faction;
     m_object.module_data = module_record;
+    m_object.module_type = m_proto[MODULE_TYPE];
     m_object.m_proto = m_proto;
     
     modules[m]=m_object.id;

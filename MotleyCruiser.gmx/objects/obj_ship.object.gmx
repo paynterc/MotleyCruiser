@@ -28,11 +28,10 @@
             <string>/// Initialize
 saved_speed = noone;
 modules = noone;
+module_data = noone;
 ship_data = noone;
 hitrad=noone;// colision radius
-
-
-faction = noone; //FACTION_PIRATE, FACTION_TRADER
+faction = noone; //FACTION_PLAYER, FACTION_PIRATE, FACTION_TRADER
 
 // Ship state
 disabled = false;
@@ -41,39 +40,12 @@ can_fire = true;
 target = noone;
 shooting = false;
 
-// Ship stats
-turn_spd = 2;
-max_spd = 5;
-max_spd_fwd = 5;
-max_spd_rvs = 3;
-acc_spd_fwd = 0.2;//acceleration speed forward
-acc_spd_rvs = 0.2;//acceleration speed reverse
-
-shields = 100;
-shields_current = shields;
-shields_regen_speed = 3;//frequency of shield regen ticks.
-shields_regen_points = 5;//shield regenerated on each tick.
-
-hull = 50;
-hull_current = hull;
-
-energy = 500;
-energy_current = energy;
-energy_regen_speed = 1;//frequency of energy regen ticks.
-energy_regen_points = 5;//energy regenerated on each tick.
-
-weapon_speed = 0.1;//multiplied by 1 second or room_speed
-weapon_range = 400;
+// Set defaults
+scr_ship_defaults();
 
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 
-
-
-// Start alarms
-
-alarm[1] = room_speed * energy_regen_speed;
-alarm[2] = room_speed * shields_regen_speed;
 
 image_speed=0;
 </string>
@@ -160,6 +132,37 @@ alarm[1] = room_speed * energy_regen_speed;
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Modules modify stats
+
+if(!stats_modified &amp;&amp; module_data != noone){
+    stats_modified = true;
+    scr_module_modify_stats();
+    // Start alarms
+    alarm[1] = room_speed * energy_regen_speed;
+    alarm[2] = room_speed * shields_regen_speed;
+    var test = 1;
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Auto deceleration
 //Step events are fired every frame.
 //max() chooses the largest of all the comma-separated values.
@@ -196,7 +199,10 @@ for(var m=0; m&lt;array_length_1d(modules); m++){
     
     module.x = x + lengthdir_x(d, image_angle + a);
     module.y = y + lengthdir_y(d, image_angle + a);
-    module.image_angle = image_angle;
+    if(module.module_type!="turret" || target==noone){
+        module.image_angle = image_angle;
+    }
+    
 }
 </string>
           </argument>

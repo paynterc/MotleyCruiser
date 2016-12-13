@@ -100,20 +100,19 @@ for(var i = 0; i < array_length_1d(stations); i++){
     
 }
 
-var max_ships = 5;
+var max_ships = 2;
 var min_ships = 1;
 var num_ships = irandom_range(min_ships,max_ships);
 for(var i=1; i<=num_ships; i++){
     
     var ship_obj = instance_create(100,100,obj_npc_ship);
     with(ship_obj){  
-        var ship_map = scr_make_ship(g_row,g_col); 
-        x = ship_map[SHIP_X1];
-        y = ship_map[SHIP_Y1];   
+        //var ship_map = scr_make_ship(g_row,g_col); 
+        
+        x = clamp( irandom(global.sector_width ), 1, global.sector_width );
+        y = clamp( irandom(global.sector_width ), 1, global.sector_width );   
         faction = FACTION_PIRATE; 
         disposition = DISPOSITION_HOSTILE;
-        
-        //ship_data = choose(scr_ship_2(),scr_ship_3());
         ship_data = scr_array_random(global.ship_library);
         scr_instantiate_ship();
      
@@ -201,7 +200,6 @@ if(instance_exists(obj_player_ship)){
 }
 
 // Add the fleet ships
-/**
 for(var i=0; i<array_length_1d(global.fleet); i++){
     
     var ship_obj = instance_create(100,100,obj_npc_ship);
@@ -209,15 +207,14 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
     with(ship_obj){  
         x = player_x;
         y = player_y - 100
-        image_angle = player_angle;        
-        sprite_index = ship_data[SHIP_SPRITE_INDEX];
-        image_index = ship_data[SHIP_IMAGE_INDEX];
-        shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
+        image_angle = player_angle;   
         faction = FACTION_PLAYER;
         disposition = DISPOSITION_HELPFUL;
         mode = MODE_DEFENDING;
-        target = obj_player_ship;     
+        target = obj_player_ship;
+        scr_instantiate_ship();     
     }
     
 }
-**/
+
+

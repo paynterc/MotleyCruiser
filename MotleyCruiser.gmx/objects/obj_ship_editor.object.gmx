@@ -39,6 +39,7 @@ grid_centers = noone;
 painting = false;
 
 // Load ship library
+/***
 ship_library = noone;
 read_list = ds_list_create();
 ini_open(DATA_FILE);
@@ -47,7 +48,7 @@ ds_list_read(read_list,str);
 ship_library = read_list[| 0];
 ds_list_destroy(read_list);
 ini_close();
-
+***/
 loaded_ship = noone;
 loaded_ship_index = noone;
 
@@ -59,11 +60,18 @@ view_xview[0]=x-(view_wview[0]/2);
 view_yview[0]=y-(view_hview[0]/2);
 
 var mx=x-(5*SCAFF_CELL_SIZE);
-var my=y-(2*SCAFF_CELL_SIZE);
+var my=y-(5*SCAFF_CELL_SIZE);
+var my_start = my;
+var mx_start = mx;
 
 //Instantiate module selection
 for(var m=0; m&lt;array_length_1d(global.module_library); m++){
     
+    if(mx&gt;mx_start+(SCAFF_CELL_SIZE*15)){
+        mx=mx_start;
+        my+= SCAFF_CELL_SIZE + (SCAFF_CELL_SIZE/2)
+    }
+
     module_record = global.module_library[m];   
     m_object = instance_create(mx, my ,obj_menu_module); 
     m_object.module_index = m; 
@@ -75,13 +83,15 @@ for(var m=0; m&lt;array_length_1d(global.module_library); m++){
     m_object.start_y = m_object.y;
     m_object.depth = depth-1;
     mx+= SCAFF_CELL_SIZE + (SCAFF_CELL_SIZE/2);
+    
+
 }
 
 
 //Create scaffold grids
-var grid_xstart = view_xview[0] + (view_wview[0]/8);
-var grid_x = grid_xstart;
-var grid_y= view_yview[0] + ((view_hview[0]/6));
+grid_xstart = view_xview[0] + (view_wview[0]/8);
+grid_x = grid_xstart;
+grid_y= view_yview[0] + ((view_hview[0]/6));
 
 for(var r=0;r&lt;scaffold_size;r++){
     for(var c=0;c&lt;scaffold_size;c++){
@@ -175,7 +185,46 @@ for(var r = 0; r&lt;array_height_2d(colors); r++){
     grid_y += sqrsize;
 }
 
+scr_ship_defaults();
 
+alarm[0]=room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update stats
+
+scr_ship_defaults();
+
+module_data=noone;
+var s_count = instance_number(obj_place_module);
+for(var i = 0; i &lt; s_count; i++) {
+    var module_obj = instance_find(obj_place_module,i);
+    var module_record = module_obj.module_data;
+    module_data = scr_push_array(module_data,module_record);
+}
+
+scr_module_modify_stats();
+
+alarm[0]=room_speed;
 </string>
           </argument>
         </arguments>
@@ -211,6 +260,33 @@ if(!painting){
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_text(32, 96, "Mass: " + string(mass));
+draw_text(32, 112, "MaxFwd: " + string(max_spd_fwd));
+draw_text(32, 128, "Acc: " + string(acc_spd_fwd));
+draw_text(32, 144, "Turn: " + string(turn_spd));
+draw_text(32, 161, "TurnMOD: " + string(turn_mod));
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -230,18 +306,11 @@ if(!painting){
             <kind>1</kind>
             <string>/// Draw scaffold layers
 draw_set_color(c_lime); 
-/***
-for(var r=0;r&lt;scaffold_size;r++){
-    for(var c=0;c&lt;scaffold_size;c++){
-        var x1 = x+(SCAFF_CELL_SIZE * c);
-        var y1 = y+(SCAFF_CELL_SIZE * r);
-        var x2 = x1+SCAFF_CELL_SIZE;
-        var y2 = y1+SCAFF_CELL_SIZE;
+draw_set_color(c_lime);
 
-        draw_rectangle(x1, y1, x2, y2, true);
-    }
-}
-***/
+
+
+
 
 for(var r=0;r&lt;scaffold_size;r++){
     for(var c=0;c&lt;scaffold_size;c++){
