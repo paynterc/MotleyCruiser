@@ -26,6 +26,7 @@ for(var i = 0; i < array_length_1d(suns); i++){
         image_yscale = size_mod;
         image_blend = sun[SUN_COLOR];
         depth = curdepth;
+        faction = FACTION_NEUTRAL;
     }
     
     if(is_array(sun[SUN_PLANETS])){
@@ -46,6 +47,7 @@ for(var i = 0; i < array_length_1d(suns); i++){
                     depth = curdepth;
                     global_index = planets[p];
                     global_type = "planet";
+                    faction = FACTION_NEUTRAL;
                 }
                 
                 // Moons
@@ -68,6 +70,7 @@ for(var i = 0; i < array_length_1d(suns); i++){
                                 depth = curdepth;
                                 global_index = moons[m];
                                 global_type = "moon";
+                                faction = FACTION_NEUTRAL;
                             }
                         }
                     }// End Moons loop
@@ -95,11 +98,13 @@ for(var i = 0; i < array_length_1d(stations); i++){
         depth = curdepth;
         global_index = stations[i];
         global_type = "station";
+        faction = FACTION_NEUTRAL;
     }
     
     
 }
 
+/***
 var max_ships = 2;
 var min_ships = 1;
 var num_ships = irandom_range(min_ships,max_ships);
@@ -118,6 +123,9 @@ for(var i=1; i<=num_ships; i++){
      
     } 
 }
+***/
+// NPC Ships
+scr_spawn_npc_ships();
 
 
 // Position the player ship.
@@ -195,6 +203,7 @@ if(instance_exists(obj_player_ship)){
         y=player_y;
         image_angle = player_angle;
         ship_data = global.ship_library[0];
+        faction = FACTION_PLAYER;
         scr_instantiate_ship();
     }
 }

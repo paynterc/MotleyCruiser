@@ -29,6 +29,7 @@
 parent_obj = noone;
 module_data = noone; // Installed module data
 m_proto = noone; // Module prototype
+guntip = sprite_get_width(sprite_index)/2;
 </string>
           </argument>
         </arguments>

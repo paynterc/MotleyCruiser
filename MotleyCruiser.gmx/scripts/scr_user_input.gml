@@ -56,6 +56,9 @@ switch(argument0){
         return keyboard_check_pressed(ord("I"));
     case "mission_log":
         return keyboard_check_pressed(ord("L"));
+    case "fullscreen":
+        return keyboard_check_pressed(ord("F"))
+        && keyboard_check(vk_shift);
     default:
         return false;
 }

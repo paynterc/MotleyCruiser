@@ -40,6 +40,8 @@
       <sprites name="16">
         <sprite>sprites\spr_armor_16_16_1</sprite>
         <sprite>sprites\spr_cargo_16_1</sprite>
+        <sprite>sprites\spr_cargo_16_2</sprite>
+        <sprite>sprites\spr_cargo_16_3</sprite>
         <sprite>sprites\spr_command_16_1</sprite>
         <sprite>sprites\spr_command_16_2</sprite>
         <sprite>sprites\spr_command_16_3</sprite>
@@ -56,8 +58,10 @@
         <sprite>sprites\spr_thrust_lat_16_16_1</sprite>
         <sprite>sprites\spr_thrust_lat_32_32_1</sprite>
         <sprite>sprites\spr_thrust_16_4</sprite>
+        <sprite>sprites\spr_beam_1</sprite>
         <sprite>sprites\spr_turret_barrel_1</sprite>
         <sprite>sprites\spr_turret_1</sprite>
+        <sprite>sprites\spr_beam_2</sprite>
       </sprites>
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
@@ -260,6 +264,8 @@
     <sprite>sprites\spr_paintbrush</sprite>
     <sprites name="_buttons">
       <sprite>sprites\spr_btn</sprite>
+      <sprite>sprites\spr_btn_small</sprite>
+      <sprite>sprites\spr_textbox</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -334,6 +340,7 @@
       <script>scripts\totro_plus.gml</script>
       <script>scripts\totro.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
+      <script>scripts\scr_spawn_npc_ships.gml</script>
     </scripts>
     <scripts name="_hule_inventory">
       <scripts name="Inventory">
@@ -398,6 +405,10 @@
       <script>scripts\scr_get_next_objective.gml</script>
       <script>scripts\scr_grant_reward.gml</script>
     </scripts>
+    <scripts name="_object_pool">
+      <script>scripts\scr_add_to_pool.gml</script>
+      <script>scripts\scr_get_from_pool.gml</script>
+    </scripts>
     <scripts name="_room">
       <scripts name="_draw_room">
         <script>scripts\scr_stamp_rectangle.gml</script>
@@ -429,12 +440,12 @@
       <script>scripts\scr_user_input.gml</script>
       <script>scripts\scr_view_zoom.gml</script>
     </scripts>
-    <scripts name="_utility">
-      <script>scripts\scr_get_closest.gml</script>
-      <script>scripts\scr_gradually_rotate.gml</script>
-      <script>scripts\scr_gradually_rotate_2.gml</script>
-      <script>scripts\scr_script_parse.gml</script>
-      <script>scripts\scr_instance_in_view.gml</script>
+    <scripts name="_ship_editor">
+      <script>scripts\scr_save_ship.gml</script>
+      <script>scripts\scr_load_ship.gml</script>
+      <script>scripts\scr_clear_editor.gml</script>
+      <script>scripts\scr_clear_modules.gml</script>
+      <script>scripts\scr_clear_library.gml</script>
     </scripts>
     <scripts name="_ship_modules">
       <script>scripts\scr_instantiate_ship.gml</script>
@@ -443,6 +454,14 @@
       <script>scripts\scr_scaffold_grid.gml</script>
       <script>scripts\scr_rotate_coords.gml</script>
       <script>scripts\scr_module_modify_stats.gml</script>
+    </scripts>
+    <scripts name="_utility">
+      <script>scripts\scr_get_closest.gml</script>
+      <script>scripts\scr_gradually_rotate.gml</script>
+      <script>scripts\scr_gradually_rotate_2.gml</script>
+      <script>scripts\scr_script_parse.gml</script>
+      <script>scripts\scr_instance_in_view.gml</script>
+      <script>scripts\scr_raycast.gml</script>
     </scripts>
     <scripts name="Glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -688,13 +707,6 @@
       <script>scripts\glrtest_string_onoff.gml</script>
       <script>scripts\enable_roof.gml</script>
     </scripts>
-    <scripts name="_ship_editor">
-      <script>scripts\scr_save_ship.gml</script>
-      <script>scripts\scr_load_ship.gml</script>
-      <script>scripts\scr_clear_editor.gml</script>
-      <script>scripts\scr_clear_modules.gml</script>
-      <script>scripts\scr_clear_library.gml</script>
-    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -756,7 +768,9 @@
     <object>objects\obj_damager</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
+    <object>objects\obj_object_pool</object>
     <object>objects\obj_module</object>
+    <object>objects\obj_glare_controller</object>
     <objects name="_people_and_places">
       <object>objects\obj_room_level</object>
       <object>objects\obj_lvl_ship_deck_rnd</object>
@@ -804,8 +818,8 @@
       <object>objects\obj_player_ship</object>
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_npc_ship</object>
-      <object>objects\obj_npc_ship_BACKUP</object>
       <object>objects\obj_laser</object>
+      <object>objects\obj_projectile</object>
       <object>objects\obj_explosion</object>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
@@ -821,7 +835,6 @@
     <objects name="_room_combat">
       <object>objects\obj_aoe</object>
     </objects>
-    <object>objects\obj_glare_controller</object>
     <objects name="_light">
       <object>objects\obj_glare_control</object>
       <object>objects\obj_light</object>
@@ -840,7 +853,14 @@
       <object>objects\obj_button_load</object>
       <object>objects\obj_button_delete</object>
       <object>objects\obj_btn_update</object>
+      <object>objects\obj_btn_next</object>
+      <object>objects\obj_btn_prev</object>
       <object>objects\obj_nuke_library</object>
+    </objects>
+    <objects name="_forms">
+      <object>objects\obj_form_text</object>
+      <object>objects\obj_form_textbox</object>
+      <object>objects\obj_form_button</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -856,7 +876,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="174">
+  <constants number="180">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -951,6 +971,7 @@
     <constant name="FACTION_FEDERATION">4</constant>
     <constant name="FACTION_BOUNTYHUNTER">5</constant>
     <constant name="FACTION_REBEL">6</constant>
+    <constant name="FACTION_NEUTRAL">7</constant>
     <constant name="DISPOSITION_NEUTRAL">0</constant>
     <constant name="DISPOSITION_HOSTILE">1</constant>
     <constant name="DISPOSITION_HELPFUL">2</constant>
@@ -961,6 +982,7 @@
     <constant name="MODE_LANDING">4</constant>
     <constant name="MODE_FOLLOWING">5</constant>
     <constant name="MODE_DEFENDING">6</constant>
+    <constant name="MODE_TRAVELING">7</constant>
     <constant name="SCAFFOLD_ROWS">0</constant>
     <constant name="SCAFFOLD_COLS">1</constant>
     <constant name="SCAFFOLD_GRID">2</constant>
@@ -994,6 +1016,10 @@
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>
     <constant name="GUN_BULLET_SPRITE">3</constant>
+    <constant name="GUN_RANGE">4</constant>
+    <constant name="GUN_BULLET_SPEED">5</constant>
+    <constant name="GUN_BULLET_TYPE">6</constant>
+    <constant name="GUN_BULLET_COLOR">7</constant>
     <constant name="MISSION_ID">0</constant>
     <constant name="MISSION_NAME">1</constant>
     <constant name="MISSION_DESCRIP">2</constant>

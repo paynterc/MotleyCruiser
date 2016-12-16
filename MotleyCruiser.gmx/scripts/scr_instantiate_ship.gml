@@ -43,12 +43,15 @@ for(var m=0; m<array_length_1d(module_data); m++){
     m_object.faction = faction;
     m_object.module_data = module_record;
     m_object.module_type = m_proto[MODULE_TYPE];
+    with(m_object){
+        guntip = sprite_get_width(sprite_index)/2;
+    }
     m_object.m_proto = m_proto;
     
     modules[m]=m_object.id;
     
-    m_object.parent_obj = id;
-     
+    // Fp this after adding object to array in parent
+    m_object.parent_obj = id;  
     module_data[m]=module_record;
 
 }

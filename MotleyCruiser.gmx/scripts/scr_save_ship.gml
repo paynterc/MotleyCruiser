@@ -13,7 +13,7 @@ if(ship_index!=noone){
     ship = scr_ship_entity();
 }
 
-
+ship[SHIP_SCAFFOLD_SIZE]=obj_ship_editor.scaffold_size;
 var s_count = instance_number(obj_place_module);
 var module_records = noone;
 for(var i = 0; i < s_count; i++) {

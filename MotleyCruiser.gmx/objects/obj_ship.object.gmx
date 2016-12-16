@@ -39,13 +39,19 @@ can_move = true;
 can_fire = true;
 target = noone;
 shooting = false;
+register_damage = 0;//Register hits from non-objects 
+color_s = c_aqua;
+color_h = c_red;
+color_e = c_yellow;
+mode = MODE_WAITING;
+disposition = DISPOSITION_NEUTRAL;
 
 // Set defaults
 scr_ship_defaults();
 
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
-
+modAlpha = 1; // Alpha tranparency for modules. Use for landing.
 
 image_speed=0;
 </string>
@@ -243,21 +249,8 @@ if(ship_data!=noone){
     {
         
         if(inst.type != faction){
-            if(shields_current&gt;0){
-                shields_current -= inst.damage;
-            }else if(hull_current&gt;0){
-                hull_current -= inst.damage;
-                
-                if(!disabled){
-                    var dchance = round( (hull_current/hull) * 100 );
-                    if(irandom(dchance)==dchance){
-                        disabled = true;
-                        can_move = false;
-                        can_fire = false;
-                    }
-                }
-        
-            }
+            disposition = DISPOSITION_HOSTILE;
+            register_damage += inst.damage;
             // Handle death in child object
             with(inst){  
                 instance_destroy();
@@ -269,6 +262,81 @@ if(ship_data!=noone){
 }
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Register damage
+if(register_damage&gt;0){
+
+    var apply_damage = register_damage;
+    register_damage = 0;
+    
+    if(shields_current&gt;0){
+        shields_current -= apply_damage;
+    }else if(hull_current&gt;0){
+        hull_current -= apply_damage;
+        
+        if(!disabled){
+            var dchance = max(2, (round( (hull_current/hull) * 100 )) - apply_damage);
+            if(irandom(dchance)==dchance){
+                disabled = true;
+            }
+        }
+
+    }
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Disabled
+if(disabled){
+    can_move = false;
+    can_fire = false;
+    color_s = c_gray;
+    color_h = c_white;
+    color_e = c_gray;
+}else{
+    can_move = true;
+    can_fire = true;
+    color_s = c_aqua;
+    color_h = c_red;
+    color_e = c_yellow;
+}
 </string>
           </argument>
         </arguments>
@@ -319,12 +387,13 @@ if speed &gt; 5 speed = 5;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw shields
+            <string>/// Draw status bars
 //draw_self()
 //draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle, c_aqua, shields_current/shields );
-draw_healthbar(x-32,y-50,x+32,y-48, (shields_current/shields) * 100,c_black,c_aqua,c_aqua,0,false,false);
-draw_healthbar(x-32,y-47,x+32,y-45, (hull_current/hull) * 100,c_black,c_red,c_red,0,false,false);
-draw_healthbar(x-32,y-44,x+32,y-42, (energy_current/energy) * 100,c_yellow,c_yellow,c_yellow,0,false,false);
+
+draw_healthbar(x-32,y-50,x+32,y-48, (shields_current/shields) * 100,c_black,color_s,color_s,0,false,false);
+draw_healthbar(x-32,y-47,x+32,y-45, (hull_current/hull) * 100,c_black,color_h,color_h,0,false,false);
+draw_healthbar(x-32,y-44,x+32,y-42, (energy_current/energy) * 100,c_black,color_e,color_e,0,false,false);
 </string>
           </argument>
         </arguments>

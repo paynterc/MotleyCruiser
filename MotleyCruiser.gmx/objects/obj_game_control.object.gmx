@@ -208,6 +208,15 @@ if(scr_user_input("goto_ship_edit")){
 if(scr_user_input("goto_space")){
     room_goto("rm_space");
 }
+
+if(scr_user_input("fullscreen")){
+    if (!window_get_fullscreen()){
+       window_set_fullscreen(true);
+    }else{
+       window_set_fullscreen(false);
+    }
+}
+
 </string>
           </argument>
         </arguments>
@@ -291,6 +300,7 @@ if(scr_user_input("goto_space")){
           <argument>
             <kind>1</kind>
             <string>/// Save game
+exit; // Disabled for now
 ini_open("motleysave.ini");
 ini_write_real("location","current_sector_row",global.current_sector_row);
 ini_write_real("location","current_sector_col",global.current_sector_col);
@@ -321,7 +331,10 @@ show_message("game saved");
         <arguments>
           <argument>
             <kind>1</kind>
-            <string> /// Load game
+            <string>/// Load game
+exit;// Disabled for now
+
+
 if(!file_exists("save.ini")) exit;
 
 ini_open("save.ini");
@@ -336,61 +349,6 @@ with(obj_player_ship){
     y=py;
 }
 show_message("game loaded");
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="82">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Restart
-//game_restart();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="70">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Fullscreen
-if (!window_get_fullscreen()){
-   window_set_fullscreen(true);
-}else{
-   window_set_fullscreen(false);
-}
-
-
-
 </string>
           </argument>
         </arguments>

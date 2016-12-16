@@ -57,8 +57,8 @@ module[MODULE_TYPE]="cargo";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_cargo_16_1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
-module[MODULE_CARGO_MOD]=200;
-module[MODULE_MASS_MOD]=200;
+module[MODULE_CARGO_MOD]=100;
+module[MODULE_MASS_MOD]=100;
 scr_push_array_1d(global.module_library, module);
 
 module = scr_ship_module();
@@ -220,5 +220,48 @@ module[MODULE_SPRITE_INDEX] = spr_turret_1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=0;
 module[MODULE_MASS_MOD]=220;
+scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Turret Proton Beam";
+module[MODULE_DESCRIPTION]="Fast, turret-mounted energy weapon.";
+module[MODULE_TYPE]="turret";// command, cargo, thrust, turret, gun
+module[MODULE_SPRITE_INDEX] = spr_turret_1;
+module[MODULE_COLOR]=c_white;
+module[MODULE_TYPE_INDEX]=2;
+module[MODULE_MASS_MOD]=220;
+scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Blue Proton Beam";
+module[MODULE_DESCRIPTION]="Medium beam weapon.";
+module[MODULE_TYPE]="gun";// command, cargo, thrust, turret, gun
+module[MODULE_SPRITE_INDEX] = spr_beam_1;
+module[MODULE_COLOR]=c_white;
+module[MODULE_TYPE_INDEX]=5;
+module[MODULE_MASS_MOD]=220;
+scr_push_array_1d(global.module_library, module);
+
+
+module = scr_ship_module();
+module[MODULE_NAME]="Terran Cargo Module 2";
+module[MODULE_DESCRIPTION]="You're basic cargo module.";
+module[MODULE_TYPE]="cargo";// command, cargo, thrust, gun
+module[MODULE_SPRITE_INDEX] = spr_cargo_16_2;
+module[MODULE_COLOR]=c_white;
+module[MODULE_TYPE_INDEX]=noone;
+module[MODULE_CARGO_MOD]=200;
+module[MODULE_MASS_MOD]=200;
+scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Terran Cargo Module 3";
+module[MODULE_DESCRIPTION]="You're basic cargo module.";
+module[MODULE_TYPE]="cargo";// command, cargo, thrust, gun
+module[MODULE_SPRITE_INDEX] = spr_cargo_16_3;
+module[MODULE_COLOR]=c_white;
+module[MODULE_TYPE_INDEX]=noone;
+module[MODULE_CARGO_MOD]=300;
+module[MODULE_MASS_MOD]=300;
 scr_push_array_1d(global.module_library, module);
 

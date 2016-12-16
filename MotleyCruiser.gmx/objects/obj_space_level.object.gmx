@@ -32,6 +32,7 @@ guiXoffset = 12;
 guiYoffset = 3;
 zoom = false;
 global.paused = false;
+ship_spawn_rate = 20;
 
 imgW = sprite_get_width(spr_ship);
 imgH = sprite_get_height(spr_ship);
@@ -44,6 +45,32 @@ shieldH = sprite_get_height(spr_shield);
 ls = 15;//line spacing
 
 npc_count = array_length_1d(global.npcs);
+
+// Need this for npcs that target this object by default
+disabled = false;
+faction = FACTION_NEUTRAL;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Fill object pool
+//scr_add_to_pool(obj_projectile,"projectile",500);
 </string>
           </argument>
         </arguments>
@@ -115,6 +142,53 @@ scr_populate_sector();
 
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start spawning ships
+alarm[0] = room_speed * ship_spawn_rate;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Spawn ships
+scr_spawn_npc_ships();
+alarm[0] = room_speed * ship_spawn_rate;
 </string>
           </argument>
         </arguments>

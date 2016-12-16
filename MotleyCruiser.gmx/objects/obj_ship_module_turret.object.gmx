@@ -26,7 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
-shooting = 0;
+shooting = false;
+hitpoint = noone;
+hitobject = noone;
 
 // Overwrite defaults
 turn_spd = 7;
@@ -120,37 +122,30 @@ alarm[3] = room_speed * 1;
           <argument>
             <kind>1</kind>
             <string>/// Shoot a bullet
+if(shooting){
 
-
-if(shooting == 1
-&amp;&amp; parent_obj!=noone 
-&amp;&amp; gundata != noone 
-&amp;&amp; parent_obj.energy_current&gt;0
-&amp;&amp; !global.paused){
-
-
-    var d = sprite_get_width(sprite_index)/2;
-
-    var rangle = abs(image_angle + (irandom(20)-40));
-
+    if(gundata[GUN_BULLET_TYPE]=="beam"){
+        if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
+            hitobject.register_damage += gundata[GUN_DAMAGE];
+        }   
+    }else if(gundata[GUN_BULLET_TYPE]=="bullet"){
+        var d = sprite_get_width(sprite_index)/2;
+        bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),obj_laser);
+        bullet.type=faction;
+        bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
+        bullet.depth = -200;
+        bullet.direction = image_angle;
+        bullet.image_angle = image_angle;
+        bullet.speed = BULLET_BASE_SPEED;
+        bullet.damage = gundata[GUN_DAMAGE];
+        if(!audio_is_playing(snd_laser3)){
+            audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+        }    
+    }
+ 
     
-    bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),obj_laser);
-    bullet.type=faction;
-    bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
-    bullet.depth = -200;
-    bullet.direction = point_direction(x,y,parent_obj.target.x,parent_obj.target.y)+random_range(-5,5);
-    bullet.image_angle = rangle;
-    bullet.speed = BULLET_BASE_SPEED;
-    bullet.damage = gundata[GUN_DAMAGE];
-
-    
-    //audio_play_sound(snd_pulse1,1,false);
     
     parent_obj.energy_current -= 2;
-
-    audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
-
-
 }
 
 alarm[0] = room_speed * weapon_speed;
@@ -199,6 +194,7 @@ if(gundata==noone &amp;&amp; turretdata!=noone){
         gundata = global.guns[0];
     }    
     weapon_speed = gundata[GUN_SPEED];
+    weapon_range = gundata[GUN_RANGE];
     alarm[0]=room_speed * weapon_speed;
 }
 </string>
@@ -253,20 +249,95 @@ if(target != noone &amp;&amp; instance_exists(target)){
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
-
-if(instance_exists(target)
-&amp;&amp; target != noone 
-&amp;&amp; abs(angleDiff) &lt; 10 
-&amp;&amp; !target.disabled
-&amp;&amp; target.faction != faction
-&amp;&amp; parent_obj.energy_current &gt; 0 
-&amp;&amp; tgt_dist &lt;= weapon_range
-&amp;&amp; !parent_obj.disabled){
-    shooting = 1;
+if(parent_obj == noone){
+    shooting = false;
 }else{
-    shooting = 0;
-};
+    shooting = instance_exists(target)
+    &amp;&amp; (parent_obj.mode == MODE_ATTACKING || parent_obj.mode == MODE_DEFENDING)
+    &amp;&amp; gundata != noone
+    &amp;&amp; target != noone 
+    &amp;&amp; abs(angleDiff) &lt; 10 
+    &amp;&amp; !target.disabled
+    &amp;&amp; target.faction != faction
+    &amp;&amp; parent_obj.energy_current &gt; 0 
+    &amp;&amp; tgt_dist &lt;= weapon_range
+    &amp;&amp; !parent_obj.disabled
+    &amp;&amp; !global.paused;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check for beam hits
+if(shooting){
 
+    var x1, y1, x2, y2;
+
+    x1 = x + lengthdir_x(guntip, image_angle);
+    y1 = y + lengthdir_y(guntip, image_angle);
+    x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
+    y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
+    hitobject = collision_line(x1,y1,x2,y2,obj_ship,false,false); 
+    if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
+        hitpoint = scr_raycast(x1,y1,x2,y2,hitobject);// This will return an array with x,y coords
+    }else{
+        hitpoint = noone;
+    }
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw beam
+if(shooting &amp;&amp;  gundata[GUN_BULLET_TYPE]=="beam"){
+    if(hitpoint!=noone){
+        x2 = hitpoint[0];
+        y2 = hitpoint[1];
+    }else{
+        x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
+        y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
+    }
+
+    draw_set_colour(gundata[GUN_BULLET_COLOR]);
+    draw_line(x + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle), x2, y2);
+    draw_set_colour(c_white);
+    draw_line(x + 1 + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle), x2+1, y2);
+}
 </string>
           </argument>
         </arguments>

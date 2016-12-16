@@ -73,6 +73,53 @@ alarm[3] = room_speed * 1;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Landing animation
+if(mode==MODE_LANDING){
+    
+    modAlpha -=.05;
+    speed = 0;
+    x = target.x;
+    y = target.y;
+    var m_object;
+    for(var m=0; m&lt;array_length_1d(modules); m++){
+        m_object = modules[m];
+        m_object.image_alpha = modAlpha;
+    }
+      
+    if(modAlpha&lt;.10){
+        for(var m=0; m&lt;array_length_1d(modules); m++){
+            m_object = modules[m];
+            instance_deactivate_object(m_object);
+        }
+        instance_deactivate_object(self);
+    }else{   
+        alarm[5] = room_speed * .10;
+    }
+
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="4">
       <action>
         <libid>1</libid>
@@ -259,12 +306,11 @@ if(global.paused){
     } 
 }
 
-var amod = 0;
+
 if(target != noone &amp;&amp; instance_exists(target)){
   
     if(can_move &amp;&amp; mode!=MODE_WAITING){
         
-        //var amod = top_speed / max(0.001,tgt_dist);
         if( ( mode==MODE_FOLLOWING || (mode==MODE_DEFENDING &amp;&amp; target==obj_player_ship) ) &amp;&amp; tgt_dist&lt;200){           
             //image_angle = target.image_angle;
             var dd = angle_difference(target.image_angle, image_angle);
@@ -275,12 +321,13 @@ if(target != noone &amp;&amp; instance_exists(target)){
            angleDiff = scr_gradually_rotate_2(self.id,target,turn_spd*.5,accuracy);
         }
         
-        if(tgt_dist&gt;300){
+        if(tgt_dist&gt;300 || mode==MODE_TRAVELING){
             //Stop accelerating when we get close      
             motion_add(image_angle,acc_spd_fwd);
         }       
     
     }
+    
 
 }
 
@@ -344,7 +391,6 @@ if(hull_current &lt; 1){
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
-
 shooting = can_fire
 &amp;&amp; instance_exists(target)
 &amp;&amp; target != noone 
@@ -354,7 +400,35 @@ shooting = can_fire
 &amp;&amp; target.faction != faction
 &amp;&amp; energy_current &gt; 0 
 &amp;&amp; tgt_dist &lt;= weapon_range;
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Land if near target planet
+if(can_move &amp;&amp; mode==MODE_TRAVELING){
+    if(tgt_dist&lt;50){
+        // Land or perform a script we planted earlier.
+        mode=MODE_LANDING;
+        // Go into landing animation
+        alarm[5] = room_speed * .25
+    }
+}
 </string>
           </argument>
         </arguments>
