@@ -83,7 +83,7 @@ for ( var i = 0; i &lt; instance_number(obj_landable); i += 1 ){
         coords[2]=px + lengthdir_x(mdist2,dir);
         coords[3]=py + lengthdir_y(mdist2,dir);
         coords[4]=clamp(global.radar_range/dist,0,1);
-        coords[5]=c_green; 
+        coords[5]=c_white; 
         
         blips[i]=coords;  
     }
@@ -105,8 +105,21 @@ for ( var i = 0; i &lt; instance_number(obj_npc_ship); i += 1 ){
         coords[2]=px + lengthdir_x(mdist2,dir);
         coords[3]=py + lengthdir_y(mdist2,dir);
         coords[4]=clamp(global.radar_range/dist,0,1);
-        coords[5]=c_red;   
-        
+        switch (blip.disposition)
+        {
+        case DISPOSITION_NEUTRAL:
+            coords[5]=c_aqua;
+            break;
+        case DISPOSITION_HELPFUL:
+            coords[5]=c_lime;
+            break;
+        case DISPOSITION_HOSTILE:
+            coords[5]=c_red
+            break;
+        default:
+            coords[5]=c_gray;
+        }
+ 
         scr_push_array_1d(blips,coords);
     
     }    
