@@ -36,9 +36,7 @@ if(search_id&lt;0){
     search_id = array_length_1d(global.ship_library) - 1;
 }
 
-obj_ship_editor.loaded_ship = global.ship_library[search_id];
-obj_ship_editor.loaded_ship_index = search_id;
-scr_load_ship();
+scr_load_ship(search_id);
 </string>
           </argument>
         </arguments>

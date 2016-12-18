@@ -8,46 +8,6 @@
   <parentName>obj_button_basic</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="7" enumb="63">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Get user input
-var i_d = ds_map_find_value(async_load, "id");
-if i_d == msg
-{
-    if ds_map_find_value(async_load, "status")
-    {
-        var search_id = ds_map_find_value(async_load, "value");
-        
-        if(search_id&gt;=0 &amp;&amp; search_id&lt;array_length_1d(global.ship_library)){
-
-            scr_load_ship(search_id);
-            
-        }else{
-            show_message("There is no ship with that id.");
-        }
-        
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
@@ -65,12 +25,8 @@ if i_d == msg
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Load ship
-msg = get_integer_async("What is the ship id?",0);
-
-
-
-
+            <string>/// Show editor settings panel
+obj_ship_editor.panel_settings[4] = !obj_ship_editor.panel_settings[4];
 
 </string>
           </argument>
@@ -97,7 +53,32 @@ msg = get_integer_async("What is the ship id?",0);
             <string>draw_set_color(c_lime);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
-draw_text(x,y,"load");
+draw_text(x,y,"settings");
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+
 </string>
           </argument>
         </arguments>

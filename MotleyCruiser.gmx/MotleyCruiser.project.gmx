@@ -83,6 +83,8 @@
       <sprites name="_space_radar">
         <sprite>sprites\spr_indicator</sprite>
       </sprites>
+      <sprite>sprites\spr_spark</sprite>
+      <sprite>sprites\sprite206</sprite>
     </sprites>
     <sprites name="Glare">
       <sprites name="Icons">
@@ -446,6 +448,7 @@
       <script>scripts\scr_clear_editor.gml</script>
       <script>scripts\scr_clear_modules.gml</script>
       <script>scripts\scr_clear_library.gml</script>
+      <script>scripts\scr_shipedit_create_grids.gml</script>
     </scripts>
     <scripts name="_ship_modules">
       <script>scripts\scr_instantiate_ship.gml</script>
@@ -707,6 +710,12 @@
       <script>scripts\glrtest_string_onoff.gml</script>
       <script>scripts\enable_roof.gml</script>
     </scripts>
+    <scripts name="_gui">
+      <script>scripts\scr_gui_set_panel_data.gml</script>
+      <script>scripts\scr_gui_draw_panel.gml</script>
+      <script>scripts\scr_gui_button_state.gml</script>
+      <script>scripts\scr_gui_button_click.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -762,6 +771,7 @@
     <font>fonts\fnt</font>
     <font>fonts\fnt_messagebox</font>
     <font>fonts\glr_font_debug</font>
+    <font>fonts\font3</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
@@ -775,6 +785,7 @@
       <object>objects\obj_room_level</object>
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
+      <object>objects\obj_dialog_control</object>
       <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_team</object>
@@ -792,7 +803,6 @@
       <object>objects\obj_gun</object>
       <object>objects\obj_wall_invis</object>
       <object>objects\obj_floor</object>
-      <object>objects\obj_dialog_control</object>
       <object>objects\obj_da_loot</object>
       <object>objects\obj_corpse</object>
       <object>objects\obj_cover</object>
@@ -810,14 +820,10 @@
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
-      <object>objects\obj_ship</object>
-      <object>objects\obj_ship_BACKUP</object>
       <object>objects\obj_ship_module</object>
       <object>objects\obj_ship_module_gun</object>
       <object>objects\obj_ship_module_turret</object>
-      <object>objects\obj_player_ship</object>
       <object>objects\obj_enemy_ship</object>
-      <object>objects\obj_npc_ship</object>
       <object>objects\obj_laser</object>
       <object>objects\obj_projectile</object>
       <object>objects\obj_explosion</object>
@@ -827,6 +833,13 @@
       <object>objects\obj_landable</object>
       <object>objects\obj_sun</object>
       <object>objects\obj_radar</object>
+      <object>objects\obj_spark</object>
+      <objects name="_ships">
+        <object>objects\obj_ship</object>
+        <object>objects\obj_player_ship</object>
+        <object>objects\obj_npc_ship</object>
+        <object>objects\obj_landing_ship</object>
+      </objects>
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
@@ -853,9 +866,11 @@
       <object>objects\obj_button_load</object>
       <object>objects\obj_button_delete</object>
       <object>objects\obj_btn_update</object>
+      <object>objects\obj_btn_show_settings</object>
       <object>objects\obj_btn_next</object>
       <object>objects\obj_btn_prev</object>
       <object>objects\obj_nuke_library</object>
+      <object>objects\obj_edit_crew</object>
     </objects>
     <objects name="_forms">
       <object>objects\obj_form_text</object>

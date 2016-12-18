@@ -38,8 +38,17 @@ grid_centers2 = noone;
 grid_centers = noone;
 painting = false;
 
+scaffold_sizes = noone;
+scaffold_sizes[0]=3;
+scaffold_sizes[1]=5;
+scaffold_sizes[2]=7;
+
+
+
+
 // Load ship library
-/***
+
+/*** This is done in obj_game_control now:
 ship_library = noone;
 read_list = ds_list_create();
 ini_open(DATA_FILE);
@@ -59,6 +68,48 @@ instance_deactivate_object(obj_paint_drag);
 view_xview[0]=x-(view_wview[0]/2);
 view_yview[0]=y-(view_hview[0]/2);
 
+
+// GUI: Settings panel
+var btns = noone;
+var btn1 = noone;
+btn1[0]=0;//x (from panel boarder+padding)
+btn1[1]=50;//y
+btn1[2]=300;//w
+btn1[3]=20;//h
+btn1[4]="3x3";//text
+
+var btn2 = noone;
+btn2[0]=0;//x (from panel boarder+padding)
+btn2[1]=80;//y
+btn2[2]=300;//w
+btn2[3]=20;//h
+btn2[4]="5x5";//text
+
+var btn3 = noone;
+btn3[0]=0;//x (from panel boarder+padding)
+btn3[1]=110;//y
+btn3[2]=300;//w
+btn3[3]=20;//h
+btn3[4]="7x7";//text
+
+btns[0]=btn1;
+btns[1]=btn2;
+btns[2]=btn3;
+
+panel_settings = scr_gui_set_panel_data("SETTINGS",400,200,btns);
+
+
+
+tx=10;//top of rectangle
+ty=10;
+padding = 5;
+margin = 10;
+boxwidth = display_get_gui_width() - (margin * 2);
+boxheight = display_get_gui_height() - (margin * 2);
+
+
+
+// Draw Module Menu
 var mx=x-(5*SCAFF_CELL_SIZE);
 var my=y-(5*SCAFF_CELL_SIZE);
 var my_start = my;
@@ -88,56 +139,9 @@ for(var m=0; m&lt;array_length_1d(global.module_library); m++){
 }
 
 
-//Create scaffold grids
-grid_xstart = view_xview[0] + (view_wview[0]/8);
-grid_x = grid_xstart;
-grid_y= view_yview[0] + ((view_hview[0]/6));
 
-for(var r=0;r&lt;scaffold_size;r++){
-    for(var c=0;c&lt;scaffold_size;c++){
-        var coords=noone;
-        coords[0] = grid_x;
-        coords[1] = grid_y;
-        grid_centers2[r,c]=coords;
-        grid_x += SCAFF_CELL_SIZE;
-    }
-    grid_y += SCAFF_CELL_SIZE;
-    grid_x = grid_xstart;
-}
-
-grid_x= grid_xstart;
-grid_y += SCAFF_CELL_SIZE;
-
-for(var r=0;r&lt;scaffold_size;r++){
-    for(var c=0;c&lt;scaffold_size;c++){
-        var coords=noone;
-        coords[0] = grid_x;
-        coords[1] = grid_y;
-        grid_centers1[r,c]=coords;
-        grid_x += SCAFF_CELL_SIZE;
-    }
-    grid_y += SCAFF_CELL_SIZE;
-    grid_x = grid_xstart;
-}
-
-grid_x= grid_xstart;
-grid_y += SCAFF_CELL_SIZE;
-
-for(var r=0;r&lt;scaffold_size;r++){
-    for(var c=0;c&lt;scaffold_size;c++){
-        var coords=noone;
-        coords[0] = grid_x;
-        coords[1] = grid_y;
-        grid_centers0[r,c]=coords;
-        grid_x += SCAFF_CELL_SIZE;
-    }
-    grid_y += SCAFF_CELL_SIZE;
-    grid_x = grid_xstart;
-}
-
-grid_centers[0]=grid_centers0;
-grid_centers[1]=grid_centers1;
-grid_centers[2]=grid_centers2;
+// Create scaffold grids
+scr_shipedit_create_grids();
 
 // Color grid
 colorgrid_centers = noone;
@@ -255,6 +259,49 @@ if(center==noone){
 if(!painting){
     instance_deactivate_object(obj_paint_drag);
 }
+
+scr_gui_button_state(panel_settings);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if gui button pressed
+var pressed_setting = scr_gui_button_click(panel_settings);
+if(pressed_setting!=noone){
+
+    scr_clear_editor();
+    if(pressed_setting==0){
+        scaffold_size = 3;
+    }else if(pressed_setting==1){
+        scaffold_size = 5;
+    }else if(pressed_setting==2){
+        scaffold_size = 7;
+    }else{
+        scaffold_size = 3;
+    }
+    
+    // Create scaffold grids
+    scr_shipedit_create_grids();
+    
+}
 </string>
           </argument>
         </arguments>
@@ -277,11 +324,19 @@ if(!painting){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(32, 96, "Mass: " + string(mass));
+            <string>scr_gui_draw_panel(panel_settings);
+
+draw_text(32, 96, "Mass: " + string(mass));
 draw_text(32, 112, "MaxFwd: " + string(max_spd_fwd));
 draw_text(32, 128, "Acc: " + string(acc_spd_fwd));
 draw_text(32, 144, "Turn: " + string(turn_spd));
 draw_text(32, 161, "TurnMOD: " + string(turn_mod));
+
+draw_text(32, 177, "guiwidth: " + string(display_get_gui_width()));
+
+draw_text(32, 187, "guix: " + string(device_mouse_x_to_gui(0)));
+
+draw_text(32, 197, "guiy: " + string(device_mouse_y_to_gui(0)));
 </string>
           </argument>
         </arguments>

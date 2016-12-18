@@ -1,11 +1,20 @@
 /// Load a ship to editor.
-if(obj_ship_editor.loaded_ship == noone){
-    show_message("No ship loaded");
+// scr_load_ship(ship_index)
+var ship_id = argument0;
+if(ship_id = noone || ship_id<0 || ship_id>array_length_1d(global.ship_library)){
+    show_message("Invalid ship id.");
 }
 
-// Clear any existing modules
-scr_clear_modules();
-var theship = obj_ship_editor.loaded_ship;
+scr_clear_editor();
+obj_ship_editor.loaded_ship = global.ship_library[ship_id];
+obj_ship_editor.loaded_ship_index = ship_id;
+obj_ship_editor.scaffold_size = obj_ship_editor.loaded_ship[SHIP_SCAFFOLD_SIZE];
+
+// Create scaffold grids
+with(obj_ship_editor){
+    scr_shipedit_create_grids();
+}
+
 //Assemble the ship in the editor
 var module_data = obj_ship_editor.loaded_ship[SHIP_MODULES];
 for(var m=0; m<array_length_1d(module_data); m++){
@@ -21,6 +30,10 @@ for(var m=0; m<array_length_1d(module_data); m++){
     
     var grid = obj_ship_editor.grid_centers[module[I_MODULE_DEPTH]];
     
+    if( m_coords[0] >= array_height_2d(grid) || m_coords[1] >= array_length_2d(grid,0) ){
+        show_message("coordinates are outside of current grid size.");
+        break;
+    }
     var g_coords = grid[m_coords[0],m_coords[1]];
     if(g_coords!=noone){
         var x1 = g_coords[0];
@@ -36,8 +49,4 @@ for(var m=0; m<array_length_1d(module_data); m++){
         show_message("coordinates could not be loaded");
     }
 
-
-    
 }
-
-

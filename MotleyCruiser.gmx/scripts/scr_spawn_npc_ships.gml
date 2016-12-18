@@ -37,7 +37,8 @@ for(var i=1; i<=num_ships; i++){
         //var ship_map = scr_make_ship(g_row,g_col);        
         x = clamp( irandom(global.sector_width ), 1, global.sector_width );
         y = clamp( irandom(global.sector_width ), 1, global.sector_width );
-        ship_data = scr_array_random(global.ship_library);
+        ship_index = irandom(array_length_1d(global.ship_library)-1);
+        ship_data = global.ship_library[ship_index];
         scr_instantiate_ship();    
     }
      

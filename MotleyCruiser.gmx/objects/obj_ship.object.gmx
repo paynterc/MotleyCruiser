@@ -30,6 +30,7 @@ saved_speed = noone;
 modules = noone;
 module_data = noone;
 ship_data = noone;
+ship_index = noone;
 hitrad=noone;// colision radius
 faction = noone; //FACTION_PLAYER, FACTION_PIRATE, FACTION_TRADER
 
@@ -45,6 +46,8 @@ color_h = c_red;
 color_e = c_yellow;
 mode = MODE_WAITING;
 disposition = DISPOSITION_NEUTRAL;
+hitby = noone;// Who hit me?!
+
 
 // Set defaults
 scr_ship_defaults();
@@ -199,14 +202,20 @@ speed = max(speed - 0.01, 0);
             <string>/// Update module positions
 if(modules != noone)
 for(var m=0; m&lt;array_length_1d(modules); m++){
-    var module = modules[m];   
-    var d = module.offsets[0]; // distance
-    var a = module.offsets[1]; // angle
-    
-    module.x = x + lengthdir_x(d, image_angle + a);
-    module.y = y + lengthdir_y(d, image_angle + a);
-    if(module.module_type!="turret" || target==noone){
-        module.image_angle = image_angle;
+    var module = modules[m]; 
+    if(module &amp;&amp; module!=noone){  
+        if(module.offsets!=noone){
+        
+            var d = module.offsets[0]; // distance
+            var a = module.offsets[1]; // angle
+            
+            module.x = x + lengthdir_x(d, image_angle + a);
+            module.y = y + lengthdir_y(d, image_angle + a);
+            if(module.module_type!="turret" || target==noone){
+                module.image_angle = image_angle;
+            }
+        
+        }
     }
     
 }
@@ -249,7 +258,7 @@ if(ship_data!=noone){
     {
         
         if(inst.type != faction){
-            disposition = DISPOSITION_HOSTILE;
+            hitby = inst.firedby;
             register_damage += inst.damage;
             // Handle death in child object
             with(inst){  

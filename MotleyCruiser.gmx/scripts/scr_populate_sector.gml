@@ -155,6 +155,7 @@ if(global.ship_boarded != noone){
         faction = FACTION_PIRATE;
         disposition = DISPOSITION_HOSTILE;
         boardable = false;
+        disabled = true;
         
         scr_instantiate_ship();
 

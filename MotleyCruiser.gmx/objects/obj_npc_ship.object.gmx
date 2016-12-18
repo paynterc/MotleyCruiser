@@ -161,27 +161,40 @@ hull_current = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update target
+            <string>/// Update target and Disposition
+if(hitby!=noone &amp;&amp; disposition != DISPOSITION_HOSTILE){
+    if(hitby.faction == FACTION_PLAYER &amp;&amp; faction != FACTION_PLAYER){
+        disposition = DISPOSITION_HOSTILE;
+    }
+}
+
 
 if(disposition == DISPOSITION_HOSTILE){
-    var s_count = instance_number(obj_ship);
-    var cdist = noone;
-    var closest = noone;
-    for(var i = 0; i &lt; s_count; i++) {
-        var s_ship = instance_find(obj_ship,i);
-        if(s_ship.faction == FACTION_PLAYER){
-            var pdist = point_distance(s_ship.x,s_ship.y,x,y);
-            if(cdist==noone || pdist&lt;cdist){
-                closest = s_ship;
-                cdist = pdist;
+    
+    if(faction=FACTION_PLAYER){
+        // Player faction vessels should never be hostile
+        disposition=DISPOSITION_HELPFUL;
+    }else{
+        var s_count = instance_number(obj_ship);
+        var cdist = noone;
+        var closest = noone;
+        for(var i = 0; i &lt; s_count; i++) {
+            var s_ship = instance_find(obj_ship,i);
+            if(s_ship.faction == FACTION_PLAYER){
+                var pdist = point_distance(s_ship.x,s_ship.y,x,y);
+                if(cdist==noone || pdist&lt;cdist){
+                    closest = s_ship;
+                    cdist = pdist;
+                }
             }
         }
-    }
+        
+        if(closest != noone){
+            target = closest;
+            tgt_dist = distance_to_object(target);
+            mode = MODE_ATTACKING;
+        }
     
-    if(closest != noone){
-        target = closest;
-        tgt_dist = distance_to_object(target);
-        mode = MODE_ATTACKING;
     }
 
 }else if(disposition == DISPOSITION_HELPFUL){
@@ -192,7 +205,7 @@ if(disposition == DISPOSITION_HOSTILE){
         var closest = noone;
         for(var i = 0; i &lt; s_count; i++) {
             var s_ship = instance_find(obj_npc_ship,i);
-            if(s_ship.disposition == DISPOSITION_HOSTILE &amp;&amp; scr_instance_in_view(s_ship)){
+            if(s_ship.disposition == DISPOSITION_HOSTILE &amp;&amp; scr_instance_in_view(s_ship) &amp;&amp; s_ship.id!=id){
                 var pdist = point_distance(s_ship.x,s_ship.y,obj_player_ship.x,obj_player_ship.y);
                 if(cdist==noone || pdist&lt;cdist){
                     closest = s_ship;
@@ -425,8 +438,11 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
     if(tgt_dist&lt;50){
         // Land or perform a script we planted earlier.
         mode=MODE_LANDING;
+        x=target.x;
+        y=target.y;
         // Go into landing animation
-        alarm[5] = room_speed * .25
+        //alarm[5] = room_speed * .25
+        instance_change(obj_landing_ship,true);
     }
 }
 </string>

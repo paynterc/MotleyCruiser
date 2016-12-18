@@ -46,6 +46,10 @@ weapon_speed = 1;
 hitpoint = noone;
 hitobject = noone;
 
+//Instantiate a spark
+spark = instance_create(x,y,obj_spark);
+
+
 alarm[0]=room_speed;
 </string>
           </argument>
@@ -88,6 +92,7 @@ if(shooting){
     if(gundata[GUN_BULLET_TYPE]=="beam"){
         if(hitobject!=noone){
             hitobject.register_damage += gundata[GUN_DAMAGE];
+            hitobject.hitby = id;
         }   
     }else if(gundata[GUN_BULLET_TYPE]=="bullet"){
         var d = sprite_get_width(sprite_index)/2;
@@ -97,6 +102,7 @@ if(shooting){
         //bullet.x = x + lengthdir_x(d, image_angle);
         //bullet.y = y + lengthdir_y(d, image_angle);
         bullet.type=faction;
+        bullet.firedby = id;
         bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
         bullet.depth = -200;
         bullet.direction = image_angle;
@@ -172,7 +178,7 @@ if(parent_obj!=noone
           <argument>
             <kind>1</kind>
             <string>/// Check for beam hits
-if(shooting){
+if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
 
     var x1, y1, x2, y2;
 
@@ -183,10 +189,19 @@ if(shooting){
     hitobject = collision_line(x1,y1,x2,y2,obj_ship,false,false); 
     if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
         hitpoint = scr_raycast(x1,y1,x2,y2,hitobject);// This will return an array with x,y coords
+        if(hitpoint!=noone){
+            spark.x = hitpoint[0];
+            spark.y = hitpoint[1];
+            spark.active = 1;
+        }
     }else{
         hitpoint = noone;
+        spark.active = 0;
     }
     
+}else{
+    spark.active = 0;
+    hitpoint = noone;
 }
 </string>
           </argument>

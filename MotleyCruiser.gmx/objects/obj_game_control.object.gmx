@@ -266,7 +266,7 @@ if(scr_user_input("fullscreen")){
             <string>/// Debug text
 
     draw_set_color(c_lime);
-    draw_text(32, 32, "FPS: " + string(fps_real));
+    draw_text(32, 32, "FPS Real: " + string(fps_real));
     /***
     if(instance_exists(obj_player_ship)){
         draw_text(32, 64, "Decks Remaining: " + string(global.decks_remaining));
