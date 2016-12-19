@@ -158,6 +158,8 @@ view_yview[0]=y-(view_hview[0]/2);
           <argument>
             <kind>1</kind>
             <string>/// User input
+var turn_m = 20000;
+var turn_a = turn_spd/turn_m;
 
 if(global.paused){
     if(speed != 0){
@@ -186,11 +188,11 @@ if(scr_user_input("thrust")){
 }
 
 if(scr_user_input("turn_left")){
-    image_angle += turn_spd;
+    image_angle += turn_a * delta_time;
 }
 
 if(scr_user_input("turn_right")){
-    image_angle -= turn_spd;
+    image_angle -= turn_a * delta_time;
 }
 
 

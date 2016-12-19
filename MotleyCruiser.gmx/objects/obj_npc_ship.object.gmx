@@ -42,7 +42,7 @@
             <string>/// Initialize
 
 // Overwrite defaults
-turn_spd = 7;
+//turn_spd = 7;
 
 
 // Custom defaults
@@ -331,7 +331,8 @@ if(target != noone &amp;&amp; instance_exists(target)){
              
             speed = target.speed;       
         }else{
-           angleDiff = scr_gradually_rotate_2(self.id,target,turn_spd*.5,accuracy);
+           //angleDiff = scr_gradually_rotate_2(self.id,target,turn_spd*.5,accuracy);
+           scr_gradually_rotate_3(self.id,target,turn_spd,accuracy);
         }
         
         if(tgt_dist&gt;300 || mode==MODE_TRAVELING){

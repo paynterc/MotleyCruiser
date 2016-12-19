@@ -142,15 +142,12 @@ alarm[1] = room_speed * energy_regen_speed;
           <argument>
             <kind>1</kind>
             <string>/// Modules modify stats
-
 if(!stats_modified &amp;&amp; module_data != noone){
     stats_modified = true;
     scr_module_modify_stats();
     // Start alarms
     alarm[1] = room_speed * energy_regen_speed;
-    alarm[2] = room_speed * shields_regen_speed;
-    var test = 1;
-    
+    alarm[2] = room_speed * shields_regen_speed; 
 }
 </string>
           </argument>
