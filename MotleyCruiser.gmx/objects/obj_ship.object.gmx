@@ -39,6 +39,7 @@ disabled = false;
 can_move = true;
 can_fire = true;
 target = noone;
+tgt_dist = 0;
 shooting = false;
 register_damage = 0;//Register hits from non-objects 
 color_s = c_aqua;
@@ -57,6 +58,9 @@ shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 modAlpha = 1; // Alpha tranparency for modules. Use for landing.
 
 image_speed=0;
+
+alarm[1] = room_speed * energy_regen_speed;
+alarm[2] = room_speed * shields_regen_speed;
 </string>
           </argument>
         </arguments>
@@ -125,34 +129,6 @@ alarm[1] = room_speed * energy_regen_speed;
       </action>
     </event>
     <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Modules modify stats
-if(!stats_modified &amp;&amp; module_data != noone){
-    stats_modified = true;
-    scr_module_modify_stats();
-    // Start alarms
-    alarm[1] = room_speed * energy_regen_speed;
-    alarm[2] = room_speed * shields_regen_speed; 
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
       <action>
         <libid>1</libid>
         <id>603</id>

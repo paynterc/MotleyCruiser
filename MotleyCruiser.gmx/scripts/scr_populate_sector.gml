@@ -203,9 +203,20 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
-        ship_data = global.ship_library[0];
+        var new_ship = false;
+        if(global.player_ship == noone){
+            ship_data = global.ship_library[10];
+            new_ship = true
+        }else{
+            ship_data = global.player_ship;
+        }       
         faction = FACTION_PLAYER;
         scr_instantiate_ship();
+        if(new_ship){
+            scr_update_ship_data();
+        }else{
+            scr_restore_ship_state();
+        }     
     }
 }
 
@@ -222,7 +233,8 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
         disposition = DISPOSITION_HELPFUL;
         mode = MODE_DEFENDING;
         target = obj_player_ship;
-        scr_instantiate_ship();     
+        scr_instantiate_ship();
+        scr_restore_ship_state();     
     }
     
 }

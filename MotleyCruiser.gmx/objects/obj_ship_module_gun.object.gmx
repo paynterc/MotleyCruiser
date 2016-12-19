@@ -43,6 +43,7 @@
 shooting = false;
 gundata = noone;
 weapon_speed = 1;
+weapon_range = 0;
 hitpoint = noone;
 hitobject = noone;
 
@@ -84,6 +85,7 @@ if(gundata==noone){
         gundata = global.guns[0];
     }    
     weapon_speed = gundata[GUN_SPEED];
+    weapon_range = gundata[GUN_RANGE]
 }
 
 if(shooting){
@@ -150,7 +152,8 @@ alarm[0] = room_speed * weapon_speed;
             <string>/// Set shooting status
 if(parent_obj!=noone 
 &amp;&amp; gundata != noone 
-&amp;&amp; parent_obj.energy_current&gt;0 
+&amp;&amp; parent_obj.energy_current&gt;0
+&amp;&amp; parent_obj.tgt_dist &lt;= weapon_range
 &amp;&amp; !global.paused
 ){
     shooting = parent_obj.shooting;

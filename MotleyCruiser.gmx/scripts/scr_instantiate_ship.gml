@@ -55,3 +55,6 @@ for(var m=0; m<array_length_1d(module_data); m++){
     module_data[m]=module_record;
 
 }
+
+// Now mofify the ship stats based on installed modules
+scr_module_modify_stats();
