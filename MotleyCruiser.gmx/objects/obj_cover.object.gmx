@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 hp = 20;
+depth=-y;
 </string>
           </argument>
         </arguments>
