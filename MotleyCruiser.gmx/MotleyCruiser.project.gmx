@@ -343,6 +343,7 @@
       <script>scripts\totro.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_spawn_npc_ships.gml</script>
+      <script>scripts\scr_persist_game_state.gml</script>
     </scripts>
     <scripts name="_hule_inventory">
       <scripts name="Inventory">
@@ -447,7 +448,6 @@
       <script>scripts\scr_load_ship.gml</script>
       <script>scripts\scr_clear_editor.gml</script>
       <script>scripts\scr_clear_modules.gml</script>
-      <script>scripts\scr_clear_library.gml</script>
       <script>scripts\scr_shipedit_create_grids.gml</script>
     </scripts>
     <scripts name="_ship_modules">
@@ -456,15 +456,21 @@
       <script>scripts\scr_scaffold_offsets.gml</script>
       <script>scripts\scr_scaffold_grid.gml</script>
       <script>scripts\scr_rotate_coords.gml</script>
+      <script>scripts\scr_update_ship_data.gml</script>
+      <script>scripts\scr_restore_ship_state.gml</script>
       <script>scripts\scr_module_modify_stats.gml</script>
     </scripts>
     <scripts name="_utility">
       <script>scripts\scr_get_closest.gml</script>
       <script>scripts\scr_gradually_rotate.gml</script>
       <script>scripts\scr_gradually_rotate_2.gml</script>
+      <script>scripts\scr_gradually_rotate_3.gml</script>
+      <script>scripts\scr_gradually_rotate_4.gml</script>
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_instance_in_view.gml</script>
       <script>scripts\scr_raycast.gml</script>
+      <script>scripts\scr_rotate_cycle.gml</script>
+      <script>scripts\scr_gradually_rotate_5.gml</script>
     </scripts>
     <scripts name="Glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -785,6 +791,7 @@
       <object>objects\obj_room_level</object>
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
+      <object>objects\obj_lvl_cantina</object>
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
@@ -869,7 +876,6 @@
       <object>objects\obj_btn_show_settings</object>
       <object>objects\obj_btn_next</object>
       <object>objects\obj_btn_prev</object>
-      <object>objects\obj_nuke_library</object>
       <object>objects\obj_edit_crew</object>
     </objects>
     <objects name="_forms">
@@ -880,18 +886,17 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
+    <room>rooms\rm_space</room>
     <room>rooms\rm_ship_deck_rnd</room>
     <room>rooms\rm_ship_control</room>
-    <room>rooms\rm_space</room>
-    <room>rooms\rm_cantina1</room>
-    <room>rooms\rm_custom1</room>
     <room>rooms\rm_cantina2</room>
+    <room>rooms\rm_cantina1</room>
     <rooms name="Glare">
       <room>rooms\room_glare_init</room>
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="180">
+  <constants number="183">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -979,6 +984,9 @@
     <constant name="SHIP_MODULES">20</constant>
     <constant name="SHIP_SCAFFOLD_SIZE">21</constant>
     <constant name="SHIP_ANGLE">22</constant>
+    <constant name="SHIP_SHIELDS_CUR">23</constant>
+    <constant name="SHIP_HULL_CUR">24</constant>
+    <constant name="SHIP_ENERGY_CUR">25</constant>
     <constant name="FACTION_PLAYER">0</constant>
     <constant name="FACTION_PIRATE">1</constant>
     <constant name="FACTION_TRADER">2</constant>

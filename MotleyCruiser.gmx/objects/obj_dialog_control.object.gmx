@@ -50,6 +50,13 @@ font_color = c_white;                   // Color to draw the font and the border
 bak_color = c_teal;                   // The color for the messagebox background
 draw_message = false;
 // End speach bubble
+
+// Add a light
+llight=noone
+llight = glr_light_create(spr_glr_light_mask_point, 0, x, y, c_white, 0);
+glr_light_set_static(llight, true);/// Light
+glr_light_set_scaling(llight,3,3);
+glr_light_set_active(llight,false);
 </string>
           </argument>
         </arguments>
@@ -76,6 +83,7 @@ draw_message = false;
 if(instance_exists(obj_player)){
     if(obj_player.hspd!=0 || obj_player.vspd!=0){
         show_dialog = false;
+        glr_light_set_active(llight,false);
         scr_reset_dialog();       
     }
 }
@@ -343,11 +351,15 @@ if(show_dialog){
         }
         staged_tree = closest_sentient.dialogue;
         staged_branch = staged_tree[0];
+        
+        glr_light_set_active(llight,true);
+        glr_light_set_position(llight,closest_sentient.x,closest_sentient.y);
+        
     }
 
 
 }
-
+glr_light_set_active(llight,show_dialog);
 
 
 </string>

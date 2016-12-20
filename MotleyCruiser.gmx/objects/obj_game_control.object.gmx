@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+//randomize();
+
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
 
@@ -72,7 +74,6 @@ scr_reset_room_random();
 /****************************************************************/
 global.ship_boarded = noone; // Should be an array of ship data from scr_make_ship;
 
-//global.fleet[0] = scr_make_ship(0,0);
 
 /****************************************************************/
 /*                      LIBRARIES                               */
@@ -102,7 +103,7 @@ scr_ship_turrets();
 
 
 /****************************************************************/
-/*                      DYNAMIC PLAYER SETTINGS                 */
+/*                      DYNAMIC PLAYER DATA                     */
 /****************************************************************/
 
 // PLAYER MISSIONS: An array of ds_maps for missions

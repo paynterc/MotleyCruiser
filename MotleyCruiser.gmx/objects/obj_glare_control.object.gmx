@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -26,8 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-depth = -10000;
 glr_init(1,512,288,0);
+depth = -10000;
+
 </string>
           </argument>
         </arguments>
@@ -75,7 +76,9 @@ glr_clear_all();
           <argument>
             <kind>1</kind>
             <string>/// Glare draw gamma
-glr_draw_gamma(application_surface);
+if(instance_exists(obj_room_level)){
+    glr_draw_gamma(application_surface);
+}
 </string>
           </argument>
         </arguments>
@@ -99,7 +102,9 @@ glr_draw_gamma(application_surface);
           <argument>
             <kind>1</kind>
             <string>/// Glare  render
-glr_render();
+if(instance_exists(obj_room_level)){
+    glr_render();
+}
 </string>
           </argument>
         </arguments>

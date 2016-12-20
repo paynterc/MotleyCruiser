@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>/// Initiate GUI vars
 texture_set_interpolation(true);
+
+
 depth=-1000;
 guiXoffset = 12;
 guiYoffset = 3;

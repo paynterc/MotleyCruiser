@@ -52,7 +52,6 @@
   </views>
   <instances>
     <instance objName="obj_player" x="368" y="624" name="inst_33D8CC02" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="obj_glare_control" x="96" y="16" name="inst_C5F1F152" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_floor" x="192" y="480" name="inst_E555B825" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_floor" x="224" y="480" name="inst_F8DCAD0E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_floor" x="256" y="480" name="inst_D06E6DD1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

@@ -209,7 +209,7 @@ if(scr_user_input("dock")){
         global.landed_on = closest_landable.global_index;
         global.landed_type = closest_landable.global_type;
         
-        room_goto(rm_cantina1);
+        room_goto(rm_cantina2);
     }
 }
 

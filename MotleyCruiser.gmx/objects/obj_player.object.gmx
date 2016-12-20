@@ -34,7 +34,7 @@ ispeed = .25;
 image_speed = ispeed;
 spd = 3;
 hspd=0;
-vsped=0;
+vspd=0;
 health_y = sprite_get_height(sprite_index) - 5;
 
 </string>
