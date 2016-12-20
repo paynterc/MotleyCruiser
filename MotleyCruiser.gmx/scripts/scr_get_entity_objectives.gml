@@ -2,6 +2,7 @@
 // scr_is_entity_objectives(type,global_index)
 var type = argument0;
 var index = argument1;
+if(type==noone || index == noone) return noone;
 
 var target = scr_get_location(type,index);
 var myobjectives = noone;

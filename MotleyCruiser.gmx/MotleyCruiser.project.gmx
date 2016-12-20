@@ -232,6 +232,7 @@
     <sprite>sprites\spr_cryptolid</sprite>
     <sprite>sprites\spr_default</sprite>
     <sprite>sprites\spr_desk</sprite>
+    <sprite>sprites\spr_table</sprite>
     <sprite>sprites\spr_door_reactor</sprite>
     <sprite>sprites\spr_enemy</sprite>
     <sprite>sprites\spr_flowridian2</sprite>
@@ -822,6 +823,7 @@
         <object>objects\obj_workstation</object>
         <object>objects\obj_panel_decor</object>
         <object>objects\obj_viewscreen_decor</object>
+        <object>objects\obj_table</object>
       </objects>
       <object>objects\obj_spawner</object>
     </objects>
