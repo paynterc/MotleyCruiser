@@ -208,7 +208,9 @@ if(scr_user_input("dock")){
     if(closest_landable != noone){
         global.landed_on = closest_landable.global_index;
         global.landed_type = closest_landable.global_type;
-        
+        global.player_x = obj_player_ship.x;
+        global.player_y = obj_player_ship.y;
+        scr_persist_game_state();
         room_goto(rm_cantina2);
     }
 }
@@ -243,6 +245,9 @@ if(scr_user_input("board_ship")){
             global.ship_boarded[SHIP_ANGLE] = ce.image_angle;
             //room_goto(rm_ship_deck_rnd);
             global.paused = true;
+            global.player_x = obj_player_ship.x;
+            global.player_y = obj_player_ship.y;
+            scr_persist_game_state();
             view_object[0]=ce;
             obj_space_level.zoom=true;
         }

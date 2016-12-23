@@ -31,3 +31,6 @@ if(instance_exists(obj_space_level)){
 }
 
 // If we're in a room, persist npc and crew.
+
+// Write to file
+scr_game_save();

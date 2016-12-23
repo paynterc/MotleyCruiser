@@ -3,10 +3,12 @@
 var p = argument0;
 if(p!=noone && p[4]){
 
+/***
     var cb = p[6];// Close panel (cancel) button
     if(cb[4]){
         p[@ 4]=false; // Close panel
     }
+***/
 
     var staged_buttons = p[8];
     var btn;

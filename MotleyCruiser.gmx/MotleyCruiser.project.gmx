@@ -267,9 +267,11 @@
     <sprite>sprites\spr_paintbrush</sprite>
     <sprites name="_buttons">
       <sprite>sprites\spr_btn</sprite>
+      <sprite>sprites\spr_btn_play</sprite>
       <sprite>sprites\spr_btn_small</sprite>
       <sprite>sprites\spr_textbox</sprite>
     </sprites>
+    <sprite>sprites\spr_main_title</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -346,6 +348,19 @@
       <script>scripts\scr_spawn_npc_ships.gml</script>
       <script>scripts\scr_persist_game_state.gml</script>
     </scripts>
+    <scripts name="_game_control">
+      <script>scripts\scr_pause_menu.gml</script>
+      <script>scripts\scr_load_game_menu.gml</script>
+      <script>scripts\scr_main_menu.gml</script>
+      <script>scripts\scr_game_save.gml</script>
+      <script>scripts\scr_game_load.gml</script>
+    </scripts>
+    <scripts name="_gui">
+      <script>scripts\scr_gui_set_panel_data.gml</script>
+      <script>scripts\scr_gui_draw_panel.gml</script>
+      <script>scripts\scr_gui_button_state.gml</script>
+      <script>scripts\scr_gui_button_click.gml</script>
+    </scripts>
     <scripts name="_hule_inventory">
       <scripts name="Inventory">
         <scripts name="Inventory System">
@@ -393,6 +408,7 @@
       <script>scripts\scr_races.gml</script>
       <script>scripts\scr_modules.gml</script>
       <script>scripts\scr_ship_turrets.gml</script>
+      <script>scripts\scr_ships.gml</script>
     </scripts>
     <scripts name="_mission">
       <script>scripts\scr_make_mission.gml</script>
@@ -717,12 +733,6 @@
       <script>scripts\glrtest_string_onoff.gml</script>
       <script>scripts\enable_roof.gml</script>
     </scripts>
-    <scripts name="_gui">
-      <script>scripts\scr_gui_set_panel_data.gml</script>
-      <script>scripts\scr_gui_draw_panel.gml</script>
-      <script>scripts\scr_gui_button_state.gml</script>
-      <script>scripts\scr_gui_button_click.gml</script>
-    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -779,6 +789,7 @@
     <font>fonts\fnt_messagebox</font>
     <font>fonts\glr_font_debug</font>
     <font>fonts\font3</font>
+    <font>fonts\fnt_menus</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
@@ -885,9 +896,14 @@
       <object>objects\obj_form_textbox</object>
       <object>objects\obj_form_button</object>
     </objects>
+    <objects name="_main_menu">
+      <object>objects\obj_btn_play</object>
+      <object>objects\obj_main_menu</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
+    <room>rooms\rm_main_menu</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_ship_deck_rnd</room>
     <room>rooms\rm_ship_control</room>
@@ -898,7 +914,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="183">
+  <constants number="184">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1072,6 +1088,7 @@
     <constant name="OBJECTIVE_ID">12</constant>
     <constant name="SCAFF_CELL_SIZE">16</constant>
     <constant name="DATA_FILE">"motleydata.ini"</constant>
+    <constant name="SAVE_GAME_FILE">"motleysave.ini"</constant>
     <constant name="I_MODULE_INDEX">0</constant>
     <constant name="I_MODULE_COORDS">1</constant>
     <constant name="I_MODULE_OFFSETS">2</constant>

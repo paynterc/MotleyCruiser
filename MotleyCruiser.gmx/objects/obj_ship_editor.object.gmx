@@ -72,21 +72,21 @@ view_yview[0]=y-(view_hview[0]/2);
 // GUI: Settings panel
 var btns = noone;
 var btn1 = noone;
-btn1[0]=0;//x (from panel boarder+padding)
+btn1[0]=noone;//x (from panel boarder+padding)
 btn1[1]=50;//y
 btn1[2]=300;//w
 btn1[3]=20;//h
 btn1[4]="3x3";//text
 
 var btn2 = noone;
-btn2[0]=0;//x (from panel boarder+padding)
+btn2[0]=noone;//x (from panel boarder+padding)
 btn2[1]=80;//y
 btn2[2]=300;//w
 btn2[3]=20;//h
 btn2[4]="5x5";//text
 
 var btn3 = noone;
-btn3[0]=0;//x (from panel boarder+padding)
+btn3[0]=noone;//x (from panel boarder+padding)
 btn3[1]=110;//y
 btn3[2]=300;//w
 btn3[3]=20;//h
@@ -96,7 +96,7 @@ btns[0]=btn1;
 btns[1]=btn2;
 btns[2]=btn3;
 
-panel_settings = scr_gui_set_panel_data("SETTINGS",400,200,btns);
+panel_settings = scr_gui_set_panel_data("SETTINGS",400,200,btns,5);
 
 
 

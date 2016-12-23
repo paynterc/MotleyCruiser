@@ -37,7 +37,7 @@ var npc = noone;
 
 var location_npcs = noone;
 
-var ship = scr_make_ship(1,1);
+//var ship = scr_make_ship(1,1);
 
 for(row=0; row < gwidth; row++){
     

@@ -26,7 +26,6 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-//randomize();
 
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
@@ -53,24 +52,23 @@ global.ship_min_energy = 100;
 global.ship_max_energy = 1000;
 global.ship_min_weapon_spd = 3;
 global.ship_max_weapon_spd = 0.1;
-
-
 global.radar_range=500;
-
-// RACES
-global.races = scr_races();
-
 global.box_height = 100;
 global.sector_width = 10000;//width in pixels of space combat room
 
+/****************************************************************/
+/*                      MENUS                                   */
+/****************************************************************/
+scr_pause_menu();
+scr_load_game_menu();
 
 /****************************************************************/
-/*                      ROOM LEVELS                      */
+/*                      ROOM LEVELS                             */
 /****************************************************************/
 scr_reset_room_random();
 
 /****************************************************************/
-/*                      SPACE LEVELS                      */
+/*                      SPACE LEVELS                            */
 /****************************************************************/
 global.ship_boarded = noone; // Should be an array of ship data from scr_make_ship;
 
@@ -78,16 +76,12 @@ global.ship_boarded = noone; // Should be an array of ship data from scr_make_sh
 /****************************************************************/
 /*                      LIBRARIES                               */
 /****************************************************************/
-//Ships
 
-global.ship_library = noone;
-var read_list = ds_list_create();
-ini_open(DATA_FILE);
-var str = ini_read_string("libraries", "ships", "");
-ds_list_read(read_list,str);
-global.ship_library = read_list[| 0];
-ds_list_destroy(read_list);
-ini_close();
+// RACES
+global.races = scr_races();
+
+//Ships
+scr_ships();
 
 // Ship Modules
 scr_modules();
@@ -127,20 +121,30 @@ global.credits = 1000;
 /****************************************************************/
 /*                      MAKE A GALAXY                           */
 /****************************************************************/
+global.game_loaded = "GAME3";
+random_set_seed(1);
+global.galaxy_seed = random_get_seed();//Random seed for the galaxy
 global.galaxy_width = 20;
-
 global.suns[0] = -1;
 global.planets[0] = -1;
 global.moons[0] = -1;
 global.stations[0] = -1;
 global.ships[0] = -1;
 global.npcs[0] = -1;
+global.galaxy = scr_make_galaxy_NEW();
+
+/****************************************************************/
+/*                      LOCATION                                */
+/****************************************************************/
+// Maybe overwrite these when loading a game.
 global.landed_on = noone;
 global.landed_type = noone;
 global.current_sector_row = global.galaxy_width/2;
 global.current_sector_col = global.galaxy_width/2;
+global.player_x = 100;
+global.player_y = 100;
 
-global.galaxy = scr_make_galaxy_NEW();
+
 
 for(var i=0; i&lt;2; i++){
     global.crew[i]=scr_array_random(global.npcs);
@@ -168,6 +172,7 @@ for(var i=0; i&lt;2; i++){
             <kind>1</kind>
             <string>/// Set GUI size
 
+/***
 var base_w = 896;
 var base_h = 504;
 var aspect = display_get_width() / display_get_height();
@@ -181,6 +186,7 @@ else
     //portrait
     display_set_gui_size(base_w, base_w / aspect);
 }
+***/
 </string>
           </argument>
         </arguments>
@@ -206,6 +212,11 @@ else
             <string>/// User input
 if(scr_user_input("pause")){
     global.paused = !global.paused;
+    /// Show/hide the paused game menu
+    panel_pause[4] = global.paused;
+    if(!global.paused){
+        panel_load_game[4]=false;
+    }
 }
 
 if(scr_user_input("goto_ship_edit")){
@@ -228,8 +239,6 @@ if(scr_user_input("fullscreen")){
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="7" enumb="3">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -246,8 +255,102 @@ if(scr_user_input("fullscreen")){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Destroy stuff
+            <string>/// Check hover status on menus
+if(panel_pause[4]){
+    scr_gui_button_state(panel_pause);
+}else if(panel_load_game[4]){
+    scr_gui_button_state(panel_load_game);
+}
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if gui button was pressed.
+if(panel_pause[4]){
+    var pause_menu_button = scr_gui_button_click(panel_pause);
+    if(pause_menu_button==0){
+        global.paused = false;
+        panel_pause[4] = false;
+    }
+    
+    if(pause_menu_button==1){
+        panel_pause[4] = false;
+        panel_load_game[4]=true;
+        var bla=0;
+    }
+    
+    if(pause_menu_button==4){
+        game_end();
+    }
+    
+}else if(panel_load_game[4]){
+    var load_game_button = scr_gui_button_click(panel_load_game);
+    if(load_game_button==0){
+        // New game
+        
+    }
+    
+    if(load_game_button==1){
+    
+        scr_game_load("GAME1");
+    }
+    
+    if(load_game_button==2){
+    
+        scr_game_load("GAME2");
+    }
+    
+    if(load_game_button==3){
+    
+        panel_load_game[4]=false;
+        panel_pause[4] = true;
+        var blabla=0;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Close menus
+panel_pause[4]=false;
+panel_load_game[4]=false;
 </string>
           </argument>
         </arguments>
@@ -271,10 +374,10 @@ if(scr_user_input("fullscreen")){
           <argument>
             <kind>1</kind>
             <string>/// Debug text
-
+    
     draw_set_color(c_lime);
     draw_text(32, 32, "FPS Real: " + string(fps_real));
-    draw_text(32, 64, "Delta Time: " + string(delta_time));
+    draw_text(32, 64, "Galaxy Seed: " + string(random_get_seed()));
     /***
     if(instance_exists(obj_player_ship)){
         draw_text(32, 64, "Decks Remaining: " + string(global.decks_remaining));
@@ -285,6 +388,29 @@ if(scr_user_input("fullscreen")){
     ***/
    
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Menu Panels
+scr_gui_draw_panel(panel_pause);
+scr_gui_draw_panel(panel_load_game);
 </string>
           </argument>
         </arguments>

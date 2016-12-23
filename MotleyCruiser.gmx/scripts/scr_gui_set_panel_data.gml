@@ -1,11 +1,11 @@
 /// Calculate center panel in view based on width and height
-// scr_gui_set_panel_data(headertext,width, height, buttons)
+// scr_gui_set_panel_data(headertext,width, height, buttons, padding)
 var data = noone;
 var header = argument0;
 var pwidth = argument1;
 var pheight = argument2;
 var buttons = argument3;
-var padding = 5;
+var padding = argument4;
 
 var top_x = ( display_get_gui_width() / 2 ) - (pwidth/2);
 var top_y = ( display_get_gui_height() / 2 ) - (pheight/2);
@@ -35,7 +35,13 @@ if(buttons!=noone){
     for(var i=0;i<array_length_1d(buttons);i++){
         bs = buttons[i];
         bn=noone;//formatted button
-        bn[0] = ( display_get_gui_width() / 2 ) - (bs[2]/2);//topx
+        if(bs[0]==noone){
+            // Center the button
+            bn[0] = ( display_get_gui_width() / 2 ) - (bs[2]/2);//topx
+        }else{
+            bn[0] = top_x + padding + bs[0];//topx
+        }
+        
         bn[1] = top_y + padding + bs[1];//topy
         bn[2] = bs[2];//width
         bn[3] = bs[3];//height
