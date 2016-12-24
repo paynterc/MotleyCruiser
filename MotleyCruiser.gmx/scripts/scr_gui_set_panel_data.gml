@@ -34,19 +34,18 @@ var buttons_formatted = noone;
 if(buttons!=noone){
     for(var i=0;i<array_length_1d(buttons);i++){
         bs = buttons[i];
-        bn=noone;//formatted button
-        if(bs[0]==noone){
+        bn=scr_gui_entity_button();//formatted button
+        if(bs[BTN_X]==noone){
             // Center the button
-            bn[0] = ( display_get_gui_width() / 2 ) - (bs[2]/2);//topx
+            bn[BTN_X] = ( display_get_gui_width() / 2 ) - (bs[BTN_W]/2);//topx
         }else{
-            bn[0] = top_x + padding + bs[0];//topx
-        }
-        
-        bn[1] = top_y + padding + bs[1];//topy
-        bn[2] = bs[2];//width
-        bn[3] = bs[3];//height
-        bn[4] = false;//hover
-        bn[5] = bs[4];//text
+            bn[BTN_X] = top_x + padding + bs[BTN_X];//topx
+        }      
+        bn[BTN_Y] = top_y + padding + bs[BTN_Y];//topy
+        bn[BTN_W] = bs[BTN_W];//width
+        bn[BTN_H] = bs[BTN_H];//height
+        bn[BTN_TXT] = bs[BTN_TXT];//text
+        bn[BTN_SHOW] = bs[BTN_SHOW];//show button
         buttons_formatted = scr_push_array(buttons_formatted,bn);
     }
 }

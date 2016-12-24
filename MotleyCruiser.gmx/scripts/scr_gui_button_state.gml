@@ -19,13 +19,15 @@ if(panel!=noone && panel[4]){
     if(staged_buttons != noone){
         for(var i = 0; i<array_length_1d(staged_buttons); i++){
             thebutton = staged_buttons[i];
-            button_x = thebutton[0];
-            button_y = thebutton[1];
-            button_w = thebutton[2];
-            button_h = thebutton[3];   
-            xhover = ( guix == median(button_x, guix, button_x + button_w) );
-            yhover = ( guiy == median(button_y, guiy, button_y + button_h) );
-            thebutton[@ 4] = xhover && yhover;
+            if(thebutton[BTN_SHOW]){
+                button_x = thebutton[0];
+                button_y = thebutton[1];
+                button_w = thebutton[2];
+                button_h = thebutton[3];   
+                xhover = ( guix == median(button_x, guix, button_x + button_w) );
+                yhover = ( guiy == median(button_y, guiy, button_y + button_h) );
+                thebutton[@ 4] = xhover && yhover;
+            }
         }
     }
     

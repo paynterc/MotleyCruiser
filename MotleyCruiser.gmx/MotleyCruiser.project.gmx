@@ -339,7 +339,6 @@
       <script>scripts\scr_make_npc.gml</script>
       <script>scripts\scr_move_to_sector.gml</script>
       <script>scripts\scr_make_ship.gml</script>
-      <script>scripts\scr_test_dsmap.gml</script>
       <script>scripts\scr_get_location.gml</script>
       <script>scripts\scr_find_random_mission_target.gml</script>
       <script>scripts\totro_plus.gml</script>
@@ -354,12 +353,19 @@
       <script>scripts\scr_main_menu.gml</script>
       <script>scripts\scr_game_save.gml</script>
       <script>scripts\scr_game_load.gml</script>
+      <script>scripts\scr_game_delete.gml</script>
+      <script>scripts\scr_get_saved_games.gml</script>
     </scripts>
     <scripts name="_gui">
       <script>scripts\scr_gui_set_panel_data.gml</script>
       <script>scripts\scr_gui_draw_panel.gml</script>
       <script>scripts\scr_gui_button_state.gml</script>
       <script>scripts\scr_gui_button_click.gml</script>
+      <scripts name="_entity">
+        <script>scripts\scr_gui_entity_button.gml</script>
+      </scripts>
+      <script>scripts\scr_update_button.gml</script>
+      <script>scripts\scr_resize_gui.gml</script>
     </scripts>
     <scripts name="_hule_inventory">
       <scripts name="Inventory">
@@ -483,11 +489,11 @@
       <script>scripts\scr_gradually_rotate_2.gml</script>
       <script>scripts\scr_gradually_rotate_3.gml</script>
       <script>scripts\scr_gradually_rotate_4.gml</script>
-      <script>scripts\scr_script_parse.gml</script>
+      <script>scripts\scr_gradually_rotate_5.gml</script>
       <script>scripts\scr_instance_in_view.gml</script>
       <script>scripts\scr_raycast.gml</script>
       <script>scripts\scr_rotate_cycle.gml</script>
-      <script>scripts\scr_gradually_rotate_5.gml</script>
+      <script>scripts\scr_script_parse.gml</script>
     </scripts>
     <scripts name="Glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -897,7 +903,6 @@
       <object>objects\obj_form_button</object>
     </objects>
     <objects name="_main_menu">
-      <object>objects\obj_btn_play</object>
       <object>objects\obj_main_menu</object>
     </objects>
   </objects>
@@ -914,7 +919,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="184">
+  <constants number="191">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1099,6 +1104,13 @@
     <constant name="TURRET_TURN_SPEED">0</constant>
     <constant name="TURRET_GUN_INDEX">1</constant>
     <constant name="BULLET_BASE_SPEED">15</constant>
+    <constant name="BTN_X">0</constant>
+    <constant name="BTN_Y">1</constant>
+    <constant name="BTN_W">2</constant>
+    <constant name="BTN_H">3</constant>
+    <constant name="BTN_HOVER">4</constant>
+    <constant name="BTN_TXT">5</constant>
+    <constant name="BTN_SHOW">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

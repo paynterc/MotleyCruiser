@@ -1,5 +1,6 @@
 /// Instantiate all members of crew
 //scr_intantiate_all_crew(x,y)
+if(global.crew==noone) return false;
 var xx = argument0;
 var yy = argument1;
 var thiscrew = noone;

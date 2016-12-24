@@ -30,6 +30,7 @@ scr_main_menu();
 scr_load_game_menu();//panel_load_game
 panel_main_menu[4]  = true;//Show menu
 loading = false;
+
 </string>
           </argument>
         </arguments>
@@ -85,27 +86,90 @@ if(panel_load_game[4]){
     
     var load_game_button = scr_gui_button_click(panel_load_game);
     if(load_game_button==0){
-        // New game       
+        scr_game_load("GAME1");  
     }
        
     if(load_game_button==1){
-        loading = true; 
-        scr_game_load("GAME1");
-    }
-    
-    if(load_game_button==2){
-        loading = true;   
         scr_game_load("GAME2");
     }
     
-    if(load_game_button==3){    
-        panel_load_game[4]=false;
+    if(load_game_button==2){
+        scr_game_load("GAME3");
     }
+    
+    // Back button
+    if(load_game_button==3){
+        scr_load_game_menu();//Reset    
+        panel_load_game[4]=false;// Hide for good measure
+    }
+    
+    if(load_game_button==4){
+        scr_update_button(panel_load_game,4,BTN_SHOW,false);
+        scr_update_button(panel_load_game,0,BTN_SHOW,false);
+        // Confirm
+        scr_update_button(panel_load_game,7,BTN_SHOW,true);
+        scr_update_button(panel_load_game,8,BTN_SHOW,true);
+        scr_update_button(panel_load_game,9,BTN_SHOW,true);
+        
+    }
+    
+    if(load_game_button==5){
+        scr_update_button(panel_load_game,5,BTN_SHOW,false);
+        scr_update_button(panel_load_game,1,BTN_SHOW,false);
+        // Confirm
+        scr_update_button(panel_load_game,10,BTN_SHOW,true);
+        scr_update_button(panel_load_game,11,BTN_SHOW,true);
+        scr_update_button(panel_load_game,12,BTN_SHOW,true);
+        
+    }
+    
+    if(load_game_button==6){
+        scr_update_button(panel_load_game,6,BTN_SHOW,false);
+        scr_update_button(panel_load_game,2,BTN_SHOW,false);
+        // Confirm
+        scr_update_button(panel_load_game,13,BTN_SHOW,true);
+        scr_update_button(panel_load_game,14,BTN_SHOW,true);
+        scr_update_button(panel_load_game,15,BTN_SHOW,true);
+
+    }
+    
+    // Confirm delete
+    if(load_game_button==8){
+        // Delete game 1
+        scr_game_delete("GAME1");
+        scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+    if(load_game_button==11){
+        // Delete game 2
+        scr_game_delete("GAME2");
+        scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+    if(load_game_button==14){
+        // Delete game 3
+        scr_game_delete("GAME3");
+        scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+    
+    // Cancel delete
+    if(load_game_button==9 || load_game_button==12 || load_game_button==15){
+        scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+
+    
+    
     
 }else if(panel_main_menu[4]){
     var main_menu_button = scr_gui_button_click(panel_main_menu);
     
     if(main_menu_button==0){
+        scr_load_game_menu();//Reset menu
         panel_load_game[4]=true;
     }
 
@@ -115,6 +179,10 @@ if(panel_load_game[4]){
     
     if(main_menu_button==2){
         //show_message("SETTINGS BUTTON CLICKED");
+    }
+    
+    if(main_menu_button==3){
+        game_end();
     }
        
 }
@@ -148,9 +216,6 @@ draw_sprite(spr_main_title,0,pcenter,pheight);
 
 scr_gui_draw_panel(panel_load_game);
 
-if(loading){
-    draw_sprite(spr_chicken,0,pcenter,20);
-}
 
 </string>
           </argument>

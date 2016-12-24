@@ -15,7 +15,7 @@ if(p!=noone && p[4]){
     if(staged_buttons!=noone){
         for(var i=0; i<array_length_1d(staged_buttons); i++){
             btn=staged_buttons[i];
-            if(btn[4]){
+            if(btn[BTN_HOVER] && btn[BTN_SHOW]){
                 return i;// Return  index of clicked button.
             }
         }

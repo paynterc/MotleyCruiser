@@ -124,13 +124,24 @@ for(var i=1; i<=num_ships; i++){
     } 
 }
 ***/
-// NPC Ships
-scr_spawn_npc_ships();
+
 
 
 // Position the player ship.
-var player_x = room_width/2;
-var player_y = room_height/2;
+var player_x;
+var player_y;
+if(global.player_x!=noone){
+    player_x = global.player_x;
+    player_y = global.player_y;
+    
+    global.player_x = noone;
+    global.player_y = noone;
+    
+}else{
+    player_x = room_width/2;
+    player_y = room_height/2;
+}
+
 var player_angle = 0;
 
 if(global.ship_boarded != noone){
@@ -239,4 +250,9 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
     
 }
 
+// Save the game
+scr_game_save();
 
+// NPC Ships
+randomize();
+scr_spawn_npc_ships();
