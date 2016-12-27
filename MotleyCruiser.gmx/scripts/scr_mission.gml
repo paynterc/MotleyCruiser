@@ -20,5 +20,6 @@ mission[MISSION_OBJECTIVES]=noone;// Achieve all objectives to receive reward. 1
 mission[MISSION_STATE]="inactive";// inactive, active, completed, failed
 mission[MISSION_GRANT_INVENTORY_START]=noone; // Grant an item on start of the mission
 mission[MISSION_SCRIPT_START]=noone;
+mission[MISSION_GRANTED_BY]=noone;//ID of NPC that granted the mission
 
 return mission;

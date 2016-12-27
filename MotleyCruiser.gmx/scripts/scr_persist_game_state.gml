@@ -13,6 +13,9 @@ if(instance_exists(obj_space_level)){
             scr_update_ship_data();
         }
         global.player_ship = obj_player_ship.ship_data;
+        
+        global.player_x = obj_player_ship.x;
+        global.player_y = obj_player_ship.y;
     }
 
     // Update the fleet

@@ -251,6 +251,8 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
 }
 
 // Save the game
+global.player_x = player_x;
+global.player_y = player_y;
 scr_game_save();
 
 // NPC Ships

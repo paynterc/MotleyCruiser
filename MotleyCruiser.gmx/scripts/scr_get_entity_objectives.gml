@@ -1,4 +1,4 @@
-/// Get all mission objectives for this entity
+/// Get all mission objectives for this entity. Look through mission log for any active objectives with this entity as a target.
 // scr_is_entity_objectives(type,global_index)
 var type = argument0;
 var index = argument1;

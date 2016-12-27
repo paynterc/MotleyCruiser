@@ -22,6 +22,39 @@
     </sounds>
   </sounds>
   <sprites name="sprites">
+    <sprites name="_aliens">
+      <sprite>sprites\spr_androne</sprite>
+      <sprite>sprites\spr_androne_eyes</sprite>
+      <sprite>sprites\spr_arcnid</sprite>
+      <sprite>sprites\spr_chicken</sprite>
+      <sprite>sprites\spr_cryptolid</sprite>
+      <sprite>sprites\spr_flowridian2</sprite>
+      <sprite>sprites\spr_pudning</sprite>
+      <sprite>sprites\spr_gorgan</sprite>
+      <sprite>sprites\spr_human</sprite>
+      <sprite>sprites\spr_hurgan3</sprite>
+      <sprite>sprites\spr_zomboid</sprite>
+    </sprites>
+    <sprites name="_buttons">
+      <sprite>sprites\spr_btn</sprite>
+      <sprite>sprites\spr_btn_play</sprite>
+      <sprite>sprites\spr_btn_small</sprite>
+      <sprite>sprites\spr_textbox</sprite>
+    </sprites>
+    <sprites name="_furniture">
+      <sprite>sprites\spr_room_reactor</sprite>
+      <sprite>sprites\spr_desk</sprite>
+      <sprite>sprites\spr_panel_2</sprite>
+      <sprite>sprites\spr_panel_decor</sprite>
+      <sprite>sprites\spr_work_station</sprite>
+      <sprite>sprites\spr_jefferies</sprite>
+      <sprite>sprites\spr_viewscreen</sprite>
+      <sprite>sprites\spr_table</sprite>
+      <sprite>sprites\spr_door_reactor</sprite>
+      <sprite>sprites\spr_panel_1</sprite>
+      <sprite>sprites\spr_crate</sprite>
+      <sprite>sprites\spr_turret_base_large</sprite>
+    </sprites>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
       <sprite>sprites\spr_hforeground</sprite>
@@ -32,6 +65,12 @@
       <sprite>sprites\spr_glr_light_mask_tv</sprite>
       <sprite>sprites\spr_glr_tv_sml</sprite>
       <sprite>sprites\spr_tv</sprite>
+    </sprites>
+    <sprites name="_personal_equipment">
+      <sprite>sprites\spr_rifle1</sprite>
+      <sprite>sprites\spr_rifle2</sprite>
+      <sprite>sprites\spr_grenade</sprite>
+      <sprite>sprites\spr_gun_large</sprite>
     </sprites>
     <sprites name="_ship_modules">
       <sprite>sprites\spr_command</sprite>
@@ -85,6 +124,12 @@
       </sprites>
       <sprite>sprites\spr_spark</sprite>
       <sprite>sprites\sprite206</sprite>
+    </sprites>
+    <sprites name="_space_objects">
+      <sprite>sprites\spr_moon</sprite>
+      <sprite>sprites\spr_station</sprite>
+      <sprite>sprites\spr_planet</sprite>
+      <sprite>sprites\spr_sun</sprite>
     </sprites>
     <sprites name="Glare">
       <sprites name="Icons">
@@ -215,9 +260,6 @@
       <sprite>sprites\spr_glr_light_mask_spot</sprite>
       <sprite>sprites\spr_glr_light_test</sprite>
     </sprites>
-    <sprite>sprites\spr_androne</sprite>
-    <sprite>sprites\spr_androne_eyes</sprite>
-    <sprite>sprites\spr_arcnid</sprite>
     <sprite>sprites\spr_bolt1</sprite>
     <sprite>sprites\spr_bolt2</sprite>
     <sprite>sprites\spr_boom</sprite>
@@ -225,53 +267,14 @@
     <sprite>sprites\spr_bullet</sprite>
     <sprite>sprites\spr_bullet_2</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
-    <sprite>sprites\spr_captain3</sprite>
-    <sprite>sprites\spr_chicken</sprite>
-    <sprite>sprites\spr_core</sprite>
-    <sprite>sprites\spr_crate</sprite>
-    <sprite>sprites\spr_cryptolid</sprite>
     <sprite>sprites\spr_default</sprite>
-    <sprite>sprites\spr_desk</sprite>
-    <sprite>sprites\spr_table</sprite>
-    <sprite>sprites\spr_door_reactor</sprite>
-    <sprite>sprites\spr_enemy</sprite>
-    <sprite>sprites\spr_flowridian2</sprite>
     <sprite>sprites\spr_glr_torch</sprite>
-    <sprite>sprites\spr_grenade</sprite>
-    <sprite>sprites\spr_gun_large</sprite>
-    <sprite>sprites\spr_human</sprite>
-    <sprite>sprites\spr_hurgan</sprite>
-    <sprite>sprites\spr_hurgan2</sprite>
-    <sprite>sprites\spr_hurgan3</sprite>
-    <sprite>sprites\spr_jefferies</sprite>
-    <sprite>sprites\spr_moon</sprite>
-    <sprite>sprites\spr_panel_1</sprite>
-    <sprite>sprites\spr_panel_2</sprite>
-    <sprite>sprites\spr_panel_decor</sprite>
+    <sprite>sprites\spr_main_title</sprite>
+    <sprite>sprites\spr_paintbrush</sprite>
     <sprite>sprites\spr_person</sprite>
     <sprite>sprites\spr_person_tmp</sprite>
-    <sprite>sprites\spr_planet</sprite>
-    <sprite>sprites\spr_portrait_wc</sprite>
-    <sprite>sprites\spr_pudning</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
-    <sprite>sprites\spr_rifle1</sprite>
-    <sprite>sprites\spr_rifle2</sprite>
-    <sprite>sprites\spr_room_reactor</sprite>
-    <sprite>sprites\spr_station</sprite>
-    <sprite>sprites\spr_sun</sprite>
-    <sprite>sprites\spr_turret_base_large</sprite>
-    <sprite>sprites\spr_viewscreen</sprite>
     <sprite>sprites\spr_wall</sprite>
-    <sprite>sprites\spr_work_station</sprite>
-    <sprite>sprites\spr_zomboid</sprite>
-    <sprite>sprites\spr_paintbrush</sprite>
-    <sprites name="_buttons">
-      <sprite>sprites\spr_btn</sprite>
-      <sprite>sprites\spr_btn_play</sprite>
-      <sprite>sprites\spr_btn_small</sprite>
-      <sprite>sprites\spr_textbox</sprite>
-    </sprites>
-    <sprite>sprites\spr_main_title</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -355,6 +358,7 @@
       <script>scripts\scr_game_load.gml</script>
       <script>scripts\scr_game_delete.gml</script>
       <script>scripts\scr_get_saved_games.gml</script>
+      <script>scripts\scr_new_game_defaults.gml</script>
     </scripts>
     <scripts name="_gui">
       <script>scripts\scr_gui_set_panel_data.gml</script>
@@ -919,7 +923,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="191">
+  <constants number="192">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1078,6 +1082,7 @@
     <constant name="MISSION_TEXT">9</constant>
     <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
     <constant name="MISSION_SCRIPT_START">11</constant>
+    <constant name="MISSION_GRANTED_BY">12</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_TYPE">2</constant>

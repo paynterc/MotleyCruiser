@@ -166,7 +166,7 @@ if(staged_buttons != noone){
                         if(link != noone &amp;&amp; array_length_1d(staged_tree)&gt;link){
                             //Look to see if the next step is a job offer. Make sure we haven't already accepted.
                             next_branch = staged_tree[link];
-                            if(next_branch[D_BRANCH_TYPE]=="job" &amp;&amp; closest_sentient.mission != noone &amp;&amp; scr_has_mission(closest_sentient.mission)){
+                            if(next_branch[D_BRANCH_TYPE]=="job" &amp;&amp; closest_sentient.mission != noone &amp;&amp; scr_has_mission(closest_sentient.global_index)){
                                  staged_branch = scr_make_dialogue_branch("Have you finished that job yet?","exposition");
                                  scr_add_dialogue_button(staged_branch,"Nope.","step_to",0);
                                  

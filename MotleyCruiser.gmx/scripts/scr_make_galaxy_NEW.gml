@@ -1,6 +1,21 @@
 /// Create a 2d array of the galaxy
-var galaxy = 0;
-galaxy[0,0]=-1;
+
+global.galaxy = noone;
+global.suns=noone;
+global.planets=noone;
+global.moons=noone;
+global.stations=noone;
+global.ships=noone;
+global.npcs=noone;
+
+global.galaxy[0,0]=-1;
+global.suns[0] = -1;
+global.planets[0] = -1;
+global.moons[0] = -1;
+global.stations[0] = -1;
+global.ships[0] = -1;
+global.npcs[0] = -1;
+
 
 var gwidth = global.galaxy_width;
 var row=0;
@@ -136,17 +151,14 @@ for(row=0; row < gwidth; row++){
             scr_update_array_1d(global.stations[station_index],STATION_NPCS,location_npcs);       
             
         }
-        
-        
-        
-        
+              
         sector[SECTOR_SUNS]=suns;
         sector[SECTOR_PLANETS]=planets;
         sector[SECTOR_MOONS]=moons;
         sector[SECTOR_NPCS]=npcs;
         sector[SECTOR_STATIONS]=stations;
                              
-        galaxy[row,col] = sector;
+        global.galaxy[row,col] = sector;
         
     }
 }
@@ -155,5 +167,3 @@ for(var i=0; i<array_length_1d(global.npcs); i++){
     var gnpc = global.npcs[i];
     gnpc[@ NPC_GLOBAL_INDEX]=i;
 }
-
-return galaxy;

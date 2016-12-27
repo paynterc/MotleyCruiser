@@ -21,7 +21,7 @@ mission[MISSION_TYPE]="deliver";
 mission[MISSION_REWARD]="cr,100";
 mission[MISSION_GRANT_INVENTORY_START]=25;
 mission[MISSION_SCRIPT_START]="inventory_item_add,25,1";
-
+mission[MISSION_GRANTED_BY]=granter_id;
 
 var objectives = noone;
 

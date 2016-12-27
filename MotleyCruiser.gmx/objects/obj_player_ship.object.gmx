@@ -208,8 +208,8 @@ if(scr_user_input("dock")){
     if(closest_landable != noone){
         global.landed_on = closest_landable.global_index;
         global.landed_type = closest_landable.global_type;
-        global.player_x = obj_player_ship.x;
-        global.player_y = obj_player_ship.y;
+        global.player_x = x;
+        global.player_y = y;
         scr_persist_game_state();
         room_goto(rm_cantina2);
     }
