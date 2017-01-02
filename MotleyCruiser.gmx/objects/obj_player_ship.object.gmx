@@ -187,6 +187,7 @@ if(scr_user_input("thrust")){
     }
 }
 
+/***
 if(scr_user_input("turn_left")){
     image_angle += turn_a * delta_time;
 }
@@ -194,7 +195,14 @@ if(scr_user_input("turn_left")){
 if(scr_user_input("turn_right")){
     image_angle -= turn_a * delta_time;
 }
+***/
 
+var pdir = scr_user_input("point_dir");
+if(pdir!=noone){
+    var dif = angle_difference(pdir, image_angle);
+    var trn = turn_a * delta_time;
+    image_angle += median(-1 * trn, dif, trn);
+}
 
 if(scr_user_input("thrust_reverse")){
     motion_add(image_angle,acc_spd_rvs *-1);
@@ -252,6 +260,10 @@ if(scr_user_input("board_ship")){
             obj_space_level.zoom=true;
         }
     }
+}
+
+if(scr_user_input("invul_mode")){
+    disabled=true;
 }
 </string>
           </argument>

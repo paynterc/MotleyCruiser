@@ -179,8 +179,8 @@ module[MODULE_TYPE]="generator";// command, cargo, thrust, lateral, gun
 module[MODULE_SPRITE_INDEX] = spr_generator_16_16_1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_MASS_MOD]=200;
-module[MODULE_ENERGY_MOD]=100;
-module[MODULE_ENERGYREGENPOINTS_MOD]=5;
+module[MODULE_ENERGY_MOD]=200;
+module[MODULE_ENERGYREGENPOINTS_MOD]=15;
 scr_push_array_1d(global.module_library, module);
 
 module = scr_ship_module();

@@ -1,5 +1,5 @@
 ///scr_spawn_npc_ships()
-var sector_limit = 20;
+var sector_limit = GLOBAL_SHIP_LIMIT;
 var sector_count = instance_number(obj_ship);
 
 if(sector_count>sector_limit) exit;

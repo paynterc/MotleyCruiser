@@ -28,6 +28,7 @@
       <sprite>sprites\spr_arcnid</sprite>
       <sprite>sprites\spr_chicken</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
+      <sprite>sprites\spr_droid1</sprite>
       <sprite>sprites\spr_flowridian2</sprite>
       <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_gorgan</sprite>
@@ -284,6 +285,7 @@
     <background>background\bg_walltile_bu</background>
     <background>background\bg_counters</background>
     <background>background\bg_starfield</background>
+    <background>background\bg_starfield_dense</background>
     <backgrounds name="Glare">
       <background>background\glr_back_platform</background>
       <background>background\glr_back_tiles</background>
@@ -316,6 +318,13 @@
       <script>scripts\scr_reset_dialog.gml</script>
       <script>scripts\scr_make_dialogue_button.gml</script>
       <script>scripts\scr_delete_button.gml</script>
+      <scripts name="_libraries">
+        <script>scripts\scr_sentences.gml</script>
+      </scripts>
+      <scripts name="_entities">
+        <script>scripts\scr_sentence.gml</script>
+      </scripts>
+      <script>scripts\scr_define_sentence.gml</script>
     </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
@@ -333,6 +342,7 @@
       <script>scripts\scr_ship_turret.gml</script>
     </scripts>
     <scripts name="_galaxy">
+      <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_sun.gml</script>
@@ -346,8 +356,8 @@
       <script>scripts\scr_find_random_mission_target.gml</script>
       <script>scripts\totro_plus.gml</script>
       <script>scripts\totro.gml</script>
-      <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_spawn_npc_ships.gml</script>
+      <script>scripts\scr_spawn_npc_ships_ext.gml</script>
       <script>scripts\scr_persist_game_state.gml</script>
     </scripts>
     <scripts name="_game_control">
@@ -422,7 +432,6 @@
     </scripts>
     <scripts name="_mission">
       <script>scripts\scr_make_mission.gml</script>
-      <script>scripts\scr_generate_mission.gml</script>
       <script>scripts\scr_has_mission.gml</script>
       <script>scripts\scr_accept_mission.gml</script>
       <script>scripts\scr_is_mission_target.gml</script>
@@ -434,6 +443,10 @@
       <script>scripts\scr_get_objective_index.gml</script>
       <script>scripts\scr_get_next_objective.gml</script>
       <script>scripts\scr_grant_reward.gml</script>
+      <scripts name="_mission_types">
+        <script>scripts\scr_mission_killxofy.gml</script>
+        <script>scripts\scr_generate_mission.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_object_pool">
       <script>scripts\scr_add_to_pool.gml</script>
@@ -469,6 +482,7 @@
       <script>scripts\scr_global_update.gml</script>
       <script>scripts\scr_user_input.gml</script>
       <script>scripts\scr_view_zoom.gml</script>
+      <script>scripts\scr_gamepad_detect.gml</script>
     </scripts>
     <scripts name="_ship_editor">
       <script>scripts\scr_save_ship.gml</script>
@@ -743,6 +757,9 @@
       <script>scripts\glrtest_string_onoff.gml</script>
       <script>scripts\enable_roof.gml</script>
     </scripts>
+    <scripts name="_events">
+      <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -816,6 +833,7 @@
       <object>objects\obj_lvl_cantina</object>
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_player</object>
+      <object>objects\obj_player_BACKUP</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_team</object>
       <object>objects\obj_enemy</object>
@@ -923,7 +941,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="192">
+  <constants number="194">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1096,6 +1114,7 @@
     <constant name="OBJECTIVE_SCRIPT_END">10</constant>
     <constant name="OBJECTIVE_MISSION_ID">11</constant>
     <constant name="OBJECTIVE_ID">12</constant>
+    <constant name="OBJECTIVE_TARGET_FACTION">13</constant>
     <constant name="SCAFF_CELL_SIZE">16</constant>
     <constant name="DATA_FILE">"motleydata.ini"</constant>
     <constant name="SAVE_GAME_FILE">"motleysave.ini"</constant>
@@ -1116,6 +1135,7 @@
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_TXT">5</constant>
     <constant name="BTN_SHOW">6</constant>
+    <constant name="GLOBAL_SHIP_LIMIT">100</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -378,6 +378,7 @@ if(speed &gt; max_spd_fwd){
             <kind>1</kind>
             <string>/// Check for dead
 if(hull_current &lt; 1){
+    scr_ev_npc_ship_destroyed();
     // Destroy modules
     for(var m=0; m&lt;array_length_1d(modules); m++){
         var m_object = modules[m];

@@ -66,6 +66,13 @@ for(var i=0; i<2; i++){
     global.crew[i]=scr_array_random(global.npcs);
 }
 
+/***
+//Random fleet
+global.fleet = noone;
+for(var i=0; i<20; i++){
+    global.fleet[i]=scr_array_random(global.ship_library);
+}
+***/
 global.game_loaded = game;
 
 room_goto(rm_space);

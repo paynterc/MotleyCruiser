@@ -25,17 +25,26 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>///Small Tutorial
+            <string>///Init
 
 //Inventory Items
 item_int();
 
 // PLAYER INVENTORY
-inventory_int(5,3);
+inventory_int(15,9);
 
 
-show_inventory = false;
-
+global.show_inventory = false;
+font = fnt_menus;
+font_size = font_get_size(font);
+padding = 16;
+margin = 16;
+boxwidth = display_get_gui_width() / 2 // Do this in case window has been resized to fullscreen
+boxheight = display_get_gui_height() - (margin*2);
+box_x = margin;
+box_y = margin;
+box_center = boxwidth;
+box_bottom = box_y+boxheight;
 
 //Just a variable value, ignore this:
 
@@ -70,10 +79,29 @@ current_id_item = 0
             <kind>1</kind>
             <string>/// Show inventory
 if(scr_user_input("inventory")){
-    show_inventory = !show_inventory;
+    global.show_inventory = !global.show_inventory;
+    if(global.show_inventory){
+        event_user(0);
+    }
 }
 
-if(!show_inventory) exit;
+if(!global.show_inventory) exit;
+
+
+
+if keyboard_check_pressed(ord("D")){
+   //Drop a Item (object is needed);
+   inventory_item_drop(inventory_last_select(),1,view_wview[0]-64+random(48),view_hview[0]/2-random(64)+random(64),obj_drop);
+   //show_message("Selected Item was dropped");
+}
+
+if keyboard_check_pressed(ord("P")){
+   //Use a Item, return: &lt;true|false&gt; (true if they have special effects, false not)
+   var has_script;
+   has_script = inventory_item_use(inventory_last_select());
+}
+
+/****
 if keyboard_check_pressed(ord("Q")){
     //Just add random items to inventory, if the inventory is full, 
     //you'll get return the remaining stack
@@ -143,7 +171,38 @@ if keyboard_check_pressed(ord("A")){
    //Exchange the Inventory Slot
    inventory_item_exchange(inventory_select(),inventory_last_select());
 }
+****/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update window size
 
+boxwidth = display_get_gui_width() / 2 // Do this in case window has been resized to fullscreen
+boxheight = display_get_gui_height() - (margin*2);
+box_x = margin;
+box_y = margin;
+box_hcenter = box_x + (boxwidth/2);
+box_bottom = box_y + boxheight;
+box_vcenter = box_bottom / 2;
 </string>
           </argument>
         </arguments>
@@ -201,30 +260,38 @@ if(ds_exists(global.ChestList,ds_type_list)){
           <argument>
             <kind>1</kind>
             <string>//Now you can draw Inventory here:
-if(show_inventory){
-    draw_panel(spr_background,0,5,5,view_wview[0]-10,view_hview[0]-10,32);
+if(global.show_inventory){
+
+    draw_set_font(font);
+    draw_panel(spr_background,0,box_x,box_y,boxwidth,boxheight,32);
     
-    draw_text(270,40,"Key Q: Add random Item#Key W: Clear Inventory#Key E: Save Inventory#Key R: Load Inventory#Key T: Sort Inventory#Key Y: Clear a Item from Selecting Slot#Key U: Delete Item by Stack Amount#Key I: Drop a Item#Key O: Find Item on Inventory#Key P: Run the script of item with effect#Key A: Exchange Items from #       'ItemOverMouse' to Selecting");
+    //draw_text(270,40,"Key Q: Add random Item#Key W: Clear Inventory#Key E: Save Inventory#Key R: Load Inventory#Key T: Sort Inventory#Key Y: Clear a Item from Selecting Slot#Key U: Delete Item by Stack Amount#Key I: Drop a Item#Key O: Find Item on Inventory#Key P: Run the script of item with effect#Key A: Exchange Items from #       'ItemOverMouse' to Selecting");
     
+    draw_set_halign(fa_center);
+    draw_text(box_hcenter,box_y+(font_size/2)+padding,"INVENTORY");
+    draw_set_halign(fa_left);
+    inventory_draw(box_x+padding,box_y+font_size+(padding*2),spr_slot, spr_slot,8,c_white);
     
-    draw_text(60,80,"Inventory");
-    inventory_draw(60,100,spr_slot, spr_slot,10,c_white);
-    
-    
-    
+       
     var id_last = inventory_read("ID",inventory_last_select());
     
     
     //Read the script "item_int" for more information for item_id_read
     
     if inventory_last_select() &gt;= 0 and inventory_read("ID",inventory_last_select()) != -1{
-    draw_text(60+70,250,
-    "#Selected Item Name: " + string(item_id_read(id_last,0)) +
-    "#Selected Item Stack: " + string(inventory_read("Stack",inventory_last_select())) + " / " + string(item_id_read(id_last,1)) +
-    "#Selected Item Description: " + string(item_id_read(id_last,5))
-    );
-    
-    draw_sprite_ext(item_id_read(id_last,2),image_index,60,250,4,4,0,c_white,1);
+        
+        draw_sprite_ext(item_id_read(id_last,2),image_index,box_x+padding,box_vcenter,4,4,0,c_white,1);
+        
+        draw_text(box_x+96,box_vcenter+padding,
+        "Item: " + string(item_id_read(id_last,0)) +
+        "Stack: " + string(inventory_read("Stack",inventory_last_select())) + " / " + string(item_id_read(id_last,1))
+        );
+        
+        draw_text(box_x+padding,box_vcenter+96,
+        "Description: " + string(item_id_read(id_last,5))
+        );
+        
+        
     }
 
 }

@@ -36,6 +36,7 @@ dialogue = noone;
 name = noone;
 global_index=noone; //index in global npc directory
 depth=-y;
+npc_data = noone;
 
 mission_loc[0]=23;
 mission_loc[1]=14;

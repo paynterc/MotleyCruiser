@@ -127,6 +127,10 @@ scr_guns();
 //Ship Turrets
 scr_ship_turrets();
 
+//Dialogue
+scr_sentences();
+
+
 </string>
           </argument>
         </arguments>
@@ -149,6 +153,32 @@ scr_ship_turrets();
             <kind>1</kind>
             <string>/// Set GUI size
 //scr_resize_gui();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Controller settings
+global.pad = 0; // controller index
+if gamepad_is_connected(global.pad){
+    gamepad_set_axis_deadzone(global.pad, 0.5);
+    gamepad_set_button_threshold(global.pad, 0.5);
+}
 </string>
           </argument>
         </arguments>
@@ -369,9 +399,10 @@ panel_load_game[4]=false;
           <argument>
             <kind>1</kind>
             <string>/// Debug text
-    
     draw_set_color(c_lime);
     draw_text(48, 32, "FPS Real: " + string(fps_real));
+/***
+
     draw_text(48, 64, "D WIDTH: " + string(display_get_width()));
     draw_text(48, 96, "D height: " + string(display_get_height()));
     
@@ -383,14 +414,14 @@ panel_load_game[4]=false;
     
     
     
-    /***
+
     if(instance_exists(obj_player_ship)){
         draw_text(32, 64, "Decks Remaining: " + string(global.decks_remaining));
         draw_text(32, 96, "Mass: " + string(obj_player_ship.mass));
         draw_text(32, 128, "MaxFwd: " + string(obj_player_ship.max_spd_fwd));
         draw_text(32, 140, "EN: " + string(obj_player_ship.energy_regen_points));
     }
-    ***/
+***/
    
 
 </string>

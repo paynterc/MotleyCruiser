@@ -16,5 +16,6 @@ ob[OBJECTIVE_SCRIPT_END]=noone; // Remove an item on completion of the objective
 ob[OBJECTIVE_TARGET_COUNT_CURRENT]=0;// Count of targets eliminated. Increment on each kill.
 ob[OBJECTIVE_MISSION_ID]=noone;
 ob[OBJECTIVE_ID]="ob-"+string(global.objective_inc);
+ob[OBJECTIVE_TARGET_FACTION]=noone;// for kill_x_of_y objectives.
 
 return ob;

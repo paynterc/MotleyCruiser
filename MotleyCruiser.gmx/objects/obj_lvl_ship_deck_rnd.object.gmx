@@ -30,7 +30,7 @@
 shadows_on = false;
 door = noone;
 level_complete = false;
-
+background_vspeed[0] = 2;
 </string>
           </argument>
         </arguments>

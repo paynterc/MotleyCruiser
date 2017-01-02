@@ -8,7 +8,15 @@ var i=0;
 var obj_for_mission = noone;
 
 // Add branch 0
-tree[i] = scr_make_dialogue_branch("I find peace in the solitude of space, but I sometimes enjoy the company of fellow travelers.","intro");
+
+
+//var crewmem = scr_array_random(global.crew);
+//var crew_race_name = global.races[crewmem[NPC_RACE_INDEX],RACE_NAME];
+//intro[0] = string_replace(intro[0],"[#race#]",crew_race_name);
+
+var intro = scr_array_random(global.dialogue_sentences[0]);
+intro[0] = string_replace(intro[0],"[#name#]","Human");
+tree[i] = scr_make_dialogue_branch(intro[0],"intro");
 
 // Add buttons.
 
@@ -42,10 +50,11 @@ scr_add_dialogue_button(tree[i],"Good Bye.", "exit",noone);
 i++;
 if(mission != noone){
     tree[i] = scr_make_dialogue_branch(mission[MISSION_TEXT],"job");
-    scr_add_dialogue_button(tree[i],"I'll do it","accept_mission",0);
+    scr_add_dialogue_button(tree[i],"I'll do it.","accept_mission",0);
+    scr_add_dialogue_button(tree[i],"No thanks.","step_to",0);
 }else{
     tree[i] = scr_make_dialogue_branch("I got nothin' for ya.","job");
-    scr_add_dialogue_button(tree[i],"Ooookay","step_to",0);
+    scr_add_dialogue_button(tree[i],"Fine.","step_to",0);
 }
 
 

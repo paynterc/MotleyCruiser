@@ -36,7 +36,6 @@ spd = 3;
 hspd=0;
 vspd=0;
 health_y = sprite_get_height(sprite_index) - 5;
-set_vibe = 0;
 
 </string>
           </argument>
@@ -128,12 +127,6 @@ if(hspd==0 &amp;&amp; vspd==0){
 }else{
     image_speed=ispeed;
 }
-
-// Fire weapon
-if(weapon != noone){
-    weapon.shooting = scr_user_input("fire");
-}
-
 </string>
           </argument>
         </arguments>
@@ -159,9 +152,7 @@ if(weapon != noone){
     weapon.x = x;
     weapon.y = y;
     weapon.depth=depth -1;
-    
-    /**
-    if( gamepad_is_connected(global.pad) ){
+    if( gamepad_is_connected(0) ){
         var h_point = gamepad_axis_value(0, gp_axisrh);
         var v_point = gamepad_axis_value(0, gp_axisrv);
         if ((h_point != 0) || (v_point != 0))
@@ -173,23 +164,8 @@ if(weapon != noone){
     }else{
         weapon.image_angle = point_direction(x,y,mouse_x,mouse_y);
     }
-    **/
-    var pdir = scr_user_input("point_dir");
-    var dif = angle_difference(pdir, weapon.image_angle);
-    weapon.image_angle += median(-20, dif, 20);
-
-        
-    // Grenade
-    if(scr_user_input("fire_alt")){
-        var grenade = instance_create(x,y,obj_grenade);
-        grenade.depth = -200;
-        grenade.direction = weapon.image_angle;
-        grenade.speed = 4;
-    }
     
 }
-
-
 </string>
           </argument>
         </arguments>
@@ -275,6 +251,188 @@ if(scr_user_input("bugout")){
     room_goto(rm_space);
 }
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="57">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Grenade
+var grenade = instance_create(x,y,obj_grenade);
+grenade.depth = -200;
+grenade.direction = point_direction(x,y,mouse_x,mouse_y);
+grenade.speed = 4;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="56">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(weapon != noone){
+    weapon.shooting = false;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(weapon != noone){
+    weapon.shooting = true;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="40">
+      <action>
+        <libid>1</libid>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>facing</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>270</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="39">
+      <action>
+        <libid>1</libid>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>facing</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>0</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="38">
+      <action>
+        <libid>1</libid>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>facing</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>90</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="37">
+      <action>
+        <libid>1</libid>
+        <id>611</id>
+        <kind>6</kind>
+        <userelative>-1</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>facing</string>
+          </argument>
+          <argument>
+            <kind>0</kind>
+            <string>180</string>
           </argument>
         </arguments>
       </action>

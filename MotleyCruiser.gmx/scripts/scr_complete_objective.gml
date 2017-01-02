@@ -32,6 +32,13 @@ if(objective!=noone){
             
             break;
             
+        case "kill_x_of_y":
+            if( objective[OBJECTIVE_TARGET_COUNT_CURRENT] >= objective[OBJECTIVE_TARGET_COUNT] )
+            {
+                complete = true;
+            }
+            break;
+            
             
         default:
           // Do other stuff;

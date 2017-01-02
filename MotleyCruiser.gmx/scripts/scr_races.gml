@@ -37,9 +37,24 @@ races[6,RACE_BASE_HP] = 8;
 races[6,RACE_BASE_SPD] = 2;
 races[6,RACE_SPR] = spr_arcnid;
 
-races[6,RACE_NAME] = "Gorgan";
-races[6,RACE_BASE_HP] = 10;
-races[6,RACE_BASE_SPD] = 1;
-races[6,RACE_SPR] = spr_gorgan;
+races[7,RACE_NAME] = "Gorgan";
+races[7,RACE_BASE_HP] = 10;
+races[7,RACE_BASE_SPD] = 1;
+races[7,RACE_SPR] = spr_gorgan;
+
+races[8,RACE_NAME] = "Droid";
+races[8,RACE_BASE_HP] = 10;
+races[8,RACE_BASE_SPD] = 1;
+races[8,RACE_SPR] = spr_droid1;
+
+races[9,RACE_NAME] = "Cryptolid";
+races[9,RACE_BASE_HP] = 10;
+races[9,RACE_BASE_SPD] = 1;
+races[9,RACE_SPR] = spr_cryptolid;
+
+races[10,RACE_NAME] = "Zomboid";
+races[10,RACE_BASE_HP] = 10;
+races[10,RACE_BASE_SPD] = 1;
+races[10,RACE_SPR] = spr_zomboid;
 
 return races;

@@ -190,6 +190,7 @@ alarm[0] = room_speed * ship_spawn_rate;
             <kind>1</kind>
             <string>/// Spawn ships
 scr_spawn_npc_ships();
+//scr_spawn_npc_ships_ext(20,FACTION_PIRATE,14,500,500);
 alarm[0] = room_speed * ship_spawn_rate;
 </string>
           </argument>

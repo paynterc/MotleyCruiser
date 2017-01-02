@@ -129,10 +129,10 @@ for(var i = 0; i &lt; s_count; i++) {
         sentient.image_speed = 0;
         sentient.race_index = raceIndex;       
         sentient.global_index = npcs[i];
-        
+        sentient.npc_data = npc;
 
         if(npc[NPC_MISSION]==noone){
-            var mission = scr_generate_mission(npcs[i]);
+            var mission = choose(scr_generate_mission(npcs[i]),scr_mission_killxofy(npcs[i]));
             sentient.mission=mission;
             npc[NPC_MISSION]=mission;
             global.npcs[npcs[i]]=npc;
