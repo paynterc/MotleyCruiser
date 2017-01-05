@@ -59,7 +59,7 @@ if(ini_section_exists(game)){
 ini_close();
 
 
-scr_make_galaxy_NEW();
+scr_make_galaxy_WEIGHTED();
 
 //Random crew
 for(var i=0; i<2; i++){

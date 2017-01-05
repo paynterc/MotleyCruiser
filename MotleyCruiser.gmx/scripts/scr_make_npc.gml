@@ -1,10 +1,28 @@
 /// Create an array with npc attributes
 // Attribute names are contained in Macros/All configurations
-var location = argument0;
-
+var location = argument0; //string "type,index,sector_row,sector_col"
+var location_array = scr_str_split(location,",");
 var map = noone;
 
-var race_index = irandom(array_height_2d(global.races) - 1);
+var faction_weights = scr_faction_location_weights(location_array[3],location_array[2]);
+// Make an array of possible factions
+var thefactions = noone;
+for(var i = 0; i<array_height_2d(global.faction_centers); i++){
+    thefactions[i]=global.faction_centers[i,2];
+}
+// Pick a random, weighted faction
+var random_faction = scr_random_weighted(thefactions,faction_weights);
+
+// Pick a race
+var race_index;
+if(random_faction!=noone){
+    race_index = global.faction_races[ random_faction, irandom( array_length_2d(global.faction_races,random_faction)-1 ) ];
+}else{
+    race_index = irandom(array_height_2d(global.races) - 1);
+}
+
+
+
 var run_modifier = irandom(4)-2;
 var hp_modifier = irandom(10)-5;
 var names = noone;

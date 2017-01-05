@@ -28,9 +28,11 @@
       <sprite>sprites\spr_arcnid</sprite>
       <sprite>sprites\spr_chicken</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
+      <sprite>sprites\spr_antinoid</sprite>
       <sprite>sprites\spr_droid1</sprite>
       <sprite>sprites\spr_flowridian2</sprite>
       <sprite>sprites\spr_pudning</sprite>
+      <sprite>sprites\sprite209</sprite>
       <sprite>sprites\spr_gorgan</sprite>
       <sprite>sprites\spr_human</sprite>
       <sprite>sprites\spr_hurgan3</sprite>
@@ -345,6 +347,7 @@
       <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
+      <script>scripts\scr_make_galaxy_WEIGHTED.gml</script>
       <script>scripts\scr_make_sun.gml</script>
       <script>scripts\scr_make_planet.gml</script>
       <script>scripts\scr_make_moon.gml</script>
@@ -359,6 +362,7 @@
       <script>scripts\scr_spawn_npc_ships.gml</script>
       <script>scripts\scr_spawn_npc_ships_ext.gml</script>
       <script>scripts\scr_persist_game_state.gml</script>
+      <script>scripts\scr_faction_location_weights.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -512,6 +516,7 @@
       <script>scripts\scr_raycast.gml</script>
       <script>scripts\scr_rotate_cycle.gml</script>
       <script>scripts\scr_script_parse.gml</script>
+      <script>scripts\scr_random_weighted.gml</script>
     </scripts>
     <scripts name="Glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -941,7 +946,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="194">
+  <constants number="197">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1040,6 +1045,9 @@
     <constant name="FACTION_BOUNTYHUNTER">5</constant>
     <constant name="FACTION_REBEL">6</constant>
     <constant name="FACTION_NEUTRAL">7</constant>
+    <constant name="FACTION_CRYPTOLID">8</constant>
+    <constant name="FACTION_ZOMBOID">9</constant>
+    <constant name="FACTION_ANTINOID">10</constant>
     <constant name="DISPOSITION_NEUTRAL">0</constant>
     <constant name="DISPOSITION_HOSTILE">1</constant>
     <constant name="DISPOSITION_HELPFUL">2</constant>

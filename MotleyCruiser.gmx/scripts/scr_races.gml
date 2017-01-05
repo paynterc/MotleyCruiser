@@ -57,4 +57,9 @@ races[10,RACE_BASE_HP] = 10;
 races[10,RACE_BASE_SPD] = 1;
 races[10,RACE_SPR] = spr_zomboid;
 
+races[11,RACE_NAME] = "Antinoid";
+races[11,RACE_BASE_HP] = 10;
+races[11,RACE_BASE_SPD] = 1;
+races[11,RACE_SPR] = spr_antinoid;
+
 return races;
