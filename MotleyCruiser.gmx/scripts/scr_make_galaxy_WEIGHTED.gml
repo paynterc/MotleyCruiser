@@ -39,7 +39,7 @@ var moonmax = 2;
 
 var npcs = noone;
 var npccount = 0;
-var npcmax = 3;
+var npcmax = 5;
 
 var i=0;
 var sector = noone;

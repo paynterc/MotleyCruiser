@@ -2,7 +2,7 @@
 // Attribute names are contained in Macros/All configurations
 var location = argument0; //string "type,index,sector_row,sector_col"
 var location_array = scr_str_split(location,",");
-var map = noone;
+var map = scr_npc();
 
 var faction_weights = scr_faction_location_weights(location_array[3],location_array[2]);
 // Make an array of possible factions
@@ -61,6 +61,8 @@ map[NPC_HP_CURRENT] =  map[NPC_HP];
 map[NPC_MISSION]=noone;
 map[NPC_LOCATION]=location;// string "type,index,sector_row,sector_col"
 map[NPC_ACTIVE]=true;
-
+map[NPC_TRAIT]=irandom( array_length_1d(global.npc_traits)-1 );//save the index of the the trait
+map[NPC_OCCUPATION]=irandom( array_length_1d(global.npc_occupations)-1 );//save the index of the the trait
+map[NPC_SEX]=max(0,irandom(global.races[race_index,RACE_SEXES]-1));//Should give zero or one
 
 return map;

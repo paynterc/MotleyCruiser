@@ -130,6 +130,11 @@ scr_ship_turrets();
 //Dialogue
 scr_sentences();
 
+//NPC Traits
+scr_npc_traits_library();
+
+scr_npc_occupation_library();
+
 
 </string>
           </argument>

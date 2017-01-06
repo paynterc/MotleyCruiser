@@ -20,7 +20,7 @@
   <width>16</width>
   <height>24</height>
   <frames>
-    <frame index="0">images\spr_flowridian_0.png</frame>
-    <frame index="1">images\spr_flowridian_1.png</frame>
+    <frame index="0">images\spr_flowridian_fml_0.png</frame>
+    <frame index="1">images\spr_flowridian_fml_1.png</frame>
   </frames>
 </sprite>

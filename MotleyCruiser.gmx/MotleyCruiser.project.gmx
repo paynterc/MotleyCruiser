@@ -24,18 +24,24 @@
   <sprites name="sprites">
     <sprites name="_aliens">
       <sprite>sprites\spr_androne</sprite>
+      <sprite>sprites\spr_androne_fml</sprite>
       <sprite>sprites\spr_androne_eyes</sprite>
-      <sprite>sprites\spr_arcnid</sprite>
-      <sprite>sprites\spr_chicken</sprite>
-      <sprite>sprites\spr_cryptolid</sprite>
       <sprite>sprites\spr_antinoid</sprite>
+      <sprite>sprites\spr_arcnid</sprite>
+      <sprite>sprites\spr_arcnid_fml</sprite>
+      <sprite>sprites\spr_chicken</sprite>
+      <sprite>sprites\spr_chicken_fml</sprite>
+      <sprite>sprites\spr_cryptolid</sprite>
       <sprite>sprites\spr_droid1</sprite>
-      <sprite>sprites\spr_flowridian2</sprite>
-      <sprite>sprites\spr_pudning</sprite>
-      <sprite>sprites\sprite209</sprite>
+      <sprite>sprites\spr_flowridian</sprite>
+      <sprite>sprites\spr_flowridian_fml</sprite>
       <sprite>sprites\spr_gorgan</sprite>
       <sprite>sprites\spr_human</sprite>
+      <sprite>sprites\spr_human_helm</sprite>
+      <sprite>sprites\spr_human_fml</sprite>
+      <sprite>sprites\spr_human_fml_h</sprite>
       <sprite>sprites\spr_hurgan3</sprite>
+      <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_zomboid</sprite>
     </sprites>
     <sprites name="_buttons">
@@ -308,6 +314,7 @@
       <script>scripts\scr_push_array_1d.gml</script>
       <script>scripts\scr_array_concat.gml</script>
       <script>scripts\scr_update_array_1d.gml</script>
+      <script>scripts\scr_fill_array.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -342,6 +349,7 @@
       <script>scripts\scr_ship_module_installed.gml</script>
       <script>scripts\scr_ship_defaults.gml</script>
       <script>scripts\scr_ship_turret.gml</script>
+      <script>scripts\scr_npc.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_populate_sector.gml</script>
@@ -363,6 +371,7 @@
       <script>scripts\scr_spawn_npc_ships_ext.gml</script>
       <script>scripts\scr_persist_game_state.gml</script>
       <script>scripts\scr_faction_location_weights.gml</script>
+      <script>scripts\scr_npc_in_crew.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -433,6 +442,8 @@
       <script>scripts\scr_modules.gml</script>
       <script>scripts\scr_ship_turrets.gml</script>
       <script>scripts\scr_ships.gml</script>
+      <script>scripts\scr_npc_traits_library.gml</script>
+      <script>scripts\scr_npc_occupation_library.gml</script>
     </scripts>
     <scripts name="_mission">
       <script>scripts\scr_make_mission.gml</script>
@@ -480,6 +491,7 @@
       <script>scripts\scr_check_deck_complete.gml</script>
       <script>scripts\scr_drop_loot.gml</script>
       <script>scripts\scr_make_control_room.gml</script>
+      <script>scripts\scr_npc_map_to_object.gml</script>
     </scripts>
     <scripts name="_service">
       <script>scripts\scr_get_random_item.gml</script>
@@ -946,7 +958,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="197">
+  <constants number="202">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -956,6 +968,8 @@
     <constant name="RACE_BASE_HP">1</constant>
     <constant name="RACE_BASE_SPD">2</constant>
     <constant name="RACE_SPR">3</constant>
+    <constant name="RACE_SEXES">4</constant>
+    <constant name="RACE_SPR_FML">5</constant>
     <constant name="NPC_RACE_INDEX">0</constant>
     <constant name="NPC_NAME">1</constant>
     <constant name="NPC_RUN_SPD">2</constant>
@@ -967,6 +981,9 @@
     <constant name="NPC_LOCATION">8</constant>
     <constant name="NPC_ACTIVE">9</constant>
     <constant name="NPC_GLOBAL_INDEX">10</constant>
+    <constant name="NPC_TRAIT">11</constant>
+    <constant name="NPC_OCCUPATION">12</constant>
+    <constant name="NPC_SEX">13</constant>
     <constant name="D_BRANCH_TEXT">0</constant>
     <constant name="D_BRANCH_TYPE">1</constant>
     <constant name="D_BRANCH_BUTTONS">2</constant>
