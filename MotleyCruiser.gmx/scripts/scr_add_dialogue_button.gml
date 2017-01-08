@@ -1,4 +1,4 @@
-//scr_add_dialogue_button(Branch, Text, Action, LinkIndex);
+//scr_add_dialogue_button(Branch, Text, Action, LinkIndex, Script, Record);
 
 var args = noone;
 for (var i=0; i<16; i++)

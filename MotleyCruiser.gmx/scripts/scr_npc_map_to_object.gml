@@ -11,7 +11,6 @@ hp=npc_data[NPC_HP_CURRENT];
 hp_current=npc_data[NPC_HP_CURRENT];
 pspeed=npc_data[NPC_RUN_SPD];
 global_index = npc_data[NPC_GLOBAL_INDEX];
-
-
-
-
+name = npc_data[NPC_NAME];
+race_index = npc_data[NPC_RACE_INDEX];
+hire_price = npc_data[NPC_HIRE_PRICE];

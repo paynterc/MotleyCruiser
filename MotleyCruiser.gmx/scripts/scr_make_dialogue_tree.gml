@@ -9,7 +9,7 @@ var obj_for_mission = noone;
 
 var occ_id = npc_data[NPC_OCCUPATION];
 var occupation_string = global.npc_occupations[occ_id];
-var trait_id = npc_data[NPC_TRAIT];
+var traits = npc_data[NPC_TRAIT];
 
 
 //var crewmem = scr_array_random(global.crew);
@@ -92,33 +92,9 @@ i++;
 var occupation_sentence = string_replace("I am a [#occupation#].","[#occupation#]",occupation_string);
 tree[i] = scr_make_dialogue_branch(occupation_sentence,"exposition");
 if(occ_id==5 || occ_id==6 || occ_id==7 || occ_id==8 || occ_id==10){
-    scr_add_dialogue_button(tree[i],string_replace("I could use a [#occupation#]. How would you like to join my crew?","[#occupation#]",occupation_string),"step_to",7);
+    scr_add_dialogue_button(tree[i],string_replace("I could use a [#occupation#]. How would you like to join my crew?","[#occupation#]",occupation_string),"hire_make_offer");
 }
 scr_add_dialogue_button(tree[i],"That must be interesting.","step_to",0);
-
-// Add branch 7
-i++
-tree[i] = scr_make_dialogue_branch("How much do you pay?","exposition");
-scr_add_dialogue_button(tree[i],"25 a day.","step_to",i+1);
-if(trait_id==3){
-    // Greedy
-    scr_add_dialogue_button(tree[i],"50 a day.","step_to",i+1);
-}else{
-    scr_add_dialogue_button(tree[i],"50 a day.","step_to",i+2);
-}
-scr_add_dialogue_button(tree[i],"75 a day.","step_to",i+2);
-
-//Add sub-branch 8
-i++;
-tree[i] = scr_make_dialogue_branch("Not enough.","exposition");
-scr_add_dialogue_button(tree[i],"Maybe we can negotiate.","step_to",i-1);
-scr_add_dialogue_button(tree[i],"That's all I can offer.","step_to",0);
-
-//Add sub-branch 9
-i++;
-tree[i] = scr_make_dialogue_branch("I'll do it.","exposition");
-scr_add_dialogue_button(tree[i],"Deal.","hire_crew",0);
-scr_add_dialogue_button(tree[i],"On second thought, forget it.","exit",noone);
 
 
 return tree;

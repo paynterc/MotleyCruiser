@@ -16,18 +16,6 @@ for(var i=0; i<array_length_1d(global.crew); i++){
     with(thiscrew){
         scr_npc_map_to_object();
     }
-    /***
-    if(crewMap[NPC_SEX]==1){
-        thiscrew.sprite_index=global.races[crewMap[NPC_RACE_INDEX], RACE_SPR_FML];
-    }else{
-        thiscrew.sprite_index=global.races[crewMap[NPC_RACE_INDEX], RACE_SPR];            
-    }
-    thiscrew.hp=crewMap[NPC_HP_CURRENT];
-    thiscrew.hp_current=crewMap[NPC_HP_CURRENT];
-    thiscrew.pspeed=crewMap[NPC_RUN_SPD];
-    thiscrew.global_index = crewMap[NPC_GLOBAL_INDEX];
-    ***/
-    thiscrew.crew_index = i;
+    thiscrew.crew_index = i;//Keep track of which crewmember this is, in case he dies.
     
-
 }

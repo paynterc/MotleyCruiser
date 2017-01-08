@@ -151,7 +151,11 @@ if(staged_buttons != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// See if a button was clicked
+            <string>/***
+See if a button was clicked
+
+If you add branches here, be sure to use staged_buttons = noone to clear the current buttons.
+***/
 if(staged_buttons != noone){
     for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
         if(array_length_2d(staged_buttons,i)==5){
@@ -160,6 +164,13 @@ if(staged_buttons != noone){
                 var thebuttons = staged_branch[D_BRANCH_BUTTONS];
                 var clicked_button = thebuttons[i];
                 var next_branch = noone;
+                
+                if(clicked_button[D_BUTTON_SCRIPT]!=noone){
+                    // Parse and run the attached script
+                    scr_script_parse(clicked_button[D_BUTTON_SCRIPT]);
+                }
+                
+                
                 switch (clicked_button[D_BUTTON_ACTION]){                
                     case "step_to":
                         var link = clicked_button[D_BUTTON_LINKINDEX];
@@ -212,21 +223,46 @@ if(staged_buttons != noone){
                         }
                         
                         break;
+                    case "hire_make_offer":
+                        staged_branch = scr_make_dialogue_branch("How much will you pay?","exposition");
+                        scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price));
+                        scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+25)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+25));
+                        scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+50)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+50));
+                        staged_buttons = noone;
+                        break;
+                    case "hire_consider_offer":
+                        var p = closest_sentient.hire_price;
+                        var c = min(p,100);
+                        if( scr_has_trait(TRAIT_GREEDY,closest_sentient.npc_data[NPC_TRAIT]) ){
+                            c -= 10;
+                        }
+                        if( scr_has_trait(TRAIT_ARROGANT,closest_sentient.npc_data[NPC_TRAIT]) ){
+                            c -= 10;
+                        }
+                        var r = irandom(100);
+                        // The lower the price, the lower the chance
+                        if(r&lt;c){
+                            // WIN
+                            staged_branch = scr_make_dialogue_branch("I'll do it.","exposition");
+                            scr_add_dialogue_button(staged_branch,"Deal.","hire_crew",0);
+                            scr_add_dialogue_button(staged_branch,"On second thought, forget it.","exit",noone,"scr_change_hire_price,"+string(closest_sentient.hire_price+25));
+                        }else{
+                            // LOSE
+                            closest_sentient.hire_price = closest_sentient.hire_price+25;
+                            staged_branch = scr_make_dialogue_branch("Not enough.","exposition");
+                            scr_add_dialogue_button(staged_branch,"Maybe we can negotiate.","hire_make_offer",0);
+                            scr_add_dialogue_button(staged_branch,"That's all I can offer.","step_to",0);                       
+                        }
+                        staged_buttons = noone;
+                        break;
+                        
                     case "hire_crew":
                         global.crew = scr_push_array(global.crew,closest_sentient.npc_data);
                         with(closest_sentient){
                             instance_change(obj_crew,true);
+                            scr_npc_map_to_object();
                         }
-                        
-                        var crewMap = closest_sentient.npc_data;
-                        if(crewMap[NPC_SEX]==1){
-                            closest_sentient.sprite_index=global.races[crewMap[NPC_RACE_INDEX], RACE_SPR_FML];
-                        }else{
-                            closest_sentient.sprite_index=global.races[crewMap[NPC_RACE_INDEX], RACE_SPR];            
-                        }
-                        closest_sentient.hp=crewMap[NPC_HP_CURRENT];
-                        closest_sentient.hp_current=crewMap[NPC_HP_CURRENT];
-                        closest_sentient.pspeed=crewMap[NPC_RUN_SPD];
+
                         closest_sentient.crew_index = array_length_1d(global.crew)-1;
                         
                         show_dialog = false;
@@ -258,6 +294,8 @@ if(staged_buttons != noone){
                         staged_buttons = noone; 
                 
                 }
+                
+
 
             }
         }
