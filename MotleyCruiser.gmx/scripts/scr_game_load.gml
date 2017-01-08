@@ -33,6 +33,52 @@ if(ini_section_exists(game)){
     ds_list_read(read_list,str);
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
+    
+    
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "suns", "");
+    ds_list_read(read_list,str);
+    global.suns = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "planets", "");
+    ds_list_read(read_list,str);
+    global.planets = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "moons", "");
+    ds_list_read(read_list,str);
+    global.moons = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "stations", "");
+    ds_list_read(read_list,str);
+    global.stations = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "ships", "");
+    ds_list_read(read_list,str);
+    global.ships = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "npcs", "");
+    ds_list_read(read_list,str);
+    global.npcs = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "galaxy", "");
+    ds_list_read(read_list,str);
+    global.galaxy = read_list[| 0];
+    ds_list_destroy(read_list);
+    
+    
      
     var i_string = ini_read_string(game, "inventory", "");
     if(i_string != ""){
@@ -47,19 +93,20 @@ if(ini_section_exists(game)){
     global.objective_inc =  ini_read_real(game, "objective_inc", 0);
     global.credits =  ini_read_real(game, "credits", 0);
         
-    global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
-    random_set_seed(global.galaxy_seed);
+    //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
+    //random_set_seed(global.galaxy_seed);
     
 }else{
 
     // NEW GAME 
     randomize();
     global.galaxy_seed = random_get_seed();// Call randomize before this
+    scr_make_galaxy_WEIGHTED();
 }
 ini_close();
 
 
-scr_make_galaxy_WEIGHTED();
+
 
 
 /***

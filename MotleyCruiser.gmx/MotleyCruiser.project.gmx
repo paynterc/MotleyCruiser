@@ -373,6 +373,7 @@
       <script>scripts\scr_persist_game_state.gml</script>
       <script>scripts\scr_faction_location_weights.gml</script>
       <script>scripts\scr_npc_in_crew.gml</script>
+      <script>scripts\scr_get_active_crew_count.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -484,7 +485,6 @@
       <script>scripts\scr_instantiate_all_crew.gml</script>
       <script>scripts\scr_instantiate_enemy.gml</script>
       <script>scripts\scr_save_room.gml</script>
-      <script>scripts\scr_player_died_in_room.gml</script>
       <script>scripts\scr_check_ship_capture.gml</script>
       <script>scripts\scr_shoot.gml</script>
       <script>scripts\scr_break_crates.gml</script>
@@ -776,6 +776,7 @@
     </scripts>
     <scripts name="_events">
       <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
+      <script>scripts\scr_player_died_in_room.gml</script>
     </scripts>
     <scripts name="_traits">
       <script>scripts\scr_npc_traits_library.gml</script>
@@ -843,6 +844,7 @@
   <objects name="objects">
     <object>objects\obj_game_control</object>
     <object>objects\obj_damager</object>
+    <object>objects\obj_ship_data</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_object_pool</object>
@@ -863,11 +865,8 @@
       <object>objects\obj_cantina</object>
       <object>objects\obj_sentient</object>
       <object>objects\obj_level_BACKUP</object>
-      <object>objects\obj_bullet</object>
-      <object>objects\obj_grenade</object>
       <object>objects\obj_bullet_enemy</object>
       <object>objects\obj_core</object>
-      <object>objects\obj_master_panel</object>
       <object>objects\obj_health_bar</object>
       <object>objects\obj_gun</object>
       <object>objects\obj_wall_invis</object>
@@ -879,14 +878,12 @@
       <object>objects\obj_room_reactor</object>
       <object>objects\obj_door</object>
       <object>objects\obj_jefferies</object>
-      <object>objects\obj_turret</object>
       <objects name="_furniture">
         <object>objects\obj_workstation</object>
         <object>objects\obj_panel_decor</object>
         <object>objects\obj_viewscreen_decor</object>
         <object>objects\obj_table</object>
       </objects>
-      <object>objects\obj_spawner</object>
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
@@ -916,7 +913,12 @@
       <object>objects\obj_inventory</object>
     </objects>
     <objects name="_room_combat">
+      <object>objects\obj_bullet</object>
+      <object>objects\obj_spawner</object>
       <object>objects\obj_aoe</object>
+      <object>objects\obj_master_panel</object>
+      <object>objects\obj_grenade</object>
+      <object>objects\obj_turret</object>
     </objects>
     <objects name="_light">
       <object>objects\obj_glare_control</object>

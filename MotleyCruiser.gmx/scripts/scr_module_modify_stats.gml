@@ -12,7 +12,7 @@ for(var m=0;m<array_length_1d(module_data);m++){
     shields += MP[MODULE_SHIELD_MOD];
     shields_current = shields;
     shields_regen_speed -= MP[MODULE_SHIELDREGEN_MOD];//frequency of shield regen ticks.
-    shields_regen_points += MP[MODULE_SHIELDREGENPOINTS_MOD];//shield regenerated on each tick.
+    shields_regen_points += MP[MODULE_SHIELDREGENPOINTS_MOD];//shield points regenerated on each tick.
     
     hull += MP[MODULE_HULL_MOD];
     hull_current = hull;
@@ -20,9 +20,10 @@ for(var m=0;m<array_length_1d(module_data);m++){
     energy += MP[MODULE_ENERGY_MOD];
     energy_current = energy;
     energy_regen_speed -= MP[MODULE_ENERGYREGEN_MOD];//frequency of energy regen ticks.
-    energy_regen_points += MP[MODULE_ENERGYREGENPOINTS_MOD];//energy regenerated on each tick.
+    energy_regen_points += MP[MODULE_ENERGYREGENPOINTS_MOD];//energy points regenerated on each tick.
     
     turn_mod += MP[MODULE_TURN_MOD];
+    bunks += MP[MODULE_BUNKS_MOD];
     
         
 }

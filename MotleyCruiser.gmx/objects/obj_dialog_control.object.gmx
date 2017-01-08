@@ -224,10 +224,15 @@ if(staged_buttons != noone){
                         
                         break;
                     case "hire_make_offer":
-                        staged_branch = scr_make_dialogue_branch("How much will you pay?","exposition");
-                        scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price));
-                        scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+25)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+25));
-                        scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+50)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+50));
+                        if( obj_ship_data.bunks &lt;= scr_get_active_crew_count()+1 ){
+                            staged_branch = scr_make_dialogue_branch("You don't have an empty bunk for me. Forget it.","exposition");
+                            scr_add_dialogue_button(staged_branch,"Right. Sorry!","step_to",0);
+                        }else{                                     
+                            staged_branch = scr_make_dialogue_branch("How much will you pay?","exposition");
+                            scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price));
+                            scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+25)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+25));
+                            scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+50)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+50));
+                        }
                         staged_buttons = noone;
                         break;
                     case "hire_consider_offer":

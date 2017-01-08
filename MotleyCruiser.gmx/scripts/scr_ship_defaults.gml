@@ -27,3 +27,5 @@ energy_regen_points = 5;//energy regenerated on each tick.
 
 weapon_speed = 0.1;//DEPRECATD: multiplied by 1 second or room_speed
 weapon_range = 600;//used for npcs
+
+bunks = 0;

@@ -9,6 +9,14 @@ scr_write_array(global.fleet,game,"fleet",SAVE_GAME_FILE);
 scr_write_array(global.missions,game,"missions",SAVE_GAME_FILE);
 scr_write_array(global.crew,game,"crew",SAVE_GAME_FILE);
 
+scr_write_array(global.suns,game,"suns",SAVE_GAME_FILE);
+scr_write_array(global.planets,game,"planets",SAVE_GAME_FILE);
+scr_write_array(global.moons,game,"moons",SAVE_GAME_FILE);
+scr_write_array(global.stations,game,"stations",SAVE_GAME_FILE);
+scr_write_array(global.ships,game,"ships",SAVE_GAME_FILE);
+scr_write_array(global.npcs,game,"npcs",SAVE_GAME_FILE);
+scr_write_array(global.galaxy,game,"galaxy",SAVE_GAME_FILE);
+
 ini_open(SAVE_GAME_FILE);
 
 var i_string;
