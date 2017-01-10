@@ -17,5 +17,6 @@ ob[OBJECTIVE_TARGET_COUNT_CURRENT]=0;// Count of targets eliminated. Increment o
 ob[OBJECTIVE_MISSION_ID]=noone;
 ob[OBJECTIVE_ID]="ob-"+string(global.objective_inc);
 ob[OBJECTIVE_TARGET_FACTION]=noone;// for kill_x_of_y objectives.
+ob[OBJECTIVE_REQUIRED_NPC]=noone;// Index number for an npc that must be in your crew or passenger list.
 
 return ob;

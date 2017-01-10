@@ -35,15 +35,22 @@ switch(type){
         break;
     case("planet"):
         index = scr_array_random(sector[SECTOR_PLANETS]);
-        result = global.planets[index];
+        if(index>-1){
+            result = global.planets[index];
+        }
         break;
     case("moon"):
         index = scr_array_random(sector[SECTOR_MOONS]);
-        result = global.moons[index];
+        if(index>-1){
+            result = global.moons[index];
+        }
         break;
     case("station"):
         index = scr_array_random(sector[SECTOR_STATIONS]);
-        result = global.stations[index];
+        if(index>-1){
+            result = global.stations[index];
+        }
+        
         break;
 }
 

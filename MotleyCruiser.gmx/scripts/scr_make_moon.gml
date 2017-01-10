@@ -1,5 +1,5 @@
 /// Create a dsmap with attributes
-var map = noone;
+var map = scr_ent_moon();
 
 var sector = noone;
 sector[0]=argument0;
@@ -24,5 +24,6 @@ map[MOON_SPRITE_INDEX]=floor(random(sprite_get_number(spr_moon)));
 map[MOON_SECTOR]=sector;
 map[MOON_NPCS] = noone;
 map[MOON_PLANET]=noone;
+map[MOON_NAME] = totro_plus(1,4,1,0,0);
 
 return map;

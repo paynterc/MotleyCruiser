@@ -32,7 +32,7 @@
       <sprite>sprites\spr_chicken</sprite>
       <sprite>sprites\spr_chicken_fml</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
-      <sprite>sprites\spr_droid1</sprite>
+      <sprite>sprites\spr_bot3</sprite>
       <sprite>sprites\spr_flowridian</sprite>
       <sprite>sprites\spr_flowridian_fml</sprite>
       <sprite>sprites\spr_gorgan</sprite>
@@ -40,7 +40,8 @@
       <sprite>sprites\spr_human_helm</sprite>
       <sprite>sprites\spr_human_fml</sprite>
       <sprite>sprites\spr_human_fml_h</sprite>
-      <sprite>sprites\spr_hurgan3</sprite>
+      <sprite>sprites\spr_hurgan</sprite>
+      <sprite>sprites\spr_bot2</sprite>
       <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_zomboid</sprite>
     </sprites>
@@ -315,6 +316,7 @@
       <script>scripts\scr_array_concat.gml</script>
       <script>scripts\scr_update_array_1d.gml</script>
       <script>scripts\scr_fill_array.gml</script>
+      <script>scripts\scr_array_remove.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -335,6 +337,7 @@
       </scripts>
       <script>scripts\scr_define_sentence.gml</script>
       <script>scripts\scr_change_hire_price.gml</script>
+      <script>scripts\scr_add_npc_to_crew.gml</script>
     </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
@@ -351,6 +354,9 @@
       <script>scripts\scr_ship_defaults.gml</script>
       <script>scripts\scr_ship_turret.gml</script>
       <script>scripts\scr_npc.gml</script>
+      <script>scripts\scr_ent_planet.gml</script>
+      <script>scripts\scr_ent_moon.gml</script>
+      <script>scripts\scr_ent_station.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_populate_sector.gml</script>
@@ -372,8 +378,8 @@
       <script>scripts\scr_spawn_npc_ships_ext.gml</script>
       <script>scripts\scr_persist_game_state.gml</script>
       <script>scripts\scr_faction_location_weights.gml</script>
-      <script>scripts\scr_npc_in_crew.gml</script>
-      <script>scripts\scr_get_active_crew_count.gml</script>
+      <script>scripts\scr_change_location.gml</script>
+      <script>scripts\scr_remove_npc_from_location.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -462,6 +468,7 @@
       <scripts name="_mission_types">
         <script>scripts\scr_mission_killxofy.gml</script>
         <script>scripts\scr_generate_mission.gml</script>
+        <script>scripts\scr_passenger.gml</script>
       </scripts>
     </scripts>
     <scripts name="_object_pool">
@@ -776,12 +783,18 @@
     </scripts>
     <scripts name="_events">
       <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
+      <script>scripts\scr_ev_docked.gml</script>
       <script>scripts\scr_player_died_in_room.gml</script>
     </scripts>
     <scripts name="_traits">
       <script>scripts\scr_npc_traits_library.gml</script>
       <script>scripts\scr_get_random_traits.gml</script>
       <script>scripts\scr_has_trait.gml</script>
+    </scripts>
+    <scripts name="_crew">
+      <script>scripts\scr_remove_from_crew.gml</script>
+      <script>scripts\scr_get_active_crew_count.gml</script>
+      <script>scripts\scr_npc_in_crew.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -965,7 +978,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="217">
+  <constants number="225">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -992,6 +1005,7 @@
     <constant name="NPC_OCCUPATION">12</constant>
     <constant name="NPC_SEX">13</constant>
     <constant name="NPC_HIRE_PRICE">14</constant>
+    <constant name="NPC_SPRITE">15</constant>
     <constant name="D_BRANCH_TEXT">0</constant>
     <constant name="D_BRANCH_TYPE">1</constant>
     <constant name="D_BRANCH_BUTTONS">2</constant>
@@ -1021,6 +1035,8 @@
     <constant name="PLANET_NPCS">6</constant>
     <constant name="PLANET_SECTOR">7</constant>
     <constant name="PLANET_SUN">8</constant>
+    <constant name="PLANET_NAME">9</constant>
+    <constant name="PLANET_GLOBAL_INDEX">10</constant>
     <constant name="MOON_X1">0</constant>
     <constant name="MOON_Y1">1</constant>
     <constant name="MOON_W1">2</constant>
@@ -1029,6 +1045,8 @@
     <constant name="MOON_NPCS">5</constant>
     <constant name="MOON_SECTOR">6</constant>
     <constant name="MOON_PLANET">7</constant>
+    <constant name="MOON_NAME">8</constant>
+    <constant name="MOON_GLOBAL_INDEX">9</constant>
     <constant name="STATION_X1">0</constant>
     <constant name="STATION_Y1">1</constant>
     <constant name="STATION_W1">2</constant>
@@ -1036,6 +1054,8 @@
     <constant name="STATION_SPRITE_INDEX">4</constant>
     <constant name="STATION_NPCS">5</constant>
     <constant name="STATION_SECTOR">6</constant>
+    <constant name="STATION_NAME">7</constant>
+    <constant name="STATION_GLOBAL_INDEX">8</constant>
     <constant name="SHIP_TURN_SPEED">0</constant>
     <constant name="SHIP_MAX_SPEED">1</constant>
     <constant name="SHIP_MAX_FWD">2</constant>
@@ -1148,6 +1168,7 @@
     <constant name="OBJECTIVE_MISSION_ID">11</constant>
     <constant name="OBJECTIVE_ID">12</constant>
     <constant name="OBJECTIVE_TARGET_FACTION">13</constant>
+    <constant name="OBJECTIVE_REQUIRED_NPC">14</constant>
     <constant name="SCAFF_CELL_SIZE">16</constant>
     <constant name="DATA_FILE">"motleydata.ini"</constant>
     <constant name="SAVE_GAME_FILE">"motleysave.ini"</constant>

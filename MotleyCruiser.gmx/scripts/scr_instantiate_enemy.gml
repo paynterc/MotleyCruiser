@@ -20,6 +20,15 @@ var race_index = argument2;
 if(race_index < 0){
     race_index = irandom(array_height_2d(global.races)-1);
 }
-newEnemy.sprite_index = global.races[race_index,RACE_SPR];
+
+var sex =max(0,irandom(global.races[race_index,RACE_SEXES]-1));//Should give zero or one
+var spr;
+if(sex){
+    spr = asset_get_index ( scr_array_random( scr_str_split( global.races[race_index, RACE_SPR_FML],",") ) );
+}else{
+    spr = asset_get_index ( scr_array_random( scr_str_split( global.races[race_index, RACE_SPR],",") ) );           
+}
+
+newEnemy.sprite_index = spr;
 
 return newEnemy;

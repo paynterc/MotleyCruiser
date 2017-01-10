@@ -20,7 +20,7 @@
   <width>16</width>
   <height>24</height>
   <frames>
-    <frame index="0">images\spr_droid1_0.png</frame>
-    <frame index="1">images\spr_droid1_1.png</frame>
+    <frame index="0">images\spr_bot3_0.png</frame>
+    <frame index="1">images\spr_bot3_1.png</frame>
   </frames>
 </sprite>

@@ -216,6 +216,7 @@ if(scr_user_input("dock")){
     if(closest_landable != noone){
         global.landed_on = closest_landable.global_index;
         global.landed_type = closest_landable.global_type;
+        global.landed_name = closest_landable.name;
         global.player_x = x;
         global.player_y = y;
         scr_persist_game_state();

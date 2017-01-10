@@ -20,7 +20,7 @@
   <width>16</width>
   <height>32</height>
   <frames>
-    <frame index="0">images\spr_hurgan_0.png</frame>
-    <frame index="1">images\spr_hurgan_1.png</frame>
+    <frame index="0">images\spr_bot2_0.png</frame>
+    <frame index="1">images\spr_bot2_1.png</frame>
   </frames>
 </sprite>

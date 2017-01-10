@@ -1,6 +1,6 @@
 /// Create a planet with attributes
 // scr_make_planet(sector_row, sector_column)
-var map = noone;
+var map = scr_ent_planet();
 
 
 var x1=0;
@@ -34,6 +34,7 @@ map[PLANET_SPRITE_INDEX]=floor(random(sprite_get_number(spr_planet)));
 map[PLANET_SECTOR]=sector;
 map[PLANET_NPCS] = noone;
 map[PLANET_SUN] = noone;
+map[PLANET_NAME] = totro_plus(1,4,1,0,0);
 
 
 return map;

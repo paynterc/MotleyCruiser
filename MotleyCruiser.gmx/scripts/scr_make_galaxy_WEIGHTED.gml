@@ -218,7 +218,29 @@ for(row=0; row < gwidth; row++){
     }
 }
 //Index the npcs
+var gnpc;
 for(var i=0; i<array_length_1d(global.npcs); i++){
-    var gnpc = global.npcs[i];
+    gnpc = global.npcs[i];
     gnpc[@ NPC_GLOBAL_INDEX]=i;
+}
+
+//Index the planets
+var gp;
+for(var i=0; i<array_length_1d(global.planets); i++){
+    gp = global.planets[i];
+    gp[@ PLANET_GLOBAL_INDEX]=i;
+}
+
+//Index the moons
+var gm;
+for(var i=0; i<array_length_1d(global.moons); i++){
+    gm = global.moons[i];
+    gm[@ MOON_GLOBAL_INDEX]=i;
+}
+
+//Index the stations
+var gstat;
+for(var i=0; i<array_length_1d(global.stations); i++){
+    gstat = global.stations[i];
+    gstat[@ STATION_GLOBAL_INDEX]=i;
 }

@@ -39,6 +39,28 @@
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Send docked event
+scr_ev_docked();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Draw the map
 scr_build_room_custom();
 </string>
@@ -137,10 +159,11 @@ for(var i = 0; i &lt; s_count; i++) {
             
             // Repopulate a saved mission. TODO: Do we really need this?
             if(npc[NPC_MISSION]==noone){
-                var mission = choose(scr_generate_mission(npcs[i]),scr_mission_killxofy(npcs[i]));
+                //var mission = choose(scr_generate_mission(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]));
+                var mission = scr_passenger(npcs[i]);
                 sentient.mission=mission;
-                npc[NPC_MISSION]=mission;
-                global.npcs[npcs[i]]=npc;
+                //npc[NPC_MISSION]=mission;
+                //global.npcs[npcs[i]]=npc;
             }else{
                 sentient.mission=npc[NPC_MISSION];
             }

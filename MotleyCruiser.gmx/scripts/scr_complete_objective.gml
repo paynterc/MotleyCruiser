@@ -38,8 +38,16 @@ if(objective!=noone){
                 complete = true;
             }
             break;
-            
-            
+        case "deliver_passenger":
+            for(var i=0;i<array_length_1d(global.crew);i++){
+                var crewMem = global.crew[i];
+                if(crewMem[NPC_GLOBAL_INDEX]==objective[OBJECTIVE_REQUIRED_NPC]){
+                    scr_remove_from_crew(crewMem[NPC_GLOBAL_INDEX]);
+                    scr_change_location("npc",crewMem[NPC_GLOBAL_INDEX],global.current_sector_row,global.current_sector_col,global_type,global_index);
+                    complete = true;
+                }
+            }
+            break;
         default:
           // Do other stuff;
     

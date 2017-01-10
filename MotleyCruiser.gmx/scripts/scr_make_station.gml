@@ -1,7 +1,7 @@
 /// Create a dsmap with stations attributes
 // scr_make_station(sector_row,sector_column)
-var map = noone;
-map[6]=0;
+var map = scr_ent_station();
+
 
 var x1=0;
 var y1=0;
@@ -26,5 +26,6 @@ map[STATION_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
 map[STATION_SPRITE_INDEX]=floor(random(sprite_get_number(spr_station)));
 map[STATION_NPCS]=noone;
 map[STATION_SECTOR]=sector;
+map[STATION_NAME] = totro_plus(1,4,1,0,0);
 
 return map;

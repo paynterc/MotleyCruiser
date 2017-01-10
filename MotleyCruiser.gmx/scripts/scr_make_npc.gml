@@ -66,4 +66,10 @@ map[NPC_TRAIT]=scr_get_random_traits();//save the index of the the trait
 map[NPC_OCCUPATION]=irandom( array_length_1d(global.npc_occupations)-1 );//save the index of the the trait
 map[NPC_SEX]=max(0,irandom(global.races[race_index,RACE_SEXES]-1));//Should give zero or one
 
+if(map[NPC_SEX]==1){
+    map[NPC_SPRITE] = asset_get_index( scr_array_random( scr_str_split( global.races[map[NPC_RACE_INDEX], RACE_SPR_FML],",") ) );
+}else{
+    map[NPC_SPRITE] = asset_get_index ( scr_array_random( scr_str_split( global.races[map[NPC_RACE_INDEX], RACE_SPR],",") ) );           
+}
+
 return map;

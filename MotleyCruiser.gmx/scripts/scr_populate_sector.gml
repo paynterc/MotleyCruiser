@@ -43,11 +43,13 @@ for(var i = 0; i < array_length_1d(suns); i++){
                     image_xscale = psize_mod;
                     image_yscale = psize_mod;
                     image_blend = planet[PLANET_COLOR];
-                    image_index = planet[PLANET_SPRITE_INDEX];
+                    image_index = planet[PLANET_SPRITE_INDEX];                  
                     depth = curdepth;
-                    global_index = planets[p];
+                    global_index = planets[p];                  
                     global_type = "planet";
                     faction = FACTION_NEUTRAL;
+                    var tname = planet[PLANET_NAME];
+                    name = tname[0];
                 }
                 
                 // Moons
@@ -71,6 +73,8 @@ for(var i = 0; i < array_length_1d(suns); i++){
                                 global_index = moons[m];
                                 global_type = "moon";
                                 faction = FACTION_NEUTRAL;
+                                var tname = moon[MOON_NAME];
+                                name = tname[0];
                             }
                         }
                     }// End Moons loop
@@ -99,6 +103,8 @@ for(var i = 0; i < array_length_1d(stations); i++){
         global_index = stations[i];
         global_type = "station";
         faction = FACTION_NEUTRAL;
+        var tname = station[STATION_NAME];
+        name = tname[0];
     }
     
     

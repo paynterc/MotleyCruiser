@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>modAlpha = 1;
+            <string>/// This object is used when an npc ship reaches its destination.
+// It stops and gradually fades out.
+modAlpha = 1;
 alarm[0] = room_speed * .10;
 </string>
           </argument>
