@@ -8,7 +8,7 @@ for(var i = 0; i<array_length_1d(global.missions); i++){
     if(objectives != noone){
         for(var o=0; o < array_length_1d(objectives); o++){
             var objective = objectives[o];
-            if(objective[OBJECTIVE_ID]==obid){
+            if(objective[OBJECTIVE_ID]==obid){                            
                 return objective;
             }
         }    

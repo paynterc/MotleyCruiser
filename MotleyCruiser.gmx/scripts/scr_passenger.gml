@@ -59,6 +59,7 @@ ob[OBJECTIVE_TYPE]="visit";
 ob[OBJECTIVE_TARGET_TYPE]="npc";
 ob[OBJECTIVE_TARGET_INDEX]=granter_id;
 ob[OBJECTIVE_MISSION_ID]=mission[MISSION_ID];
+ob[OBJECTIVE_TEXT_END]="Thank you for delivering me here. I hope we can do business again.";
 objectives[1]=ob;
 
 mission[MISSION_OBJECTIVES]=objectives;

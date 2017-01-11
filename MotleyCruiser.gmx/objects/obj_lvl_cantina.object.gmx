@@ -159,8 +159,8 @@ for(var i = 0; i &lt; s_count; i++) {
             
             // Repopulate a saved mission. TODO: Do we really need this?
             if(npc[NPC_MISSION]==noone){
-                //var mission = choose(scr_generate_mission(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]));
-                var mission = scr_passenger(npcs[i]);
+                var mission = choose(scr_deliver_inventory(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]));
+                
                 sentient.mission=mission;
                 //npc[NPC_MISSION]=mission;
                 //global.npcs[npcs[i]]=npc;

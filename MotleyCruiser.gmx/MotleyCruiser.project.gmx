@@ -33,6 +33,7 @@
       <sprite>sprites\spr_chicken_fml</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
       <sprite>sprites\spr_bot3</sprite>
+      <sprite>sprites\spr_c_bot1</sprite>
       <sprite>sprites\spr_flowridian</sprite>
       <sprite>sprites\spr_flowridian_fml</sprite>
       <sprite>sprites\spr_gorgan</sprite>
@@ -318,6 +319,11 @@
       <script>scripts\scr_fill_array.gml</script>
       <script>scripts\scr_array_remove.gml</script>
     </scripts>
+    <scripts name="_crew">
+      <script>scripts\scr_remove_from_crew.gml</script>
+      <script>scripts\scr_get_active_crew_count.gml</script>
+      <script>scripts\scr_npc_in_crew.gml</script>
+    </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
@@ -357,6 +363,11 @@
       <script>scripts\scr_ent_planet.gml</script>
       <script>scripts\scr_ent_moon.gml</script>
       <script>scripts\scr_ent_station.gml</script>
+    </scripts>
+    <scripts name="_events">
+      <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
+      <script>scripts\scr_ev_docked.gml</script>
+      <script>scripts\scr_player_died_in_room.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_populate_sector.gml</script>
@@ -467,7 +478,7 @@
       <script>scripts\scr_grant_reward.gml</script>
       <scripts name="_mission_types">
         <script>scripts\scr_mission_killxofy.gml</script>
-        <script>scripts\scr_generate_mission.gml</script>
+        <script>scripts\scr_deliver_inventory.gml</script>
         <script>scripts\scr_passenger.gml</script>
       </scripts>
     </scripts>
@@ -524,6 +535,11 @@
       <script>scripts\scr_restore_ship_state.gml</script>
       <script>scripts\scr_module_modify_stats.gml</script>
     </scripts>
+    <scripts name="_traits">
+      <script>scripts\scr_npc_traits_library.gml</script>
+      <script>scripts\scr_get_random_traits.gml</script>
+      <script>scripts\scr_has_trait.gml</script>
+    </scripts>
     <scripts name="_utility">
       <script>scripts\scr_get_closest.gml</script>
       <script>scripts\scr_gradually_rotate.gml</script>
@@ -537,7 +553,7 @@
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
     </scripts>
-    <scripts name="Glare">
+    <scripts name="_glare">
       <script>scripts\glr_Documentation.gml</script>
       <scripts name="Engine">
         <script>scripts\glr_init.gml</script>
@@ -768,34 +784,6 @@
         </scripts>
       </scripts>
     </scripts>
-    <scripts name="Glare demo">
-      <scripts name="misc">
-        <script>scripts\glrtest_text_pressed.gml</script>
-        <script>scripts\glrtest_text_hold.gml</script>
-      </scripts>
-      <script>scripts\glrtest_gui_mobile.gml</script>
-      <script>scripts\glrtest_gui_desktop.gml</script>
-      <script>scripts\glrtest_get_illumination.gml</script>
-      <script>scripts\glrtest_autotile.gml</script>
-      <script>scripts\glrtest_show_matrix.gml</script>
-      <script>scripts\glrtest_string_onoff.gml</script>
-      <script>scripts\enable_roof.gml</script>
-    </scripts>
-    <scripts name="_events">
-      <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
-      <script>scripts\scr_ev_docked.gml</script>
-      <script>scripts\scr_player_died_in_room.gml</script>
-    </scripts>
-    <scripts name="_traits">
-      <script>scripts\scr_npc_traits_library.gml</script>
-      <script>scripts\scr_get_random_traits.gml</script>
-      <script>scripts\scr_has_trait.gml</script>
-    </scripts>
-    <scripts name="_crew">
-      <script>scripts\scr_remove_from_crew.gml</script>
-      <script>scripts\scr_get_active_crew_count.gml</script>
-      <script>scripts\scr_npc_in_crew.gml</script>
-    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -875,7 +863,6 @@
       <object>objects\obj_team</object>
       <object>objects\obj_enemy</object>
       <object>objects\obj_mortal</object>
-      <object>objects\obj_cantina</object>
       <object>objects\obj_sentient</object>
       <object>objects\obj_level_BACKUP</object>
       <object>objects\obj_bullet_enemy</object>
@@ -972,13 +959,12 @@
     <room>rooms\rm_ship_deck_rnd</room>
     <room>rooms\rm_ship_control</room>
     <room>rooms\rm_cantina2</room>
-    <room>rooms\rm_cantina1</room>
     <rooms name="Glare">
       <room>rooms\room_glare_init</room>
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="225">
+  <constants number="226">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1169,6 +1155,7 @@
     <constant name="OBJECTIVE_ID">12</constant>
     <constant name="OBJECTIVE_TARGET_FACTION">13</constant>
     <constant name="OBJECTIVE_REQUIRED_NPC">14</constant>
+    <constant name="OBJECTIVE_TEXT_END">15</constant>
     <constant name="SCAFF_CELL_SIZE">16</constant>
     <constant name="DATA_FILE">"motleydata.ini"</constant>
     <constant name="SAVE_GAME_FILE">"motleysave.ini"</constant>

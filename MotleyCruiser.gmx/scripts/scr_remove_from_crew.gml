@@ -6,7 +6,7 @@ var crewmate = noone;
 for(var i=0;i<array_length_1d(global.crew); i++){
     crewmate = global.crew[i];
     if(crewmate[NPC_GLOBAL_INDEX]!=global_index){
-        new_crew[i] = crewmate;
+        new_crew = scr_push_array(new_crew,crewmate);
     } 
 }
 

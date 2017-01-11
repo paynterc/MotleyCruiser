@@ -26,9 +26,9 @@ if(type=="npc"){
 
 var loc = scr_str_split(oldlocation,",");
 var oldtype = loc[0];
-var oldindex = loc[1];
-var oldrow = loc[2];
-var oldcol = loc[3];
+var oldindex = real(loc[1]);
+var oldrow = real(loc[2]);
+var oldcol = real(loc[3]);
 
 var old1 = noone;
 // Remove from old location
@@ -36,10 +36,10 @@ if(oldtype=="planet"){
     old1 = global.planets[oldindex];
     old1[@ PLANET_NPCS] = scr_array_remove(old1[PLANET_NPCS],g_index); 
 }else if(oldtype=="moon"){
-    old1 = global.planets[oldindex];
+    old1 = global.moons[oldindex];
     old1[@ MOON_NPCS] = scr_array_remove(old1[MOON_NPCS],g_index);
 }else if(oldtype=="station"){
-    old1 = global.planets[oldindex];
+    old1 = global.stations[oldindex];
     old1[@ STATION_NPCS] = scr_array_remove(old1[STATION_NPCS],g_index);
 }
 
