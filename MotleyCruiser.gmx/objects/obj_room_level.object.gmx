@@ -29,6 +29,68 @@
 shadows_on = false;
 door = noone;
 level_complete = false;
+shake=false;
+shake_count = 0;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cancel gampad vibration
+gamepad_set_vibration(0, 0, 0);
+alarm[1]=room_speed*.5;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Screen shake and feedback
+if(shake){
+    if(shake_count&lt;3){
+        scr_screen_shake();
+        shake_count++;
+        
+    }else{
+        shake_count=0;
+        shake=false;
+    }
+}
+alarm[0]=room_speed*.25
 </string>
           </argument>
         </arguments>
@@ -55,6 +117,7 @@ level_complete = false;
 glr_clear_all();
 ds_grid_destroy(global.grid);
 mp_grid_destroy(global.grid_path);
+gamepad_set_vibration(0, 0, 0);
 </string>
           </argument>
         </arguments>
@@ -81,6 +144,31 @@ mp_grid_destroy(global.grid_path);
 
 audio_stop_all();
 audio_play_sound(snd_theme1,1,1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start timers
+gamepad_set_vibration(0, 0, 0);
+
+alarm[0]=room_speed*.25;//shake
+alarm[1]=room_speed*.50;//vibrate cancel
 </string>
           </argument>
         </arguments>

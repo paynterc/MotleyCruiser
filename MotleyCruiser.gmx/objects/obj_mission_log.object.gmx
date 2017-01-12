@@ -182,7 +182,7 @@ for(var i = 0; i &lt; array_length_1d(global.missions); i++){
     draw_set_valign(fa_top);
     draw_set_alpha(1);
     
-    text = "CREDITS: " + string(global.credits);
+    text = "DAY: " + string(global.day);
     text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
     text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
     

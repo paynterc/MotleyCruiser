@@ -29,6 +29,7 @@
 hp=10;
 hp_current=hp;
 health_y = sprite_get_height(sprite_index) - 5;
+shake=false;
 </string>
           </argument>
         </arguments>
@@ -53,6 +54,8 @@ health_y = sprite_get_height(sprite_index) - 5;
             <kind>1</kind>
             <string>//Apply damage
 if(other.type!=type){
+    shake=true;
+    instance_create(other.x,other.y,obj_impact);
     hp_current -= other.damage;
     with(other){
         instance_destroy();

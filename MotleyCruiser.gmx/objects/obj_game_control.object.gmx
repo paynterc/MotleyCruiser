@@ -86,6 +86,9 @@ global.objective_inc = 100
 // Money
 global.credits = 1000;
 
+// Time
+global.day = 0;
+
 
 
 /****************************************************************/
@@ -259,6 +262,10 @@ if(scr_user_input("fullscreen")){
 
        
     }
+}
+
+if(scr_user_input("goto_shiplevel")){
+    room_goto(rm_ship_deck_rnd);
 }
 </string>
           </argument>

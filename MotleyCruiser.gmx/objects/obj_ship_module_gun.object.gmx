@@ -57,6 +57,30 @@ alarm[0]=room_speed;
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Deactivate spark
+spark.active=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -92,14 +116,14 @@ if(shooting){
 
 
     if(gundata[GUN_BULLET_TYPE]=="beam"){
-        if(hitobject!=noone){
+        if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
             hitobject.register_damage += gundata[GUN_DAMAGE];
             hitobject.hitby = id;
         }   
     }else if(gundata[GUN_BULLET_TYPE]=="bullet"){
         var d = sprite_get_width(sprite_index)/2;
         
-        bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),obj_laser);
+        var bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),obj_laser);
         //bullet = scr_get_from_pool("projectile",obj_projectile);
         //bullet.x = x + lengthdir_x(d, image_angle);
         //bullet.y = y + lengthdir_y(d, image_angle);
@@ -112,8 +136,8 @@ if(shooting){
         bullet.speed = BULLET_BASE_SPEED;
         bullet.damage = gundata[GUN_DAMAGE];
         
-        audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
-        
+        var b_sound = audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+        //audio_sound_pitch(b_sound, random_range(.85,1.5));
             
     }
  

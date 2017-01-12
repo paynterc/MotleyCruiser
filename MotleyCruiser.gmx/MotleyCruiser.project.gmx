@@ -24,6 +24,7 @@
   <sprites name="sprites">
     <sprites name="_aliens">
       <sprite>sprites\spr_androne</sprite>
+      <sprite>sprites\spr_drone1</sprite>
       <sprite>sprites\spr_androne_fml</sprite>
       <sprite>sprites\spr_androne_eyes</sprite>
       <sprite>sprites\spr_antinoid</sprite>
@@ -203,13 +204,18 @@
         <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
+        <sprite>sprites\spr_ItemIcon_GasBlue</sprite>
         <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
         <sprite>sprites\spr_ItemIcon_BigDefPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigHealPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_BloodRed</sprite>
         <sprite>sprites\spr_ItemIcon_BigManaPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Water</sprite>
         <sprite>sprites\spr_ItemIcon_BigRegPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_LiquidPink</sprite>
         <sprite>sprites\spr_ItemIcon_Bone</sprite>
         <sprite>sprites\spr_ItemIcon_Bottle</sprite>
+        <sprite>sprites\spr_ItemIcon_Pills</sprite>
         <sprite>sprites\spr_ItemIcon_Bottle2</sprite>
         <sprite>sprites\spr_ItemIcon_Claw</sprite>
         <sprite>sprites\spr_ItemIcon_Coal</sprite>
@@ -218,6 +224,7 @@
         <sprite>sprites\spr_ItemIcon_CutWood</sprite>
         <sprite>sprites\spr_ItemIcon_DefPotion</sprite>
         <sprite>sprites\spr_ItemIcon_Diamant</sprite>
+        <sprite>sprites\spr_ItemIcon_Diamonds</sprite>
         <sprite>sprites\spr_ItemIcon_EmptyBucket</sprite>
         <sprite>sprites\spr_ItemIcon_EmptyIronBucket</sprite>
         <sprite>sprites\spr_ItemIcon_Feather</sprite>
@@ -246,6 +253,7 @@
         <sprite>sprites\spr_ItemIcon_Sand</sprite>
         <sprite>sprites\spr_ItemIcon_Slime</sprite>
         <sprite>sprites\spr_ItemIcon_SmallBottle</sprite>
+        <sprite>sprites\spr_ItemIcon_PillsSmall</sprite>
         <sprite>sprites\spr_ItemIcon_SmallHealPotion</sprite>
         <sprite>sprites\spr_ItemIcon_SmallManaPotion</sprite>
         <sprite>sprites\spr_ItemIcon_SoulDust</sprite>
@@ -273,10 +281,13 @@
     </sprites>
     <sprite>sprites\spr_bolt1</sprite>
     <sprite>sprites\spr_bolt2</sprite>
+    <sprite>sprites\spr_impact</sprite>
+    <sprite>sprites\sprite226</sprite>
     <sprite>sprites\spr_boom</sprite>
     <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_bullet</sprite>
     <sprite>sprites\spr_bullet_2</sprite>
+    <sprite>sprites\spr_bullet_sm</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
     <sprite>sprites\spr_default</sprite>
     <sprite>sprites\spr_glr_torch</sprite>
@@ -318,11 +329,13 @@
       <script>scripts\scr_update_array_1d.gml</script>
       <script>scripts\scr_fill_array.gml</script>
       <script>scripts\scr_array_remove.gml</script>
+      <script>scripts\scr_get_array_1d.gml</script>
     </scripts>
     <scripts name="_crew">
       <script>scripts\scr_remove_from_crew.gml</script>
       <script>scripts\scr_get_active_crew_count.gml</script>
       <script>scripts\scr_npc_in_crew.gml</script>
+      <script>scripts\scr_daily_expenses.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -401,6 +414,7 @@
       <script>scripts\scr_game_delete.gml</script>
       <script>scripts\scr_get_saved_games.gml</script>
       <script>scripts\scr_new_game_defaults.gml</script>
+      <script>scripts\scr_screen_shake.gml</script>
     </scripts>
     <scripts name="_gui">
       <script>scripts\scr_gui_set_panel_data.gml</script>
@@ -862,6 +876,7 @@
       <object>objects\obj_crew</object>
       <object>objects\obj_team</object>
       <object>objects\obj_enemy</object>
+      <object>objects\obj_drone</object>
       <object>objects\obj_mortal</object>
       <object>objects\obj_sentient</object>
       <object>objects\obj_level_BACKUP</object>
@@ -893,7 +908,6 @@
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_laser</object>
       <object>objects\obj_projectile</object>
-      <object>objects\obj_explosion</object>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
       <object>objects\obj_station</object>
@@ -951,6 +965,9 @@
     <objects name="_main_menu">
       <object>objects\obj_main_menu</object>
     </objects>
+    <object>objects\obj_impact</object>
+    <object>objects\obj_explosion_OLD</object>
+    <object>objects\obj_explosion</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>

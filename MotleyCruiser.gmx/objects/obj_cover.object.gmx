@@ -52,7 +52,8 @@ depth=-y;
             <kind>1</kind>
             <string>if(other.lifespan&gt;5){
     
-
+    var impact = instance_create(other.x,other.y,obj_impact);
+    impact.image_blend = c_aqua;
     with(other){
         instance_destroy();
     }

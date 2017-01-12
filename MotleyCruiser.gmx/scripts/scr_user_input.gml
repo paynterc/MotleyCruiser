@@ -87,6 +87,13 @@ switch(argument0){
         && keyboard_check(vk_shift)
         && debug_mode;
         break;
+    case "goto_shiplevel":
+        return  
+        keyboard_check_pressed(ord("R"))
+        && keyboard_check(vk_shift)
+        && debug_mode;
+        break;
+        
     case "point_dir":
         var pdir = noone;
         if( gamepad_is_connected(global.pad) ){

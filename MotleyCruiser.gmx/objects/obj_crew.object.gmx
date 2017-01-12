@@ -46,6 +46,7 @@ hp=20;
 hp_current=hp;
 ispeed=0.5;
 pspeed=2;//path speed
+r_speed=.5;//reaction speed
 
 image_speed = .5;
 
@@ -62,7 +63,7 @@ hyset = false;
 sublight = noone;
 
 alarm[0] = room_speed;
-alarm[1] = room_speed;
+alarm[1] = room_speed * r_speed;
 </string>
           </argument>
         </arguments>
@@ -130,7 +131,8 @@ if(path_exists(path)) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var crewMap = global.crew[crew_index];
+            <string>// Update sublight
+var crewMap = global.crew[crew_index];
 if(crewMap[NPC_RACE_INDEX]==4){
     //sublight = glr_light_create(spr_androne_eyes,0,x,y,c_red,5);
     //glr_light_set_static(sublight,true);
@@ -157,7 +159,7 @@ if(crewMap[NPC_RACE_INDEX]==4){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Move
+            <string>/// Move, select target, shoot
 
 // defend will find path to player while shooting at enemies
 //"hold" holds position then falls back to core when player gets near
@@ -256,7 +258,7 @@ if(stopPath){
 
 
 
-alarm[0] = room_speed;
+alarm[0] = room_speed * r_speed;
 </string>
           </argument>
         </arguments>

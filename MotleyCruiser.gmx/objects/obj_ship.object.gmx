@@ -33,7 +33,7 @@ ship_data = noone;
 ship_index = noone;
 hitrad=noone;// colision radius
 faction = noone; //FACTION_PLAYER, FACTION_PIRATE, FACTION_TRADER
-
+shake = false;//sceen shake
 // Ship state
 disabled = false;
 can_move = true;
@@ -61,6 +61,7 @@ image_speed=0;
 
 alarm[1] = room_speed * energy_regen_speed;
 alarm[2] = room_speed * shields_regen_speed;
+
 </string>
           </argument>
         </arguments>
@@ -231,6 +232,10 @@ if(ship_data!=noone){
     {
         
         if(inst.type != faction){
+            
+            var impact = instance_create(inst.x,inst.y,obj_impact);
+            impact.image_blend = c_aqua;
+            
             hitby = inst.firedby;
             register_damage += inst.damage;
             // Handle death in child object
@@ -266,7 +271,7 @@ if(ship_data!=noone){
             <kind>1</kind>
             <string>/// Register damage
 if(register_damage&gt;0){
-
+    shake=true;
     var apply_damage = register_damage;
     register_damage = 0;
     

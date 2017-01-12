@@ -382,7 +382,7 @@ if(hull_current &lt; 1){
     // Destroy modules
     for(var m=0; m&lt;array_length_1d(modules); m++){
         var m_object = modules[m];
-        instance_create(m_object.x,m_object.y,obj_explosion);
+        instance_create(m_object.x,m_object.y,obj_impact);
         instance_deactivate_object(m_object);
     }
     instance_deactivate_object(self);

@@ -94,6 +94,8 @@ for ( var i = 0; i &lt; instance_number(obj_mortal); i += 1 ){
 
 var explosion = instance_create(x,y,obj_explosion);
 explosion.depth = depth-1;
+gamepad_set_vibration(0, 1, 1);
+obj_room_level.shake=true;
 instance_destroy();
 </string>
           </argument>

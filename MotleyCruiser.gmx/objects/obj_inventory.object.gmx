@@ -262,12 +262,17 @@ if(ds_exists(global.ChestList,ds_type_list)){
             <string>//Now you can draw Inventory here:
 if(global.show_inventory){
 
+
+
     draw_set_font(font);
     draw_panel(spr_background,0,box_x,box_y,boxwidth,boxheight,32);
     
     //draw_text(270,40,"Key Q: Add random Item#Key W: Clear Inventory#Key E: Save Inventory#Key R: Load Inventory#Key T: Sort Inventory#Key Y: Clear a Item from Selecting Slot#Key U: Delete Item by Stack Amount#Key I: Drop a Item#Key O: Find Item on Inventory#Key P: Run the script of item with effect#Key A: Exchange Items from #       'ItemOverMouse' to Selecting");
     
     draw_set_halign(fa_center);
+    
+    
+
     draw_text(box_hcenter,box_y+(font_size/2)+padding,"INVENTORY");
     draw_set_halign(fa_left);
     inventory_draw(box_x+padding,box_y+font_size+(padding*2),spr_slot, spr_slot,8,c_white);
@@ -294,6 +299,9 @@ if(global.show_inventory){
         
     }
 
+    draw_set_halign(fa_left);
+    draw_text(box_x+padding,box_bottom - padding - font_size,"CREDITS: " + string(global.credits));
+    
 }
 
 

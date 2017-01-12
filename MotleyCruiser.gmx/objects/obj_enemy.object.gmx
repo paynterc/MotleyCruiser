@@ -363,6 +363,8 @@ scr_move(hspd, vspd);
           <argument>
             <kind>1</kind>
             <string>if(other.type!=type){
+    var impact = instance_create(other.x,other.y,obj_impact);
+    //impact.image_blend = c_red;
     hp_current -= other.damage;
     with(other){
         instance_destroy();

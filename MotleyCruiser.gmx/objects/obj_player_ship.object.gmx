@@ -286,12 +286,42 @@ if(scr_user_input("invul_mode")){
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>///Screen shake and feedback
+if(shake){
+    scr_screen_shake();
+    shake=false;
+    gamepad_set_vibration(0, 1, 1);
+
+}else{
+    gamepad_set_vibration(0, 0, 0);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Check for dead
 if(hull_current &lt; 1){
+    gamepad_set_vibration(0, 0, 0);
     // Destroy modules
     for(var m=0; m&lt;array_length_1d(modules); m++){
         var m_object = modules[m];
-        instance_create(m_object.x,m_object.y,obj_explosion);
+        instance_create(m_object.x,m_object.y,obj_impact);
         instance_deactivate_object(m_object);
     }
     instance_deactivate_object(self);
