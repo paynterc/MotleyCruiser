@@ -44,6 +44,7 @@
       <sprite>sprites\spr_human_fml_h</sprite>
       <sprite>sprites\spr_hurgan</sprite>
       <sprite>sprites\spr_bot2</sprite>
+      <sprite>sprites\spr_pudning_OLD</sprite>
       <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_zomboid</sprite>
     </sprites>
@@ -297,6 +298,7 @@
     <sprite>sprites\spr_person_tmp</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
     <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_melee</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>

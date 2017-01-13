@@ -29,6 +29,7 @@
 glr_init(.75,480,272,0);
 glr_set_ambient_daytime(.95);
 depth = -10000;
+enabled=0;
 
 </string>
           </argument>
@@ -78,7 +79,9 @@ glr_clear_all();
             <kind>1</kind>
             <string>/// Glare draw gamma
 if(instance_exists(obj_room_level)){
-    //glr_draw_gamma(application_surface);
+    if(enabled==1){
+        glr_draw_gamma(application_surface);
+    }
 }
 </string>
           </argument>
@@ -104,7 +107,9 @@ if(instance_exists(obj_room_level)){
             <kind>1</kind>
             <string>/// Glare  render
 if(instance_exists(obj_room_level)){
-    //glr_render();
+    if(enabled==1){
+        glr_render();
+    }
 }
 </string>
           </argument>
