@@ -35,7 +35,7 @@ target = noone;
 //hunt, defend, hold
 mode = "hunt";
 
-alarm[0] = room_speed;
+alarm[0] = room_speed;// Move and shoot
 
 hp=10;
 hp_current=hp;
@@ -46,6 +46,10 @@ sprite_default = spr_default;
 sprite_index = sprite_default;
 health_y = sprite_get_height(sprite_index) + 5;
 hyset = false;
+weapon_index = noone;
+weapon=noone;
+race_index = noone;
+sex = noone;
 </string>
           </argument>
         </arguments>
@@ -67,12 +71,13 @@ hyset = false;
           <argument>
             <kind>1</kind>
             <string>/// Equip weapon
-/// Equip weapon
-weapon = instance_create(x,y,obj_gun);
+/***
+weapon = instance_create(x,y,obj_melee_weapon);
 weapon.weaponSpeed = .5;
 weapon.type = type;
+weapon.parent_obj = id;
 weapon.bullet_speed = 10;
-
+***/
 </string>
           </argument>
         </arguments>
@@ -131,21 +136,18 @@ if(path_exists(path)) {
 // "hold" holds position then falls back to core when target gets near
 // "hunt" finds closest player team member and moves to it
 
-if(mode=="hunt" &amp;&amp; hp_current&lt;hp/2){
-    mode = "hold";
-}else if(mode=="hold" &amp;&amp; hp_current&lt;hp/4){
-    mode = "defend";
+if(mode!="hunt" &amp;&amp; hp_current&lt;hp){
+    mode = "hunt";
 }
+
 var inview = scr_instance_in_view(self);
+
 /***
 Find closest member of the player's boarding team. This includes the player.
 ***/
 if(instance_exists(obj_team)){
+    
     target = instance_nearest(x,y,obj_team);
-    //if(!instance_exists(target) || point_distance(x,y,target.x,target.y) &gt; 200){
-        //target = instance_nearest(x,y,obj_team);
-    //}
-
     var px = (target.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
     var py = (target.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
     var pd = distance_to_object(target);
@@ -154,8 +156,9 @@ if(instance_exists(obj_team)){
     target = noone;
 }
 
-if( target!=noone &amp;&amp; instance_exists(target)){
+if( target!=noone &amp;&amp; instance_exists(target) ){
 
+    
     
     if(instance_exists(obj_core) &amp;&amp; (mode=="defend" || mode=="hold")){
     
@@ -170,13 +173,14 @@ if( target!=noone &amp;&amp; instance_exists(target)){
         
         //point_distance(x,y,px,py)
         if(mode=="defend" &amp;&amp; pd &lt; 200){
-            path_end();
+            mode="attack";
+            //path_end();
         }else if(mode=="hold" &amp;&amp; pd &gt; 120){
             path_end();
         }
 
         if(weapon!=noone){
-            if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) ){
+            if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; pd&lt;=weapon.range ){
                 /// Start shooting
     
                 weapon.image_angle =  point_direction(x, y, px, py);
@@ -194,18 +198,20 @@ if( target!=noone &amp;&amp; instance_exists(target)){
         // Get path to player
         scr_get_path_to_point(px,py,pspeed);
         //path_get_number(path)&lt;5
-        if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; inview ){
-            path_end();
-            if(weapon!=noone){
-                weapon.image_angle =  point_direction(x, y, px, py);
-                weapon.shooting = true;
-            }      
-        }else{
-            if(weapon!=noone){
-                weapon.image_angle =  direction;
-                weapon.shooting = false;
+        if(weapon!=noone){
+            if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; inview &amp;&amp; pd&lt;=weapon.range ){
+                path_end();
+                if(weapon!=noone){
+                    weapon.image_angle =  point_direction(x, y, px, py);
+                    weapon.shooting = true;
+                }      
+            }else{
+                if(weapon!=noone){
+                    weapon.image_angle =  direction;
+                    weapon.shooting = false;
+                }
+    
             }
-
         }
     
     }
@@ -277,11 +283,22 @@ if(hp_current&lt;1){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update weapon  position and angle
+            <string>/// Equip weapon. Update weapon position and angle
+if(weapon==noone &amp;&amp; weapon_index!=noone){
+    weapon = instance_create(x,y,weapon_index);
+    weapon.weaponSpeed = .5;
+    weapon.type = type;
+    weapon.parent_obj = id;
+    if(race_index==10){
+        //Zomboid
+        weapon.sprite_index = noone;
+        weapon.animation_spr = spr_melee_swish;
+    }
+}
+
 if(weapon != noone){
     weapon.x = x;
     weapon.y = y;
-    //weapon.image_angle = point_direction(x,y,mouse_x,mouse_y);
     weapon.depth=depth -1;
 }
 </string>

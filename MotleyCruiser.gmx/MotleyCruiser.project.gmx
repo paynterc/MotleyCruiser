@@ -29,6 +29,7 @@
       <sprite>sprites\spr_androne_eyes</sprite>
       <sprite>sprites\spr_antinoid</sprite>
       <sprite>sprites\spr_arcnid</sprite>
+      <sprite>sprites\spr_laser_sword</sprite>
       <sprite>sprites\spr_arcnid_fml</sprite>
       <sprite>sprites\spr_chicken</sprite>
       <sprite>sprites\spr_chicken_fml</sprite>
@@ -298,7 +299,9 @@
     <sprite>sprites\spr_person_tmp</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
     <sprite>sprites\spr_wall</sprite>
-    <sprite>sprites\spr_melee</sprite>
+    <sprite>sprites\spr_melee_swish</sprite>
+    <sprite>sprites\spr_melee_sword</sprite>
+    <sprite>sprites\spr_melee_area</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -886,6 +889,7 @@
       <object>objects\obj_core</object>
       <object>objects\obj_health_bar</object>
       <object>objects\obj_gun</object>
+      <object>objects\obj_melee_weapon</object>
       <object>objects\obj_wall_invis</object>
       <object>objects\obj_floor</object>
       <object>objects\obj_da_loot</object>
@@ -930,6 +934,8 @@
     </objects>
     <objects name="_room_combat">
       <object>objects\obj_bullet</object>
+      <object>objects\obj_melee_attack</object>
+      <object>objects\obj_melee_animation</object>
       <object>objects\obj_spawner</object>
       <object>objects\obj_aoe</object>
       <object>objects\obj_master_panel</object>
