@@ -73,7 +73,7 @@ races[9,RACE_SPR_FML] = noone;
 races[9,RACE_SEXES] = 1;
 
 races[10,RACE_NAME] = "Zomboid";
-races[10,RACE_BASE_HP] = 10;
+races[10,RACE_BASE_HP] = 5;
 races[10,RACE_BASE_SPD] = 1;
 races[10,RACE_SPR] = "spr_zomboid";
 races[10,RACE_SPR_FML] = noone;
@@ -85,5 +85,6 @@ races[11,RACE_BASE_SPD] = 1;
 races[11,RACE_SPR] = "spr_antinoid";
 races[11,RACE_SPR_FML] = noone;
 races[11,RACE_SEXES] = 1;
+
 
 return races;

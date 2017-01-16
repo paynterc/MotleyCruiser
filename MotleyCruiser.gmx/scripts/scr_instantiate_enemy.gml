@@ -57,4 +57,12 @@ if(weapon==noone){
 newEnemy.sprite_index = spr;
 newEnemy.weapon_index = weapon;
 
+var run_modifier = irandom(2)-1;
+var hp_modifier = irandom(2)-1;
+
+newEnemy.pspeed = max(global.min_spd, global.races[race_index,RACE_BASE_SPD] + run_modifier);
+newEnemy.hp = max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_modifier);
+newEnemy.hp_current = newEnemy.hp;
+
+
 return newEnemy;

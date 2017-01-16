@@ -32,7 +32,7 @@ global.paused = false;
 
 // Baseline npc settings.
 global.min_spd = 1; //minimum run speed for npc
-global.min_hp = 10; //minimum hp for npc
+global.min_hp = 5; //minimum hp for npc
 
 global.min_station_npc = 3; //minimum npcs per station
 global.max_station_npc = 10; //max npcs per station
@@ -265,7 +265,7 @@ if(scr_user_input("fullscreen")){
 }
 
 if(scr_user_input("goto_shiplevel")){
-    room_goto(rm_ship_deck_rnd);
+    room_goto(rm_arena);
 }
 </string>
           </argument>

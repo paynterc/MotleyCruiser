@@ -28,6 +28,7 @@
       <sprite>sprites\spr_androne_fml</sprite>
       <sprite>sprites\spr_androne_eyes</sprite>
       <sprite>sprites\spr_antinoid</sprite>
+      <sprite>sprites\spr_princess_monster</sprite>
       <sprite>sprites\spr_arcnid</sprite>
       <sprite>sprites\spr_laser_sword</sprite>
       <sprite>sprites\spr_arcnid_fml</sprite>
@@ -48,6 +49,10 @@
       <sprite>sprites\spr_pudning_OLD</sprite>
       <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_zomboid</sprite>
+      <sprite>sprites\spr_beast1</sprite>
+      <sprite>sprites\spr_beast2</sprite>
+      <sprite>sprites\spr_hairbeast</sprite>
+      <sprite>sprites\spr_beast2_arm</sprite>
     </sprites>
     <sprites name="_buttons">
       <sprite>sprites\spr_btn</sprite>
@@ -875,35 +880,37 @@
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
       <object>objects\obj_lvl_cantina</object>
+      <object>objects\obj_lvl_arena</object>
+      <object>objects\obj_core</object>
       <object>objects\obj_dialog_control</object>
-      <object>objects\obj_player</object>
-      <object>objects\obj_player_BACKUP</object>
-      <object>objects\obj_crew</object>
+      <object>objects\obj_mortal</object>
       <object>objects\obj_team</object>
+      <object>objects\obj_player</object>
+      <object>objects\obj_crew</object>
       <object>objects\obj_enemy</object>
       <object>objects\obj_drone</object>
-      <object>objects\obj_mortal</object>
       <object>objects\obj_sentient</object>
-      <object>objects\obj_level_BACKUP</object>
-      <object>objects\obj_bullet_enemy</object>
-      <object>objects\obj_core</object>
       <object>objects\obj_health_bar</object>
       <object>objects\obj_gun</object>
       <object>objects\obj_melee_weapon</object>
+      <object>objects\obj_arm</object>
       <object>objects\obj_wall_invis</object>
       <object>objects\obj_floor</object>
       <object>objects\obj_da_loot</object>
       <object>objects\obj_corpse</object>
-      <object>objects\obj_cover</object>
-      <object>objects\obj_crate</object>
-      <object>objects\obj_room_reactor</object>
-      <object>objects\obj_door</object>
-      <object>objects\obj_jefferies</object>
       <objects name="_furniture">
         <object>objects\obj_workstation</object>
+        <object>objects\obj_room_reactor</object>
+        <object>objects\obj_crate</object>
+        <object>objects\obj_cover</object>
+        <object>objects\obj_door</object>
+        <object>objects\obj_jefferies</object>
         <object>objects\obj_panel_decor</object>
         <object>objects\obj_viewscreen_decor</object>
         <object>objects\obj_table</object>
+      </objects>
+      <objects name="_critters">
+        <object>objects\obj_beast2</object>
       </objects>
     </objects>
     <objects name="_space_combat">
@@ -984,6 +991,7 @@
     <room>rooms\rm_ship_deck_rnd</room>
     <room>rooms\rm_ship_control</room>
     <room>rooms\rm_cantina2</room>
+    <room>rooms\rm_arena</room>
     <rooms name="Glare">
       <room>rooms\room_glare_init</room>
     </rooms>

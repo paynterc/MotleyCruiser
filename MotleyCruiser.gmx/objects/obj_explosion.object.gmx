@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_blend = c_orange;
+            <string>glr_light_set_position(obj_room_level.boom_light, x , y);
+glr_light_set_active(obj_room_level.boom_light,true);
+image_blend = c_orange;
 depth=-10000;
 </string>
           </argument>

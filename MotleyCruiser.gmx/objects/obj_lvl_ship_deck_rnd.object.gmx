@@ -181,7 +181,7 @@ door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),
 
 //Mke a light over the door
 var my_light1 = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, ((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2), c_white, 0);
-glr_light_set_static(my_light1, true)
+glr_light_set_static(my_light1, true);
 
 // This part will depend on the number of decks.
 // Sequence will be: deck, deck, deck, control

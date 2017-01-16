@@ -35,8 +35,6 @@ target = noone;
 //hunt, defend, hold
 mode = "hunt";
 
-alarm[0] = room_speed;// Move and shoot
-
 hp=10;
 hp_current=hp;
 pspeed = 2;
@@ -46,38 +44,13 @@ sprite_default = spr_default;
 sprite_index = sprite_default;
 health_y = sprite_get_height(sprite_index) + 5;
 hyset = false;
+
 weapon_index = noone;
 weapon=noone;
 race_index = noone;
 sex = noone;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Equip weapon
-/***
-weapon = instance_create(x,y,obj_melee_weapon);
-weapon.weaponSpeed = .5;
-weapon.type = type;
-weapon.parent_obj = id;
-weapon.bullet_speed = 10;
-***/
+
+alarm[0] = room_speed;// Move and shoot
 </string>
           </argument>
         </arguments>
@@ -227,7 +200,7 @@ if( target!=noone &amp;&amp; instance_exists(target) ){
     
 }
 
-alarm[0] = room_speed;
+alarm[0] = room_speed * 2;
 </string>
           </argument>
         </arguments>
@@ -380,6 +353,7 @@ scr_move(hspd, vspd);
           <argument>
             <kind>1</kind>
             <string>if(other.type!=type){
+
     var impact = instance_create(other.x,other.y,obj_impact);
     //impact.image_blend = c_red;
     hp_current -= other.damage;

@@ -90,8 +90,8 @@ if(shooting){
     audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
     
     animation.image_xscale=parent_obj.image_xscale;
-    animation.x = x;
-    animation.y = y;
+    animation.x = xdir;
+    animation.y = ydir;
     animation.image_alpha=1;
 
 }else{
