@@ -8,8 +8,8 @@ var obj = argument3;        // The object speaking. (message box points to them)
 var bak_color = argument4;  // Color of the background
 var force = argument5;      // Force box to draw below object
 var buttons = argument6;
-var font = fnt_messagebox;
-var font_color = c_white;
+var font = fnt_menus;
+var font_color = c_lime;
 var text_scale = 0.30
 var result = noone; //return array with coordinates of text box
 
@@ -54,8 +54,8 @@ else
 }
 
 
-draw_roundrect(xx-padding,yy-padding,xx+len+padding*3,yy+height+padding*3,0);
-draw_roundrect_colour(xx,yy,xx+w,yy+h2,bak_color,bak_color,0);
+draw_rectangle(xx-padding,yy-padding,xx+len+padding*3,yy+height+padding*3,0);
+draw_rectangle_colour(xx,yy,xx+w,yy+h2,bak_color,bak_color,bak_color,bak_color,0);
 
 
 draw_text_ext_transformed(xx+padding,yy+padding,text,-1,len/text_scale,text_scale,text_scale,0);

@@ -1,5 +1,8 @@
 /// Parses a string containing script name plus arguments. Accepts up to 5.
 // scr_script_parse(string)
+if(argument0==noone || argument0==""){
+    return false;
+}
 
 var split = scr_str_split(argument0,",");
 var script = asset_get_index(split[0]);

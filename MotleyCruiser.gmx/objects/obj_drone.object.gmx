@@ -95,38 +95,40 @@ if(path_exists(path)) {
             <kind>1</kind>
             <string>/// Move
 // Drones are hunt only
-var inview = scr_instance_in_view(self);
-/***
-Find closest member of the player's boarding team. This includes the player.
-***/
-if(instance_exists(obj_team)){
-    target = instance_nearest(x,y,obj_team);
-    //if(!instance_exists(target) || point_distance(x,y,target.x,target.y) &gt; 200){
-        //target = instance_nearest(x,y,obj_team);
-    //}
+if(!global.paused){
 
-    var px = (target.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
-    var py = (target.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
-    var pd = distance_to_object(target);
-
-}else{
-    target = noone;
-}
-
-if( target!=noone &amp;&amp; instance_exists(target)){
-
+    var inview = scr_instance_in_view(self);
+    /***
+    Find closest member of the player's boarding team. This includes the player.
+    ***/
+    if(instance_exists(obj_team)){
+        target = instance_nearest(x,y,obj_team);
+        //if(!instance_exists(target) || point_distance(x,y,target.x,target.y) &gt; 200){
+            //target = instance_nearest(x,y,obj_team);
+        //}
     
-    // Get path to player. Just keep going till you hit them.
-    scr_get_path_to_point(px,py,pspeed);
-
+        var px = (target.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
+        var py = (target.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
+        var pd = distance_to_object(target);
     
-    var verse = direction div 180;
-    if( (verse == 0 &amp;&amp; image_xscale&lt;0) || (verse == 1 &amp;&amp; image_xscale&gt;0) ){
-        image_xscale *= -1;
+    }else{
+        target = noone;
     }
-  
+    
+    if( target!=noone &amp;&amp; instance_exists(target)){
+    
+        
+        // Get path to player. Just keep going till you hit them.
+        scr_get_path_to_point(px,py,pspeed);
+    
+        
+        var verse = direction div 180;
+        if( (verse == 0 &amp;&amp; image_xscale&lt;0) || (verse == 1 &amp;&amp; image_xscale&gt;0) ){
+            image_xscale *= -1;
+        }
+      
+    }
 }
-
 alarm[0] = room_speed;
 </string>
           </argument>
@@ -157,6 +159,30 @@ depth = -y;
 if(hp_current&lt;1){
 
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Pause
+if(global.paused){
+    path_end();
 }
 </string>
           </argument>

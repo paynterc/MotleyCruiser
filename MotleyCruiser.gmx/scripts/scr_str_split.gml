@@ -4,7 +4,7 @@
 var msg = argument0; //string to split
 var splitBy = argument1; //string to split the first string by
 var slot = 0;
-var splits; //array to hold all splits
+var splits = noone; //array to hold all splits
 var str2 = ""; //var to hold the current split we're working on building
 
 var i;

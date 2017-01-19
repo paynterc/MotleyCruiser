@@ -91,7 +91,7 @@ alarm[1]=room_speed * .10;
             <kind>1</kind>
             <string>/// Shoot a bullet
 
-if(shooting){
+if(shooting &amp;&amp; !global.paused){
     glr_lightsimple_set_active(llight,true);
     bullet = instance_create(x,y,myBullet);
     bullet.type = type;

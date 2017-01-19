@@ -25,8 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>glr_light_set_position(obj_room_level.boom_light, x , y);
-glr_light_set_active(obj_room_level.boom_light,true);
+            <string>if(instance_exists(obj_room_level)){
+    glr_light_set_position(obj_room_level.boom_light, x , y);
+    glr_light_set_active(obj_room_level.boom_light,true);
+}
+
 depth=-10000;
 </string>
           </argument>

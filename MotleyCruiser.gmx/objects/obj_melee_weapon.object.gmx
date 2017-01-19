@@ -33,10 +33,13 @@ destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
 bullet_speed = 0;
 range=32;
+opsprite = sprite_index;
+xdir=x;
+ydir=y;
 
-animation = noone;
+
 animation_spr = spr_melee_sword;
-animation_set = false;
+
 
 alarm[0] = room_speed * weaponSpeed;
 </string>
@@ -63,21 +66,10 @@ alarm[0] = room_speed * weaponSpeed;
             <kind>1</kind>
             <string>/// Shwing!
 
-// Create an animation object
-// We have a separate animation object because the bullet object
-// will be destroyed as soon as it hits something, so we wouldn't see the animation
-if(!animation_set){
-    animation_set = true;
-    animation = instance_create(x,y,obj_melee_animation);
-    animation.sprite_index = animation_spr;
-    animation.depth = -100000;
-    animation.image_alpha=0;
-}
-
 
 if(shooting){
 
-    image_alpha=0;
+
         
     xdir = x+lengthdir_x(15, image_angle);
     ydir = y+lengthdir_y(15, image_angle);
@@ -88,14 +80,12 @@ if(shooting){
     bullet.speed = 0;
     bullet.damage = damage;
     audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+ 
+    sprite_index = animation_spr;
     
-    animation.image_xscale=parent_obj.image_xscale;
-    animation.x = xdir;
-    animation.y = ydir;
-    animation.image_alpha=1;
 
 }else{
-    image_alpha=1;
+    sprite_index = opsprite;
 }
 
 alarm[0] = room_speed * weaponSpeed;
@@ -124,6 +114,34 @@ alarm[0] = room_speed * weaponSpeed;
             <string>/// Set position, destroy
 if(destroy){
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(sprite_index!=noone){
+    draw_self();
+}
+if(shooting){
+    draw_sprite(spr_melee_area,0,xdir,ydir);  
 }
 </string>
           </argument>

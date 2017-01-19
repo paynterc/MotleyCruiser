@@ -45,9 +45,9 @@ popup_width = view_wview[0]*.50;           // The max width of the text inside t
 popup_padding = 3;                     // The space between the text and the edge
 text = "";                              // The text to draw in the box.  If empty, the questionmark will not show.
 draw_below = false;                     // Force the box to be drawn below the questionmark
-font = fnt_messagebox;                  // The font to use when drawing the messagebox text
-font_color = c_white;                   // Color to draw the font and the border around messagebox
-bak_color = c_teal;                   // The color for the messagebox background
+font = fnt_menus;                  // The font to use when drawing the messagebox text
+font_color = c_lime;                   // Color to draw the font and the border around messagebox
+bak_color = c_black;                   // The color for the messagebox background
 draw_message = false;
 // End speach bubble
 

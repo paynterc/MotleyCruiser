@@ -1,4 +1,6 @@
 ///move(hspd,vspd)
+if(global.paused) return false;
+
 var hspd = argument[0];
 var vspd = argument[1];
 

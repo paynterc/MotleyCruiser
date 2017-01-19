@@ -37,7 +37,7 @@ target = noone;
 //hunt, defend, hold
 mode = "hunt";
 
-hp=100;
+hp=1000;
 hp_current=hp;
 pspeed = 2;
 ospeed = pspeed;//original speed
@@ -222,7 +222,7 @@ if(arms != noone){
         arm.depth = -10000;
         
         // Slower rotate
-        if(target!=noone){
+        if(target!=noone &amp;&amp; instance_exists(target)){
             var pdir = point_direction(arm.x, arm.y, target.x, target.y);
             var dif = angle_difference(pdir, arm.image_angle);
             arm.image_angle += median(-.5, dif,.5);      

@@ -35,6 +35,7 @@
       <sprite>sprites\spr_chicken</sprite>
       <sprite>sprites\spr_chicken_fml</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
+      <sprite>sprites\spr_skeleton</sprite>
       <sprite>sprites\spr_bot3</sprite>
       <sprite>sprites\spr_c_bot1</sprite>
       <sprite>sprites\spr_flowridian</sprite>
@@ -49,10 +50,13 @@
       <sprite>sprites\spr_pudning_OLD</sprite>
       <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_zomboid</sprite>
+      <sprite>sprites\spr_zombie_brute</sprite>
       <sprite>sprites\spr_beast1</sprite>
       <sprite>sprites\spr_beast2</sprite>
       <sprite>sprites\spr_hairbeast</sprite>
       <sprite>sprites\spr_beast2_arm</sprite>
+      <sprite>sprites\spr_beast3</sprite>
+      <sprite>sprites\spr_zombie_arm</sprite>
     </sprites>
     <sprites name="_buttons">
       <sprite>sprites\spr_btn</sprite>
@@ -305,8 +309,12 @@
     <sprite>sprites\spr_questionmark_button</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_melee_swish</sprite>
+    <sprite>sprites\sprite242</sprite>
     <sprite>sprites\spr_melee_sword</sprite>
+    <sprite>sprites\sprite241</sprite>
     <sprite>sprites\spr_melee_area</sprite>
+    <sprite>sprites\spr_exit</sprite>
+    <sprite>sprites\spr_exit_inactive</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -534,6 +542,7 @@
       <script>scripts\scr_drop_loot.gml</script>
       <script>scripts\scr_make_control_room.gml</script>
       <script>scripts\scr_npc_map_to_object.gml</script>
+      <script>scripts\scr_start_alarm.gml</script>
     </scripts>
     <scripts name="_service">
       <script>scripts\scr_get_random_item.gml</script>
@@ -808,6 +817,9 @@
         </scripts>
       </scripts>
     </scripts>
+    <scripts name="_messages">
+      <script>scripts\scr_display_message.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -871,6 +883,7 @@
     <object>objects\obj_damager</object>
     <object>objects\obj_ship_data</object>
     <object>objects\obj_mission_log</object>
+    <object>objects\obj_message_box</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_object_pool</object>
     <object>objects\obj_module</object>
@@ -904,6 +917,7 @@
         <object>objects\obj_crate</object>
         <object>objects\obj_cover</object>
         <object>objects\obj_door</object>
+        <object>objects\obj_door_exit_spc</object>
         <object>objects\obj_jefferies</object>
         <object>objects\obj_panel_decor</object>
         <object>objects\obj_viewscreen_decor</object>
@@ -911,6 +925,7 @@
       </objects>
       <objects name="_critters">
         <object>objects\obj_beast2</object>
+        <object>objects\obj_zombie_brute</object>
       </objects>
     </objects>
     <objects name="_space_combat">

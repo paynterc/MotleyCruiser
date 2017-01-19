@@ -93,6 +93,12 @@ switch(argument0){
         && keyboard_check(vk_shift)
         && debug_mode;
         break;
+    case "show_messagebox":
+        return  
+        keyboard_check_pressed(ord("M"))
+        && keyboard_check(vk_shift)
+        && debug_mode;
+        break;
         
     case "point_dir":
         var pdir = noone;

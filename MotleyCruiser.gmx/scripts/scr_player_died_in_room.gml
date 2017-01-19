@@ -1,6 +1,7 @@
 /// Player has died while boarding ship or in other room
 
-//Reset globals
-//scr_reset_room_random();
+scr_display_message("You have died.","scr_game_load,"+string(global.game_loaded));
+corpse = instance_create(x,y,obj_corpse);
+corpse.sprite = sprite_index;
 
-room_goto(room);
+instance_destroy();

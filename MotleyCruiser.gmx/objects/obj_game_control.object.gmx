@@ -265,8 +265,10 @@ if(scr_user_input("fullscreen")){
 }
 
 if(scr_user_input("goto_shiplevel")){
-    room_goto(rm_arena);
+    room_goto(rm_ship_deck_rnd);
 }
+
+
 </string>
           </argument>
         </arguments>
@@ -412,6 +414,13 @@ panel_load_game[4]=false;
             <kind>1</kind>
             <string>/// Debug text
     draw_set_color(c_lime);
+    
+    if(global.paused){
+        draw_set_valign(fa_center);
+        draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
+    }
+
+    draw_set_valign(fa_left);
     draw_text(48, 32, "FPS Real: " + string(fps_real));
 /***
 
@@ -459,78 +468,6 @@ panel_load_game[4]=false;
             <string>/// Menu Panels
 scr_gui_draw_panel(panel_pause);
 scr_gui_draw_panel(panel_load_game);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="90">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Save game
-exit; // Disabled for now
-ini_open("motleysave.ini");
-ini_write_real("location","current_sector_row",global.current_sector_row);
-ini_write_real("location","current_sector_col",global.current_sector_col);
-//ini_write_real("location","player_x",obj_player_ship.x);
-//ini_write_real("location","player_y",obj_player_ship.y);
-ini_close();
-show_message("game saved");
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="85">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Load game
-exit;// Disabled for now
-
-
-if(!file_exists("save.ini")) exit;
-
-ini_open("save.ini");
-global.current_sector_row = ini_read_real("location","current_sector_row",global.galaxy_width/2);
-global.current_sector_col = ini_read_real("location","current_sector_col",global.galaxy_width/2);
-var px=ini_read_real("location","player_x",100);
-var py=ini_read_real("location","player_y",100);
-ini_close();
-room_goto(rm_space);
-with(obj_player_ship){
-    x=px;
-    y=py;
-}
-show_message("game loaded");
 </string>
           </argument>
         </arguments>

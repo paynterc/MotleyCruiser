@@ -85,6 +85,88 @@ scr_build_room_custom();
             <kind>1</kind>
             <string>/// Some additional variables
 populated = false;
+z_wave=0;//ZOMBIE WAVES
+alarm[3]=room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check zombie count
+if(instance_number(obj_enemy)&lt;1 &amp;&amp; z_wave&gt;2){
+    obj_door_exit_spc.open = true;
+}else{
+    alarm[3]=room_speed;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Spawn zombies
+var beast = 0;
+var beast_count = instance_number(obj_beast2);
+var beast_odds = 30;
+
+if(instance_number(obj_enemy) &lt; 20 &amp;&amp; z_wave&lt;3){
+    z_wave++;
+    var width = room_width div CELL_WIDTH;
+    var height = room_height div CELL_HEIGHT;
+    var odds = 20;
+    for(var yy = 0; yy &lt; height; yy++){
+        for(var xx = 0; xx &lt; width; xx++){
+            var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
+            var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
+            if(global.grid[# xx, yy] == FLOOR){
+                if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){                    
+                    scr_instantiate_enemy(ex,ey,10,"hunt",noone,obj_melee_weapon);
+                    //instance_create(ex,ey,obj_drone);                  
+                }
+                if(beast==0 &amp;&amp; beast_count&lt;2 &amp;&amp; irandom(beast_odds) == beast_odds){
+                    beast=1;
+                    instance_create(ex,ey,obj_zombie_brute);
+                }
+            } 
+        }
+    }
+    
+}
+alarm[2] = room_speed * 15;
 </string>
           </argument>
         </arguments>
@@ -135,41 +217,53 @@ if(location_type=="station"){
 
 
 npcs = location[npc_index];
-
-// Place NPCs at sentient positions.
 var s_count = instance_number(obj_sentient);
-var last_id = noone;
-for(var i = 0; i &lt; s_count; i++) {
+if(array_length_1d(npcs)&gt;0){
 
-    var sentient = instance_find(obj_sentient,i);
-    if(i &lt; array_length_1d(npcs)){
-            var npc = global.npcs[npcs[i]];
-            if(scr_npc_in_crew(npcs[i]) || !npc[NPC_ACTIVE]) continue;// Don't instantiate if this one is already in the crew OR is dead
-            sentient.active = 1;//Set to active so the placeholder object won't delete itself. See obj_sentient.
-            
-            sentient.npc_data = npc;
-            with(sentient){
-                scr_npc_map_to_object();
-            }
-
-            if(npc[NPC_RACE_INDEX]!=5){
-                // I like Pudnings to move
-                sentient.image_speed = 0;
-            }           
-            
-            // Repopulate a saved mission. TODO: Do we really need this?
-            if(npc[NPC_MISSION]==noone){
-                var mission = choose(scr_deliver_inventory(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]));
+    // Place NPCs at sentient positions.
+    
+    var last_id = noone;
+    for(var i = 0; i &lt; s_count; i++) {
+    
+        var sentient = instance_find(obj_sentient,i);
+        if(i &lt; array_length_1d(npcs)){
+                var npc = global.npcs[npcs[i]];
+                if(scr_npc_in_crew(npcs[i]) || !npc[NPC_ACTIVE]) continue;// Don't instantiate if this one is already in the crew OR is dead
+                sentient.active = 1;//Set to active so the placeholder object won't delete itself. See obj_sentient.
                 
-                sentient.mission=mission;
-                //npc[NPC_MISSION]=mission;
-                //global.npcs[npcs[i]]=npc;
-            }else{
-                sentient.mission=npc[NPC_MISSION];
-            }
-
+                sentient.npc_data = npc;
+                with(sentient){
+                    scr_npc_map_to_object();
+                }
+    
+                if(npc[NPC_RACE_INDEX]!=5){
+                    // I like Pudnings to move
+                    sentient.image_speed = 0;
+                }           
+                
+                // Repopulate a saved mission. TODO: Do we really need this?
+                if(npc[NPC_MISSION]==noone){
+                    var mission = choose(scr_deliver_inventory(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]));
+                    
+                    sentient.mission=mission;
+                    //npc[NPC_MISSION]=mission;
+                    //global.npcs[npcs[i]]=npc;
+                }else{
+                    sentient.mission=npc[NPC_MISSION];
+                }
+    
+        }
+            
     }
-        
+
+}else{
+
+    // Spawn zombies
+    z_wave=0;
+    obj_door_exit_spc.open=0;
+    var txt = "An unholy stench permeates this room. The dim lighting reveals a scene in disarray. Broken equipment and furniture are strewn everywhere. Something violent and aweful has occurred here.";
+    scr_display_message(txt,"scr_start_alarm,"+string(id)+",2,15");
+    
 }
 
 
@@ -193,30 +287,6 @@ for(var i = 0; i &lt; s_count; i++) {
     }
         
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="68">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Debark
-room_goto(rm_space);
 </string>
           </argument>
         </arguments>
