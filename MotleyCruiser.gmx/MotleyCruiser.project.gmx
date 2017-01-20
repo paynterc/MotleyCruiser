@@ -375,6 +375,7 @@
       <script>scripts\scr_define_sentence.gml</script>
       <script>scripts\scr_change_hire_price.gml</script>
       <script>scripts\scr_add_npc_to_crew.gml</script>
+      <script>scripts\scr_repair_ship.gml</script>
     </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
@@ -550,6 +551,7 @@
       <script>scripts\scr_user_input.gml</script>
       <script>scripts\scr_view_zoom.gml</script>
       <script>scripts\scr_gamepad_detect.gml</script>
+      <script>scripts\scr_surface_to_sprite.gml</script>
     </scripts>
     <scripts name="_ship_editor">
       <script>scripts\scr_save_ship.gml</script>
