@@ -56,7 +56,7 @@ hp = 20;
     with(other){
         instance_destroy();
     }
-    hp--;
+    hp -= other.damage;
     
     /// Check hp
     if(hp&lt;1){

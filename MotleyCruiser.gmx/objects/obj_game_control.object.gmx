@@ -29,6 +29,7 @@
 
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
+global.game_loaded = noone;
 
 // Baseline npc settings.
 global.min_spd = 1; //minimum run speed for npc
@@ -42,18 +43,32 @@ global.ship_min_turn_spd=1;
 global.ship_max_turn_spd=10;
 global.ship_min_spd=1;
 global.ship_max_spd=10;
+global.ship_max_spd_fwd=10;
+global.ship_max_spd_rvs=8;
 global.ship_min_acc=0.1;
 global.ship_max_acc=1;
 global.ship_min_shields=0;
 global.ship_max_shields=200;
-global.ship_min_hull=10;
+global.ship_min_hull=5;
 global.ship_max_hull=100;
-global.ship_min_energy = 100;
+global.ship_min_energy = 500;
 global.ship_max_energy = 1000;
 global.ship_min_weapon_spd = 3;
 global.ship_max_weapon_spd = 0.1;
+
+// Defaults can be reduced, but not beneath the min
+global.ship_default_turn_spd=3;
+global.ship_default_shields=100;
+global.ship_default_shields=100;
+global.ship_default_shields_regen_speed=3;
+global.ship_default_shields_regen_points=5;
+global.ship_default_energy_regen_speed=1;
+global.ship_default_energy_regen_points=5;
+
 global.radar_range=500;
 global.box_height = 100;
+
+
 
 
 /****************************************************************/
@@ -61,6 +76,8 @@ global.box_height = 100;
 /****************************************************************/
 global.galaxy_width = 20;
 global.sector_width = 10000;//width in pixels of space combat room
+
+global.hull_repair_cost = 10; // Cost per hull unit
 
 scr_new_game_defaults();
 

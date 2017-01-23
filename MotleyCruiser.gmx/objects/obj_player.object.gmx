@@ -30,9 +30,10 @@ type = 1//player team
 facing = 0;
 hp = 10;
 hp_current = hp;
-ispeed = .25;
+ispeed = .25;// Image speed
 image_speed = ispeed;
 spd = 3;
+spd_save = spd;//hold max speed here
 hspd=0;
 vspd=0;
 health_y = sprite_get_height(sprite_index) - 5;
@@ -101,12 +102,19 @@ weapon.weaponSpeed = .15;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Fire weapon
+            <string>/// Fire weapon and move
 if(weapon != noone){
     weapon.shooting = scr_user_input("fire");
 }
 
-/// Get input and move
+// Adjust run speed
+if(weapon.shooting){
+    spd = 1;
+}else{
+    spd = spd_save;
+}
+
+// Get input and move
 if( gamepad_is_connected(0) ){
     hspd = gamepad_axis_value(0, gp_axislh) * spd;
     vspd = gamepad_axis_value(0, gp_axislv) * spd;
@@ -134,7 +142,6 @@ if(hspd==0 &amp;&amp; vspd==0){
 }else{
     image_speed=ispeed;
 }
-
 
 
 </string>
@@ -172,10 +179,13 @@ if(weapon != noone){
         
     // Grenade
     if(scr_user_input("fire_alt")){
-        var grenade = instance_create(x,y,obj_grenade);
-        grenade.depth = -200;
-        grenade.direction = weapon.image_angle;
-        grenade.speed = 4;
+        if(scr_inv_item_count(53)&gt;0){
+            scr_inv_item_decrement(53);
+            var grenade = instance_create(x,y,obj_grenade);
+            grenade.depth = -200;
+            grenade.direction = weapon.image_angle;
+            grenade.speed = 4;
+        }
     }
     
 }

@@ -1,6 +1,22 @@
-/// Global library of possible dialog responses.
+/*****
+Global library of possible dialog responses.
+
+scr_define_sentence:
+map[0]=noone; // DIA_RESP_TXT: "Hello there, [#replace1#]" 
+map[1]=noone; // DIA_RESP_TYPE: intro,farewell,tip,exposition,rebuff
+map[2]=noone; // DIA_RESP_SUBTYPE: expo-homeworld, expo-personal, expo-team, expo-motivation
+map[3]=noone; // DIA_RESP_DISPOSITION: 0=friendly, 1=neutral, 2=hostile
+map[4]=noone; // DIA_RESP_RACE
+map[5]=noone; // DIA_RESP_PART: Placement
+map[6]=noone; // DIA_RESP_TAG: rude, pleasant, arrogant
+
+*****/
+// scr_sentences()
+
 global.dialogue_sentences = noone;
 
+
+// INTRODUCTIONS
 var intros = noone;
 var sentence;
 
@@ -39,9 +55,25 @@ intros = scr_push_array(intros,sentence);
 
 global.dialogue_sentences[0] = intros;
 
+
+// FAREWELLS
+var farewells = noone;
+
+sentence = scr_define_sentence("Good luck, deebaag!", "farewell", noone, 2);
+farewells = scr_push_array(farewells,sentence);
+
+sentence = scr_define_sentence("Sayonara, sucker!", "farewell", noone, 2);
+farewells = scr_push_array(farewells,sentence);
+
+sentence = scr_define_sentence("Drift, loser.", "farewell", noone, 2);
+farewells = scr_push_array(farewells,sentence);
+
+global.dialogue_sentences[1] = farewells;
+
+/*****
 var intros_racist_friend= noone;
 sentence = scr_define_sentence("I may be able to help you, [#name#], but your [#race#] friend will need to wait outside.", "intro", noone, 2);
 intros_racist_friend = scr_push_array(intros_racist_friend,sentence);
 
 global.dialogue_sentences[1] = intros_racist_friend;
-
+*****/

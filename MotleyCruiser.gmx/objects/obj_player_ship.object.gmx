@@ -174,13 +174,13 @@ if(global.paused){
     } 
 }
 
-if(scr_user_input("fire")){
+if(scr_user_input("fire") &amp;&amp; can_fire){
     shooting = true;
 }else{
     shooting = false;
 }
 
-if(scr_user_input("thrust")){
+if(scr_user_input("thrust") &amp;&amp; can_move){
     motion_add(image_angle,acc_spd_fwd);
     if(speed &gt; max_spd_fwd){
         speed = max_spd_fwd;//clamp
@@ -198,13 +198,13 @@ if(scr_user_input("turn_right")){
 ***/
 
 var pdir = scr_user_input("point_dir");
-if(pdir!=noone){
+if(pdir!=noone &amp;&amp; can_move){
     var dif = angle_difference(pdir, image_angle);
     var trn = turn_a * delta_time;
     image_angle += median(-1 * trn, dif, trn);
 }
 
-if(scr_user_input("thrust_reverse")){
+if(scr_user_input("thrust_reverse") &amp;&amp; can_move){
     motion_add(image_angle,acc_spd_rvs *-1);
     if(speed &gt; max_spd_rvs){
         speed = max_spd_rvs;//clamp
@@ -226,7 +226,7 @@ if(scr_user_input("dock")){
 
 
 // Check for key combo sector jump
-if(keyboard_check(vk_shift)){
+if(keyboard_check(vk_shift) &amp;&amp; can_move){
 
     if(keyboard_check_pressed(vk_up)){
         scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);

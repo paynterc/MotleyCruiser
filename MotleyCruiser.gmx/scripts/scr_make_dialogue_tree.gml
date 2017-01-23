@@ -94,6 +94,11 @@ tree[i] = scr_make_dialogue_branch(occupation_sentence,"exposition");
 if(occ_id==5 || occ_id==6 || occ_id==7 || occ_id==8 || occ_id==10){
     scr_add_dialogue_button(tree[i],string_replace("I could use a [#occupation#]. How would you like to join my crew?","[#occupation#]",occupation_string),"hire_make_offer");
 }
+if(occ_id==6 || occ_id==2){
+    //Mechanics and Shipwrights can repair ships
+     scr_add_dialogue_button(tree[i],"Can you repair my ship?","repair_ships");
+}
+
 scr_add_dialogue_button(tree[i],"That must be interesting.","step_to",0);
 
 

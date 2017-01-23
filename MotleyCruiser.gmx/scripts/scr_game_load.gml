@@ -102,6 +102,8 @@ if(ini_section_exists(game)){
     randomize();
     global.galaxy_seed = random_get_seed();// Call randomize before this
     scr_make_galaxy_WEIGHTED();
+    scr_inv_item_add(53,20);
+    
 }
 ini_close();
 

@@ -347,11 +347,19 @@ if(disabled){
           <argument>
             <kind>1</kind>
             <string>/// Bounce
+/*********** OLD BOUNCE
 var pdir;
 pdir = point_direction(other.x, other.y, x, y);
 motion_add(pdir, other.speed);
 if speed &gt; 5 speed = 5;
+*************/
 
+// Just move away
+var dir = point_direction(other.x, other.y, x, y);
+var hspd = lengthdir_x(1,dir);
+var vspd = lengthdir_y(1,dir);
+x+=hspd;
+y+=vspd;
 </string>
           </argument>
         </arguments>

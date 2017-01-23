@@ -278,6 +278,16 @@ if(staged_buttons != noone){
                         
                         break;
                         
+                    case "repair_ships":
+                        var repair_cost = scr_repair_all_ship_cost();
+                        staged_branch = scr_make_dialogue_branch("It will cost you "+string(repair_cost)+"c.","exposition");
+                        if(repair_cost&lt;=global.credits || repair_cost==0){
+                            scr_add_dialogue_button(staged_branch,"Deal.","exit",noone,"scr_repair_all_ships");
+                        }
+                        scr_add_dialogue_button(staged_branch,"I can't afford that.","exit");
+                        staged_buttons = noone;
+                        break;
+                                                
                     case "reset":
                         if(closest_sentient==noone) exit;
                         with(closest_sentient){

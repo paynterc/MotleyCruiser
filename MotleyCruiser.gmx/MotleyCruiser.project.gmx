@@ -315,6 +315,7 @@
     <sprite>sprites\spr_melee_area</sprite>
     <sprite>sprites\spr_exit</sprite>
     <sprite>sprites\spr_exit_inactive</sprite>
+    <sprite>sprites\sprite245</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -366,16 +367,21 @@
       <script>scripts\scr_reset_dialog.gml</script>
       <script>scripts\scr_make_dialogue_button.gml</script>
       <script>scripts\scr_delete_button.gml</script>
-      <scripts name="_libraries">
-        <script>scripts\scr_sentences.gml</script>
-      </scripts>
-      <scripts name="_entities">
-        <script>scripts\scr_sentence.gml</script>
-      </scripts>
-      <script>scripts\scr_define_sentence.gml</script>
       <script>scripts\scr_change_hire_price.gml</script>
       <script>scripts\scr_add_npc_to_crew.gml</script>
       <script>scripts\scr_repair_ship.gml</script>
+      <script>scripts\scr_repair_all_ships.gml</script>
+      <script>scripts\scr_repair_all_ship_cost.gml</script>
+      <scripts name="_sentences">
+        <scripts name="_libraries">
+          <script>scripts\scr_sentences.gml</script>
+        </scripts>
+        <scripts name="_entities">
+          <script>scripts\scr_sentence.gml</script>
+        </scripts>
+        <script>scripts\scr_random_sentence.gml</script>
+        <script>scripts\scr_define_sentence.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_entities">
       <script>scripts\scr_ship.gml</script>
@@ -423,6 +429,7 @@
       <script>scripts\scr_faction_location_weights.gml</script>
       <script>scripts\scr_change_location.gml</script>
       <script>scripts\scr_remove_npc_from_location.gml</script>
+      <script>scripts\scr_find_landable_target.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -552,6 +559,11 @@
       <script>scripts\scr_view_zoom.gml</script>
       <script>scripts\scr_gamepad_detect.gml</script>
       <script>scripts\scr_surface_to_sprite.gml</script>
+      <scripts name="_inventory">
+        <script>scripts\scr_inv_item_count.gml</script>
+        <script>scripts\scr_inv_item_decrement.gml</script>
+        <script>scripts\scr_inv_item_add.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_ship_editor">
       <script>scripts\scr_save_ship.gml</script>
@@ -569,6 +581,7 @@
       <script>scripts\scr_update_ship_data.gml</script>
       <script>scripts\scr_restore_ship_state.gml</script>
       <script>scripts\scr_module_modify_stats.gml</script>
+      <script>scripts\scr_modules_to_ship_data.gml</script>
     </scripts>
     <scripts name="_traits">
       <script>scripts\scr_npc_traits_library.gml</script>
@@ -879,6 +892,7 @@
     <font>fonts\glr_font_debug</font>
     <font>fonts\font3</font>
     <font>fonts\fnt_menus</font>
+    <font>fonts\fnt_menus_sm</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>

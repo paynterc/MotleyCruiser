@@ -39,7 +39,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>lifespan=0;
+            <string>lifespan=100;// Set this high so you can hit crates
 image_alpha=0;
 </string>
           </argument>

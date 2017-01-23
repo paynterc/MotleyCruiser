@@ -61,6 +61,7 @@ if(mode!=MODE_WAITING){
 }
 
 target = noone;
+target_save = noone;//Save in case we need to reset to original target
 tgt_dist = 0;
 
 
@@ -68,6 +69,32 @@ facingMinusTarget = 100;
 angleDiff = 100;
 
 alarm[3] = room_speed * 1;
+
+bark = noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="6">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Clear bark
+bark = noone;
 </string>
           </argument>
         </arguments>
@@ -162,6 +189,7 @@ hull_current = 0;
           <argument>
             <kind>1</kind>
             <string>/// Update target and Disposition
+// consider three attributes: FACTION, DISPOSITION and MODE.
 if(hitby!=noone &amp;&amp; disposition != DISPOSITION_HOSTILE){
     if(hitby.faction == FACTION_PLAYER &amp;&amp; faction != FACTION_PLAYER){
         disposition = DISPOSITION_HOSTILE;
@@ -180,7 +208,7 @@ if(disposition == DISPOSITION_HOSTILE){
         var closest = noone;
         for(var i = 0; i &lt; s_count; i++) {
             var s_ship = instance_find(obj_ship,i);
-            if(s_ship.faction == FACTION_PLAYER){
+            if(s_ship.faction == FACTION_PLAYER &amp;&amp; !s_ship.disabled){
                 var pdist = point_distance(s_ship.x,s_ship.y,x,y);
                 if(cdist==noone || pdist&lt;cdist){
                     closest = s_ship;
@@ -193,6 +221,23 @@ if(disposition == DISPOSITION_HOSTILE){
             target = closest;
             tgt_dist = distance_to_object(target);
             mode = MODE_ATTACKING;
+        }else{
+            // Could not find an enabled player unit
+            // All player units must have been disabled or destroyed.
+            // GOOD LUCK, DOUCHE!
+            disposition = DISPOSITION_NEUTRAL;
+            mode = MODE_TRAVELING;
+            hitby = noone;
+            if(target_save!=noone){
+                // Reset to original target. Planet, moon or whatever.
+                target = target_save;
+            }else{
+                target = scr_find_landable_target();
+            }
+            
+            bark = scr_random_sentence(1);// Random farewell.
+            event_user(0);
+            
         }
     
     }
@@ -327,9 +372,9 @@ if(target != noone &amp;&amp; instance_exists(target)){
         if( ( mode==MODE_FOLLOWING || (mode==MODE_DEFENDING &amp;&amp; target==obj_player_ship) ) &amp;&amp; tgt_dist&lt;200){           
             //image_angle = target.image_angle;
             var dd = angle_difference(target.image_angle, image_angle);
-            image_angle += sin(degtorad(dd)) * turn_spd;
-             
-            speed = target.speed;       
+            image_angle += sin(degtorad(dd)) * turn_spd;             
+            speed = target.speed;
+                  
         }else{
            //angleDiff = scr_gradually_rotate_2(id,target,turn_spd,accuracy);
            //scr_gradually_rotate_3(self.id,target,turn_spd,accuracy);
@@ -445,10 +490,33 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
         x=target.x;
         y=target.y;
         // Go into landing animation
-        //alarm[5] = room_speed * .25
         instance_change(obj_landing_ship,true);
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Bark
+alarm[6]=room_speed * 3;// Clear bark
 </string>
           </argument>
         </arguments>
@@ -471,7 +539,32 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Draw Bark
+if(bark!=noone){
+    scr_draw_messagebox_plus(bark, 300, 10, id, c_black, false, noone, noone, 1);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Draw target status indicators
+// THIS IS OLD STUFF FOR TESTING
 exit;
 
 if(target==noone || !instance_exists(target)) exit;

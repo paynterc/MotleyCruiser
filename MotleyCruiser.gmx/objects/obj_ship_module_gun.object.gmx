@@ -75,7 +75,10 @@ alarm[0]=room_speed;
           <argument>
             <kind>1</kind>
             <string>/// Deactivate spark
-spark.active=0;
+with(spark){
+    active = 0;
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
