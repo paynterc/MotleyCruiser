@@ -21,8 +21,11 @@ if(random_faction!=noone){
     race_index = irandom(array_height_2d(global.races) - 1);
 }
 
-
-
+/**
+if(real(location_array[3])==2 && real(location_array[2])==17){
+    var test = 1;
+}
+**/
 var run_modifier = irandom(4)-2;
 var hp_modifier = irandom(10)-5;
 var names = noone;

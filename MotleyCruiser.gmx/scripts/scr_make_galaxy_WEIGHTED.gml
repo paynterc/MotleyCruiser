@@ -51,63 +51,7 @@ var npc = noone;
 
 var location_npcs = noone;
 
-var fc = noone;// Faction centers
-//2d array with x,y coords
-fc[0,0]=0;// x coord
-fc[0,1]=0;// y coord
-fc[0,2]=FACTION_CRYPTOLID;// FACTION
-fc[0,3]=(gwidth/2)+2;// RANGE
 
-fc[1,0]=gwidth-1;// x coord
-fc[1,1]=0;// y coord
-fc[1,2]=FACTION_ZOMBOID;// FACTION
-fc[1,3]=(gwidth/2)+2;// RANGE
-
-fc[2,0]=0;// x coord
-fc[2,1]=gwidth-1;// y coord
-fc[2,2]=FACTION_PIRATE;// FACTION
-fc[2,3]=(gwidth/2)+2;// RANGE
-
-fc[3,0]=gwidth-1;// x coord
-fc[3,1]=gwidth-1;// y coord
-fc[3,2]=FACTION_ANTINOID;// FACTION
-fc[3,3]=(gwidth/2)+2;// RANGE
-
-fc[4,0]=gwidth/4;// x coord
-fc[4,1]=gwidth/2;// y coord
-fc[4,2]=FACTION_FEDERATION;// FACTION
-fc[4,3]=(gwidth/2);// RANGE
-
-fc[5,0]=gwidth - (gwidth/4);// x coord
-fc[5,1]=gwidth/2;// y coord
-fc[5,2]=FACTION_EMPIRE;// FACTION
-fc[5,3]=(gwidth/2);// RANGE
-
-global.faction_centers = fc;
-
-var faction_races = noone;
-faction_races[FACTION_CRYPTOLID,0]=9;// Cryptolid
-
-faction_races[FACTION_ZOMBOID,0]=10;// Zomboid
-
-faction_races[FACTION_ANTINOID,0]=11;// Antinoid
-
-faction_races[FACTION_PIRATE,0]=0;// xx
-faction_races[FACTION_PIRATE,1]=1;// xx
-faction_races[FACTION_PIRATE,2]=2;// xx
-faction_races[FACTION_PIRATE,3]=3;// xx
-faction_races[FACTION_PIRATE,4]=4;// xx
-faction_races[FACTION_PIRATE,5]=8;// xx
-
-faction_races[FACTION_FEDERATION,0]=0;// xx
-faction_races[FACTION_FEDERATION,1]=1;// xx
-faction_races[FACTION_FEDERATION,2]=2;// xx
-
-faction_races[FACTION_EMPIRE,0]=0;// xx
-faction_races[FACTION_EMPIRE,1]=3;// xx
-faction_races[FACTION_EMPIRE,2]=4;// xx
-
-global.faction_races = faction_races;
 
 for(row=0; row < gwidth; row++){
     

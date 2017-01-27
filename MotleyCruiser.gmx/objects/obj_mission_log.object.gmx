@@ -196,7 +196,7 @@ for(var i = 0; i &lt; array_length_1d(global.missions); i++){
     );
     offset += text_height + padding;
     
-    text = "Sector " + " " + string(global.current_sector_row) + "," + string(global.current_sector_col);
+    text = "Sector " + " " + string(global.current_sector_col) + "," + string(global.current_sector_row);
     if(global.landed_type != noone){
         text = text + " " + string(global.landed_type) + " " + global.landed_name + " (" + string(global.landed_on) + ")";
     }

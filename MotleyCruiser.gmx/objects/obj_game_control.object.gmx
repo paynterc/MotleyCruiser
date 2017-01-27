@@ -81,6 +81,7 @@ global.hull_repair_cost = 10; // Cost per hull unit
 
 scr_new_game_defaults();
 
+scr_faction_centers();
 
 /****************************************************************/
 /*                      DYNAMIC PLAYER DATA                     */

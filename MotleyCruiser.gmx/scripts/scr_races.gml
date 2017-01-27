@@ -1,3 +1,4 @@
+
 /// Library of alien races
 
 var races = noone;
@@ -61,7 +62,7 @@ races[7,RACE_SEXES] = 1;
 races[8,RACE_NAME] = "Bot";
 races[8,RACE_BASE_HP] = 10;
 races[8,RACE_BASE_SPD] = 1;
-races[8,RACE_SPR] = "spr_bot2,spr_bot3";
+races[8,RACE_SPR] = "spr_bot2,spr_bot3,spr_bot3,spr_bot3b,spr_bot3c,spr_bot4";
 races[8,RACE_SPR_FML] = noone;
 races[8,RACE_SEXES] = 1;
 
@@ -85,6 +86,41 @@ races[11,RACE_BASE_SPD] = 1;
 races[11,RACE_SPR] = "spr_antinoid";
 races[11,RACE_SPR_FML] = noone;
 races[11,RACE_SEXES] = 1;
+
+races[12,RACE_NAME] = "Vaylit";
+races[12,RACE_BASE_HP] = 10;
+races[12,RACE_BASE_SPD] = 1;
+races[12,RACE_SPR] = "spr_vaylit";
+races[12,RACE_SPR_FML] = noone;
+races[12,RACE_SEXES] = 1;
+
+races[13,RACE_NAME] = "Selwat";
+races[13,RACE_BASE_HP] = 8;
+races[13,RACE_BASE_SPD] = 2;
+races[13,RACE_SPR] = "spr_selwat";
+races[13,RACE_SPR_FML] = noone;
+races[13,RACE_SEXES] = 1;
+
+races[14,RACE_NAME] = "Fion";
+races[14,RACE_BASE_HP] = 8;
+races[14,RACE_BASE_SPD] = 2;
+races[14,RACE_SPR] = "spr_fion";
+races[14,RACE_SPR_FML] = noone;
+races[14,RACE_SEXES] = 1;
+
+races[15,RACE_NAME] = "Selgesh";
+races[15,RACE_BASE_HP] = 12;
+races[15,RACE_BASE_SPD] = 1;
+races[15,RACE_SPR] = "spr_selgesh";
+races[15,RACE_SPR_FML] = noone;
+races[15,RACE_SEXES] = 1;
+
+races[16,RACE_NAME] = "Miota";
+races[16,RACE_BASE_HP] = 8;
+races[16,RACE_BASE_SPD] = 2;
+races[16,RACE_SPR] = "spr_miota";
+races[16,RACE_SPR_FML] = noone;
+races[16,RACE_SEXES] = 1;
 
 
 return races;

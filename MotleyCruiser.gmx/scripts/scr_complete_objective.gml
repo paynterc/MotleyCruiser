@@ -58,6 +58,10 @@ if(objective!=noone){
         objective[@ OBJECTIVE_STATE]="complete";
         sound_play(snd_laser1);
         
+        if(objective[OBJECTIVE_SCRIPT_END]!=noone){
+            scr_script_parse(objective[OBJECTIVE_SCRIPT_END]);     
+        }
+        
         //Find next objective and set it to active
         var mission = scr_find_mission(objective[OBJECTIVE_MISSION_ID]);
         if(mission != noone){

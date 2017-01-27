@@ -40,18 +40,21 @@ if(staged_objectives != noone){
     
 }
 
-
-scr_add_dialogue_button(tree[i],"Do you have any work that needs doing?", "step_to",i+1);
-scr_add_dialogue_button(tree[i],"Do you have any tips?", "step_to",i+2);
+if(global_index!=noone && mission != noone){
+    scr_add_dialogue_button(tree[i],"Do you have any work that needs doing?", "step_to",i+1);
+}
+scr_add_dialogue_button(tree[i],"Have you heard anything I might want to know?", "step_to",i+2);
 scr_add_dialogue_button(tree[i],"Tell me about your home world.", "step_to",i+3);
-scr_add_dialogue_button(tree[i],"What is your occupation?", "step_to",i+6);
+if(global_index!=noone){
+    scr_add_dialogue_button(tree[i],"What is your occupation?", "step_to",i+6);
+}
 scr_add_dialogue_button(tree[i],"Good Bye.", "exit",noone);
 
 
 
 // Add branch 1
 i++;
-if(mission != noone){
+if(mission != noone && global_index!=noone){
     tree[i] = scr_make_dialogue_branch(mission[MISSION_TEXT],"job");
     scr_add_dialogue_button(tree[i],"I'll do it.","accept_mission",0);
     scr_add_dialogue_button(tree[i],"No thanks.","step_to",0);

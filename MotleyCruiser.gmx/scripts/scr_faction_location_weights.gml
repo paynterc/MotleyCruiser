@@ -13,7 +13,7 @@ for(var i = 0; i<array_height_2d(fc); i++){
     var frange = fc[i,3]; // faction range
     var xdist = abs( fx - col);
     var ydist = abs( fy - row);
-    fweights[i] = max(1,frange - (xdist+ydist));
+    fweights[i] = 14 - (xdist+ydist);
 }
 
 return fweights;

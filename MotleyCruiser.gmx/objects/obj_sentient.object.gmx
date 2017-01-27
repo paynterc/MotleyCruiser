@@ -43,6 +43,8 @@ mission_loc[1]=14;
 
 dialogue = noone;
 
+image_speed = .25;
+
 
 </string>
           </argument>
