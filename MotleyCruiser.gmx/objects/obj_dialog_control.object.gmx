@@ -227,7 +227,10 @@ if(staged_buttons != noone){
                         
                         break;
                     case "hire_make_offer":
-                        if( obj_ship_data.bunks &lt;= scr_get_active_crew_count()+1 ){
+                        if(scr_has_mission(closest_sentient.global_index)){
+                            staged_branch = scr_make_dialogue_branch("You have to finish that job for me first.","exposition");
+                            scr_add_dialogue_button(staged_branch,"Oh, yeah.","step_to",0);
+                        }else if( obj_ship_data.bunks &lt;= scr_get_active_crew_count()+1 ){
                             staged_branch = scr_make_dialogue_branch("You don't have an empty bunk for me. Forget it.","exposition");
                             scr_add_dialogue_button(staged_branch,"Right. Sorry!","step_to",0);
                         }else{                                     

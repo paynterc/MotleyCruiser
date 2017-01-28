@@ -19,6 +19,8 @@ t[5,0]=TRAIT_LOYAL;
 t[5,1]=TRAIT_TREACHEROUS;
 t[6,0]=TRAIT_HUMBLE;
 t[6,1]=TRAIT_ARROGANT;
+t[7,0]=TRAIT_MORAL;
+t[7,1]=TRAIT_IMMORAL;
 
 global.npc_traits=t;
 

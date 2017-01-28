@@ -127,6 +127,7 @@ text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
 
 scroll = 0;
 alltext = noone;
+var rtxt;
 for(var i = 0; i &lt; array_length_1d(global.missions); i++){
     this_mission = global.missions[i];
     if(this_mission[MISSION_STATE]=="complete") continue;// Skip the completed missions.
@@ -142,6 +143,11 @@ for(var i = 0; i &lt; array_length_1d(global.missions); i++){
         }
         alltext = scr_push_array(alltext,otext);
     }
+    
+    rtxt = "";
+    alltext=scr_push_array(alltext,rtxt);
+    alltext=scr_push_array(alltext,rtxt);
+    alltext=scr_push_array(alltext,rtxt);
     
 }
 
@@ -212,7 +218,11 @@ for(var i = 0; i &lt; array_length_1d(global.missions); i++){
     );
     offset += text_height + padding;
     
-    text = "Scroll " + " " + string(scroll);
+  
+    offset += text_height*2 + padding;
+    
+    
+    text = "-- MISSIONS --";
     text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
     text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
     draw_text_ext
@@ -222,16 +232,10 @@ for(var i = 0; i &lt; array_length_1d(global.missions); i++){
         text,
         font_size + (font_size/2),
         maxlength
-    );   
+    );
     offset += text_height + padding;
     
-    /**
-    maxlines  = 10;
-    totallines = 12;
-    maxindex = 11;
-    scroll = 5;
-    scroll + maxlines = 15;  
-    **/
+    
     
     for(var i = scroll; i&lt; min(scroll + maxlines, array_length_1d(alltext)); i++){
 

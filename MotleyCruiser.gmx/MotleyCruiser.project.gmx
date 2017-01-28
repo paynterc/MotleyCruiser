@@ -37,6 +37,7 @@
       <sprite>sprites\spr_kren</sprite>
       <sprite>sprites\spr_chicken_fml</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
+      <sprite>sprites\spr_cryptolid2</sprite>
       <sprite>sprites\spr_skeleton</sprite>
       <sprite>sprites\spr_bot3</sprite>
       <sprite>sprites\spr_bot3b</sprite>
@@ -52,6 +53,7 @@
       <sprite>sprites\spr_fion</sprite>
       <sprite>sprites\spr_bot4</sprite>
       <sprite>sprites\spr_miota</sprite>
+      <sprite>sprites\spr_miota2</sprite>
       <sprite>sprites\spr_hurgan</sprite>
       <sprite>sprites\spr_selgesh</sprite>
       <sprite>sprites\spr_bot2</sprite>
@@ -503,6 +505,7 @@
         <script>scripts\draw_shadow.gml</script>
       </scripts>
       <script>scripts\scr_example_leaf.gml</script>
+      <script>scripts\scr_contraband.gml</script>
     </scripts>
     <scripts name="_libraries">
       <script>scripts\scr_guns.gml</script>
@@ -1039,7 +1042,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="248">
+  <constants number="251">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1229,6 +1232,7 @@
     <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
     <constant name="MISSION_SCRIPT_START">11</constant>
     <constant name="MISSION_GRANTED_BY">12</constant>
+    <constant name="MISSION_ILLEGAL">13</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_TYPE">2</constant>
@@ -1280,6 +1284,8 @@
     <constant name="TRAIT_TREACHEROUS">11</constant>
     <constant name="TRAIT_HUMBLE">12</constant>
     <constant name="TRAIT_ARROGANT">13</constant>
+    <constant name="TRAIT_MORAL">14</constant>
+    <constant name="TRAIT_IMMORAL">15</constant>
     <constant name="LOC_X1">0</constant>
     <constant name="LOC_Y1">1</constant>
     <constant name="LOC_NAME">2</constant>

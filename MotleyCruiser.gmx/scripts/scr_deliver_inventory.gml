@@ -11,12 +11,11 @@ var target_id = scr_find_random_mission_target("npc",1,granter[NPC_LOCATION]);
 if(target_id == noone) return noone;
 var td = global.npcs[target_id];//target data
 var td_loc = scr_str_split(td[NPC_LOCATION],",");
-
-//var inv_item = 
+var tloc = scr_location_translate(td_loc[0],td_loc[1]);
 
 
 var mission = scr_make_mission();
-mission[MISSION_TEXT]="I need you to deliver an item to "+td[NPC_NAME]+ " on " + td_loc[1] + " " + td_loc[0] + " in sector " + td_loc[2] + "," + td_loc[3];
+mission[MISSION_TEXT]="I need you to deliver an item to "+td[NPC_NAME]+ " on " + td_loc[1] + " " + tloc[LOC_NAME_1] + " in sector " + td_loc[3] + "," + td_loc[2];
 mission[MISSION_TYPE]="deliver";
 mission[MISSION_REWARD]="cr,100";
 mission[MISSION_GRANT_INVENTORY_START]=25;

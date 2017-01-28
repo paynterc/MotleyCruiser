@@ -69,7 +69,7 @@ races[8,RACE_SEXES] = 1;
 races[9,RACE_NAME] = "Cryptolid";
 races[9,RACE_BASE_HP] = 10;
 races[9,RACE_BASE_SPD] = 1;
-races[9,RACE_SPR] = "spr_cryptolid";
+races[9,RACE_SPR] = "spr_cryptolid,spr_cryptolid2";
 races[9,RACE_SPR_FML] = noone;
 races[9,RACE_SEXES] = 1;
 
@@ -118,7 +118,7 @@ races[15,RACE_SEXES] = 1;
 races[16,RACE_NAME] = "Miota";
 races[16,RACE_BASE_HP] = 8;
 races[16,RACE_BASE_SPD] = 2;
-races[16,RACE_SPR] = "spr_miota";
+races[16,RACE_SPR] = "spr_miota,spr_miota2";
 races[16,RACE_SPR_FML] = noone;
 races[16,RACE_SEXES] = 1;
 
