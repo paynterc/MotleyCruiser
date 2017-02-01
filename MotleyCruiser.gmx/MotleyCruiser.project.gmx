@@ -577,6 +577,8 @@
         <script>scripts\scr_inv_item_count.gml</script>
         <script>scripts\scr_inv_item_decrement.gml</script>
         <script>scripts\scr_inv_item_add.gml</script>
+        <script>scripts\scr_inv_save.gml</script>
+        <script>scripts\scr_inv_load.gml</script>
       </scripts>
     </scripts>
     <scripts name="_ship_editor">

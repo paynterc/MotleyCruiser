@@ -79,11 +79,7 @@ if(ini_section_exists(game)){
     ds_list_destroy(read_list);
     
     
-     
-    var i_string = ini_read_string(game, "inventory", "");
-    if(i_string != ""){
-        ds_map_read(global.inventory, i_string);
-    }
+    scr_inv_load(game);
 
     global.current_sector_row =  ini_read_real(game, "current_sector_row", 10);
     global.current_sector_col =  ini_read_real(game, "current_sector_col", 10);

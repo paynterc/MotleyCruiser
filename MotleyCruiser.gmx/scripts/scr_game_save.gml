@@ -17,11 +17,7 @@ scr_write_array(global.ships,game,"ships",SAVE_GAME_FILE);
 scr_write_array(global.npcs,game,"npcs",SAVE_GAME_FILE);
 scr_write_array(global.galaxy,game,"galaxy",SAVE_GAME_FILE);
 
-ini_open(SAVE_GAME_FILE);
-
-var i_string;
-i_string = ds_map_write(global.inventory);
-ini_write_string(game, "inventory", i_string);
+scr_inv_save(game);
 
 ini_write_real(game,"current_sector_row",global.current_sector_row);
 ini_write_real(game,"current_sector_col",global.current_sector_col);

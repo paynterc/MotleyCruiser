@@ -244,8 +244,8 @@ if(array_length_1d(npcs)&gt;0){
                 
                 // Repopulate a saved mission. TODO: Do we really need this?
                 if(npc[NPC_MISSION]==noone){
-                    //var mission = choose(scr_deliver_inventory(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]),scr_get_inventory(npcs[i]));
-                    var mission = choose(scr_get_inventory(npcs[i]));
+                    var mission = choose(scr_deliver_inventory(npcs[i]),scr_mission_killxofy(npcs[i]),scr_passenger(npcs[i]),scr_get_inventory(npcs[i]));
+                    //var mission = choose(scr_get_inventory(npcs[i]));
                     sentient.mission=mission;
                     //npc[NPC_MISSION]=mission;
                     //global.npcs[npcs[i]]=npc;
