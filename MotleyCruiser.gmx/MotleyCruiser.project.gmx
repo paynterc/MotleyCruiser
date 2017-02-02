@@ -1044,7 +1044,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="251">
+  <constants number="255">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1148,6 +1148,10 @@
     <constant name="SHIP_SHIELDS_CUR">23</constant>
     <constant name="SHIP_HULL_CUR">24</constant>
     <constant name="SHIP_ENERGY_CUR">25</constant>
+    <constant name="SHIP_MASS">26</constant>
+    <constant name="SHIP_CARGO_CAP">27</constant>
+    <constant name="SHIP_BUNKS">28</constant>
+    <constant name="SHIP_CARGO">29</constant>
     <constant name="FACTION_PLAYER">0</constant>
     <constant name="FACTION_PIRATE">1</constant>
     <constant name="FACTION_TRADER">2</constant>

@@ -1,8 +1,8 @@
 /*****
 Update ship data after modifying with module data
-This is similar to scr_module_modify_stats, but it only updates the data array,
-not the variables within the ship object. It is intended for cases where the
-ship object is not present.
+This is done before scr_module_modify_stats.
+The progression should be scr_modules_to_ship_data()->scr_module_modify_stats()->obj_ship
+
 Call it like ship_data = scr_modules_to_ship_data(ship_data);
 *****/
 //scr_modules_to_ship_data(ship_data)
@@ -23,6 +23,7 @@ var energy_regen_speed=global.ship_default_energy_regen_speed;
 var energy_regen_points=global.ship_default_energy_regen_points;
 
 var bunks=0;
+var cargo=0;
 
 var turn_spd = global.ship_default_turn_spd;
 var turn_mod = 0;
@@ -54,6 +55,7 @@ for(var m=0;m<array_length_1d(module_data);m++){
     
     turn_mod += MP[MODULE_TURN_MOD];
     bunks += MP[MODULE_BUNKS_MOD];
+    cargo += MP[MODULE_CARGO_MOD];
            
 }
 
@@ -82,5 +84,8 @@ ship_data[SHIP_HULL]=hull;
 ship_data[SHIP_ENERGY]=energy;
 ship_data[SHIP_ENERGY_REGEN_SPD]=energy_regen_speed;
 ship_data[SHIP_ENERGY_REGEN_PTS]=energy_regen_points;
+ship_data[SHIP_BUNKS]=bunks;
+ship_data[SHIP_MASS]=mass;
+ship_data[SHIP_CARGO]=cargo;
 
 return ship_data;

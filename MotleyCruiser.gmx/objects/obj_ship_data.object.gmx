@@ -28,10 +28,10 @@
             <string>/// Calculate ship stats
 if(global.player_ship == noone) exit;
 scr_ship_defaults();
-module_data = global.player_ship[SHIP_MODULES];
+
+ship_data =  global.player_ship;
 scr_module_modify_stats();
 
-var bla = 1;
 </string>
           </argument>
         </arguments>
