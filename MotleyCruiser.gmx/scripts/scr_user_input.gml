@@ -35,9 +35,25 @@ switch(argument0){
         return keyboard_check_pressed(ord("D"))
         && instance_exists(obj_room_level);
         break;
+    case "hotslot1":
+        return !global.show_inventory && 
+        (keyboard_check_pressed(ord("1")) || gamepad_button_check_released(global.pad, gp_face1));
+        break;
+    case "hotslot2":
+        return !global.show_inventory && 
+        (keyboard_check_pressed(ord("2")) || gamepad_button_check_released(global.pad, gp_face2));
+        break;
+    case "hotslot3":
+        return !global.show_inventory && 
+        (keyboard_check_pressed(ord("3")) || gamepad_button_check_released(global.pad, gp_face3));
+        break;        
+    case "hotslot4":
+        return !global.show_inventory && 
+        (keyboard_check_pressed(ord("4")) || gamepad_button_check_released(global.pad, gp_face4));
+        break;           
     case "inventory-use":
-        return keyboard_check_pressed(ord("E")) 
-        && global.show_inventory;
+        return global.show_inventory && 
+        (keyboard_check_pressed(ord("E")) || gamepad_button_check_released(global.pad, gp_face1));
         break;
     case "interact":
         return keyboard_check_pressed(ord("E"));
@@ -113,7 +129,18 @@ switch(argument0){
             pdir = point_direction(x,y,mouse_x,mouse_y);
         }
         return pdir;
-        break;     
+        break;
+    case "inventory_page_left":
+        if( gamepad_is_connected(global.pad) ){
+            return gamepad_button_check_released(global.pad,gp_shoulderl);
+        }
+        break;
+        
+    case "inventory_page_right":
+        if( gamepad_is_connected(global.pad) ){
+            return gamepad_button_check_released(global.pad,gp_shoulderr);
+        }
+        break;        
     default:
         return false;
 }

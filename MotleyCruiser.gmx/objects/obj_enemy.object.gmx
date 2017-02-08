@@ -38,6 +38,7 @@ mode = "hunt";
 hp=10;
 hp_current=hp;
 pspeed = 2;
+pspeed_init = pspeed;
 image_speed = .25;
 
 sprite_default = spr_default;
@@ -229,10 +230,12 @@ alarm[0] = room_speed * 2;
             <string>/// Check hp
 depth = -y;
 
+pspeed = pspeed_init * global.speed_mod;
+
 /// Check hp_current
 if(hp_current&lt;1){
 
-    scr_drop_loot();
+    scr_drop_loot(2,5,'npc');
 
     corpse = instance_create(x,y,obj_corpse);
     corpse.sprite = sprite_index;

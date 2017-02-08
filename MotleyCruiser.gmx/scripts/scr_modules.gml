@@ -12,7 +12,7 @@ module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_HULL_MOD]=10;
 module[MODULE_ENERGY_MOD]=200;
 module[MODULE_ENERGYREGENPOINTS_MOD]=3;
-module[MODULE_CARGO_MOD]=10;
+module[MODULE_CARGO_MOD]=1;
 module[MODULE_BUNKS_MOD]=3;
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
@@ -28,7 +28,7 @@ module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_HULL_MOD]=15;
 module[MODULE_ENERGY_MOD]=200;
 module[MODULE_ENERGYREGENPOINTS_MOD]=3;
-module[MODULE_CARGO_MOD]=10;
+module[MODULE_CARGO_MOD]=1;
 module[MODULE_BUNKS_MOD]=3;
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
@@ -44,7 +44,7 @@ module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_HULL_MOD]=10;
 module[MODULE_ENERGY_MOD]=250;
 module[MODULE_ENERGYREGENPOINTS_MOD]=3;
-module[MODULE_CARGO_MOD]=15;
+module[MODULE_CARGO_MOD]=1;
 module[MODULE_BUNKS_MOD]=3;
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
@@ -57,7 +57,7 @@ module[MODULE_TYPE]="cargo";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_cargo_16_1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
-module[MODULE_CARGO_MOD]=20;
+module[MODULE_CARGO_MOD]=2;
 module[MODULE_MASS_MOD]=100;
 scr_push_array_1d(global.module_library, module);
 
@@ -193,7 +193,7 @@ module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_HULL_MOD]=10;
 module[MODULE_ENERGY_MOD]=270;
 module[MODULE_ENERGYREGENPOINTS_MOD]=4;
-module[MODULE_CARGO_MOD]=200;
+module[MODULE_CARGO_MOD]=1;
 module[MODULE_BUNKS_MOD]=4;
 module[MODULE_MASS_MOD]=230;
 scr_push_array_1d(global.module_library, module);
@@ -250,7 +250,7 @@ module[MODULE_TYPE]="cargo";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_cargo_16_2;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
-module[MODULE_CARGO_MOD]=200;
+module[MODULE_CARGO_MOD]=2;
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
 
@@ -261,7 +261,7 @@ module[MODULE_TYPE]="cargo";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_cargo_16_3;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
-module[MODULE_CARGO_MOD]=300;
+module[MODULE_CARGO_MOD]=3;
 module[MODULE_MASS_MOD]=300;
 scr_push_array_1d(global.module_library, module);
 

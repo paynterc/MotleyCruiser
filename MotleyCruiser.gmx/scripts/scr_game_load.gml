@@ -98,14 +98,13 @@ if(ini_section_exists(game)){
     randomize();
     global.galaxy_seed = random_get_seed();// Call randomize before this
     scr_make_galaxy_WEIGHTED();
+    global.player_ship = global.ship_library[10];
     scr_inv_item_add(53,20);
     
 }
 ini_close();
 
-
-
-
+global.player_ship = scr_modules_to_ship_data(global.player_ship);
 
 /***
 
@@ -123,5 +122,7 @@ for(var i=0; i<20; i++){
 ***/
 
 global.game_loaded = game;
+
+scr_ev_game_loaded();
 
 room_goto(rm_space);

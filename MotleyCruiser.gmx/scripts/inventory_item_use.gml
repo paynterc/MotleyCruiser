@@ -5,7 +5,8 @@ if inventory_read("slot",slot_id) = true{
    var item_id_va;
    item_id_va = item_id_read(inventory_read("ID",slot_id),3)
    if item_id_va = true{
-      script_execute(asset_get_index(item_id_read(inventory_read("ID",slot_id),4)))
+      //script_execute(asset_get_index(item_id_read(inventory_read("ID",slot_id),4)))
+      scr_script_parse(item_id_read(inventory_read("ID",slot_id),4));
       var item_amount;
       item_amount = inventory_read("Stack",slot_id)
       item_amount = max(item_amount-1,0)

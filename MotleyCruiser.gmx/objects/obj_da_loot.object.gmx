@@ -31,8 +31,8 @@ inv_amount = noone; // Amount of inventory to grant
 credits = noone; // Credits to grant
 
 sprite_default = spr_ItemIcon_CrystalGoldStone;
-sprite = sprite_default; //item_id_read(ID,2) //spr_ItemIcon_Leaf
-sprite_index = sprite_default;
+sprite = sprite_default; //default
+sprite_index = sprite;
 image_speed = 0.025;
 
 r = random(400);
@@ -93,10 +93,13 @@ if (inv_id != noone &amp;&amp; sprite==sprite_default){
             <string>/// LOOOT!
 if(credits!=noone){
     global.credits += credits;
+    audio_play_sound(snd_pickup_credit,2,0);
 }
 
 if(inv_id != noone){
     inventory_item_add(inv_id,inv_amount);
+    scr_hotbar_update();
+    audio_play_sound(snd_pickup,2,0);
 }
 
 glr_lightsimple_destroy(lootlight);

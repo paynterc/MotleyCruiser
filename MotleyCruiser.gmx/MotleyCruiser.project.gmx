@@ -20,6 +20,13 @@
       <sound>sound\snd_theme1</sound>
       <sound>sound\snd_theme2</sound>
     </sounds>
+    <sounds name="Effects">
+      <sound>sound\snd_slowdown</sound>
+      <sound>sound\snd_heal</sound>
+      <sound>sound\snd_fail</sound>
+      <sound>sound\snd_pickup_credit</sound>
+      <sound>sound\snd_pickup</sound>
+    </sounds>
   </sounds>
   <sprites name="sprites">
     <sprites name="_aliens">
@@ -224,8 +231,10 @@
         <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
+        <sprite>sprites\spr_ItemIcon_medkit</sprite>
         <sprite>sprites\spr_ItemIcon_GasBlue</sprite>
         <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
+        <sprite>sprites\spr_ItemIcon_ShieldBelt</sprite>
         <sprite>sprites\spr_ItemIcon_BigDefPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigHealPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BloodRed</sprite>
@@ -416,6 +425,7 @@
       <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
       <script>scripts\scr_ev_docked.gml</script>
       <script>scripts\scr_player_died_in_room.gml</script>
+      <script>scripts\scr_ev_game_loaded.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_populate_sector.gml</script>
@@ -453,6 +463,7 @@
       <script>scripts\scr_get_saved_games.gml</script>
       <script>scripts\scr_new_game_defaults.gml</script>
       <script>scripts\scr_screen_shake.gml</script>
+      <script>scripts\scr_set_gui_vars.gml</script>
     </scripts>
     <scripts name="_gui">
       <script>scripts\scr_gui_set_panel_data.gml</script>
@@ -506,6 +517,7 @@
       </scripts>
       <script>scripts\scr_example_leaf.gml</script>
       <script>scripts\scr_contraband.gml</script>
+      <script>scripts\scr_npc_drops.gml</script>
     </scripts>
     <scripts name="_libraries">
       <script>scripts\scr_guns.gml</script>
@@ -579,6 +591,9 @@
         <script>scripts\scr_inv_item_add.gml</script>
         <script>scripts\scr_inv_save.gml</script>
         <script>scripts\scr_inv_load.gml</script>
+        <script>scripts\scr_smart_heal.gml</script>
+        <script>scripts\scr_hotbar_init.gml</script>
+        <script>scripts\scr_hotbar_update.gml</script>
       </scripts>
     </scripts>
     <scripts name="_ship_editor">
@@ -851,6 +866,11 @@
     <scripts name="_messages">
       <script>scripts\scr_display_message.gml</script>
     </scripts>
+    <script>scripts\script376.gml</script>
+    <scripts name="_powerups">
+      <script>scripts\scr_heal_player.gml</script>
+      <script>scripts\scr_flash.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1030,6 +1050,7 @@
     <object>objects\obj_impact</object>
     <object>objects\obj_explosion_OLD</object>
     <object>objects\obj_explosion</object>
+    <object>objects\obj_flash_timer</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>

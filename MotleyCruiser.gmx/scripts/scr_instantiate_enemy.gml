@@ -22,7 +22,7 @@ var newEnemy = instance_create(x1,y1,obj_enemy);
 // Set a random mode if none given
 if(set_mode== noone){
 
-    var oddsMode = 3;
+    var oddsMode = 5;
     var modRnm = irandom(oddsMode);
     if(modRnm==0){
         set_mode = "hunt";

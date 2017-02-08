@@ -101,11 +101,17 @@ global.mission_id = 1000; //A number to start mission ids with. Increment this w
 global.missions = noone;
 global.objective_inc = 100
 
+global.bullet_time=false;
+global.speed_mod = 1;
+
 // Money
 global.credits = 1000;
 
 // Time
 global.day = 0;
+
+// Inventory
+global.base_inventory_rows = 20;
 
 
 
@@ -119,6 +125,8 @@ scr_pause_menu();
 /*                      ROOM LEVELS                             */
 /****************************************************************/
 scr_reset_room_random();
+
+scr_hotbar_init();
 
 /****************************************************************/
 /*                      SPACE LEVELS                            */
@@ -179,6 +187,7 @@ scr_npc_occupation_library();
             <kind>1</kind>
             <string>/// Set GUI size
 //scr_resize_gui();
+scr_set_gui_vars()
 </string>
           </argument>
         </arguments>
@@ -285,6 +294,8 @@ if(scr_user_input("fullscreen")){
 if(scr_user_input("goto_shiplevel")){
     room_goto(rm_ship_deck_rnd);
 }
+
+
 
 
 </string>

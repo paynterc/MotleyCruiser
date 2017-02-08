@@ -40,7 +40,7 @@ health_y = sprite_get_height(sprite_index) - 5;
 set_vibe = 0;
 shake=false;
 can_move=true;
-weapon_index = obj_melee_weapon;
+weapon_index = obj_gun;
 </string>
           </argument>
         </arguments>
@@ -188,9 +188,23 @@ if(weapon != noone){
         }
     }
     
+
+    
 }
 
+// Heal
+if(scr_user_input("hotslot1")){
+    scr_smart_heal();
+}
 
+// Flash
+if(scr_user_input("hotslot2")){
+
+    if(scr_inv_item_count(2)&gt;0){
+        scr_inv_item_decrement(2);
+        scr_script_parse(item_id_read(2,4));
+    } 
+}
 </string>
           </argument>
         </arguments>

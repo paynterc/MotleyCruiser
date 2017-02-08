@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 glr_init(.75,480,272,0);
+
 glr_set_ambient_daytime(.8);
 depth = -10000;
 enabled=1;

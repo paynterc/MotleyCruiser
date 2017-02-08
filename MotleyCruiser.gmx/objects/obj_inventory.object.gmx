@@ -26,12 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>///Init
-rows = 4;
+cols = 10;
+rows = global.base_inventory_rows;
 //Inventory Items
 item_int();
 
 // PLAYER INVENTORY
-inventory_int(15,rows);
+inventory_int(cols,rows);
 
 
 global.show_inventory = false;
@@ -48,13 +49,42 @@ box_bottom = box_y+boxheight;
 
 //Just a variable value, ignore this:
 
-last_stack = 0
-last_slot = 0
-last_id_item = 0
+last_stack = 0;
+last_slot = 0;
+last_id_item = 0;
    
-current_stack = 0
-current_slot = 0
-current_id_item = 0
+current_stack = 0;
+current_slot = 0;
+current_id_item = 0;
+
+
+// Pagination
+rows_per_page=5;
+page=0;
+start_row = page * rows_per_page;
+page_rows = min(rows - start_row,rows_per_page);
+
+// Navigation buttons
+navbuttons = noone;
+nbtn_left=scr_gui_entity_button();
+nbtn_right=scr_gui_entity_button();
+
+nbtn_left[0]=box_x+padding;// x
+nbtn_left[1]=box_y+padding;// y
+nbtn_left[2]=font_size+4;// width
+nbtn_left[3]=font_size+4;// height
+nbtn_left[4]=false;// hover status
+nbtn_left[5]="&lt;";// text
+
+nbtn_right[0]=boxwidth-padding-(font_size);// x
+nbtn_right[1]=box_y+padding;// y
+nbtn_right[2]=font_size+4;// width
+nbtn_right[3]=font_size+4;// height
+nbtn_right[4]=false;// hover status
+nbtn_right[5]="&gt;";// text
+
+navbuttons[0]=nbtn_left;
+navbuttons[1]=nbtn_right;
 </string>
           </argument>
         </arguments>
@@ -78,6 +108,10 @@ current_id_item = 0
           <argument>
             <kind>1</kind>
             <string>/// Show inventory
+if(global.game_loaded==noone){
+    global.show_inventory = false;
+    exit;
+}
 if(scr_user_input("inventory")){
     global.show_inventory = !global.show_inventory;
     if(global.show_inventory){
@@ -87,7 +121,15 @@ if(scr_user_input("inventory")){
 
 if(!global.show_inventory) exit;
 
+if(global.player_ship!=noone){
+    rows = global.base_inventory_rows + global.player_ship[SHIP_CARGO];
+}
 
+if(scr_user_input("inventory_page_left")){
+    page = max(0,page-1);
+}else if(scr_user_input("inventory_page_right")){
+    page = min(page+1,ceil(rows/rows_per_page)-1);
+}
 
 if keyboard_check_pressed(ord("D")){
    //Drop a Item (object is needed);
@@ -95,7 +137,7 @@ if keyboard_check_pressed(ord("D")){
    //show_message("Selected Item was dropped");
 }
 
-if keyboard_check_pressed(ord("P")){
+if(scr_user_input("inventory-use")){
    //Use a Item, return: &lt;true|false&gt; (true if they have special effects, false not)
    var has_script;
    has_script = inventory_item_use(inventory_last_select());
@@ -172,6 +214,87 @@ if keyboard_check_pressed(ord("A")){
    inventory_item_exchange(inventory_select(),inventory_last_select());
 }
 ****/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check nav buttons for SHOW and HOVER
+if(global.show_inventory){
+    // Show button
+    var lbtn = navbuttons[0];
+    lbtn[@ BTN_SHOW] = page &gt; 0;
+    
+    var rbtn = navbuttons[1];
+    rbtn[@ BTN_SHOW] = rows - ((page+1) * rows_per_page)&gt;0;
+
+    var guix = device_mouse_x_to_gui(0);
+    var guiy = device_mouse_y_to_gui(0);
+    for(var i = 0; i&lt;array_length_1d(navbuttons); i++){
+        thebutton = navbuttons[i];
+        button_x = thebutton[0];
+        button_y = thebutton[1];
+        button_w = thebutton[2];
+        button_h = thebutton[3];   
+        xhover = ( guix == median(button_x, guix, button_x + button_w) );
+        yhover = ( guiy == median(button_y, guiy, button_y + button_h) );
+        thebutton[@ 4] = xhover &amp;&amp; yhover &amp;&amp; thebutton[BTN_SHOW];
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if button was clicked
+if(global.show_inventory){
+
+    for(var i=0; i&lt;array_length_1d(navbuttons); i++){
+        btn=navbuttons[i];
+        if(btn[BTN_HOVER]){
+            if(i==0){
+                page = max(0,page-1);
+                break;
+            }else if(i==1){
+                page = min(page+1,ceil(rows/rows_per_page)-1);
+                break;
+            }
+        }
+    }
+    
+}
 </string>
           </argument>
         </arguments>
@@ -266,14 +389,13 @@ if(global.show_inventory){
 
     draw_set_font(font);
     draw_panel(spr_background,0,box_x,box_y,boxwidth,boxheight,32);
+    var font_size = font_get_size(font);
     
     //draw_text(270,40,"Key Q: Add random Item#Key W: Clear Inventory#Key E: Save Inventory#Key R: Load Inventory#Key T: Sort Inventory#Key Y: Clear a Item from Selecting Slot#Key U: Delete Item by Stack Amount#Key I: Drop a Item#Key O: Find Item on Inventory#Key P: Run the script of item with effect#Key A: Exchange Items from #       'ItemOverMouse' to Selecting");
     
     draw_set_halign(fa_center);
     
-    
-
-    draw_text(box_hcenter,box_y+(font_size/2)+padding,"INVENTORY");
+    draw_text(box_hcenter,box_y+(font_size/2)+padding,"INVENTORY " + string(page+1));
     draw_set_halign(fa_left);
     inventory_draw(box_x+padding,box_y+font_size+(padding*2),spr_slot, spr_slot,8,c_white);
     
@@ -285,22 +407,49 @@ if(global.show_inventory){
     
     if inventory_last_select() &gt;= 0 and inventory_read("ID",inventory_last_select()) != -1{
         
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
         draw_sprite_ext(item_id_read(id_last,2),image_index,box_x+padding,box_vcenter,4,4,0,c_white,1);
         
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_bottom);
         draw_text(box_x+96,box_vcenter+padding,
         "Item: " + string(item_id_read(id_last,0)) +
         "Stack: " + string(inventory_read("Stack",inventory_last_select())) + " / " + string(item_id_read(id_last,1))
         );
-        
+        /**
         draw_text(box_x+padding,box_vcenter+96,
         "Description: " + string(item_id_read(id_last,5))
         );
-        
+        **/
+        draw_text_ext(box_x+padding,box_vcenter+96,
+        string(item_id_read(id_last,5)),
+        font_size,
+        boxwidth - (padding*2)
+        );
         
     }
 
     draw_set_halign(fa_left);
     draw_text(box_x+padding,box_bottom - padding - font_size,"CREDITS: " + string(global.credits));
+    
+        // Draw nav buttons
+    var b;
+    for(var i = 0; i&lt;array_length_1d(navbuttons); i++){
+        
+        b = navbuttons[i];
+        if(b[BTN_SHOW]){
+            draw_panel(spr_background,0,b[0],b[1],b[2],b[3],16);
+            if(b[4]){
+                draw_set_color(c_white);
+            }
+            draw_set_halign(fa_center);
+            draw_set_valign(fa_center);
+            draw_text(b[0]+(b[2]/2),b[1]+(b[3]/2),b[5]);
+            draw_set_color(c_lime);
+            draw_set_valign(fa_bottom);
+        }
+    }
     
 }
 
@@ -311,7 +460,7 @@ if(global.show_inventory){
         </arguments>
       </action>
     </event>
-    <event eventtype="9" enumb="88">
+    <event eventtype="9" enumb="35">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -328,11 +477,8 @@ if(global.show_inventory){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Increase rows of inventory
-scr_inv_save(global.game_loaded);
-rows++;
-inventory_int(15,rows);
-scr_inv_load(global.game_loaded);
+            <string>/// Add inventory
+scr_inv_item_add(2,5);
 </string>
           </argument>
         </arguments>

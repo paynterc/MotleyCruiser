@@ -8,15 +8,31 @@ slot_gap = argument4;
 pre_col = draw_get_color();
 draw_set_color(argument5);
 
+
+/************************
+My additions - pagination
+***********************/
+start_row = page * rows_per_page;
+page_rows = min(rows - start_row,rows_per_page);
+var start_index = start_row * cols;// 0, 50, 100
+/************************
+end - pagination
+***********************/
+
 var guix=device_mouse_x_to_gui(0);// My change. Adjusts mouse location to GUI layer. - cp
 var guiy=device_mouse_y_to_gui(0);
 
 var slot_height;
-slot_width = slot
-slot_height = slot_h//slot/slot_width
+slot_width = slot;
+//slot_height = slot_h;
+slot_height = page_rows;
+
+
 var j, index;
 j = 0
-index = 0
+//index = 0;
+index = start_index;
+
 var item_id_va;
 item_id_va = -1
 var sprite;
@@ -47,7 +63,7 @@ for (i=0; i<slot_height; i+=1)
         index += 1
     }
 }
-index = 0
+index = start_index;
 global.MouseOutside = true
 for (i=0; i<slot_height; i+=1)
 {
@@ -94,17 +110,17 @@ for (i=0; i<slot_height; i+=1)
         index += 1
     };  
 };
-index = 0
+index = start_index;
 for (i=0; i<slot_height; i+=1)
 {
     for (j=0; j<slot_width; j+=1)
     {
     if ds_map_find_value(global.inventory,"slot"+string(index)) = true{
       if global.MouseItem = false{
-      if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
-         draw_panel(sprite_infobox,0,max(view_xview[0],guix-string_width(string(item_id_read(inventory_read("ID",index),0)))/2),floor(_y+((spr_height+slot_gap)*i)-5-string_height(string(item_id_read(inventory_read("ID",index),0)))/2-15),string_width(string(item_id_read(inventory_read("ID",index),0)))+10,string_height(string(item_id_read(inventory_read("ID",index),0)))+10,10)
-         draw_text(max(view_xview[0]+5,guix+5+-string_width(string(item_id_read(inventory_read("ID",index),0)))/2),floor(_y+((spr_height+slot_gap)*i)-string_height(string(item_id_read(inventory_read("ID",index),0)))/2-15),string(item_id_read(inventory_read("ID",index),0)))
-      }
+          if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
+             draw_panel(sprite_infobox,0,max(view_xview[0],guix-string_width(string(item_id_read(inventory_read("ID",index),0)))/2),floor(_y+((spr_height+slot_gap)*i)-5-string_height(string(item_id_read(inventory_read("ID",index),0)))/2-15),string_width(string(item_id_read(inventory_read("ID",index),0)))+10,string_height(string(item_id_read(inventory_read("ID",index),0)))+10,10)
+             draw_text(max(view_xview[0]+5,guix+5+-string_width(string(item_id_read(inventory_read("ID",index),0)))/2),floor(_y+((spr_height+slot_gap)*i)-string_height(string(item_id_read(inventory_read("ID",index),0)))/2-15),string(item_id_read(inventory_read("ID",index),0)))
+          }
       }
     }
     index += 1
