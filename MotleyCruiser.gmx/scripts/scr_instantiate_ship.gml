@@ -56,5 +56,5 @@ for(var m=0; m<array_length_1d(module_data); m++){
 
 }
 
-// Now mofify the ship stats based on installed modules
+// Now modify the ship stats based on installed modules
 scr_module_modify_stats();

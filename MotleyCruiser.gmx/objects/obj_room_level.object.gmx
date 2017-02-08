@@ -31,6 +31,7 @@ door = noone;
 level_complete = false;
 shake=false;
 shake_count = 0;
+depth=-10000;
 //Mke a light over the door
 boom_light = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, room_height/2, c_white, 0);
 glr_light_set_static(boom_light, true);
@@ -262,19 +263,18 @@ alarm[1]=room_speed*.50;//vibrate cancel
             <string>/// Draw hotbar
 
 // Four boxes
-
-var boxes = array_length_1d(global.hotbar);
+var boxes = array_height_2d(global.hotbar);
 var boxw = 40;//box width
 var boxp = 4;//padding
 var boxm = 12;//margin
 var _x = (display_get_gui_width()/2) - boxw*2 - round(boxp*1.5);
 var _y = 0 + boxm;
-    draw_set_halign(fa_left);
-    draw_set_valign(fa_top);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 for(var i=0; i&lt;boxes; i++){
     draw_panel(spr_background,0,_x,_y,boxw,boxw,16);   
-    draw_sprite_ext(global.hot_sprites[i],0,_x+boxp,_y+boxp,2,2,0,c_white,1);
-    draw_text(_x,_y,string(global.hot_counts[i]));  
+    draw_sprite_ext(global.hotbar[i,2],0,_x+boxp,_y+boxp,2,2,0,c_white,1);
+    draw_text(_x,_y,string(global.hotbar[i,1]));  
     _x+=boxm+boxw;
 }
 

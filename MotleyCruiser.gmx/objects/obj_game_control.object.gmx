@@ -132,6 +132,7 @@ scr_hotbar_init();
 /*                      SPACE LEVELS                            */
 /****************************************************************/
 global.ship_boarded = noone; // Should be an array of ship data from scr_make_ship;
+global.new_ship = false; // Set to true if this is a new game
 
 
 /****************************************************************/

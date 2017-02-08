@@ -220,16 +220,11 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
-        var new_ship = false;
-        if(global.player_ship == noone){
-            ship_data = global.ship_library[10];
-            new_ship = true
-        }else{
-            ship_data = global.player_ship;
-        }       
+        ship_data = global.player_ship;       
         faction = FACTION_PLAYER;
         scr_instantiate_ship();
-        if(new_ship){
+        if(global.new_ship){
+            global.new_ship = false;
             scr_update_ship_data();
         }else{
             scr_restore_ship_state();

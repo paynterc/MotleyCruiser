@@ -99,6 +99,7 @@ if(ini_section_exists(game)){
     global.galaxy_seed = random_get_seed();// Call randomize before this
     scr_make_galaxy_WEIGHTED();
     global.player_ship = global.ship_library[10];
+    global.new_ship=true;
     scr_inv_item_add(53,20);
     
 }

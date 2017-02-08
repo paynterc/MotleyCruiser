@@ -8,18 +8,21 @@ if(global.hotbar=noone){
 
 var hot_counts = noone;
 var hot_sprites = noone;
+
 var amt = 0;
 var hsprite;
-for(var i=0; i<array_length_1d(global.hotbar);i++){
+var iid;
+for(var i=0; i<array_height_2d(global.hotbar);i++){
     amt = 0;
     hsprite = noone;
-    if(global.hotbar[i]!=noone){
-        amt = scr_inv_item_count(global.hotbar[i]);
-        hsprite = item_id_read(global.hotbar[i],2);
+    iid = global.hotbar[i,0];
+    if(iid!=noone){
+        amt = scr_inv_item_count(iid);
+        hsprite = item_id_read(iid,2);
     }
-    hot_counts[i] = amt;
-    hot_sprites[i] = hsprite;
+    global.hotbar[i,1] = amt;
+    global.hotbar[i,2] = hsprite;
 }
 
-global.hot_counts = hot_counts;
-global.hot_sprites = hot_sprites;
+//global.hot_counts = hot_counts;
+//global.hot_sprites = hot_sprites;
