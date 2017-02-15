@@ -40,6 +40,7 @@
           <argument>
             <kind>1</kind>
             <string>lifespan=0;
+lifelimit=3;
 
 </string>
           </argument>
@@ -82,7 +83,10 @@
 lifespan++;
 if(scr_grid_place_meeting(x,y)){
     instance_destroy();
+    //direction+=90;
+    //image_angle=direction;
 }
+
 
 
 

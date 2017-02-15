@@ -25,21 +25,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>myBullet = obj_melee_attack;
+            <string>/// Init
+myBullet = obj_melee_attack;//zero speed. destroys self after draw
+bullet_sprite=noone;// sprite defines the hit box of bullet. noone leaves it as default
+area_sprite=spr_melee_area;// highlight the area where enemies will be hit
+animation_spr = spr_melee_sword;// an animation for the weapon
+bullet_alpha=0;//show bullet or not
+
 damage = 3;
 weaponSpeed = .15;
 shooting = false;
 destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
 bullet_speed = 0;
-range=32;
+range=16;
 opsprite = sprite_index;
 xdir=x;
 ydir=y;
-
-
-animation_spr = spr_melee_sword;
-
 
 alarm[0] = room_speed * weaponSpeed;
 </string>
@@ -65,8 +67,6 @@ alarm[0] = room_speed * weaponSpeed;
           <argument>
             <kind>1</kind>
             <string>/// Shwing!
-
-
 if(shooting){
 
 
@@ -75,13 +75,22 @@ if(shooting){
     ydir = y+lengthdir_y(15, image_angle);
         
     var bullet = instance_create(xdir,ydir,myBullet);
+    if(bullet_sprite!=noone){
+        bullet.sprite_index = bullet_sprite;
+    }
+    if(bullet_alpha&gt;0){
+         bullet.image_alpha = bullet_alpha;
+    }
     bullet.type = type;
+    bullet.image_angle=image_angle;
     bullet.depth = -100000;
     bullet.speed = 0;
     bullet.damage = damage;
     audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
  
-    sprite_index = animation_spr;
+    if(animation_spr!=noone){
+        sprite_index = animation_spr;
+    }
     
 
 }else{
@@ -140,8 +149,8 @@ if(destroy){
             <string>if(sprite_index!=noone){
     draw_self();
 }
-if(shooting){
-    draw_sprite(spr_melee_area,0,xdir,ydir);  
+if(shooting &amp;&amp; area_sprite!=noone){
+    draw_sprite_ext(area_sprite,-1,xdir,ydir,1,1,image_angle,c_white,1);  
 }
 </string>
           </argument>

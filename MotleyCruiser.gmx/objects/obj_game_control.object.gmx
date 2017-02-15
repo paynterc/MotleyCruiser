@@ -186,6 +186,32 @@ scr_npc_occupation_library();
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Controller settings
+global.pad = 0; // controller index
+if gamepad_is_connected(global.pad){
+    gamepad_set_axis_deadzone(global.pad, 0.5);
+    gamepad_set_button_threshold(global.pad, 0.5);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Set GUI size
 //scr_resize_gui();
 scr_set_gui_vars()
@@ -209,12 +235,33 @@ scr_set_gui_vars()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Controller settings
-global.pad = 0; // controller index
-if gamepad_is_connected(global.pad){
-    gamepad_set_axis_deadzone(global.pad, 0.5);
-    gamepad_set_button_threshold(global.pad, 0.5);
-}
+            <string>/// Particle System
+
+global.Particles = part_system_create();
+part_system_depth(global.Particles, -100000 );
+
+
+global.f1 = part_type_create();
+part_type_shape(global.f1, pt_shape_smoke);
+part_type_life(global.f1, room_speed*.25, room_speed*.50);
+part_type_speed(global.f1, 5, 10, 0, .25);
+part_type_scale(global.f1, .25, .25);
+part_type_size(global.f1, .05, .10, 0.10, 0.01);
+part_type_color2(global.f1,c_yellow,c_red);
+part_type_alpha3(global.f1,1,0.8,0);
+part_type_blend(global.f1,1);
+
+global.ptcl_hole = part_type_create();
+part_type_shape(global.ptcl_hole, pt_shape_sphere);
+part_type_life(global.ptcl_hole, room_speed*.15, room_speed*.25);
+part_type_speed(global.ptcl_hole, 1, 3, 0, .25);
+part_type_scale(global.ptcl_hole, .50, .50);
+part_type_size(global.ptcl_hole, .25, 1, 0.10, 0.01);
+part_type_color2(global.ptcl_hole,c_aqua,c_navy);
+part_type_alpha3(global.ptcl_hole,1,0.8,0);
+part_type_blend(global.ptcl_hole,1);
+
+
 </string>
           </argument>
         </arguments>
@@ -420,6 +467,46 @@ if(panel_pause[4]){
 scr_pause_menu();
 panel_pause[4]=false;
 panel_load_game[4]=false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if part_system_exists(global.Particles)
+{
+   part_system_destroy(global.Particles);
+   
+
+}
+
+if part_type_exists(global.f1)
+{
+    part_type_destroy(global.f1);
+}
+
+if part_type_exists(global.ptcl_hole)
+{
+    part_type_destroy(global.ptcl_hole);
+}
+
+
 </string>
           </argument>
         </arguments>

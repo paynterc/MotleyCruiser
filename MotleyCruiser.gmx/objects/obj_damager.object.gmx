@@ -31,6 +31,7 @@ depth= -y * 30000;
 damage=5;
 type=0//1=player, 2=enemy
 saved_speed = noone;
+pierce_living = false;// continue traveling through living
 </string>
           </argument>
         </arguments>

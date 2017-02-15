@@ -107,9 +107,15 @@
     <sprites name="_personal_equipment">
       <sprite>sprites\spr_rifle1</sprite>
       <sprite>sprites\spr_rifle2</sprite>
+      <sprite>sprites\spr_singularity</sprite>
+      <sprite>sprites\spr_shotgun1</sprite>
       <sprite>sprites\spr_laser_sword</sprite>
       <sprite>sprites\spr_grenade</sprite>
       <sprite>sprites\spr_gun_large</sprite>
+      <sprite>sprites\spr_bullet_1</sprite>
+      <sprite>sprites\spr_bullet_2</sprite>
+      <sprite>sprites\spr_bullet_3</sprite>
+      <sprite>sprites\spr_bullet_4</sprite>
     </sprites>
     <sprites name="_ship_modules">
       <sprite>sprites\spr_command</sprite>
@@ -229,6 +235,7 @@
       <sprites name="HuleInventoryItem">
         <sprite>sprites\spr_ItemIcon_Default</sprite>
         <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
+        <sprite>sprites\spr_ItemIcon_Grenade</sprite>
         <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
         <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
         <sprite>sprites\spr_ItemIcon_medkit</sprite>
@@ -315,7 +322,6 @@
     <sprite>sprites\spr_boom</sprite>
     <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_bullet</sprite>
-    <sprite>sprites\spr_bullet_2</sprite>
     <sprite>sprites\spr_bullet_sm</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
     <sprite>sprites\spr_default</sprite>
@@ -564,6 +570,7 @@
         <script>scripts\scr_grid_place_meeting.gml</script>
         <script>scripts\scr_gridcol_point.gml</script>
         <script>scripts\scr_gridcol_line.gml</script>
+        <script>scripts\scr_gridcol_line_plus.gml</script>
       </scripts>
       <script>scripts\scr_reset_room_random.gml</script>
       <script>scripts\scr_instantiate_all_crew.gml</script>
@@ -941,6 +948,7 @@
     <object>objects\obj_module</object>
     <object>objects\obj_glare_controller</object>
     <objects name="_people_and_places">
+      <object>objects\obj_player</object>
       <object>objects\obj_room_level</object>
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
@@ -950,14 +958,11 @@
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_mortal</object>
       <object>objects\obj_team</object>
-      <object>objects\obj_player</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_enemy</object>
       <object>objects\obj_drone</object>
       <object>objects\obj_sentient</object>
       <object>objects\obj_health_bar</object>
-      <object>objects\obj_gun</object>
-      <object>objects\obj_melee_weapon</object>
       <object>objects\obj_arm</object>
       <object>objects\obj_wall_invis</object>
       <object>objects\obj_floor</object>
@@ -1008,6 +1013,14 @@
     </objects>
     <objects name="_room_combat">
       <object>objects\obj_bullet</object>
+      <object>objects\obj_gun</object>
+      <object>objects\obj_singularity_gun</object>
+      <object>objects\obj_blaster1</object>
+      <object>objects\obj_beam_gun</object>
+      <object>objects\obj_shotgun1</object>
+      <object>objects\obj_flamethrower1</object>
+      <object>objects\obj_melee_weapon</object>
+      <object>objects\obj_warp_sword</object>
       <object>objects\obj_melee_attack</object>
       <object>objects\obj_melee_animation</object>
       <object>objects\obj_spawner</object>
@@ -1015,6 +1028,7 @@
       <object>objects\obj_master_panel</object>
       <object>objects\obj_grenade</object>
       <object>objects\obj_turret</object>
+      <object>objects\obj_singularity</object>
     </objects>
     <objects name="_light">
       <object>objects\obj_glare_control</object>

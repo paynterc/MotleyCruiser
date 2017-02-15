@@ -235,7 +235,7 @@ pspeed = pspeed_init * global.speed_mod;
 /// Check hp_current
 if(hp_current&lt;1){
 
-    scr_drop_loot(2,5,'npc');
+    scr_drop_loot(1,3,'npc');
 
     corpse = instance_create(x,y,obj_corpse);
     corpse.sprite = sprite_index;
@@ -388,8 +388,10 @@ scr_move(hspd, vspd);
     var impact = instance_create(other.x,other.y,obj_impact);
     //impact.image_blend = c_red;
     hp_current -= other.damage;
-    with(other){
-        instance_destroy();
+    if(!other.pierce_living){
+        with(other){
+            instance_destroy();
+        }
     }
 }
 

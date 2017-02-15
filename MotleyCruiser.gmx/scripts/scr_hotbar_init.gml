@@ -16,7 +16,7 @@ hotbar[2,0]=2;//flash
 hotbar[2,1]=0;//count
 hotbar[2,2]=noone;//sprite
 
-hotbar[3,0]=50;//souldust
+hotbar[3,0]=53;//grenades
 hotbar[3,1]=0;//count
 hotbar[3,2]=noone;//sprite
 

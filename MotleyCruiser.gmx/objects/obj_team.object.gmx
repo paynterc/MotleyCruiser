@@ -92,8 +92,10 @@ if(other.type==2){
     var impact = instance_create(other.x,other.y,obj_impact);
     impact.image_blend = c_red;
     hp_current -= other.damage;
-    with(other){
-        instance_destroy();
+    if(!other.pierce_living){
+        with(other){
+            instance_destroy();
+        }
     }
 }
 

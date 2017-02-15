@@ -40,7 +40,7 @@ health_y = sprite_get_height(sprite_index) - 5;
 set_vibe = 0;
 shake=false;
 can_move=true;
-weapon_index = obj_gun;
+weapon_index = obj_singularity_gun;
 </string>
           </argument>
         </arguments>
@@ -65,7 +65,6 @@ weapon_index = obj_gun;
 weapon = instance_create(x,y,weapon_index);
 weapon.type = type;
 weapon.parent_obj = id;
-weapon.weaponSpeed = .15;
 </string>
           </argument>
         </arguments>

@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>myBullet = obj_bullet;
+bullet_sprite = spr_bullet_3;
 damage = 1;
 weaponSpeed = .15;
 shooting = false;
@@ -98,8 +99,11 @@ if(shooting &amp;&amp; !global.paused){
     bullet.depth = -200;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
-    bullet.speed = bullet_speed;
+    bullet.speed = bullet_speed;    
     bullet.damage = damage;
+    if(bullet_sprite!=noone){
+        bullet.image_index=bullet_sprite;
+    }
     audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2); 
 }
 

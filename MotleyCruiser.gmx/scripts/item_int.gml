@@ -373,7 +373,7 @@ item_add(52,5,"Bust the crates!")
 
 item_add(53,0,"Sticky Grenade")
 item_add(53,1,10)
-item_add(53,2,spr_grenade)
+item_add(53,2,spr_ItemIcon_Grenade)
 item_add(53,3,false)
 item_add(53,4,"")
 item_add(53,5,"A powerful bomb. Amazingly, still safe to use on spaceships.")
