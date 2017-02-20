@@ -226,6 +226,7 @@ if(instance_exists(obj_player_ship)){
         if(global.new_ship){
             global.new_ship = false;
             scr_update_ship_data();
+            global.player_ship = ship_data;// Put ship data back into the global array so we have full hitpoints
         }else{
             scr_restore_ship_state();
         }     
@@ -246,7 +247,7 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
         mode = MODE_DEFENDING;
         target = obj_player_ship;
         scr_instantiate_ship();
-        scr_restore_ship_state();     
+        scr_restore_ship_state();  
     }
     
 }

@@ -31,6 +31,7 @@ bullet_sprite=noone;// sprite defines the hit box of bullet. noone leaves it as 
 area_sprite=spr_melee_area;// highlight the area where enemies will be hit
 animation_spr = spr_melee_sword;// an animation for the weapon
 bullet_alpha=0;//show bullet or not
+inventory_id=noone;// Refers to inventory item library
 
 damage = 3;
 weaponSpeed = .15;
@@ -78,9 +79,9 @@ if(shooting){
     if(bullet_sprite!=noone){
         bullet.sprite_index = bullet_sprite;
     }
-    if(bullet_alpha&gt;0){
-         bullet.image_alpha = bullet_alpha;
-    }
+
+    bullet.image_alpha = bullet_alpha;
+
     bullet.type = type;
     bullet.image_angle=image_angle;
     bullet.depth = -100000;

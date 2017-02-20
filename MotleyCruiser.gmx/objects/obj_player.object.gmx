@@ -40,7 +40,8 @@ health_y = sprite_get_height(sprite_index) - 5;
 set_vibe = 0;
 shake=false;
 can_move=true;
-weapon_index = obj_singularity_gun;
+weapon=noone;
+weapon_index=noone;
 </string>
           </argument>
         </arguments>
@@ -62,9 +63,9 @@ weapon_index = obj_singularity_gun;
           <argument>
             <kind>1</kind>
             <string>/// Equip weapon
-weapon = instance_create(x,y,weapon_index);
-weapon.type = type;
-weapon.parent_obj = id;
+event_user(0);
+
+
 </string>
           </argument>
         </arguments>
@@ -104,14 +105,17 @@ weapon.parent_obj = id;
             <string>/// Fire weapon and move
 if(weapon != noone){
     weapon.shooting = scr_user_input("fire");
+    
+    // Adjust run speed
+    if(weapon.shooting){
+        spd = 1;
+    }else{
+        spd = spd_save;
+    }
+    
 }
 
-// Adjust run speed
-if(weapon.shooting){
-    spd = 1;
-}else{
-    spd = spd_save;
-}
+
 
 // Get input and move
 if( gamepad_is_connected(0) ){
@@ -288,6 +292,12 @@ if(obj_player.hp_current&lt;1){
 if(scr_user_input("bugout")){
     room_goto(rm_space);
 }
+
+if(scr_user_input("auto_capture")){
+    // Debug mode, shift C
+    obj_room_level.level_complete = true;
+}
+
 </string>
           </argument>
         </arguments>
@@ -320,6 +330,49 @@ if(other.type==2){
     hp_current -= other.damage;
     with(other){
         instance_destroy();
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Equip weapon
+if(ds_map_exists(global.equipped,"weapon")){
+    if(weapon!=noone &amp;&amp; instance_exists(weapon)){
+        with(weapon){
+            instance_destroy();// Remove the old weapon
+        }
+    }
+    var item_id = ds_map_find_value(global.equipped, "weapon");
+    if(item_id!=noone){
+    
+        weapon_index = scr_inv_item_read(item_id,6);// Slot 6 holds the object name
+        if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
+        
+            weapon = instance_create(x,y,weapon_index);
+            weapon.type = type;// enemy or ally
+            weapon.parent_obj = id;
+            weapon.inventory_id = item_id;
+        
+        }  
     }
 }
 </string>

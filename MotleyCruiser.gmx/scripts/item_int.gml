@@ -359,10 +359,11 @@ item_add(50,5,"A highly addictive drug.")
 
 item_add(51,0,"Blaster Rifle A") //Title
 item_add(51,1,10) //Max Stack
-item_add(51,2,spr_rifle2) //Sprite
-item_add(51,3,false) //Does have effect?
-item_add(51,4,"")  //If yes, put script here on string, if not, just put ""
+item_add(51,2,spr_rifle1) //Sprite
+item_add(51,3,true) //Does have effect?
+item_add(51,4,"scr_equip_weapon,51")  //If yes, put script here on string, if not, just put ""
 item_add(51,5,"Your basic space gun") //Description
+item_add(51,6,obj_blaster1) //Object to equip
 
 item_add(52,0,"Crate Master Card")
 item_add(52,1,10)
@@ -377,3 +378,19 @@ item_add(53,2,spr_ItemIcon_Grenade)
 item_add(53,3,false)
 item_add(53,4,"")
 item_add(53,5,"A powerful bomb. Amazingly, still safe to use on spaceships.")
+
+item_add(54,0,"Flamethrower A1") //Title
+item_add(54,1,10) //Max Stack
+item_add(54,2,spr_flamer1) //Sprite
+item_add(54,3,true) //Does have effect?
+item_add(54,4,"scr_equip_weapon,54")  //If yes, put script here on string, if not, just put ""
+item_add(54,5,"An advanced flamethrower") //Description
+item_add(54,6,obj_flamethrower1) //Object to equip
+
+item_add(55,0,"Warp Sword") //Title
+item_add(55,1,10) //Max Stack
+item_add(55,2,spr_laser_sword) //Sprite
+item_add(55,3,true) //Does have effect?
+item_add(55,4,"scr_equip_weapon,55")  //If yes, put script here on string, if not, just put ""
+item_add(55,5,"A mysterious weapon of unknown origin.") //Description
+item_add(55,6,obj_warp_sword) //Object to equip

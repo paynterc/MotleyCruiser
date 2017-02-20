@@ -14,7 +14,7 @@ My additions - pagination
 ***********************/
 start_row = page * rows_per_page;
 page_rows = min(rows - start_row,rows_per_page);
-var start_index = start_row * cols;// 0, 50, 100
+start_index = start_row * cols;// 0, 50, 100
 /************************
 end - pagination
 ***********************/

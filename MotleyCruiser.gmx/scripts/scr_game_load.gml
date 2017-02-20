@@ -80,6 +80,7 @@ if(ini_section_exists(game)){
     
     
     scr_inv_load(game);
+    
 
     global.current_sector_row =  ini_read_real(game, "current_sector_row", 10);
     global.current_sector_col =  ini_read_real(game, "current_sector_col", 10);
@@ -88,6 +89,9 @@ if(ini_section_exists(game)){
     global.mission_id =  ini_read_real(game, "mission_id", 0);
     global.objective_inc =  ini_read_real(game, "objective_inc", 0);
     global.credits =  ini_read_real(game, "credits", 0);
+    
+    // Equipment - created map in obj_game_control
+
         
     //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
     //random_set_seed(global.galaxy_seed);
@@ -100,7 +104,21 @@ if(ini_section_exists(game)){
     scr_make_galaxy_WEIGHTED();
     global.player_ship = global.ship_library[10];
     global.new_ship=true;
-    scr_inv_item_add(53,20);
+    scr_inv_item_add(51,1);//blaster
+    scr_inv_item_add(42,5);
+    scr_inv_item_add(2,3);
+    scr_inv_item_add(53,10);
+    
+    
+    
+    // Equipment
+    ds_map_add(global.equipped, "weapon", 55);
+    ds_map_add(global.equipped, "hot0", 42);//med
+    ds_map_add(global.equipped, "hot1", 2);//flash
+    ds_map_add(global.equipped, "hot2", 53);//grenade
+    
+    
+    
     
 }
 ini_close();

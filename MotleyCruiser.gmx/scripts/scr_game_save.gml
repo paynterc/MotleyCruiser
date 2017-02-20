@@ -19,6 +19,7 @@ scr_write_array(global.galaxy,game,"galaxy",SAVE_GAME_FILE);
 
 scr_inv_save(game);
 
+
 ini_write_real(game,"current_sector_row",global.current_sector_row);
 ini_write_real(game,"current_sector_col",global.current_sector_col);
 ini_write_real(game,"player_x",global.player_x);

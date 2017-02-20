@@ -27,6 +27,23 @@ switch(argument0){
         && keyboard_check(vk_shift)
         && global.show_inventory;
         break;
+    case "inventory_select_next":
+        return gamepad_button_check_released(global.pad,gp_padr)
+        && global.show_inventory;
+        break;
+    case "inventory_select_prev":
+        return gamepad_button_check_released(global.pad,gp_padl)
+        && global.show_inventory;
+        break; 
+    case "inventory_select_down":
+        return gamepad_button_check_released(global.pad,gp_padd)
+        && global.show_inventory;
+        break;       
+    case "inventory_select_up":
+        return gamepad_button_check_released(global.pad,gp_padu)
+        && global.show_inventory;
+        break;
+         
     case "dock":
         return keyboard_check_pressed(ord("D"))
         && instance_exists(obj_space_level);
@@ -100,6 +117,12 @@ switch(argument0){
     case "invul_mode":
         return  
         keyboard_check_pressed(ord("I"))
+        && keyboard_check(vk_shift)
+        && debug_mode;
+        break;
+    case "auto_capture":
+        return  
+        keyboard_check_pressed(ord("C"))
         && keyboard_check(vk_shift)
         && debug_mode;
         break;

@@ -77,7 +77,8 @@ pierce_living = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>part_particles_create(global.Particles, x, y, global.ptcl_hole, 5);
+            <string>/// Particle
+part_particles_create(global.Particles, x, y, global.ptcl_hole, 1);
 </string>
           </argument>
         </arguments>

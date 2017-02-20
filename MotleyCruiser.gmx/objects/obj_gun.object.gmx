@@ -34,6 +34,8 @@ destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
 bullet_speed = 10;
 range=400;
+gun_sound=snd_laser3;
+inventory_id=noone;// Refers to inventory item library
 
 image_speed = .05;
 
@@ -102,9 +104,9 @@ if(shooting &amp;&amp; !global.paused){
     bullet.speed = bullet_speed;    
     bullet.damage = damage;
     if(bullet_sprite!=noone){
-        bullet.image_index=bullet_sprite;
+        bullet.sprite_index=bullet_sprite;
     }
-    audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2); 
+    audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2); 
 }
 
 

@@ -15,6 +15,8 @@
       <sound>sound\snd_laser2</sound>
       <sound>sound\snd_laser3</sound>
       <sound>sound\snd_pulse1</sound>
+      <sound>sound\snd_singularity_charge</sound>
+      <sound>sound\snd_singularity_launch</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\snd_theme1</sound>
@@ -31,6 +33,7 @@
   <sprites name="sprites">
     <sprites name="_aliens">
       <sprite>sprites\spr_androne</sprite>
+      <sprite>sprites\spr_asteroz</sprite>
       <sprite>sprites\spr_selwat</sprite>
       <sprite>sprites\spr_drone1</sprite>
       <sprite>sprites\spr_androne_fml</sprite>
@@ -106,7 +109,12 @@
     </sprites>
     <sprites name="_personal_equipment">
       <sprite>sprites\spr_rifle1</sprite>
+      <sprite>sprites\spr_blaster1</sprite>
+      <sprite>sprites\spr_blaster3</sprite>
+      <sprite>sprites\spr_blaster2</sprite>
       <sprite>sprites\spr_rifle2</sprite>
+      <sprite>sprites\spr_flamer1</sprite>
+      <sprite>sprites\spr_singularity_gun</sprite>
       <sprite>sprites\spr_singularity</sprite>
       <sprite>sprites\spr_shotgun1</sprite>
       <sprite>sprites\spr_laser_sword</sprite>
@@ -337,6 +345,7 @@
     <sprite>sprites\spr_melee_sword</sprite>
     <sprite>sprites\sprite241</sprite>
     <sprite>sprites\spr_melee_area</sprite>
+    <sprite>sprites\spr_flame_area</sprite>
     <sprite>sprites\spr_exit</sprite>
     <sprite>sprites\spr_exit_inactive</sprite>
     <sprite>sprites\sprite245</sprite>
@@ -601,6 +610,8 @@
         <script>scripts\scr_smart_heal.gml</script>
         <script>scripts\scr_hotbar_init.gml</script>
         <script>scripts\scr_hotbar_update.gml</script>
+        <script>scripts\scr_inv_item_read.gml</script>
+        <script>scripts\scr_equip_weapon.gml</script>
       </scripts>
     </scripts>
     <scripts name="_ship_editor">
@@ -873,7 +884,6 @@
     <scripts name="_messages">
       <script>scripts\scr_display_message.gml</script>
     </scripts>
-    <script>scripts\script376.gml</script>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
       <script>scripts\scr_flash.gml</script>
