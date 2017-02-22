@@ -357,7 +357,7 @@ item_add(50,3,false)
 item_add(50,4,"")
 item_add(50,5,"A highly addictive drug.")
 
-item_add(51,0,"Blaster Rifle A") //Title
+item_add(51,0,"Blaster Type 1") //Title
 item_add(51,1,10) //Max Stack
 item_add(51,2,spr_rifle1) //Sprite
 item_add(51,3,true) //Does have effect?
@@ -394,3 +394,19 @@ item_add(55,3,true) //Does have effect?
 item_add(55,4,"scr_equip_weapon,55")  //If yes, put script here on string, if not, just put ""
 item_add(55,5,"A mysterious weapon of unknown origin.") //Description
 item_add(55,6,obj_warp_sword) //Object to equip
+
+item_add(56,0,"Heavy Blaster Type 1") //Title
+item_add(56,1,10) //Max Stack
+item_add(56,2,spr_rifle2) //Sprite
+item_add(56,3,true) //Does have effect?
+item_add(56,4,"scr_equip_weapon,56")  //If yes, put script here on string, if not, just put ""
+item_add(56,5,"Larger and heavier than a standard hand blaster.") //Description
+item_add(56,6,obj_heavy_blaster1) //Object to equip
+
+item_add(57,0,"Singularity Cannon") //Title
+item_add(57,1,10) //Max Stack
+item_add(57,2,spr_singularity_gun) //Sprite
+item_add(57,3,true) //Does have effect?
+item_add(57,4,"scr_equip_weapon,57")  //If yes, put script here on string, if not, just put ""
+item_add(57,5,"Fires a miniature black hole. Slow moving but unstoppable, the singularity will suck up all projectiles it comes in contact with.") //Description
+item_add(57,6,obj_singularity_gun) //Object to equip

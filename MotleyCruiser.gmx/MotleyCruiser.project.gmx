@@ -385,6 +385,7 @@
     </scripts>
     <scripts name="_crew">
       <script>scripts\scr_remove_from_crew.gml</script>
+      <script>scripts\scr_instantiate_all_crew.gml</script>
       <script>scripts\scr_get_active_crew_count.gml</script>
       <script>scripts\scr_npc_in_crew.gml</script>
       <script>scripts\scr_daily_expenses.gml</script>
@@ -533,6 +534,7 @@
       <script>scripts\scr_example_leaf.gml</script>
       <script>scripts\scr_contraband.gml</script>
       <script>scripts\scr_npc_drops.gml</script>
+      <script>scripts\scr_npc_weapons.gml</script>
     </scripts>
     <scripts name="_libraries">
       <script>scripts\scr_guns.gml</script>
@@ -582,7 +584,6 @@
         <script>scripts\scr_gridcol_line_plus.gml</script>
       </scripts>
       <script>scripts\scr_reset_room_random.gml</script>
-      <script>scripts\scr_instantiate_all_crew.gml</script>
       <script>scripts\scr_instantiate_enemy.gml</script>
       <script>scripts\scr_save_room.gml</script>
       <script>scripts\scr_check_ship_capture.gml</script>
@@ -612,6 +613,7 @@
         <script>scripts\scr_hotbar_update.gml</script>
         <script>scripts\scr_inv_item_read.gml</script>
         <script>scripts\scr_equip_weapon.gml</script>
+        <script>scripts\scr_grant_random_weapon.gml</script>
       </scripts>
     </scripts>
     <scripts name="_ship_editor">
@@ -959,6 +961,10 @@
     <object>objects\obj_glare_controller</object>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
+      <object>objects\obj_team</object>
+      <object>objects\obj_crew</object>
+      <object>objects\obj_enemy</object>
+      <object>objects\obj_sentient</object>
       <object>objects\obj_room_level</object>
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
@@ -967,11 +973,7 @@
       <object>objects\obj_core</object>
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_mortal</object>
-      <object>objects\obj_team</object>
-      <object>objects\obj_crew</object>
-      <object>objects\obj_enemy</object>
       <object>objects\obj_drone</object>
-      <object>objects\obj_sentient</object>
       <object>objects\obj_health_bar</object>
       <object>objects\obj_arm</object>
       <object>objects\obj_wall_invis</object>
@@ -1024,6 +1026,7 @@
     <objects name="_room_combat">
       <object>objects\obj_bullet</object>
       <object>objects\obj_gun</object>
+      <object>objects\obj_heavy_blaster1</object>
       <object>objects\obj_singularity_gun</object>
       <object>objects\obj_blaster1</object>
       <object>objects\obj_beam_gun</object>
@@ -1089,7 +1092,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="255">
+  <constants number="261">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1117,6 +1120,7 @@
     <constant name="NPC_SEX">13</constant>
     <constant name="NPC_HIRE_PRICE">14</constant>
     <constant name="NPC_SPRITE">15</constant>
+    <constant name="NPC_EQUIPMENT">16</constant>
     <constant name="D_BRANCH_TEXT">0</constant>
     <constant name="D_BRANCH_TYPE">1</constant>
     <constant name="D_BRANCH_BUTTONS">2</constant>
@@ -1345,6 +1349,11 @@
     <constant name="LOC_GLOBAL_INDEX">5</constant>
     <constant name="LOC_TYPE">6</constant>
     <constant name="LOC_NAME_1">7</constant>
+    <constant name="EQUIP_WEAPON1">0</constant>
+    <constant name="EQUIP_WEAPON2">1</constant>
+    <constant name="EQUIP_HEAD">2</constant>
+    <constant name="EQUIP_BODY">3</constant>
+    <constant name="EQUIP_BELT">4</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

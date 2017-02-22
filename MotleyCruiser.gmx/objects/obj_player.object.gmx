@@ -167,7 +167,7 @@ if(hspd==0 &amp;&amp; vspd==0){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Update weapon  position and angle
+            <string>/// User input. Update weapon
 if(weapon != noone){
     weapon.x = x;
     weapon.y = y;

@@ -50,8 +50,9 @@ weapon_index = noone;
 weapon=noone;
 race_index = noone;
 sex = noone;
+bullet_width=1; // Use this to add to range. Useful for melee weapons with short range but big bullets.
 
-alarm[0] = room_speed;// Move and shoot
+alarm[0] = room_speed * .5;// Move and shoot
 </string>
           </argument>
         </arguments>
@@ -117,6 +118,7 @@ if(!global.paused){
     
     var inview = scr_instance_in_view(self);
     
+    
     /***
     Find closest member of the player's boarding team. This includes the player.
     ***/
@@ -155,7 +157,7 @@ if(!global.paused){
             }
     
             if(weapon!=noone){
-                if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; pd&lt;=weapon.range ){
+                if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; pd&lt;=weapon.range + bullet_width ){
                     /// Start shooting
         
                     weapon.image_angle =  point_direction(x, y, px, py);
@@ -174,7 +176,7 @@ if(!global.paused){
             scr_get_path_to_point(px,py,pspeed);
             //path_get_number(path)&lt;5
             if(weapon!=noone){
-                if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; inview &amp;&amp; pd&lt;=weapon.range ){
+                if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; inview &amp;&amp; pd&lt;=weapon.range + bullet_width){
                     path_end();
                     if(weapon!=noone){
                         weapon.image_angle =  point_direction(x, y, px, py);
@@ -204,7 +206,7 @@ if(!global.paused){
 
 }
 
-alarm[0] = room_speed * 2;
+alarm[0] = room_speed * .5;
 </string>
           </argument>
         </arguments>
@@ -264,15 +266,18 @@ if(hp_current&lt;1){
             <kind>1</kind>
             <string>/// Equip weapon. Update weapon position and angle
 if(weapon==noone &amp;&amp; weapon_index!=noone){
-    weapon = instance_create(x,y,weapon_index);
-    weapon.weaponSpeed = .5;
-    weapon.type = type;
-    weapon.parent_obj = id;
-    if(race_index==10){
-        //Zomboid
-        weapon.sprite_index = noone;
-        weapon.opsprite = noone; // original sprite
-        weapon.animation_spr = spr_melee_swish;
+    var weapon_list = scr_npc_weapons();
+    var weapon_id = scr_array_random(weapon_list);
+    weapon_index = scr_inv_item_read(weapon_id,6);// Slot 6 holds the object name
+    if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
+
+        weapon = instance_create(x,y,weapon_index);
+        weapon.weaponSpeed = max(.5, weapon.weaponSpeed * 2); // slow down fire rate for enemies. lower the number, the faster
+        weapon.type = type;
+        weapon.parent_obj = id;
+        weapon.bullet_speed = max(round(weapon.bullet_speed/2),3);// Slow down bullets from enemy. higher the faster.
+        bullet_width = sprite_get_width(weapon.bullet_sprite);
+        
     }
 }
 

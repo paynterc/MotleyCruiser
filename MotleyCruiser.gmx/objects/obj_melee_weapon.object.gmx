@@ -72,8 +72,8 @@ if(shooting){
 
 
         
-    xdir = x+lengthdir_x(15, image_angle);
-    ydir = y+lengthdir_y(15, image_angle);
+    xdir = x+lengthdir_x(range, image_angle);
+    ydir = y+lengthdir_y(range, image_angle);
         
     var bullet = instance_create(xdir,ydir,myBullet);
     if(bullet_sprite!=noone){

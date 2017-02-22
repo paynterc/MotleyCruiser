@@ -445,7 +445,7 @@ if(global.show_inventory){
     
     //Read the script "item_int" for more information for item_id_read
     
-    if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined( inventory_read("ID",inventory_last_select()) ) ){
+    if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined(id_last) &amp;&amp; id_last!=-1 ){
         
         draw_set_halign(fa_center);
         draw_set_valign(fa_center);

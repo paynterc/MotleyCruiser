@@ -54,7 +54,7 @@ shooting = false;
 destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
 bullet_speed = 0;
-range=32;
+range=16;
 opsprite = sprite_index;
 xdir=x;
 ydir=y;

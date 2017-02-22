@@ -17,5 +17,5 @@ npc[NPC_OCCUPATION]=noone;
 npc[NPC_SEX]=0;// 0 male, 1 female, 2 ???
 npc[NPC_HIRE_PRICE]=25;
 npc[NPC_SPRITE]=noone;
-
+npc[NPC_EQUIPMENT]=noone;
 return npc;

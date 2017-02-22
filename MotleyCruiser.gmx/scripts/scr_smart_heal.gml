@@ -4,33 +4,31 @@ options.
 ***/
 //scr_smart_heal()
 if(!instance_exists(obj_player)) return false;
-var hp = obj_player.hp;
-var hpc = obj_player.hp_current;
-var hpd = hp-hpc;
 
-if(hp==hpc) return false; // No damage. No need to heal
+var heal_player = obj_player.hp_current<obj_player.hp;
+var heal_crewmem = false;
 
-var heal1;
-var heal2;
-
-if(hpd>5){
-    // More than 5 damage. Use a big heal.
-    heal1=42;
-    heal2=9;
-
-}else{
-    // Prioritize a small heal
-    heal1=9;
-    heal2=42;
+// Check for injured crew
+for(var i=0;i<instance_number(obj_crew);i++){
+    var crewmem = instance_find(obj_crew,i);
+    if(crewmem.hp_current<crewmem.hp){
+        heal_crewmem=true;
+        break;
+    }
 }
+
+
+if(!heal_crewmem && !heal_player){
+    audio_play_sound(snd_fail,1,0);
+    return false; // No damage. No need to heal
+}
+
+var heal1=42;// Item 42 is a healbag.
+
 
 if(scr_inv_item_count(heal1)>0){
     scr_inv_item_decrement(heal1);
-    scr_script_parse(item_id_read(heal1,4));
-    audio_play_sound(snd_heal,2,0);      
-}else if(scr_inv_item_count(heal2)>0){
-    scr_inv_item_decrement(heal2);
-    scr_script_parse(item_id_read(heal2,4));
+    scr_script_parse(item_id_read(42,4));
     audio_play_sound(snd_heal,2,0);       
 }else{
     audio_play_sound(snd_fail,1,0);

@@ -1,3 +1,4 @@
+/// Player equips weapon
 // scr_equip_weapon(item_id)
 if(ds_map_exists(global.equipped,"weapon")){
     

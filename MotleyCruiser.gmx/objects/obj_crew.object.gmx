@@ -34,6 +34,7 @@ global_index = noone;
 crew_index = noone;
 team_index = noone;
 
+
 path = path_add();
 
 //hunt, defend, hold
@@ -52,9 +53,8 @@ r_speed=.5;//reaction speed
 image_speed = .5;
 
 
-// Equip weapon
-weapon = instance_create(x,y,obj_gun);
-weapon.type = type;
+// Equip weapon in the step event, after npc_data is assigned.
+weapon = noone;
 
 sprite_default = spr_default;
 sprite_index = sprite_default;
@@ -266,6 +266,49 @@ alarm[0] = room_speed * r_speed;
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Equip weapon
+if(weapon==noone &amp;&amp; npc_data!=noone){
+    var equipment=noone;
+    var weapon_id=noone;
+    var weapon_index=noone;
+    if(array_length_1d(npc_data)&gt;=NPC_EQUIPMENT){
+        equipment = npc_data[NPC_EQUIPMENT];
+        if(is_array(equipment)){
+            weapon_id = equipment[EQUIP_WEAPON1];
+            if(weapon_id!=noone){
+                weapon_index = scr_inv_item_read(weapon_id,6);// Slot 6 holds the object name
+            }
+        }
+    }
+    
+    if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
+        weapon = instance_create(x,y,weapon_index);         
+    }else{
+        weapon = instance_create(x,y,obj_gun);
+    }
+      
+    weapon.type = type;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
