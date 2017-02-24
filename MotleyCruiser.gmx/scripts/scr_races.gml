@@ -122,5 +122,12 @@ races[16,RACE_SPR] = "spr_miota,spr_miota2";
 races[16,RACE_SPR_FML] = noone;
 races[16,RACE_SEXES] = 1;
 
+races[17,RACE_NAME] = "Asteroz";
+races[17,RACE_BASE_HP] = 9;
+races[17,RACE_BASE_SPD] = 2;
+races[17,RACE_SPR] = "spr_asteroz";
+races[17,RACE_SPR_FML] = noone;
+races[17,RACE_SEXES] = 1;
+
 
 return races;
