@@ -25,5 +25,8 @@ map[MOON_SECTOR]=sector;
 map[MOON_NPCS] = noone;
 map[MOON_PLANET]=noone;
 map[MOON_NAME] = totro_plus(1,4,1,0,0);
+map[MOON_ECONOMY]=irandom(3);
+map[MOON_ECON_MOD] = random_range(.25,1.25);
+map[MOON_ECON_OFFSET] = random(1);
 
 return map;

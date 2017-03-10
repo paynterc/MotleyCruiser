@@ -11,5 +11,8 @@ map[MOON_NPCS] = noone;
 map[MOON_PLANET] = noone;
 map[MOON_NAME] = "Temp";
 map[MOON_GLOBAL_INDEX] = noone;
+map[MOON_ECONOMY]=noone;
+map[MOON_ECON_MOD] = noone;
+map[MOON_ECON_OFFSET] = noone;
 
 return map;

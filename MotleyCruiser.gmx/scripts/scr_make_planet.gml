@@ -35,6 +35,8 @@ map[PLANET_SECTOR]=sector;
 map[PLANET_NPCS] = noone;
 map[PLANET_SUN] = noone;
 map[PLANET_NAME] = totro_plus(1,4,1,0,0);
-
+map[PLANET_ECONOMY]=irandom(3);
+map[PLANET_ECON_MOD] = random_range(.25,1.25);
+map[PLANET_ECON_OFFSET] = random(1);
 
 return map;

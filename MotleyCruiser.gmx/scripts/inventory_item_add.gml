@@ -25,7 +25,7 @@ for (i=0; i<(global.InventorySlot*global.InventorySlotH); i+=1)
 
 while (stack > 0){
       inventory_empty = false
-      for (i=0; i<(global.InventorySlot*global.InventorySlotH); i+=1)
+      for (i=0; i<(global.InventorySlot*global.InventorySlotH); i++)
       {
          if ds_map_find_value(global.inventory,"slot"+string(i)) = false{
             inventory_empty = true
@@ -52,6 +52,7 @@ while (stack > 0){
                   break;
                }
             }
+            var test=0;
        }
     }else{
        break;

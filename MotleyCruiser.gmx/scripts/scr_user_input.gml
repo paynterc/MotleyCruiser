@@ -8,7 +8,7 @@ switch(argument0){
         return keyboard_check(vk_space) || mouse_check_button(mb_left) || gamepad_button_value(global.pad, gp_shoulderrb);
         break;
     case "fire_alt":
-        return keyboard_check(vk_shift) || mouse_check_button_released(mb_right) || gamepad_button_check_released(global.pad, gp_shoulderr);
+        return mouse_check_button_released(mb_right) || gamepad_button_check_released(global.pad, gp_shoulderr);
         break;
     case "thrust":
         return keyboard_check(vk_up) || gamepad_axis_value(global.pad, gp_axislv) < 0;
@@ -73,7 +73,7 @@ switch(argument0){
         (keyboard_check_pressed(ord("E")) || gamepad_button_check_released(global.pad, gp_face1));
         break;
     case "interact":
-        return keyboard_check_pressed(ord("E"));
+        return !global.show_inventory && keyboard_check_pressed(ord("E"));
         break;
     case "board_ship":
         return instance_exists(obj_space_level) && keyboard_check_pressed(ord("B"));
@@ -100,7 +100,13 @@ switch(argument0){
         keyboard_check_pressed(ord("W")) 
         && keyboard_check(vk_shift)
         && debug_mode;
-        break;       
+        break;
+    case "open_trade_window":
+        return  
+        keyboard_check_released(ord("T")) 
+        && keyboard_check(vk_shift)
+        && debug_mode;
+        break;               
     case "pause":
         return keyboard_check_pressed(vk_escape);
     case "inventory":

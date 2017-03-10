@@ -10,5 +10,8 @@ map[STATION_SECTOR]=noone;
 map[STATION_NPCS] = noone;
 map[STATION_NAME] = "Temp";
 map[STATION_GLOBAL_INDEX] = noone;
+map[STATION_ECONOMY]=noone;
+map[STATION_ECON_MOD] = noone;
+map[STATION_ECON_OFFSET] = noone;
 
 return map;

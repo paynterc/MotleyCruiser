@@ -27,5 +27,8 @@ map[STATION_SPRITE_INDEX]=floor(random(sprite_get_number(spr_station)));
 map[STATION_NPCS]=noone;
 map[STATION_SECTOR]=sector;
 map[STATION_NAME] = totro_plus(1,4,1,0,0);
+map[STATION_ECONOMY]=irandom(3);
+map[STATION_ECON_MOD] = random_range(.25,1.25);
+map[STATION_ECON_OFFSET] = random(1);
 
 return map;

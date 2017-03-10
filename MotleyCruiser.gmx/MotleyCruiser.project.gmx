@@ -270,6 +270,7 @@
         <sprite>sprites\spr_ItemIcon_Diamant</sprite>
         <sprite>sprites\spr_ItemIcon_Diamonds</sprite>
         <sprite>sprites\spr_ItemIcon_EmptyBucket</sprite>
+        <sprite>sprites\spr_ItemIcon_Fruit</sprite>
         <sprite>sprites\spr_ItemIcon_EmptyIronBucket</sprite>
         <sprite>sprites\spr_ItemIcon_Feather</sprite>
         <sprite>sprites\spr_keycard</sprite>
@@ -304,6 +305,7 @@
         <sprite>sprites\spr_ItemIcon_Sticky</sprite>
         <sprite>sprites\spr_ItemIcon_Stone</sprite>
         <sprite>sprites\spr_ItemIcon_WaterBucket</sprite>
+        <sprite>sprites\spr_ItemIcon_BeerBucket</sprite>
         <sprite>sprites\spr_ItemIcon_XPTrank</sprite>
       </sprites>
     </sprites>
@@ -596,7 +598,6 @@
       <script>scripts\scr_start_alarm.gml</script>
     </scripts>
     <scripts name="_service">
-      <script>scripts\scr_get_random_item.gml</script>
       <script>scripts\scr_global_update.gml</script>
       <script>scripts\scr_user_input.gml</script>
       <script>scripts\scr_view_zoom.gml</script>
@@ -614,6 +615,8 @@
         <script>scripts\scr_inv_item_read.gml</script>
         <script>scripts\scr_equip_weapon.gml</script>
         <script>scripts\scr_grant_random_weapon.gml</script>
+        <script>scripts\scr_get_random_item.gml</script>
+        <script>scripts\scr_inv_has_space.gml</script>
       </scripts>
     </scripts>
     <scripts name="_ship_editor">
@@ -890,6 +893,14 @@
       <script>scripts\scr_heal_player.gml</script>
       <script>scripts\scr_flash.gml</script>
     </scripts>
+    <scripts name="_trade">
+      <script>scripts\scr_trade_buy.gml</script>
+      <script>scripts\scr_trade_buy_all.gml</script>
+      <script>scripts\scr_trade_sell.gml</script>
+      <script>scripts\scr_trade_sell_all.gml</script>
+      <script>scripts\scr_trade_calc_price.gml</script>
+      <script>scripts\scr_trade_sector_economy.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -955,6 +966,7 @@
     <object>objects\obj_ship_data</object>
     <object>objects\obj_mission_log</object>
     <object>objects\obj_message_box</object>
+    <object>objects\obj_trade</object>
     <object>objects\obj_button_basic</object>
     <object>objects\obj_object_pool</object>
     <object>objects\obj_module</object>
@@ -1092,7 +1104,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="261">
+  <constants number="277">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1152,6 +1164,9 @@
     <constant name="PLANET_SUN">8</constant>
     <constant name="PLANET_NAME">9</constant>
     <constant name="PLANET_GLOBAL_INDEX">10</constant>
+    <constant name="PLANET_ECONOMY">11</constant>
+    <constant name="PLANET_ECON_MOD">12</constant>
+    <constant name="PLANET_ECON_OFFSET">13</constant>
     <constant name="MOON_X1">0</constant>
     <constant name="MOON_Y1">1</constant>
     <constant name="MOON_W1">2</constant>
@@ -1162,6 +1177,9 @@
     <constant name="MOON_PLANET">7</constant>
     <constant name="MOON_NAME">8</constant>
     <constant name="MOON_GLOBAL_INDEX">9</constant>
+    <constant name="MOON_ECONOMY">10</constant>
+    <constant name="MOON_ECON_MOD">11</constant>
+    <constant name="MOON_ECON_OFFSET">12</constant>
     <constant name="STATION_X1">0</constant>
     <constant name="STATION_Y1">1</constant>
     <constant name="STATION_W1">2</constant>
@@ -1171,6 +1189,9 @@
     <constant name="STATION_SECTOR">6</constant>
     <constant name="STATION_NAME">7</constant>
     <constant name="STATION_GLOBAL_INDEX">8</constant>
+    <constant name="STATION_ECONOMY">9</constant>
+    <constant name="STATION_ECON_MOD">10</constant>
+    <constant name="STATION_ECON_OFFSET">11</constant>
     <constant name="SHIP_TURN_SPEED">0</constant>
     <constant name="SHIP_MAX_SPEED">1</constant>
     <constant name="SHIP_MAX_FWD">2</constant>
@@ -1349,11 +1370,18 @@
     <constant name="LOC_GLOBAL_INDEX">5</constant>
     <constant name="LOC_TYPE">6</constant>
     <constant name="LOC_NAME_1">7</constant>
+    <constant name="LOC_ECONOMY">8</constant>
+    <constant name="LOC_ECON_MOD">9</constant>
+    <constant name="LOC_ECON_OFFSET">10</constant>
     <constant name="EQUIP_WEAPON1">0</constant>
     <constant name="EQUIP_WEAPON2">1</constant>
     <constant name="EQUIP_HEAD">2</constant>
     <constant name="EQUIP_BODY">3</constant>
     <constant name="EQUIP_BELT">4</constant>
+    <constant name="CC_AGRICULTURE">0</constant>
+    <constant name="CC_MINING">1</constant>
+    <constant name="CC_INDUSTRIAL">2</constant>
+    <constant name="CC_TECH">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

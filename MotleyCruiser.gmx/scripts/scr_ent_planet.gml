@@ -12,5 +12,7 @@ map[PLANET_NPCS] = noone;
 map[PLANET_SUN] = noone;
 map[PLANET_NAME] = "Temp";
 map[PLANET_GLOBAL_INDEX] = noone;
-
+map[PLANET_ECONOMY] = noone;
+map[PLANET_ECON_MOD] = noone;
+map[PLANET_ECON_OFFSET] = noone;
 return map;

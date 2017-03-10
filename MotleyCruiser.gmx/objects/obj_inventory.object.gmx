@@ -116,7 +116,8 @@ if(global.game_loaded==noone){
 if(scr_user_input("inventory")){
     global.show_inventory = !global.show_inventory;
     if(global.show_inventory){
-        event_user(0);
+        event_user(0);//update window size
+        event_user(1);//update inventory size
         page=0;
         global.ItemSelected=-1;
         global.ItemLastSelect=-1;
@@ -125,9 +126,7 @@ if(scr_user_input("inventory")){
 
 if(!global.show_inventory) exit;
 
-if(global.player_ship!=noone){
-    rows = global.base_inventory_rows + global.player_ship[SHIP_CARGO];
-}
+
 
 if(scr_user_input("inventory_page_left")){
     page = max(0,page-1);
@@ -334,6 +333,44 @@ if(global.show_inventory){
         }
     }
     
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update inventory size based on ship storage
+
+if(global.player_ship!=noone){
+    rows = global.base_inventory_rows + global.player_ship[SHIP_CARGO];
+    slot_h = rows;
+    global.InventorySlotH=rows;
+    for (i=0; i&lt;(slot*slot_h); i++)
+    {
+        if(is_undefined(ds_map_find_value(global.inventory,"slot"+string(i)))){
+            ds_map_add(global.inventory,"slot"+string(i),false);
+            ds_map_add(global.inventory,"ID"+string(i),-1);
+            ds_map_add(global.inventory,"Stack"+string(i),-1);
+        }
+
+    }   
 }
 </string>
           </argument>

@@ -23,6 +23,7 @@ if(loc==noone){
 
 var name;
 if(type=="planet"){
+
     name = loc[PLANET_NAME];
     loc_map[LOC_X1] = loc[PLANET_X1];
     loc_map[LOC_Y1] = loc[PLANET_Y1];
@@ -30,9 +31,14 @@ if(type=="planet"){
     loc_map[LOC_NPCS] = loc[PLANET_NPCS];
     loc_map[LOC_SECTOR] = loc[PLANET_SECTOR];
     loc_map[LOC_GLOBAL_INDEX] = loc[PLANET_GLOBAL_INDEX];
+    loc_map[LOC_ECONOMY] = loc[PLANET_ECONOMY];
     loc_map[LOC_TYPE] = "planet";
     loc_map[LOC_NAME_1] = name[0];
+    loc_map[LOC_ECON_MOD]=loc[PLANET_ECON_MOD];
+    loc_map[LOC_ECON_OFFSET]=loc[PLANET_ECON_OFFSET];
+    
 }else if(type=="moon"){
+
     name = loc[MOON_NAME];
     loc_map[LOC_X1] = loc[MOON_X1];
     loc_map[LOC_Y1] = loc[MOON_Y1];
@@ -42,6 +48,10 @@ if(type=="planet"){
     loc_map[LOC_GLOBAL_INDEX] = loc[MOON_GLOBAL_INDEX];
     loc_map[LOC_TYPE] = "moon";
     loc_map[LOC_NAME_1] = name[0];
+    loc_map[LOC_ECONOMY] = loc[MOON_ECONOMY];
+    loc_map[LOC_ECON_MOD]=loc[MOON_ECON_MOD];
+    loc_map[LOC_ECON_OFFSET]=loc[MOON_ECON_OFFSET];
+    
 }else if(type=="station"){
     name = loc[STATION_NAME];
     loc_map[LOC_X1] = loc[STATION_X1];
@@ -52,6 +62,10 @@ if(type=="planet"){
     loc_map[LOC_GLOBAL_INDEX] = loc[STATION_GLOBAL_INDEX];
     loc_map[LOC_TYPE] = "station";
     loc_map[LOC_NAME_1] = name[0];
+    loc_map[LOC_ECONOMY] = loc[STATION_ECONOMY];
+    loc_map[LOC_ECON_MOD]=loc[STATION_ECON_MOD];
+    loc_map[LOC_ECON_OFFSET]=loc[STATION_ECON_OFFSET];
+    
 }
 
 return loc_map;

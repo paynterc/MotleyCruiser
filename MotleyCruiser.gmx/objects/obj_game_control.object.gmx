@@ -111,7 +111,7 @@ global.credits = 1000;
 global.day = 0;
 
 // Inventory
-global.base_inventory_rows = 20;
+global.base_inventory_rows = 2;
 global.equipped = ds_map_create();
 scr_hotbar_init();
 

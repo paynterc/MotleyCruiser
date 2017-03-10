@@ -9,5 +9,8 @@ loc[LOC_SECTOR]=noone;
 loc[LOC_GLOBAL_INDEX]=noone;
 loc[LOC_TYPE]=noone;
 loc[LOC_NAME_1]=noone;// Names usually come in more than one part. This can hold the first part
+loc[LOC_ECONOMY]=noone;
+loc[LOC_ECON_MOD]=noone;
+loc[LOC_ECON_OFFSET]=noone;
 
 return loc;
