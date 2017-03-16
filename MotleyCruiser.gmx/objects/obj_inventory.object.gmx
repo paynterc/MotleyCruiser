@@ -125,7 +125,8 @@ if(obj_game_control.panel_pause[4]){
     exit;
 }
 
-if(scr_user_input("menu_close")){
+if(show &amp;&amp; scr_user_input("menu_close")){
+    scr_gui_set_context(noone);
     show = false;
     exit;
 }
@@ -138,6 +139,8 @@ if(scr_user_input("inventory")){
         page=0;
         global.ItemSelected=-1;
         global.ItemLastSelect=-1;
+    }else{
+        scr_gui_set_context(noone);
     }
 }
 

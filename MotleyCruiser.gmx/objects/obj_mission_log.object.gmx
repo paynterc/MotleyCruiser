@@ -87,7 +87,8 @@ if(obj_game_control.panel_pause[4]){
     exit;
 }
 
-if(scr_user_input("menu_close")){
+if(show &amp;&amp; scr_user_input("menu_close")){
+    scr_gui_set_context(noone);
     show = false;
     exit;
 }
@@ -98,6 +99,8 @@ if(scr_user_input("mission_log")){
     if(show){
         scr_gui_toggle_windows("mission");
         event_user(0);
+    }else{
+        scr_gui_set_context(noone);
     }
 }
 
