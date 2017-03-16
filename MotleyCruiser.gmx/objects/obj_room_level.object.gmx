@@ -144,12 +144,14 @@ alarm[0]=room_speed*.25
             <kind>1</kind>
             <string>/// Bullet time
 
+/****
 if(keyboard_check_released(ord("U"))){
     global.bullet_time = !global.bullet_time;
     if(global.bullet_time){
         audio_play_sound(snd_slowdown,1,0);
     }
 }
+****/
 
 if(global.bullet_time){
     //room_speed=10;

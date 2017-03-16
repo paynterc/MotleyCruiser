@@ -45,6 +45,8 @@ dialogue = noone;
 
 image_speed = .25;
 
+is_trader = false;
+
 
 </string>
           </argument>
@@ -99,6 +101,31 @@ glr_light_set_static(llight, true);/// Light
 if(active == 0){
     glr_light_destroy(llight);
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(is_trader){
+    draw_sprite(spr_trade_icon,0,x, y - sprite_height - sprite_get_height(spr_trade_icon)/2);
 }
 </string>
           </argument>

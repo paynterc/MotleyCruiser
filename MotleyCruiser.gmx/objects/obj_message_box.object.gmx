@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 show = false;
+clickable = false;
 depth = -1000000;
 
 raw_text="";
@@ -48,6 +49,30 @@ script = noone;
 
 scroll=0;
 maxlines=0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set clickable
+clickable = true;
 </string>
           </argument>
         </arguments>
@@ -109,19 +134,61 @@ if (keyboard_check_pressed(vk_anykey) == true)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Button hover
-if(show){
-    var bx = tx + (boxwidth/2)-75;
-    var by = ty + boxheight - 75;    
-    var guix = device_mouse_x_to_gui(0);
-    var guiy = device_mouse_y_to_gui(0);
+            <string>/// Button select
+var can_click = clickable &amp;&amp; (scr_gui_get_context()=="message");
+
+if(can_click){
+    if( gamepad_is_connected(global.pad) ){
     
-    xhover = ( guix == median(bx, guix, bx + 150) );
-    yhover = ( guiy == median(by, guiy, by + 50) );
+        if( scr_user_input('menu_op_select') ){
+            event_user(1);
+        }
+        
+        if(  scr_user_input('menu_close') ){
+            event_user(1);
+        }
+        
+        
+    }else{
     
+        var bx = tx + (boxwidth/2)-75;
+        var by = ty + boxheight - 75;    
+        var guix = device_mouse_x_to_gui(0);
+        var guiy = device_mouse_y_to_gui(0);
+        
+        xhover = ( guix == median(bx, guix, bx + 150) );
+        yhover = ( guiy == median(by, guiy, by + 50) );
+    
+    }   
 }else{
     xhover=false;
     yhover=false;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Show/Hide
+
+if(obj_game_control.panel_pause[4]){
+    // if pause menu showing close this menu
+    show = false;
 }
 </string>
           </argument>
@@ -147,10 +214,64 @@ if(show){
             <kind>1</kind>
             <string>/// Check if button clicked
 if(xhover &amp;&amp; yhover){
-    show=false;
-    global.paused = false;
-    scr_script_parse(script);
+    event_user(1)
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Show message
+event_user(0);
+show = true;
+scr_gui_set_context("message");
+alarm[0]=room_speed;//Delay before button is clickable
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// User selects OK
+show=false;
+clickable = false;
+scr_gui_return_context();
+global.paused = false;
+scr_script_parse(script);
 </string>
           </argument>
         </arguments>

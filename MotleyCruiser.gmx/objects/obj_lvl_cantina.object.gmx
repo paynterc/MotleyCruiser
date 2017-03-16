@@ -139,6 +139,8 @@ if(instance_number(obj_enemy)&lt;1 &amp;&amp; z_wave&gt;2){
           <argument>
             <kind>1</kind>
             <string>/// Spawn zombies
+if(!instance_exists(obj_player)) exit;
+
 var beast = 0;
 var beast_count = instance_number(obj_beast2);
 var beast_odds = 30;
@@ -193,6 +195,7 @@ alarm[2] = room_speed * 15;
 if(populated == true) exit;
 populated = true;
 var b_listers = true; // spawn b-listers
+var make_trader = true;
 
 location_index = global.landed_on;
 location_type = global.landed_type;
@@ -290,7 +293,11 @@ for(var i = 0; i &lt; s_count; i++) {
             with(sentient){
                 scr_npc_map_to_object();
             }
-    
+            if(make_trader){
+                make_trader = false;
+                sentient.is_trader = true;
+            }
+            
             if(npc[NPC_RACE_INDEX]!=5 &amp;&amp; npc[NPC_RACE_INDEX]!=7){
                 // I like Pudnings to move
                 sentient.image_speed = 0;

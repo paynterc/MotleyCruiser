@@ -347,6 +347,7 @@
     <sprite>sprites\spr_melee_sword</sprite>
     <sprite>sprites\sprite241</sprite>
     <sprite>sprites\spr_melee_area</sprite>
+    <sprite>sprites\spr_trade_icon</sprite>
     <sprite>sprites\spr_flame_area</sprite>
     <sprite>sprites\spr_exit</sprite>
     <sprite>sprites\spr_exit_inactive</sprite>
@@ -484,17 +485,25 @@
       <script>scripts\scr_set_gui_vars.gml</script>
     </scripts>
     <scripts name="_gui">
-      <script>scripts\scr_gui_set_panel_data.gml</script>
-      <script>scripts\scr_gui_draw_panel.gml</script>
-      <script>scripts\scr_gui_button_state.gml</script>
-      <script>scripts\scr_gui_button_click.gml</script>
-      <scripts name="_entity">
-        <script>scripts\scr_gui_entity_button.gml</script>
+      <scripts name="_gui_package">
+        <script>scripts\scr_gui_draw_panel.gml</script>
+        <script>scripts\scr_gui_button_state.gml</script>
+        <script>scripts\scr_gui_button_click.gml</script>
+        <script>scripts\scr_gui_set_panel_data.gml</script>
+        <scripts name="_entity">
+          <script>scripts\scr_gui_entity_button.gml</script>
+        </scripts>
       </scripts>
       <script>scripts\scr_update_button.gml</script>
       <script>scripts\scr_resize_gui.gml</script>
+      <script>scripts\scr_gui_toggle_windows.gml</script>
+      <script>scripts\scr_window_open.gml</script>
+      <script>scripts\scr_gui_set_context.gml</script>
+      <script>scripts\scr_gui_set_last_context.gml</script>
+      <script>scripts\scr_gui_get_context.gml</script>
+      <script>scripts\scr_gui_return_context.gml</script>
     </scripts>
-    <scripts name="_hule_inventory">
+    <scripts name="_inventory">
       <scripts name="Inventory">
         <scripts name="Inventory System">
           <script>scripts\inventory_int.gml</script>
@@ -964,13 +973,21 @@
     <object>objects\obj_game_control</object>
     <object>objects\obj_damager</object>
     <object>objects\obj_ship_data</object>
-    <object>objects\obj_mission_log</object>
-    <object>objects\obj_message_box</object>
-    <object>objects\obj_trade</object>
-    <object>objects\obj_button_basic</object>
     <object>objects\obj_object_pool</object>
     <object>objects\obj_module</object>
     <object>objects\obj_glare_controller</object>
+    <objects name="_dialogue">
+      <object>objects\obj_dialog_control</object>
+    </objects>
+    <objects name="_gui">
+      <object>objects\obj_gui_control</object>
+      <object>objects\obj_trade</object>
+      <object>objects\obj_mission_log</object>
+      <object>objects\obj_inventory</object>
+      <object>objects\obj_message_box</object>
+      <object>objects\obj_main_menu</object>
+      <object>objects\obj_button_basic</object>
+    </objects>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
       <object>objects\obj_team</object>
@@ -983,7 +1000,6 @@
       <object>objects\obj_lvl_cantina</object>
       <object>objects\obj_lvl_arena</object>
       <object>objects\obj_core</object>
-      <object>objects\obj_dialog_control</object>
       <object>objects\obj_mortal</object>
       <object>objects\obj_drone</object>
       <object>objects\obj_health_bar</object>
@@ -1013,6 +1029,12 @@
       <object>objects\obj_space_level</object>
       <object>objects\obj_ship_module</object>
       <object>objects\obj_ship_module_gun</object>
+      <objects name="_ships">
+        <object>objects\obj_ship</object>
+        <object>objects\obj_player_ship</object>
+        <object>objects\obj_npc_ship</object>
+        <object>objects\obj_landing_ship</object>
+      </objects>
       <object>objects\obj_ship_module_turret</object>
       <object>objects\obj_enemy_ship</object>
       <object>objects\obj_laser</object>
@@ -1024,16 +1046,9 @@
       <object>objects\obj_sun</object>
       <object>objects\obj_radar</object>
       <object>objects\obj_spark</object>
-      <objects name="_ships">
-        <object>objects\obj_ship</object>
-        <object>objects\obj_player_ship</object>
-        <object>objects\obj_npc_ship</object>
-        <object>objects\obj_landing_ship</object>
-      </objects>
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
-      <object>objects\obj_inventory</object>
     </objects>
     <objects name="_room_combat">
       <object>objects\obj_bullet</object>
@@ -1082,9 +1097,6 @@
       <object>objects\obj_form_text</object>
       <object>objects\obj_form_textbox</object>
       <object>objects\obj_form_button</object>
-    </objects>
-    <objects name="_main_menu">
-      <object>objects\obj_main_menu</object>
     </objects>
     <object>objects\obj_impact</object>
     <object>objects\obj_explosion_OLD</object>

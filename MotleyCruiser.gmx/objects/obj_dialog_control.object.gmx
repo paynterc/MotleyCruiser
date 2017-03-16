@@ -31,7 +31,7 @@
 global.gui_mouse_x = (mouse_x - view_xview[view_current]) * global.display_scale;
 global.gui_mouse_y = (mouse_y - view_yview[view_current]) * global.display_scale;
 
-show_dialog = false;
+show = false;
 
 scr_reset_dialog();
 
@@ -49,6 +49,7 @@ font = fnt_menus;                  // The font to use when drawing the messagebo
 font_color = c_lime;                   // Color to draw the font and the border around messagebox
 bak_color = c_black;                   // The color for the messagebox background
 draw_message = false;
+b_selected = noone; // Use to increment selected button via gampad
 // End speach bubble
 
 // Add a light
@@ -82,10 +83,36 @@ glr_light_set_active(llight,false);
             <string>/// Hide box if player moves
 if(instance_exists(obj_player)){
     if(obj_player.hspd!=0 || obj_player.vspd!=0){
-        show_dialog = false;
-        glr_light_set_active(llight,false);
-        scr_reset_dialog();       
+        event_user(2);       
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// User interact
+if(scr_user_input("interact")){
+    event_user(0);
+}
+
+if(show &amp;&amp; scr_user_input("menu_close")){
+    event_user(2);
 }
 </string>
           </argument>
@@ -108,27 +135,82 @@ if(instance_exists(obj_player)){
           <argument>
             <kind>1</kind>
             <string>/// Check to see if mouse is over a button
-var xhover = false;
-var yhover = false;
-var button_x = 0;
-var button_y = 0;
-var button_w = 0;
-var button_h = 0;
-if(staged_buttons != noone){
-    for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
-        if(array_length_2d(staged_buttons,i)==5){
-            button_x = staged_buttons[i,0];
-            button_y = staged_buttons[i,1];
-            button_w = staged_buttons[i,2];
-            button_h = staged_buttons[i,3];
+if(show){
+    var xhover = false;
+    var yhover = false;
+    var button_x = 0;
+    var button_y = 0;
+    var button_w = 0;
+    var button_h = 0;
+    if(staged_buttons != noone){
+        for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
+            if(array_length_2d(staged_buttons,i)==5){
+                button_x = staged_buttons[i,0];
+                button_y = staged_buttons[i,1];
+                button_w = staged_buttons[i,2];
+                button_h = staged_buttons[i,3];
+        
+                xhover = ( mouse_x == median(button_x, mouse_x, button_x + button_w) );
+                yhover = ( mouse_y == median(button_y, mouse_y, button_y + button_h) );
+                staged_buttons[i,4] = xhover &amp;&amp; yhover;
+            }
     
-            xhover = ( mouse_x == median(button_x, mouse_x, button_x + button_w) );
-            yhover = ( mouse_y == median(button_y, mouse_y, button_y + button_h) );
-            staged_buttons[i,4] = xhover &amp;&amp; yhover;
         }
-
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Select menu buttons via controller
+if(show &amp;&amp; is_array(staged_buttons)){
+    
+    if( scr_user_input("menu_op_down") ){
+        
+        if(b_selected = noone){
+            b_selected = 0;
+        }else{
+            b_selected = min(b_selected+1,array_length_1d(staged_buttons)-1);
+        } 
+         
+    }else if( scr_user_input("menu_op_up") ){
+        if(b_selected &gt; 0){
+            b_selected = max(b_selected-1,0);
+        }   
+    }
+    
+    
+    for(var i=0;i&lt;array_height_2d(staged_buttons);i++){
+        if(i==b_selected){
+            staged_buttons[i,4] = true;
+        }else{
+            staged_buttons[i,4] = false;
+        }
+    }
+    
+    if(scr_user_input("menu_op_select")){
+        event_user(1);
+    }
+    
+}
+
+
 </string>
           </argument>
         </arguments>
@@ -151,12 +233,62 @@ if(staged_buttons != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/***
-See if a button was clicked
+            <string>/// See if a button was clicked
+event_user(1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Close dialog
+show = false;
+glr_light_set_active(llight,false);
+scr_reset_dialog(); 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Execute code for clicked option
 
+/***
 If you add branches here, be sure to use staged_buttons = noone to clear the current buttons.
 ***/
-if(staged_buttons != noone){
+if(show &amp;&amp; staged_buttons != noone){
     for(var i = 0; i&lt;array_height_2d(staged_buttons); i++){
         if(array_length_2d(staged_buttons,i)==5){
             if( staged_buttons[i,4] ){//hover = true
@@ -201,7 +333,7 @@ if(staged_buttons != noone){
                         with(closest_sentient){
                             dialogue = scr_make_dialogue_tree();
                         }
-                        show_dialog = false;
+                        show = false;
                         scr_reset_dialog();
                         
                         break;
@@ -289,7 +421,7 @@ if(staged_buttons != noone){
 
                         closest_sentient.crew_index = array_length_1d(global.crew)-1;
                         
-                        show_dialog = false;
+                        show = false;
                         scr_reset_dialog();
                         
                         break;
@@ -319,7 +451,7 @@ if(staged_buttons != noone){
                         staged_buttons = noone;
                         break;
                     case "exit":
-                        show_dialog = false;
+                        show = false;
                         scr_reset_dialog();
                         break;
                     default:
@@ -335,6 +467,94 @@ if(staged_buttons != noone){
         }
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Open dialog or trade window.
+if(show) exit;
+
+scr_reset_dialog();
+var this_sentient = noone;
+var closest_range = 0;
+var this_range = 0;
+
+
+for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
+    this_sentient = instance_find(obj_sentient,i);
+    this_range = point_distance(obj_player.x,obj_player.y,this_sentient.x,this_sentient.y);
+    if(this_range&lt;50){
+        if(closest_sentient==noone){
+            closest_sentient = this_sentient;
+            closest_range = this_range;
+        }else if(this_range&lt;closest_range){
+            closest_sentient = this_sentient;
+            closest_range = this_range;
+        }
+    }
+}
+
+if(closest_sentient != noone &amp;&amp; closest_sentient.name != noone){
+
+    if(closest_sentient.is_trader){
+        
+        if(instance_exists(obj_trade)){
+
+            with(obj_trade){
+                show = true;
+                event_user(0);
+            }           
+           
+        }
+    
+    }else{
+        
+        with(closest_sentient){
+            dialogue = scr_make_dialogue_tree();
+        }
+        staged_tree = closest_sentient.dialogue;
+        staged_branch = staged_tree[0];
+        show=true;
+        
+               
+    }
+          
+
+    
+}
+
+
+if(show){
+
+    glr_light_set_active(llight,true);
+    glr_light_set_position(llight,closest_sentient.x,closest_sentient.y);
+
+
+}else{
+
+    glr_light_set_active(llight,show);
+
+}
+
+
 </string>
           </argument>
         </arguments>
@@ -357,7 +577,7 @@ if(staged_buttons != noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(show_dialog &amp;&amp; staged_branch!=noone &amp;&amp; closest_sentient.name != noone){
+            <string>if(show &amp;&amp; staged_branch!=noone &amp;&amp; closest_sentient.name != noone){
     
     draw_set_font(font);
     draw_set_color(font_color);
@@ -415,15 +635,16 @@ if(staged_buttons != noone){
           <argument>
             <kind>1</kind>
             <string>/// Open dialog box if player in range
+exit;//disable for now
 
-show_dialog = !show_dialog;
+show = !show;
 scr_reset_dialog();
 var this_sentient = noone;
 var closest_range = 0;
 var this_range = 0;
 
 
-if(show_dialog){
+if(show){
 
     for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
         this_sentient = instance_find(obj_sentient,i);
@@ -439,12 +660,27 @@ if(show_dialog){
         }
     }
     
-    if(closest_sentient != noone &amp;&amp; closest_sentient.name != noone){          
-        with(closest_sentient){
-            dialogue = scr_make_dialogue_tree();
+    if(closest_sentient != noone &amp;&amp; closest_sentient.name != noone){
+    
+        if(closest_sentient.is_trader){
+            if(instance_exists(obj_trade)){
+
+                with(obj_trade){
+                    show = true;
+                    event_user(0);
+                }           
+               
+            }
+        
+        }else{
+            with(closest_sentient){
+                dialogue = scr_make_dialogue_tree();
+            }
+            staged_tree = closest_sentient.dialogue;
+            staged_branch = staged_tree[0];       
         }
-        staged_tree = closest_sentient.dialogue;
-        staged_branch = staged_tree[0];
+              
+
         
         glr_light_set_active(llight,true);
         glr_light_set_position(llight,closest_sentient.x,closest_sentient.y);
@@ -453,7 +689,7 @@ if(show_dialog){
 
 
 }
-glr_light_set_active(llight,show_dialog);
+glr_light_set_active(llight,show);
 
 
 </string>

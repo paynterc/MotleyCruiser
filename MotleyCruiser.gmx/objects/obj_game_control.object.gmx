@@ -337,88 +337,6 @@ scr_display_message("You have died.","scr_game_load,"+string(global.game_loaded)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// User input
-if(scr_user_input("pause")){   
-    if(room!=rm_main_menu){
-        global.paused = !global.paused;
-    
-        /// Show/hide the paused game menu
-    
-        panel_pause[4] = global.paused;
-        if(!global.paused){
-            panel_load_game[4]=false;
-        }
-    }
-
-}
-
-if(scr_user_input("goto_ship_edit")){
-    room_goto(rm_ship_edit);
-}
-
-if(scr_user_input("goto_space")){
-    room_goto("rm_space");
-}
-
-if(scr_user_input("fullscreen")){
-    if (!window_get_fullscreen()){
-        window_set_fullscreen(true);
-
-        scr_resize_gui();   
-        scr_pause_menu();
-        if(instance_exists(obj_main_menu)){
-            with(obj_main_menu){
-                scr_main_menu();
-                scr_load_game_menu();//panel_load_game
-                panel_main_menu[4]  = true;//Show menu
-            }
-        }
-
-    }else{
-       window_set_fullscreen(false);
-       
-       scr_resize_gui();       
-       scr_pause_menu();
-       if(instance_exists(obj_main_menu)){
-            with(obj_main_menu){
-
-                scr_main_menu();
-                scr_load_game_menu();//panel_load_game
-                panel_main_menu[4]  = true;//Show menu
-            }
-        }
-
-       
-    }
-}
-
-if(scr_user_input("goto_shiplevel")){
-    room_goto(rm_ship_deck_rnd);
-}
-
-
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Check hover status on menus
 if(panel_pause[4]){
     scr_gui_button_state(panel_pause);
@@ -455,6 +373,106 @@ if(panel_pause[4]){
             }
         }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// User input
+if(scr_user_input("pause")){   
+    
+    if(room!=rm_main_menu){
+        global.paused = !global.paused;
+    
+        /// Show/hide the paused game menu
+    
+        panel_pause[4] = global.paused;
+        if(!global.paused){
+            panel_load_game[4]=false;
+        }else{
+            // Close all other windows
+            scr_gui_toggle_windows("all");
+        }
+        
+    }
+
+}
+
+if(scr_user_input("menu_close")){
+    panel_load_game[4]=false;
+    
+    if(panel_pause[4]){
+        panel_pause[4] = false;
+        global.paused = false;
+    }
+    exit;
+}
+
+
+/****
+Debug navigation commands
+****/
+if(scr_user_input("goto_ship_edit")){
+    room_goto(rm_ship_edit);
+}
+
+if(scr_user_input("goto_space")){
+    room_goto("rm_space");
+}
+
+if(scr_user_input("goto_shiplevel")){
+    room_goto(rm_ship_deck_rnd);
+}
+
+if(scr_user_input("fullscreen")){
+    if (!window_get_fullscreen()){
+        window_set_fullscreen(true);
+
+        scr_resize_gui();   
+        scr_pause_menu();
+        if(instance_exists(obj_main_menu)){
+            with(obj_main_menu){
+                scr_main_menu();
+                scr_load_game_menu();//panel_load_game
+                panel_main_menu[4]  = true;//Show menu
+            }
+        }
+
+    }else{
+       window_set_fullscreen(false);      
+       scr_resize_gui();       
+       scr_pause_menu();
+       if(instance_exists(obj_main_menu)){
+            with(obj_main_menu){
+
+                scr_main_menu();
+                scr_load_game_menu();//panel_load_game
+                panel_main_menu[4]  = true;//Show menu
+            }
+        }       
+    }
+}
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -620,6 +638,10 @@ if(ds_exists(global.equipped,ds_type_map)){
 
     draw_set_valign(fa_left);
     draw_text(48, 32, "FPS Real: " + string(fps_real));
+    
+    if(instance_exists(obj_gui_control)){
+            draw_text(48, 64, "HAS BALL: " + string(scr_gui_get_context()));
+    }
 /***
 
     draw_text(48, 64, "D WIDTH: " + string(display_get_width()));

@@ -33,6 +33,21 @@ text = "";
 font = fnt_menus;
 font_size = font_get_size(font);
 scroll = 0;
+
+padding = 10;
+margin = 10;
+boxwidth = display_get_gui_width() - ( margin * 2 );
+boxheight = display_get_gui_height() - ( margin * 2 );
+tx = (display_get_gui_width()/2) - (boxwidth/2);//top of rectangle
+ty = (display_get_gui_height()/2) - (boxheight/2);
+header_height = 60;
+
+maxlength= boxwidth - (padding*2);
+maxheight= boxheight - (padding*2);
+maxlines = 20; 
+
+
+
 alltext = noone;
 
 
@@ -59,32 +74,63 @@ event_user(0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Keyboard input
+            <string>/// User input
+
+if(global.game_loaded = noone || room==rm_main_menu){
+    show = false;
+    exit;
+}
+
+if(obj_game_control.panel_pause[4]){
+    // if pause menu showing close this menu
+    show = false;
+    exit;
+}
+
+if(scr_user_input("menu_close")){
+    show = false;
+    exit;
+}
+
+
 if(scr_user_input("mission_log")){
     show = !show;
     if(show){
+        scr_gui_toggle_windows("mission");
         event_user(0);
     }
 }
 
+
+
+
 // STEP
 var alength = array_length_1d(alltext);
-if (keyboard_check_pressed(vk_anykey) == true)
-{
-    switch (keyboard_key)
+if(show){
+    if (keyboard_check_pressed(vk_anykey) == true)
     {
-        case vk_down:
-        scroll = min( scroll + 1, (alength - min(alength, maxlines) ) );
-        break;
-        case vk_up:
-        scroll = max(scroll - 1, 0);
-        break;
-        /**
-        case vk_space:
-        alltext = scr_push_array(alltext,"MORE TEXT " + string(current_time));
-        break;
-        **/
+        switch (keyboard_key)
+        {
+            case vk_down:
+            scroll = min( scroll + 1, (alength - min(alength, maxlines) ) );
+            break;
+            case vk_up:
+            scroll = max(scroll - 1, 0);
+            break;
+            /**
+            case vk_space:
+            alltext = scr_push_array(alltext,"MORE TEXT " + string(current_time));
+            break;
+            **/
+        }
     }
+    
+    if( scr_user_input("menu_op_up") ){
+        scroll = max(scroll - 1, 0);
+    }else if( scr_user_input("menu_op_down") ){    
+        scroll = min( scroll + 1, (alength - min(alength, maxlines) ) );
+    }
+    
 }
 </string>
           </argument>
@@ -110,20 +156,6 @@ if (keyboard_check_pressed(vk_anykey) == true)
             <kind>1</kind>
             <string>/// Update window text and settings
 
-tx=10;//top of rectangle
-ty=10;
-padding = 5;
-margin = 10;
-boxwidth = display_get_gui_width() - (margin * 2); // Do this in case window has been resized to fullscreen
-boxheight = display_get_gui_height() - (margin * 2);
-maxlength= boxwidth - (padding*2);
-maxheight= boxheight - (padding*2);
-maxlines = 20; 
-
-/**
-text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
-text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
-**/
 
 scroll = 0;
 alltext = noone;
@@ -174,12 +206,17 @@ for(var i = 0; i &lt; array_length_1d(global.missions); i++){
           <argument>
             <kind>1</kind>
             <string>if(show){
+    tx = (display_get_gui_width()/2) - (boxwidth/2);//top of rectangle
+    ty = (display_get_gui_height()/2) - (boxheight/2);
+    
+    draw_panel(spr_background,0,tx,ty,boxwidth,boxheight,32);
+
     draw_set_font(font);
-    draw_set_color(c_black);
-    draw_set_alpha(.85);
-    draw_rectangle(tx,ty,boxwidth,boxheight,0);
-    draw_set_color(c_white);
-    draw_rectangle(tx,ty,boxwidth,boxheight,1);
+    //draw_set_color(c_black);
+    //draw_set_alpha(.85);
+    //draw_rectangle(tx,ty,boxwidth,boxheight,0);
+    //draw_set_color(c_white);
+    //draw_rectangle(tx,ty,boxwidth,boxheight,1);
 
     var offset = 0;
     var this_mission = noone;

@@ -60,6 +60,7 @@ room_goto(rm_main_menu);</code>
     <instance objName="obj_ship_data" x="160" y="32" name="inst_EC32762E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_message_box" x="192" y="32" name="inst_DE586301" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="obj_trade" x="224" y="32" name="inst_7794C27E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="obj_gui_control" x="256" y="32" name="inst_57C2A2C0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
