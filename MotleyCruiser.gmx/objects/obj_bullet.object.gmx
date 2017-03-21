@@ -83,6 +83,8 @@ lifelimit=3;
 lifespan++;
 if(scr_grid_place_meeting(x,y)){
     instance_destroy();
+    
+    // bounce?
     //direction+=90;
     //image_angle=direction;
 }

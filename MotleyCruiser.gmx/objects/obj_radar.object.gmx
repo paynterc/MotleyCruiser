@@ -91,6 +91,30 @@ for ( var i = 0; i &lt; instance_number(obj_landable); i += 1 ){
  
 }
 
+
+for ( var i = 0; i &lt; instance_number(obj_gate); i += 1 ){
+ 
+    blip = instance_find( obj_gate, i );
+    coords=noone;
+    if( !scr_instance_in_view(blip) ){
+        
+        var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
+        var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y); 
+        var mdist1 = min(dist,100);var mdist2 = min(dist,400);
+        
+        coords[0]=px + lengthdir_x(mdist1,dir);
+        coords[1]=py + lengthdir_y(mdist1,dir);
+        coords[2]=px + lengthdir_x(mdist2,dir);
+        coords[3]=py + lengthdir_y(mdist2,dir);
+        coords[4]=clamp(global.radar_range/dist,0,1);
+        coords[5]=c_blue;
+        coords[6]="GATE";
+        
+        scr_push_array_1d(blips,coords);  
+    }
+ 
+}
+
 for ( var i = 0; i &lt; instance_number(obj_npc_ship); i += 1 ){
  
     blip = instance_find( obj_npc_ship, i );

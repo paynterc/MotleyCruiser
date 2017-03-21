@@ -186,7 +186,7 @@ if(show &amp;&amp; is_array(staged_buttons)){
         if(b_selected = noone){
             b_selected = 0;
         }else{
-            b_selected = min(b_selected+1,array_length_1d(staged_buttons)-1);
+            b_selected = min(b_selected+1,array_height_2d(staged_buttons)-1);
         } 
          
     }else if( scr_user_input("menu_op_up") ){
@@ -319,10 +319,12 @@ if(show &amp;&amp; staged_buttons != noone){
                             }
 
                             staged_buttons = noone; // CLEAR CURRENT BUTTONS FOR THE NEXT BRANCH
+                            b_selected=noone;
                         }else{
                             staged_branch = scr_make_dialogue_branch("I have no idea how to respond to that.","exposition");
                             scr_add_dialogue_button(staged_branch,"Sorry.","step_to",0);
-                            staged_buttons = noone; 
+                            staged_buttons = noone;
+                            b_selected=noone; 
                         }
                         break;
                     case "accept_mission":
@@ -355,6 +357,7 @@ if(show &amp;&amp; staged_buttons != noone){
                                 scr_add_dialogue_button(staged_branch,"Oops.","step_to",0);
                             }
                             staged_buttons = noone;
+                            b_selected=noone;
                         }
                         
                         break;
@@ -372,6 +375,7 @@ if(show &amp;&amp; staged_buttons != noone){
                             scr_add_dialogue_button(staged_branch,string(closest_sentient.hire_price+50)+" a day.","hire_consider_offer",0,"scr_change_hire_price,"+string(closest_sentient.hire_price+50));
                         }
                         staged_buttons = noone;
+                        b_selected=noone;
                         break;
                     case "hire_consider_offer":
                         var p = closest_sentient.hire_price;
@@ -397,6 +401,7 @@ if(show &amp;&amp; staged_buttons != noone){
                             scr_add_dialogue_button(staged_branch,"That's all I can offer.","step_to",0);                       
                         }
                         staged_buttons = noone;
+                        b_selected=noone;
                         break;
                         
                     case "hire_crew":
@@ -434,6 +439,7 @@ if(show &amp;&amp; staged_buttons != noone){
                         }
                         scr_add_dialogue_button(staged_branch,"I can't afford that.","exit");
                         staged_buttons = noone;
+                        b_selected=noone;
                         break;
                                                 
                     case "reset":
@@ -444,11 +450,13 @@ if(show &amp;&amp; staged_buttons != noone){
                         staged_tree = closest_sentient.dialogue;
                         staged_branch = staged_tree[0];
                         staged_buttons = noone;
+                        b_selected=noone;
                         break;      
                         
                     case "intro":
                         staged_branch = staged_tree[0];
                         staged_buttons = noone;
+                        b_selected=noone;
                         break;
                     case "exit":
                         show = false;
@@ -457,7 +465,8 @@ if(show &amp;&amp; staged_buttons != noone){
                     default:
                         staged_branch = scr_make_dialogue_branch("I don't feel like talking now.","exposition");
                         scr_add_dialogue_button(staged_branch,"Sorry.","exit",noone);
-                        staged_buttons = noone; 
+                        staged_buttons = noone;
+                        b_selected=noone; 
                 
                 }
                 

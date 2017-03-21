@@ -41,12 +41,121 @@
             <kind>1</kind>
             <string>/// Initialize
 faction = FACTION_PLAYER;
+mode = MODE_TRAVELING;// Default mode. Treat this like state.
 
-/*****
-thrust = 200;
-mass=1000;
-max_spd_fwd += thrust/mass;
-*****/
+interact_range = 200;
+
+board_count_max=10;
+board_count=board_count_max;
+board_spd=.25;
+
+land_count_max=10;
+land_count=land_count_max;
+land_spd=.25;
+
+closest_landable=noone;
+closest_boardable=noone;
+closest_gate=noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Land/Dock
+/// Board ship
+if(mode==MODE_LANDING){
+    land_count--;
+    if(land_count&lt;1){
+        
+        // LAND 
+        global.landed_on = closest_landable.global_index;
+        global.landed_type = closest_landable.global_type;
+        global.landed_name = closest_landable.name;
+        global.player_x = x;
+        global.player_y = y;
+        scr_persist_game_state();
+        room_goto(rm_cantina2);
+    
+        exit;
+        
+    }else if( 
+        scr_user_input("interact_hold") &amp;&amp;
+        instance_exists(closest_landable) &amp;&amp; 
+        distance_to_object(closest_landable)&lt;interact_range)
+    {
+        alarm[4]=room_speed * land_spd;
+    }else{
+        land_count=land_count_max;
+        mode = MODE_TRAVELING;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Board ship
+if(mode==MODE_BOARDING){
+    board_count--;
+    if(board_count&lt;1){
+        
+        // BOARD SHIP   
+        global.ship_boarded = closest_boardable.ship_data;
+        global.ship_boarded[SHIP_X1] = closest_boardable.x;
+        global.ship_boarded[SHIP_Y1] = closest_boardable.y;
+        global.ship_boarded[SHIP_ANGLE] = closest_boardable.image_angle;
+        global.paused = true;
+        global.player_x = obj_player_ship.x;
+        global.player_y = obj_player_ship.y;
+        scr_persist_game_state();
+        view_object[0]=closest_boardable;
+        obj_space_level.zoom=true;
+        
+        exit;
+    }else if( 
+    scr_user_input("interact_hold") &amp;&amp;
+    instance_exists(closest_boardable) &amp;&amp; 
+    distance_to_object(closest_boardable)&lt;interact_range){
+        alarm[3]=room_speed * board_spd;
+    }else{
+        board_count=board_count_max;
+        mode = MODE_TRAVELING;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -211,8 +320,9 @@ if(scr_user_input("thrust_reverse") &amp;&amp; can_move){
     }
 }
 
+/***
 if(scr_user_input("dock")){
-    var closest_landable = scr_get_closest(obj_landable,self,1000);
+    closest_landable = scr_get_closest(obj_landable,self,1000);
     if(closest_landable != noone){
         global.landed_on = closest_landable.global_index;
         global.landed_type = closest_landable.global_type;
@@ -223,27 +333,80 @@ if(scr_user_input("dock")){
         room_goto(rm_cantina2);
     }
 }
+***/
 
+if(mode==MODE_TRAVELING){
+    
+    if( scr_user_input("interact_hold") ){
+    
+        
+            // What is closest
+            var closest = noone;// string
+            var dist=interact_range;
+            closest_landable = scr_get_closest(obj_landable,self,dist);
+            if(closest_landable!=noone){
+                closest = "landable";
+                dist = distance_to_point(closest_landable.x, closest_landable.y);
+            }
+    
+            closest_boardable = scr_get_closest(obj_npc_ship,self,dist);       
+            if(closest_boardable!=noone){
+                if(closest_boardable.disabled &amp;&amp; closest_boardable.boardable &amp;&amp; closest_boardable.faction!=FACTION_PLAYER){
+                    closest = "boardable";
+                    dist = distance_to_point(closest_boardable.x, closest_boardable.y);              
+                }       
+            }
 
-// Check for key combo sector jump
-if(keyboard_check(vk_shift) &amp;&amp; can_move){
-
-    if(keyboard_check_pressed(vk_up)){
-        scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);
-    }else if(keyboard_check_pressed(vk_down)){
-        scr_move_to_sector(global.current_sector_row + 1,global.current_sector_col);
-    }else if(keyboard_check_pressed(vk_left)){
-        scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
-    }else if(keyboard_check_pressed(vk_right)){
-        scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
-    }else{
-        // Do nothing
+            
+            
+            closest_gate = scr_get_closest(obj_gate,self,dist);       
+            if(closest_gate!=noone){
+                closest = "gate";
+            }
+    
+            switch (closest)
+            {
+                case "landable": 
+                    mode=MODE_LANDING;
+                    land_count = land_count_max;
+                    alarm[4]=room_speed*land_spd;
+                    break;
+                case "boardable": 
+                    mode=MODE_BOARDING;
+                    board_count=board_count_max; 
+                    alarm[3]=room_speed*board_spd;
+                    break;
+                case "gate":
+                    mode=MODE_JUMPING;
+                    break;
+            }
+               
     }
 
+}// End MODE_TRAVELLING check
+
+// Check for key combo sector jump
+if(debug_mode){
+    if(keyboard_check(vk_shift) &amp;&amp; can_move){
+    
+        if(keyboard_check_pressed(vk_up)){
+            scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);
+        }else if(keyboard_check_pressed(vk_down)){
+            scr_move_to_sector(global.current_sector_row + 1,global.current_sector_col);
+        }else if(keyboard_check_pressed(vk_left)){
+            scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
+        }else if(keyboard_check_pressed(vk_right)){
+            scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
+        }else{
+            // Do nothing
+        }
+    
+    }
 }
 
 
 // Board ship
+/*****
 if(scr_user_input("board_ship")){
     ce = instance_nearest(x,y,obj_npc_ship);
     if(ce != noone){
@@ -252,7 +415,6 @@ if(scr_user_input("board_ship")){
             global.ship_boarded[SHIP_X1] = ce.x;
             global.ship_boarded[SHIP_Y1] = ce.y;
             global.ship_boarded[SHIP_ANGLE] = ce.image_angle;
-            //room_goto(rm_ship_deck_rnd);
             global.paused = true;
             global.player_x = obj_player_ship.x;
             global.player_y = obj_player_ship.y;
@@ -262,6 +424,7 @@ if(scr_user_input("board_ship")){
         }
     }
 }
+*****/
 
 if(scr_user_input("invul_mode")){
     disabled=true;
@@ -325,6 +488,42 @@ if(hull_current &lt; 1){
         instance_deactivate_object(m_object);
     }
     instance_deactivate_object(self);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Land or Board text
+if(mode==MODE_LANDING){
+    
+    draw_set_color(c_yellow);
+    draw_set_halign(fa_center);
+    draw_text(x, y+32, "DOCKING: " + string(land_count));
+
+}else if(mode==MODE_BOARDING){
+
+    draw_set_color(c_yellow);
+    draw_set_halign(fa_center);
+    draw_text(x, y+32, "BOARDING: " + string(board_count));
+    
 }
 </string>
           </argument>

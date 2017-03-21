@@ -233,6 +233,21 @@ if(instance_exists(obj_player_ship)){
     }
 }
 
+var gate1 = instance_create(room_width/2,0-room_width,obj_gate);
+gate1.spx=0;gate1.spy=-1;
+
+var gate2 = instance_create(room_width/2,room_width*2,obj_gate);
+gate2.spx=0;gate2.spy=1;
+
+var gate3 = instance_create(0-room_width,room_width/2,obj_gate);
+gate3.spx=-1;gate2.spy=0;
+
+var gate4 = instance_create(room_width*2,room_width/2,obj_gate);
+gate4.spx=1;gate2.spy=0;
+
+
+
+
 // Add the fleet ships
 for(var i=0; i<array_length_1d(global.fleet); i++){
     

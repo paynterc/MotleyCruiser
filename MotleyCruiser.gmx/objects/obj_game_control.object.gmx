@@ -262,6 +262,16 @@ part_type_color2(global.ptcl_hole,c_aqua,c_black);
 part_type_alpha3(global.ptcl_hole,1,0.8,0);
 part_type_blend(global.ptcl_hole,1);
 
+global.ptcl_gate = part_type_create();
+part_type_shape(global.ptcl_gate, pt_shape_ring);
+part_type_life(global.ptcl_gate, room_speed*3, room_speed*4);
+part_type_speed(global.ptcl_gate, .02, .05, 0, .25);
+part_type_scale(global.ptcl_gate, 1, 1);
+part_type_size(global.ptcl_gate, .5, 1.25, 0.05, 0.01);
+part_type_color2(global.ptcl_gate,c_aqua,c_black);
+part_type_alpha3(global.ptcl_gate,1,0.8,0);
+part_type_blend(global.ptcl_gate,1);
+
 
 </string>
           </argument>
@@ -601,6 +611,12 @@ if part_type_exists(global.ptcl_hole)
 {
     part_type_destroy(global.ptcl_hole);
 }
+
+if part_type_exists(global.ptcl_gate)
+{
+    part_type_destroy(global.ptcl_gate);
+}
+
 
 if(ds_exists(global.equipped,ds_type_map)){
     ds_map_destroy(global.equipped);

@@ -180,6 +180,8 @@
     </sprites>
     <sprites name="_space_objects">
       <sprite>sprites\spr_moon</sprite>
+      <sprite>sprites\spr_gate</sprite>
+      <sprite>sprites\spr_gate2</sprite>
       <sprite>sprites\spr_station</sprite>
       <sprite>sprites\spr_planet</sprite>
       <sprite>sprites\spr_sun</sprite>
@@ -1046,6 +1048,7 @@
       <object>objects\obj_sun</object>
       <object>objects\obj_radar</object>
       <object>objects\obj_spark</object>
+      <object>objects\obj_gate</object>
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
@@ -1116,7 +1119,7 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
   </rooms>
-  <constants number="277">
+  <constants number="279">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1270,6 +1273,8 @@
     <constant name="MODE_FOLLOWING">5</constant>
     <constant name="MODE_DEFENDING">6</constant>
     <constant name="MODE_TRAVELING">7</constant>
+    <constant name="MODE_BOARDING">8</constant>
+    <constant name="MODE_JUMPING">9</constant>
     <constant name="SCAFFOLD_ROWS">0</constant>
     <constant name="SCAFFOLD_COLS">1</constant>
     <constant name="SCAFFOLD_GRID">2</constant>

@@ -110,7 +110,10 @@ if( scr_window_open() ){
             return (keyboard_check_pressed(ord("3")) || gamepad_button_check_pressed(global.pad, gp_face2));
             break;   
         case "interact":
-            return ( keyboard_check_pressed(ord("E")) || gamepad_button_check_pressed(global.pad, gp_face1) );;
+            return ( keyboard_check_pressed(ord("E")) || gamepad_button_check_pressed(global.pad, gp_face1) );
+            break;
+        case "interact_hold":
+            return ( keyboard_check(ord("E")) || gamepad_button_check(global.pad, gp_face1) );
             break;
         case "board_ship":
             return instance_exists(obj_space_level) && keyboard_check_pressed(ord("B"));
