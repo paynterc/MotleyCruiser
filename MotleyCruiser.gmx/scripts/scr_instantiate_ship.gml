@@ -1,4 +1,15 @@
-/// scr_instantiate_ship(ship_data)
+/*****
+Instantiates the module objects for the ship object
+The progression should be 
+scr_instatiate_ship()->
+    scr_module_modify_stats()->
+        ship_data = scr_modules_to_ship_data(ship_data)
+scr_update_ship_data() (for new ship)
+OR
+scr_restore_ship_state() (when loading ship in new room)
+*****/
+
+// scr_instantiate_ship(ship_data)
 
 module_data = ship_data[SHIP_MODULES];
 modules = noone;

@@ -58,6 +58,7 @@ ship_library = read_list[| 0];
 ds_list_destroy(read_list);
 ini_close();
 ***/
+ship_data = noone;
 loaded_ship = noone;
 loaded_ship_index = noone;
 
@@ -324,7 +325,8 @@ if(pressed_setting!=noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scr_gui_draw_panel(panel_settings);
+            <string>/// Ship stats
+scr_gui_draw_panel(panel_settings);
 
 draw_text(32, 96, "Mass: " + string(mass));
 draw_text(32, 112, "MaxFwd: " + string(max_spd_fwd));

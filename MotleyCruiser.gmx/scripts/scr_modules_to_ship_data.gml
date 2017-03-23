@@ -1,9 +1,8 @@
 /*****
 Update ship data after modifying with module data
 This is done before scr_module_modify_stats.
-The progression should be scr_modules_to_ship_data()->scr_module_modify_stats()->obj_ship
 
-Call it like ship_data = scr_modules_to_ship_data(ship_data);
+
 *****/
 //scr_modules_to_ship_data(ship_data)
 var ship_data = argument0;

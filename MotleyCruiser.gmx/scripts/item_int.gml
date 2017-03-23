@@ -606,4 +606,13 @@ item_add(57,4,"scr_equip_weapon,57")  //If yes, put script here on string, if no
 item_add(57,5,"Fires a miniature black hole. Slow moving but unstoppable, the singularity will suck up all projectiles it comes in contact with.") //Description
 item_add(57,6,obj_singularity_gun) //Object to equip
 
+idx=58;
+item_add(idx,0,"Shotgun 1") //Title
+item_add(idx,1,10) //Max Stack
+item_add(idx,2,spr_shotgun1) //Sprite
+item_add(idx,3,true) //Does have effect?
+item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
+item_add(idx,5,"Fires three bullets simultaneously.") //Description
+item_add(idx,6,obj_shotgun1) //Object to equip
+
 global.item_lib_count = idx+1;
