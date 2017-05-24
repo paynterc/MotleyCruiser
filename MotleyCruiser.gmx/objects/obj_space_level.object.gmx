@@ -25,52 +25,6 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Initiate GUI vars
-texture_set_interpolation(true);
-
-
-depth=-1000;
-guiXoffset = 12;
-guiYoffset = 3;
-zoom = false;
-global.paused = false;
-ship_spawn_rate = 20;
-
-imgW = sprite_get_width(spr_ship);
-imgH = sprite_get_height(spr_ship);
-imgOSx = imgW/2;
-imgOSy = imgH/2;
-
-shieldW = sprite_get_width(spr_shield);
-shieldH = sprite_get_height(spr_shield);
-
-ls = 15;//line spacing
-
-npc_count = array_length_1d(global.npcs);
-
-// Need this for npcs that target this object by default
-disabled = false;
-faction = FACTION_NEUTRAL;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Fill object pool
 //scr_add_to_pool(obj_projectile,"projectile",500);
 </string>
@@ -164,8 +118,100 @@ scr_populate_sector();
         <arguments>
           <argument>
             <kind>1</kind>
+            <string>/// Initiate GUI vars
+texture_set_interpolation(true);
+asteroid_rate = 3;
+ship_spawn_rate = 20;
+
+depth=-1000;
+guiXoffset = 12;
+guiYoffset = 3;
+zoom = false;
+global.paused = false;
+
+
+imgW = sprite_get_width(spr_ship);
+imgH = sprite_get_height(spr_ship);
+imgOSx = imgW/2;
+imgOSy = imgH/2;
+
+shieldW = sprite_get_width(spr_shield);
+shieldH = sprite_get_height(spr_shield);
+
+ls = 15;//line spacing
+
+npc_count = array_length_1d(global.npcs);
+
+// Need this for npcs that target this object by default
+disabled = false;
+faction = FACTION_NEUTRAL;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
             <string>/// Start spawning ships
 alarm[0] = room_speed * ship_spawn_rate;
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Spawn asteroid
+if(instance_exists(obj_player_ship)){
+    if(instance_number(obj_asteroid) &lt; 10){
+    
+        var xx; var yy; var astr;
+        var r_angle = irandom(40)-20;
+        
+        xx = lengthdir_x(800, obj_player_ship.image_angle+r_angle);
+        yy = lengthdir_y(800, obj_player_ship.image_angle+r_angle);
+        
+        
+        astr = instance_create(obj_player_ship.x + xx,obj_player_ship.y + yy,obj_asteroid);
+        astr.direction = obj_player_ship.image_angle + 180;
+        astr.speed = irandom(1);
+        
+    }
+    
+    
+}
+
+alarm[1] = room_speed * asteroid_rate;
 </string>
           </argument>
         </arguments>
@@ -317,29 +363,6 @@ audio_stop_all();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Music
-audio_stop_all();
-audio_play_sound(snd_theme2,1,1);
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Increment date
 global.day++;
 scr_daily_expenses()
@@ -365,6 +388,28 @@ scr_daily_expenses()
             <kind>1</kind>
             <string>/// Close Windows
 scr_gui_toggle_windows("all");
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start asteroids
+alarm[1] = room_speed * asteroid_rate;
 </string>
           </argument>
         </arguments>

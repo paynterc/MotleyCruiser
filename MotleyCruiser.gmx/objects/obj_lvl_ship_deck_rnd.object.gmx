@@ -226,12 +226,13 @@ for(var yy = 0; yy &lt; height; yy++){
             if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
   
                 var race_index = irandom(array_height_2d(global.races)-1);               
-                scr_instantiate_enemy(ex,ey,race_index);
+                //scr_instantiate_enemy(ex,ey,race_index);
+                scr_instantiate_enemy(ex,ey,irandom(1));
                 
             }
             
             // Drone?
-            odds = 20;          
+            odds = 100;          
             if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
             
                 instance_create(ex,ey,obj_drone);

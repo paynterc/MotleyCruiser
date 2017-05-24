@@ -171,11 +171,12 @@ if(global.game_loaded == noone || room==rm_main_menu){
     show = false;
     exit;
 }
-
-if(obj_game_control.panel_pause[4]){
-    // if pause menu showing close this menu
-    show = false;
-    exit;
+if(instance_exists(obj_game_control)){
+    if(obj_game_control.panel_pause[4]){
+        // if pause menu showing close this menu
+        show = false;
+        exit;
+    }
 }
 
 if(scr_gui_get_context()=="trade" &amp;&amp; scr_user_input("menu_close")){

@@ -56,6 +56,52 @@ if(weapon==noone){
 
 newEnemy.sprite_index = spr;
 newEnemy.weapon_index = weapon;
+newEnemy.accessories = noone;
+newEnemy.acc_colors = noone;
+//global.accessories[race_index]
+if(global.accessories[race_index] != noone){
+    
+    var accessories = global.accessories[race_index];
+    var a_chance = 3;
+    //chest
+    
+    var chests = accessories[0];
+    if(chests != noone){
+        //choose chest
+        if(irandom(a_chance)==a_chance){
+            var chest = scr_array_random(chests);
+            newEnemy.accessories = scr_push_array(newEnemy.accessories,chest);
+            newEnemy.acc_colors = scr_push_array(newEnemy.acc_colors, scr_color_random(0) );
+        }       
+    }
+    
+    
+    
+    //hair
+    var hairs = accessories[1];
+    if(hairs != noone){
+        //choose hair
+        if(irandom(a_chance)==a_chance){
+            var hair = scr_array_random(hairs);
+            newEnemy.accessories = scr_push_array(newEnemy.accessories,hair);
+            newEnemy.acc_colors = scr_push_array(newEnemy.acc_colors, scr_color_random(0) );
+        }
+    }
+    
+    
+    //head
+    var heads = accessories[2];
+    if(heads != noone){
+        //choose heads
+        if(irandom(a_chance)==a_chance){
+            var head = scr_array_random(heads);
+            newEnemy.accessories = scr_push_array(newEnemy.accessories,head);
+            newEnemy.acc_colors = scr_push_array(newEnemy.acc_colors, scr_color_random(0) );
+        }
+    }
+    
+}
+
 
 var run_modifier = irandom(2)-1;
 var hp_modifier = irandom(2)-1;

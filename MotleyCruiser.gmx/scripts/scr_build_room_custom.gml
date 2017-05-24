@@ -35,6 +35,12 @@ for(var i = 0; i < instance_number(obj_floor); i++) {
 if(instance_exists(obj_player)){
     //Intantiate crew
     scr_instantiate_all_crew(obj_player.x,obj_player.y);
+}else if(instance_exists(obj_player_start)){
+    var px = obj_player_start.x;
+    var py = obj_player_start.y;
+    
+    instance_create(px,py,obj_player);    
+    scr_instantiate_all_crew(px,py);
 }
 
 

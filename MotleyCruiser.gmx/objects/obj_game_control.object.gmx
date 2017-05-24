@@ -90,6 +90,9 @@ scr_faction_centers();
 // PLAYER SHIP: An array containing current ship state.
 global.player_ship = noone;
 
+// PLAYER MODEL: An array containing player clothing and body selections.
+global.player_model = noone;
+
 // PLAYER FLEET: An array of ships in the fleet and their current state.
 global.fleet = noone;
 
@@ -142,6 +145,9 @@ global.new_ship = false; // Set to true if this is a new game
 
 // RACES
 global.races = scr_races();
+
+// Accessories
+scr_accessories();
 
 //Ships
 scr_ships();
@@ -622,6 +628,32 @@ if(ds_exists(global.equipped,ds_type_map)){
     ds_map_destroy(global.equipped);
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Instantiate control objects
+if(!instance_exists(obj_sound_control)){
+    instance_create(x,y,obj_sound_control);
+}
 </string>
           </argument>
         </arguments>

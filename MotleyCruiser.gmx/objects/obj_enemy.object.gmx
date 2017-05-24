@@ -43,8 +43,13 @@ image_speed = .25;
 
 sprite_default = spr_default;
 sprite_index = sprite_default;
+accessories = noone;
+acc_colors = noone;
+
 health_y = sprite_get_height(sprite_index) + 5;
 hyset = false;
+
+
 
 weapon_index = noone;
 weapon=noone;
@@ -448,8 +453,23 @@ if(path_exists(path)) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Healthbar
+            <string>/// Healthbar and Accessories
 draw_self();
+var clr = c_white;
+if(accessories!=noone){
+    for(var i=0;i&lt;array_length_1d(accessories);i++){
+        if(acc_colors!=noone){
+            if(acc_colors[i]!=noone){
+                clr = acc_colors[i];
+            }else{
+                clr = c_white;
+            }
+        }
+        draw_sprite_ext(accessories[i],0,x,y,image_xscale,image_yscale,0,clr,1);
+    }
+}
+
+
 draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
 </string>
           </argument>
