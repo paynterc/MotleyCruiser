@@ -1,5 +1,7 @@
 /// grid_place_meeting(x,y)
 
+if(global.grid == noone) return false
+
 var xx = argument[0];
 var yy = argument[1];
 

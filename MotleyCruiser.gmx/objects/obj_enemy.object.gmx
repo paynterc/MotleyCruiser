@@ -46,6 +46,17 @@ sprite_index = sprite_default;
 accessories = noone;
 acc_colors = noone;
 
+skincolor = noone;
+hair = noone;
+haircolor = noone;
+top = noone;
+eye = noone;
+hat = noone;
+if(skincolor != noone){
+    image_blend = skincolor;
+}
+
+
 health_y = sprite_get_height(sprite_index) + 5;
 hyset = false;
 
@@ -455,18 +466,21 @@ if(path_exists(path)) {
             <kind>1</kind>
             <string>/// Healthbar and Accessories
 draw_self();
-var clr = c_white;
-if(accessories!=noone){
-    for(var i=0;i&lt;array_length_1d(accessories);i++){
-        if(acc_colors!=noone){
-            if(acc_colors[i]!=noone){
-                clr = acc_colors[i];
-            }else{
-                clr = c_white;
-            }
-        }
-        draw_sprite_ext(accessories[i],0,x,y,image_xscale,image_yscale,0,clr,1);
-    }
+
+if(hair != noone){
+    draw_sprite_ext(hair,0,x,y, image_xscale, 1, 0,haircolor,1);
+}
+
+if(top != noone){
+    draw_sprite_ext(top,0,x,y, image_xscale, 1, 0,c_white,1);
+}
+
+if(eye != noone){
+    draw_sprite_ext(eye,0,x,y, image_xscale, 1, 0,c_white,1);
+}
+
+if(hat != noone){
+    draw_sprite_ext(hat,0,x,y, image_xscale, 1, 0,c_white,1);
 }
 
 

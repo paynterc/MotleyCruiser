@@ -135,6 +135,12 @@ if( scr_window_open() ){
             && keyboard_check(vk_shift)
             && debug_mode;
             break;
+        case "goto_player_edit":
+            return  
+            keyboard_check_pressed(ord("P")) 
+            && keyboard_check(vk_shift)
+            && debug_mode;
+            break;
         case "goto_space":
             return  
             keyboard_check_pressed(ord("W")) 

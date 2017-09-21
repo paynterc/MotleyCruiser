@@ -25,48 +25,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init Some variables
-shadows_on = false;
-door = noone;
-level_complete = false;
-shake=false;
-shake_count = 0;
-depth=-10000;
-//Mke a light over the door
-boom_light = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, room_height/2, c_white, 0);
-glr_light_set_static(boom_light, true);
-glr_light_set_active(boom_light,false);
+            <string>/// Init
+//event_user(0);
+p=noone; // set this to a bug template
+spr_custom=noone;
 
-
-scr_hotbar_update();
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Instantiate a flash timer
-instance_create(x,y,obj_flash_timer);
+sw = 64;
+smid = sw/2;
+surf = surface_create(sw, sw);
+drawn = false;
+DestX = noone;
+DestY = noone;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="1">
+    <event eventtype="1" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -83,43 +58,7 @@ instance_create(x,y,obj_flash_timer);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Cancel gampad vibration
-gamepad_set_vibration(0, 0, 0);
-alarm[1]=room_speed*.5;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Screen shake and feedback
-if(shake){
-    if(shake_count&lt;3){
-        scr_screen_shake();
-        shake_count++;
-        
-    }else{
-        shake_count=0;
-        shake=false;
-    }
-}
-alarm[0]=room_speed*.25
+            <string>sprite_delete(spr_custom);
 </string>
           </argument>
         </arguments>
@@ -142,23 +81,15 @@ alarm[0]=room_speed*.25
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Bullet time
+            <string>var RandMove = irandom(room_speed*5)
+var WanderDist = 100 //The distance in pixels your object will wander
 
-/****
-if(keyboard_check_released(ord("U"))){
-    global.bullet_time = !global.bullet_time;
-    if(global.bullet_time){
-        audio_play_sound(snd_slowdown,1,0);
-    }
-}
-****/
 
-if(global.bullet_time){
-    //room_speed=10;
-    global.speed_mod = .15;
+if(RandMove == 0 || DestX==noone){
+    DestX = (x + irandom_range(-WanderDist, WanderDist));
+    DestY = (y + irandom_range(-WanderDist, WanderDist));
 }else{
-    //room_speed=30;
-    global.speed_mod = 1;
+    mp_potential_step(DestX, DestY, 5, false);
 }
 </string>
           </argument>
@@ -182,82 +113,45 @@ if(global.bullet_time){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Cleanup
-glr_clear_all();
-ds_grid_destroy(global.grid);
-mp_grid_destroy(global.grid_path);
-gamepad_set_vibration(0, 0, 0);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="4">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Start timers
-global.bullet_time = false;
-
-gamepad_set_vibration(0, 0, 0);
-
-alarm[0]=room_speed*.25;//shake
-alarm[1]=room_speed*.50;//vibrate cancel
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="74">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw hotbar
-
-// Four boxes
-var boxes = array_height_2d(global.hotbar);
-var boxw = 40;//box width
-var boxp = 4;//padding
-var boxm = 12;//margin
-var _x = (display_get_gui_width()/2) - boxw*2 - round(boxp*1.5);
-var _y = 0 + boxm;
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-for(var i=0; i&lt;boxes; i++){
-    draw_panel(spr_background,0,_x,_y,boxw,boxw,16);   
-    if( !is_undefined(global.hotbar[i,2]) ){
-        draw_sprite_ext(global.hotbar[i,2],0,_x+boxp,_y+boxp,2,2,0,c_white,1);
-    }
-    draw_text(_x,_y,string(global.hotbar[i,1]));  
-    _x+=boxm+boxw;
+            <string>if(surface_exists(surf)){
+    surface_free(surf);
 }
+var test = 1;
+instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(p!=noone &amp;&amp; !drawn){
+    if(!surface_exists(surf)){
+        surf = surface_create(sw, sw);
+    }else{
 
+        scr_draw_bug()
+        drawn=true;
+    }
+
+}else{
+    draw_self();
+}
 </string>
           </argument>
         </arguments>

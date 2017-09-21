@@ -37,7 +37,7 @@ if(pm[6]==1){
 }
 
 var a = global.accessories[0];
-var chests = a[0];
+var tops = a[0];
 var hairs = a[1];
 var hats = a[2];
 var eyes = a[3];
@@ -46,7 +46,7 @@ skincolor = global.skincolors[pm[0]];
 hair = hairs[pm[1]];
 haircolor = global.haircolors[pm[2]];
 top = tops[pm[3]];
-eyes = eyes[pm[4]];
+eye = eyes[pm[4]];
 hat = hats[pm[5]];
 if(skincolor != noone){
     image_blend = skincolor;
@@ -428,8 +428,8 @@ if(top != noone){
     draw_sprite_ext(top,0,x,y, image_xscale, 1, 0,c_white,1);
 }
 
-if(eyes != noone){
-    draw_sprite_ext(eyes,0,x,y, image_xscale, 1, 0,c_white,1);
+if(eye != noone){
+    draw_sprite_ext(eye,0,x,y, image_xscale, 1, 0,c_white,1);
 }
 
 if(hat != noone){

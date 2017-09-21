@@ -96,6 +96,7 @@ hats[2]=spr_chicken_helm4;
 a[0]=chests;
 a[1]=hairs;
 a[2]=hats;
+a[3]=noone;
 
 global.accessories[1]=a;
 

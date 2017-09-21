@@ -3,6 +3,25 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="1" name="datafiles">
+    <datafile>
+      <name></name>
+      <exists>0</exists>
+      <size>0</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename></filename>
+    </datafile>
+  </datafiles>
   <NewExtensions>
     <extension index="0">extensions\Totro - Random Name Generator</extension>
     <extension index="1">extensions\Hule Inventory System</extension>
@@ -434,6 +453,7 @@
       <script>scripts\scr_fill_array.gml</script>
       <script>scripts\scr_array_remove.gml</script>
       <script>scripts\scr_get_array_1d.gml</script>
+      <script>scripts\scr_array.gml</script>
     </scripts>
     <scripts name="_crew">
       <script>scripts\scr_remove_from_crew.gml</script>
@@ -488,6 +508,8 @@
       <script>scripts\scr_ent_moon.gml</script>
       <script>scripts\scr_ent_station.gml</script>
       <script>scripts\scr_location.gml</script>
+      <script>scripts\scr_plant.gml</script>
+      <script>scripts\scr_bug.gml</script>
     </scripts>
     <scripts name="_events">
       <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
@@ -520,6 +542,10 @@
       <script>scripts\scr_find_landable_target.gml</script>
       <script>scripts\scr_faction_centers.gml</script>
       <script>scripts\scr_location_translate.gml</script>
+      <script>scripts\scr_draw_plant.gml</script>
+      <script>scripts\scr_draw_bug.gml</script>
+      <script>scripts\scr_make_plant.gml</script>
+      <script>scripts\scr_make_bug.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -679,6 +705,7 @@
         <script>scripts\scr_inv_has_space.gml</script>
       </scripts>
       <script>scripts\scr_color_random.gml</script>
+      <script>scripts\scr_make_background.gml</script>
     </scripts>
     <scripts name="_ship_editor">
       <script>scripts\scr_save_ship.gml</script>
@@ -969,6 +996,7 @@
       <script>scripts\scr_get_player_model.gml</script>
       <script>scripts\scr_player_model_default.gml</script>
     </scripts>
+    <script>scripts\scr_go_through_door.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1174,6 +1202,11 @@
       <object>objects\obj_change_button</object>
       <object>objects\obj_exit_button</object>
     </objects>
+    <objects name="_planetside">
+      <object>objects\obj_planet_surface</object>
+      <object>objects\obj_plant</object>
+      <object>objects\obj_bug</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -1188,8 +1221,9 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
     <room>rooms\rm_player_edit</room>
+    <room>rooms\rm_test</room>
   </rooms>
-  <constants number="279">
+  <constants number="304">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1469,6 +1503,31 @@
     <constant name="CC_MINING">1</constant>
     <constant name="CC_INDUSTRIAL">2</constant>
     <constant name="CC_TECH">3</constant>
+    <constant name="PL_W_LOW">0</constant>
+    <constant name="PL_W_HIGH">1</constant>
+    <constant name="PL_H_LOW">2</constant>
+    <constant name="PL_H_HIGH">3</constant>
+    <constant name="PL_LEAF_SHAPE">4</constant>
+    <constant name="PL_LEAF_COLOR">5</constant>
+    <constant name="PL_LEAF_SIZE_LOW">6</constant>
+    <constant name="PL_LEAF_SIZE_HIGH">7</constant>
+    <constant name="PL_LEAF_COUNT_LOW">8</constant>
+    <constant name="PL_LEAF_COUNT_HIGH">9</constant>
+    <constant name="PL_BRANCH_COLOR">10</constant>
+    <constant name="PL_BRANCH_COUNT_LOW">11</constant>
+    <constant name="PL_BRANCH_COUNT_HIGH">12</constant>
+    <constant name="PL_LEAF_COLOR2">13</constant>
+    <constant name="PL_BRANCH_SHAPE">14</constant>
+    <constant name="BUG_W_LOW">0</constant>
+    <constant name="BUG_W_HIGH">1</constant>
+    <constant name="BUG_H_LOW">2</constant>
+    <constant name="BUG_H_HIGH">3</constant>
+    <constant name="BUG_WING_SHAPE">4</constant>
+    <constant name="BUG_WING_COLOR">5</constant>
+    <constant name="BUG_WING_COLOR2">6</constant>
+    <constant name="BUG_WING_COUNT">7</constant>
+    <constant name="BUG_BODY_COLOR">8</constant>
+    <constant name="BUG_BODY_SHAPE">9</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

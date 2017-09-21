@@ -63,15 +63,24 @@ if(global.accessories[race_index] != noone){
     
     var accessories = global.accessories[race_index];
     var a_chance = 3;
-    //chest
     
-    var chests = accessories[0];
-    if(chests != noone){
+    //skincolor
+    if(race_index==0){
+        newEnemy.skincolor = scr_array_random(global.skincolors);
+        with(newEnemy){
+            if(skincolor != noone){
+                image_blend = skincolor;
+            }
+        }
+    }
+    
+    
+    //chest   
+    var tops = accessories[0];
+    if(tops != noone){
         //choose chest
         if(irandom(a_chance)==a_chance){
-            var chest = scr_array_random(chests);
-            newEnemy.accessories = scr_push_array(newEnemy.accessories,chest);
-            newEnemy.acc_colors = scr_push_array(newEnemy.acc_colors, scr_color_random(0) );
+            newEnemy.top = scr_array_random(tops);
         }       
     }
     
@@ -82,9 +91,8 @@ if(global.accessories[race_index] != noone){
     if(hairs != noone){
         //choose hair
         if(irandom(a_chance)==a_chance){
-            var hair = scr_array_random(hairs);
-            newEnemy.accessories = scr_push_array(newEnemy.accessories,hair);
-            newEnemy.acc_colors = scr_push_array(newEnemy.acc_colors, scr_color_random(0) );
+            newEnemy.hair = scr_array_random(hairs);
+            newEnemy.haircolor = scr_array_random(global.haircolors);;
         }
     }
     
@@ -94,9 +102,16 @@ if(global.accessories[race_index] != noone){
     if(heads != noone){
         //choose heads
         if(irandom(a_chance)==a_chance){
-            var head = scr_array_random(heads);
-            newEnemy.accessories = scr_push_array(newEnemy.accessories,head);
-            newEnemy.acc_colors = scr_push_array(newEnemy.acc_colors, scr_color_random(0) );
+            newEnemy.hat = scr_array_random(heads);
+        }
+    }
+    
+    //eyes
+    var eyes = accessories[3];
+    if(eyes != noone){
+        //choose eyes
+        if(irandom(a_chance)==a_chance){
+            newEnemy.eye = scr_array_random(eyes);
         }
     }
     
