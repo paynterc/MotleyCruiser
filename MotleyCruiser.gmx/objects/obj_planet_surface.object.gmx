@@ -28,72 +28,120 @@
             <string>/// Set Planet and Room
 
 var plant1;
+var plant2;
+var plant3;
 var bug;
+var bug2;
+seed = noone;
 
-if(global.planet_seed==noone){
+if(!global.planet_seed){
+
     // Initialize room map
     randomize();
     global.planet_seed = random_get_seed();
-
-    global.planet_room_index = 0;
- 
-
+    show_debug_message("planet_seed set: " + string(global.planet_seed));
+    global.planet_room_index_x = 0;
+    global.planet_room_index_y = 0;
+        
     global.planet_map = noone;
     global.planet_map[0,0] = noone;
-    global.planet_map[0,1] = noone;
-    global.planet_map[0,2] = noone;
-    global.planet_map[0,3] = noone;
-    global.planet_map[0,4] = noone;
+    
+
     var test = 5;
     
 }else{
-    random_set_seed(global.planet_seed);
     
+    show_debug_message("planet_seed: " + string(global.planet_seed));
+    random_set_seed(global.planet_seed);
 }
 
-if(global.planet_room_index == noone){
-     global.planet_room_index = 0;
-}
 
-// Randomize at planet level
+
+// Randomize at planet level - These are the ones that come out as default sometimes
 plant1 = scr_make_plant();
+plant2 = scr_make_plant();
+plant3 = scr_make_plant();
 bug = scr_make_bug();
+bug2 = scr_make_bug();
+critter1 = scr_make_critter();
+critter2 = scr_make_critter();
+
 background_colour=  make_color_hsv(random(255), 50, random_range(50,255));
 background_showcolour = true;
 
 
-// Randomize at room level
-var rix = global.planet_room_index;
-if( global.planet_map[rix,0] != noone){
-    random_set_seed(global.planet_map[global.planet_room_index,0]);
-    var test = 3;
-}else{
+// Randomize at room level - This part seems to work. The room layouts are unique.
+var rix = global.planet_room_index_x;
+var riy = global.planet_room_index_y;
+seed = global.planet_map[rix,riy];
+test = 1;
+if( !seed ){
+
     randomize();
-    global.planet_map[rix,0] = random_get_seed();
+    seed =  random_get_seed();
+    global.planet_map[rix,riy] = seed;
     var test = 4;
+
+}else{
+    random_set_seed(seed);
+    var test = 3;
 }
 
 
-
-drawn=false;
-
-
-var ip;
-for(var i=0; i&lt;10; i++){
-    var rx = irandom_range(room_width/4,room_width-(room_width/4));
-    var ry = irandom_range(room_height/4,room_height-(room_width/4));
+var ip, rx, ry;
+var theplant = choose(plant1,plant2,plant3);
+for(var i=0; i&lt;irandom_range(7,10); i++){
+    rx = irandom_range(room_width/4,room_width-(room_width/4));
+    ry = irandom_range(room_height/4,room_height-(room_width/4));
     ip = instance_create(rx,ry,obj_plant);
-    ip.p = plant1;
+    ip.p = theplant;
+    ip.depth = -ry;
+}
+theplant = choose(plant1,plant2,plant3);
+for(var i=0; i&lt;irandom(5); i++){
+    rx = irandom_range(room_width/4,room_width-(room_width/4));
+    ry = irandom_range(room_height/4,room_height-(room_width/4));
+    ip = instance_create(rx,ry,obj_plant);
+    ip.p = theplant;
+    ip.depth = -ry;
+}
+theplant = choose(plant1,plant2,plant3);
+for(var i=0; i&lt;irandom(3); i++){
+    rx = irandom_range(room_width/4,room_width-(room_width/4));
+    ry = irandom_range(room_height/4,room_height-(room_width/4));
+    ip = instance_create(rx,ry,obj_plant);
+    ip.p = theplant;
     ip.depth = -ry;
 }
 
-
-for(var i=0; i&lt;5; i++){
-    var rx = irandom_range(room_width/4,room_width-(room_width/4));
-    var ry = irandom_range(room_height/4,room_height-(room_width/4));
+var thebug = choose(bug,bug2);
+for(var i=0; i&lt;irandom(5); i++){
+    rx = irandom_range(room_width/4,room_width-(room_width/4));
+    ry = irandom_range(room_height/4,room_height-(room_width/4));
     ip = instance_create(rx,ry,obj_bug);
-    ip.p = bug;
+    ip.p = thebug;
     ip.depth = -ry;
+}
+
+if(irandom(5)==5){
+
+    for(var i=0; i&lt;irandom(5); i++){
+        rx = irandom_range(room_width/2,room_width-(room_width/2));
+        ry = irandom_range(room_height/2,room_height-(room_width/2));
+        ip = instance_create(rx,ry,obj_critter);
+        ip.p = critter1;   
+    }
+
+}
+
+if(irandom(10)==10){
+
+    for(var i=0; i&lt;irandom(5); i++){
+        rx = irandom_range(room_width/2,room_width-(room_width/2));
+        ry = irandom_range(room_height/2,room_height-(room_width/2));
+        ip = instance_create(rx,ry,obj_critter);
+        ip.p = critter2;   
+    }
 }
 
 var px, py;
@@ -150,19 +198,31 @@ instance_create(px,py,obj_player);
             <string>/// Player goes off screen / through door
 
 if(instance_exists(obj_player)){
+
     var px = obj_player.x;
     var py = obj_player.y;
+    
     if(px&gt;room_width)
     {
         scr_go_through_door(2);// exit right
     }
     else if(px&lt;0)
     {
-        scr_go_through_door(4);// exit left
+        if(global.planet_room_index_x&gt;0){
+            scr_go_through_door(4);// exit left
+        }else{
+            obj_player.x = 1;
+
+        }
+
     }
     else if(py&lt;0)
     {
-        scr_go_through_door(1);// exit top
+        if(global.planet_room_index_y&gt;0){
+            scr_go_through_door(1);// exit top
+        }else{
+            obj_player.y = 1;
+        }
     }
     else if(py&gt;room_height)
     {
@@ -192,7 +252,12 @@ if(instance_exists(obj_player)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_restart();
+            <string>global.planet_seed = noone;
+global.planet_map = noone;// 2d array
+global.planet_room_index_x = noone;
+global.planet_room_index_y = noone;
+global.planet_nextdoor = noone;
+room_restart();
 </string>
           </argument>
         </arguments>

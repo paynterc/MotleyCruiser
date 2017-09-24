@@ -393,6 +393,10 @@
     <sprite>sprites\spr_bolt1</sprite>
     <sprite>sprites\spr_bolt2</sprite>
     <sprite>sprites\spr_impact</sprite>
+    <sprites name="_bullets">
+      <sprite>sprites\spr_laserbolt</sprite>
+      <sprite>sprites\spr_impact_glow</sprite>
+    </sprites>
     <sprite>sprites\sprite226</sprite>
     <sprite>sprites\spr_boom</sprite>
     <sprite>sprites\spr_bot1</sprite>
@@ -510,6 +514,7 @@
       <script>scripts\scr_location.gml</script>
       <script>scripts\scr_plant.gml</script>
       <script>scripts\scr_bug.gml</script>
+      <script>scripts\scr_critter.gml</script>
     </scripts>
     <scripts name="_events">
       <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
@@ -542,10 +547,6 @@
       <script>scripts\scr_find_landable_target.gml</script>
       <script>scripts\scr_faction_centers.gml</script>
       <script>scripts\scr_location_translate.gml</script>
-      <script>scripts\scr_draw_plant.gml</script>
-      <script>scripts\scr_draw_bug.gml</script>
-      <script>scripts\scr_make_plant.gml</script>
-      <script>scripts\scr_make_bug.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_pause_menu.gml</script>
@@ -996,7 +997,15 @@
       <script>scripts\scr_get_player_model.gml</script>
       <script>scripts\scr_player_model_default.gml</script>
     </scripts>
-    <script>scripts\scr_go_through_door.gml</script>
+    <scripts name="_planetside">
+      <script>scripts\scr_go_through_door.gml</script>
+      <script>scripts\scr_make_bug.gml</script>
+      <script>scripts\scr_make_critter.gml</script>
+      <script>scripts\scr_draw_bug.gml</script>
+      <script>scripts\scr_draw_critter.gml</script>
+      <script>scripts\scr_draw_plant.gml</script>
+      <script>scripts\scr_make_plant.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1206,7 +1215,9 @@
       <object>objects\obj_planet_surface</object>
       <object>objects\obj_plant</object>
       <object>objects\obj_bug</object>
+      <object>objects\obj_critter</object>
     </objects>
+    <object>objects\obj_laserbolt</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -1222,8 +1233,9 @@
     <room>rooms\rm_ship_edit</room>
     <room>rooms\rm_player_edit</room>
     <room>rooms\rm_test</room>
+    <room>rooms\rm_bullettest</room>
   </rooms>
-  <constants number="304">
+  <constants number="328">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1528,6 +1540,30 @@
     <constant name="BUG_WING_COUNT">7</constant>
     <constant name="BUG_BODY_COLOR">8</constant>
     <constant name="BUG_BODY_SHAPE">9</constant>
+    <constant name="CRITTER_W_LOW">0</constant>
+    <constant name="CRITTER_W_HIGH">1</constant>
+    <constant name="CRITTER_H_LOW">2</constant>
+    <constant name="CRITTER_H_HIGH">3</constant>
+    <constant name="CRITTER_LEG_SHAPE">4</constant>
+    <constant name="CRITTER_LEG_COLOR">5</constant>
+    <constant name="CRITTER_LEG_COLOR2">6</constant>
+    <constant name="CRITTER_LEG_COUNT">7</constant>
+    <constant name="CRITTER_BODY_COLOR">8</constant>
+    <constant name="CRITTER_BODY_SHAPE">9</constant>
+    <constant name="CRITTER_HEAD_SIZE_MOD_W">10</constant>
+    <constant name="CRITTER_HEAD_SIZE_MOD_H">11</constant>
+    <constant name="CRITTER_HEAD_SHAPE">12</constant>
+    <constant name="CRITTER_TAIL_L_LOW">13</constant>
+    <constant name="CRITTER_TAIL_L_HIGH">14</constant>
+    <constant name="CRITTER_EYE_COLOR">15</constant>
+    <constant name="CRITTER_SYMETRICAL">16</constant>
+    <constant name="CRITTER_HAS_HORNS">17</constant>
+    <constant name="CRITTER_HORN_COUNT">18</constant>
+    <constant name="CRITTER_HORN_LENGTH">19</constant>
+    <constant name="CRITTER_EYE_COUNT">20</constant>
+    <constant name="CRITTER_HAS_TEETH">21</constant>
+    <constant name="CRITTER_TOOTH_COUNT">22</constant>
+    <constant name="CRITTER_SPEED">23</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

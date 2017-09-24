@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 
+
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
 global.game_loaded = noone;
@@ -180,9 +181,10 @@ global.grid = noone;
 // Planet side stuff
 global.planet_seed = noone;
 global.planet_map = noone;// 2d array
-global.planet_room_index = noone;
-global.planet_door_index = noone;
+global.planet_room_index_x = noone;
+global.planet_room_index_y = noone;
 global.planet_nextdoor = noone;
+
 
 </string>
           </argument>
@@ -706,7 +708,10 @@ if(!instance_exists(obj_sound_control)){
     draw_text(48, 32, "FPS Real: " + string(fps_real));
     
     if(instance_exists(obj_planet_surface)){
-            draw_text(48, 64, "Room index: " + string(global.planet_room_index) );
+            draw_text(48, 64, "Room index x: " + string(global.planet_room_index_x) );
+            draw_text(48, 96, "Room index y: " + string(global.planet_room_index_y) );
+            draw_text(48, 128, "planet seed: " + string(global.planet_seed) );
+            draw_text(48, 160, "room seed: " + string(obj_planet_surface.seed) );
     }
 /***
 
