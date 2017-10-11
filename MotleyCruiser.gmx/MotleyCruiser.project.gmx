@@ -27,6 +27,8 @@
     <extension index="1">extensions\Hule Inventory System</extension>
     <extension index="2">extensions\prettylight</extension>
     <extension index="3">extensions\Glare Engine - 2D illumination</extension>
+    <extension index="4">extensions\Simple Dialogue Box Demo</extension>
+    <extension index="5">extensions\Passage</extension>
   </NewExtensions>
   <sounds name="sound">
     <sounds name="Weapons">
@@ -49,6 +51,10 @@
       <sound>sound\snd_pickup_credit</sound>
       <sound>sound\snd_pickup</sound>
       <sound>sound\snd_hit1</sound>
+    </sounds>
+    <sounds name="_stringbean">
+      <sound>sound\snd_beep</sound>
+      <sound>sound\snd_explo</sound>
     </sounds>
   </sounds>
   <sprites name="sprites">
@@ -112,6 +118,7 @@
       <sprite>sprites\spr_hairbeast</sprite>
       <sprite>sprites\spr_human</sprite>
       <sprite>sprites\spr_human_BU</sprite>
+      <sprite>sprites\spr_old_salt</sprite>
       <sprite>sprites\spr_human_fml</sprite>
       <sprite>sprites\spr_human_fml_BU2</sprite>
       <sprite>sprites\spr_human_helm</sprite>
@@ -140,6 +147,8 @@
       <sprite>sprites\spr_continue</sprite>
       <sprite>sprites\spr_label</sprite>
       <sprite>sprites\spr_field</sprite>
+      <sprite>sprites\sprite337</sprite>
+      <sprite>sprites\spr_flyoption</sprite>
     </sprites>
     <sprites name="_furniture">
       <sprite>sprites\spr_room_reactor</sprite>
@@ -390,16 +399,16 @@
       <sprite>sprites\spr_glr_light_mask_spot</sprite>
       <sprite>sprites\spr_glr_light_test</sprite>
     </sprites>
-    <sprite>sprites\spr_bolt1</sprite>
-    <sprite>sprites\spr_bolt2</sprite>
-    <sprite>sprites\spr_impact</sprite>
     <sprites name="_bullets">
       <sprite>sprites\spr_laserbolt</sprite>
       <sprite>sprites\spr_impact_glow</sprite>
     </sprites>
-    <sprite>sprites\sprite226</sprite>
     <sprite>sprites\spr_boom</sprite>
+    <sprite>sprites\sprite226</sprite>
     <sprite>sprites\spr_bot1</sprite>
+    <sprite>sprites\spr_bolt1</sprite>
+    <sprite>sprites\spr_bolt2</sprite>
+    <sprite>sprites\spr_impact</sprite>
     <sprite>sprites\spr_bullet</sprite>
     <sprite>sprites\spr_bullet_sm</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
@@ -422,6 +431,26 @@
     <sprite>sprites\spr_exit_inactive</sprite>
     <sprite>sprites\sprite245</sprite>
     <sprite>sprites\sprite301</sprite>
+    <sprites name="_intro">
+      <sprite>sprites\spr_oldgirl</sprite>
+      <sprite>sprites\spr_pirateship1</sprite>
+      <sprite>sprites\spr_intro_child1</sprite>
+      <sprite>sprites\spr_intro_child2</sprite>
+      <sprite>sprites\spr_intro_parent1</sprite>
+      <sprite>sprites\spr_intro_pirate1</sprite>
+      <sprite>sprites\spr_piratejetfire1</sprite>
+      <sprite>sprites\spr_piratefire</sprite>
+      <sprite>sprites\spr_oldgirl2</sprite>
+      <sprite>sprites\spr_og_fire</sprite>
+      <sprite>sprites\spr_house</sprite>
+      <sprite>sprites\spr_intro_house2</sprite>
+      <sprite>sprites\sprite357</sprite>
+      <sprite>sprites\sprite356</sprite>
+      <sprite>sprites\spr_house_bu</sprite>
+      <sprite>sprites\sprite354</sprite>
+      <sprite>sprites\spr_into_window</sprite>
+      <sprite>sprites\spr_horizon</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -441,6 +470,12 @@
       <background>background\glr_back_sky</background>
       <background>background\glr_back_tiles2</background>
     </backgrounds>
+    <backgrounds name="_simdialog">
+      <background>background\bg_back1</background>
+    </backgrounds>
+    <background>background\bg_intro</background>
+    <background>background\bg_landscape1</background>
+    <background>background\bg_farmfields</background>
   </backgrounds>
   <paths name="paths">
     <path>paths\path_glr_0</path>
@@ -491,6 +526,11 @@
         </scripts>
         <script>scripts\scr_random_sentence.gml</script>
         <script>scripts\scr_define_sentence.gml</script>
+      </scripts>
+      <scripts name="_flywriter">
+        <script>scripts\scr_flywriter.gml</script>
+        <script>scripts\scr_typewriter.gml</script>
+        <script>scripts\scr_stringtowords.gml</script>
       </scripts>
     </scripts>
     <scripts name="_entities">
@@ -689,7 +729,7 @@
       <script>scripts\scr_view_zoom.gml</script>
       <script>scripts\scr_gamepad_detect.gml</script>
       <script>scripts\scr_surface_to_sprite.gml</script>
-      <script>scripts\scr_surface_to_sprite_BU.gml</script>
+      <script>scripts\scr_surface_to_sprite_bu.gml</script>
       <scripts name="_inventory">
         <script>scripts\scr_inv_item_count.gml</script>
         <script>scripts\scr_inv_item_decrement.gml</script>
@@ -996,6 +1036,9 @@
       <script>scripts\scr_draw_selection.gml</script>
       <script>scripts\scr_get_player_model.gml</script>
       <script>scripts\scr_player_model_default.gml</script>
+      <script>scripts\scr_make_player_sprite.gml</script>
+      <script>scripts\scr_get_player_sprite_filename.gml</script>
+      <script>scripts\scr_load_player_sprite.gml</script>
     </scripts>
     <scripts name="_planetside">
       <script>scripts\scr_go_through_door.gml</script>
@@ -1065,6 +1108,14 @@
     <font>fonts\fnt_menus</font>
     <font>fonts\fnt_menus_med</font>
     <font>fonts\fnt_menus_sm</font>
+    <font>fonts\f_other</font>
+    <font>fonts\f_another</font>
+    <fonts name="_stringbean">
+      <font>fonts\f_normal</font>
+      <font>fonts\f_options</font>
+    </fonts>
+    <font>fonts\font11</font>
+    <font>fonts\font12</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
@@ -1073,9 +1124,15 @@
     <object>objects\obj_object_pool</object>
     <object>objects\obj_module</object>
     <object>objects\obj_damager</object>
-    <object>objects\obj_glare_controller</object>
     <objects name="_dialogue">
       <object>objects\obj_dialog_control</object>
+      <objects name="_flywriter">
+        <object>objects\obj_flybox</object>
+        <object>objects\obj_flybox_bu2</object>
+        <object>objects\obj_flybox_bu</object>
+        <object>objects\obj_flyoption</object>
+        <object>objects\obj_flytest</object>
+      </objects>
     </objects>
     <objects name="_gui">
       <object>objects\obj_gui_control</object>
@@ -1173,6 +1230,7 @@
       <object>objects\obj_singularity</object>
     </objects>
     <objects name="_light">
+      <object>objects\obj_glare_controller_ORIGINAL</object>
       <object>objects\obj_glare_control</object>
       <object>objects\obj_light</object>
       <object>objects\obj_light_white</object>
@@ -1218,6 +1276,22 @@
       <object>objects\obj_critter</object>
     </objects>
     <object>objects\obj_laserbolt</object>
+    <objects name="_intro">
+      <object>objects\obj_intro_control</object>
+      <object>objects\obj_intro_oldgirl</object>
+      <object>objects\obj_prop_house</object>
+      <object>objects\obj_horizon</object>
+      <object>objects\obj_pirateship1</object>
+      <object>objects\obj_piratefire</object>
+      <object>objects\obj_ogfire</object>
+      <object>objects\obj_intro_window</object>
+      <object>objects\obj_intro_pirate</object>
+      <object>objects\obj_intro_parent1</object>
+      <object>objects\obj_intro_old_salt</object>
+      <object>objects\obj_intro_player</object>
+      <object>objects\obj_intro_child1</object>
+      <object>objects\obj_intro_child2</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -1232,8 +1306,9 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
     <room>rooms\rm_player_edit</room>
-    <room>rooms\rm_test</room>
+    <room>rooms\rm_planetside</room>
     <room>rooms\rm_bullettest</room>
+    <room>rooms\rm_intro</room>
   </rooms>
   <constants number="328">
     <constant name="CELL_WIDTH">32</constant>

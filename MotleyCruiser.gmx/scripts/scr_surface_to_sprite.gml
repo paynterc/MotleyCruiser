@@ -31,12 +31,13 @@ for(var i = 1;i<array_length_1d(args);i++){
 }
 spr_custom = sprite_create_from_surface(surf, 0, 0, 16, 24, false, false, 8, 16);
 
+
 surface_free(surf);
 surf = surface_create(16, 24);
 surface_set_target(surf);
 draw_clear_alpha(c_black, 0);
 
-draw_sprite(s_body, 1, 8, 16);
+draw_sprite(s_body, 1, 8, 16);// Second frame
 for(var i = 1;i<array_length_1d(args);i++){
     if(args[i]!=noone){
         draw_sprite(args[i], 0, 8, 16);

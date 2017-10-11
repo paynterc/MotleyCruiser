@@ -119,6 +119,7 @@ global.base_inventory_rows = 2;
 global.equipped = ds_map_create();
 scr_hotbar_init();
 
+global.player_sprite = noone;// Overwrite this on game load
 
 /****************************************************************/
 /*                      MENUS                                   */
@@ -645,6 +646,9 @@ if(ds_exists(global.equipped,ds_type_map)){
     ds_map_destroy(global.equipped);
 }
 
+if(sprite_exists(global.player_sprite)){
+    sprite_delete(global.player_sprite);
+}
 </string>
           </argument>
         </arguments>

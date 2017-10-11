@@ -1,50 +1,75 @@
-/// scr_text(Text, Speed, X, Y, ShowButton);
-//txt = instance_create(argument2,argument3,obj_text);
 
-with (obj_text)
-{
-    x = argument2;
-    y = argument3;
-    
-    alpha = 0;
-    print = "";
-    time = 0;
-    depth = depth - instance_number(obj_text);
-    
-    padding = 16;
-    maxlength= view_wview[0]/2;
-    text = argument0;
-    spd = argument1;
-    font = fnt;
-    
-    text_length = string_length(text);
-    font_size = font_get_size(font);
-    
-    draw_set_font(font);
-    
-    text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
-    text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
-    
-    boxwidth = text_width + (padding*2);
-    boxheight = text_height + (padding*2);
-    show = true;
-    
-}
+var str = argument0;
+var type = argument1;
+var xx = argument2;
+var yy = argument3;
+var sprite_id = argument4;
+var image_id = argument5;
+//Additional Strings
+var str2 = argument6;
+var str3 = argument7;
+var str4 = argument8;
+var str5 = argument9;
 
-if(argument4){
-with (obj_button)
-{
-    display_x = argument2;
-    display_y = argument3;
-    show = true;
-    depth = obj_text.depth-1;
-    
-    text = "Accept";
-    text_length = string_length(text);    
-    text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
-    text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
+var str6 = argument10;
+var str7 = argument11;
+var str8 = argument12;
+var str9 = argument13;
+//var str10 = argument14;
+var creating_inst = argument14;
 
-}
-}
+//
+if instance_exists(o_text_conditionals) {o_text_conditionals.destroy = true;}
+var message_count = 1; 
+if string_length(str2) > 0 {message_count = 2;}
+if string_length(str3) > 0 {message_count = 3;}
+if string_length(str4) > 0 {message_count = 4;}
+if string_length(str5) > 0 {message_count = 5;}
 
+if string_length(str6) > 0 {message_count = 6;}
+if string_length(str7) > 0 {message_count = 7;}
+if string_length(str8) > 0 {message_count = 8;}
+if string_length(str9) > 0 {message_count = 9;}
+//if string_length(str10) > 0 {message_count = 10;}
+
+//xx = camera_get_view_x(view_camera[0])+ 672/2 - (sprite_get_width(s_text_box)/2);
+//yy = camera_get_view_y(view_camera[0])+ 378 - 78 - (sprite_get_height(s_text_box)/2);
+xx = room_width/2 - sprite_get_width(s_text_box)/2;
+yy = (room_height/2) - (sprite_get_height(s_text_box)/2);
+
+if instance_exists(o_text_box) {o_text_box.destroy = true;}
+var inst = instance_create(xx,room_height-64,o_text_box);
+
+inst.type = type;
+inst.str = str;
+inst.str2 = str2;
+inst.str3 = str3;
+inst.str4 = str4;
+inst.str5 = str5;
+inst.str6 = str6;
+inst.str7 = str7;
+inst.str8 = str8;
+inst.str9 = str9;
+
+
+//my additions. clear any stored text when new text box is created - cp
+o_text_control.str_store1="";
+o_text_control.str_store2="";
+o_text_control.str_store3="";
+o_text_control.str_store4="";
+o_text_control.str_store5="";
+o_text_control.str_store6="";
+o_text_control.str_store7="";
+o_text_control.str_store8="";
+o_text_control.str_store9="";
+o_text_control.str_store10="";
+o_text_control.FINAL_ACTIVE = false;
+o_text_control.restartEngine = true;
+//end my additions - cp
+
+o_text_control.creating_inst_store = creating_inst;
+o_text_control.message_count_store = message_count;
+o_text_control.current_count_store = 1;
+o_text_control.portrait_index_store = sprite_id;
+o_text_control.portrait_id_store = image_id;
 

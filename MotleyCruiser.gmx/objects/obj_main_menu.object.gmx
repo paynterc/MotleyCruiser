@@ -103,6 +103,7 @@ if(panel_load_game[4]){
         panel_load_game[4]=false;// Hide for good measure
     }
     
+    // Delete game
     if(load_game_button==4){
         scr_update_button(panel_load_game,4,BTN_SHOW,false);
         scr_update_button(panel_load_game,0,BTN_SHOW,false);

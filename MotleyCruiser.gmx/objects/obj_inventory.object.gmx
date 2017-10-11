@@ -114,7 +114,11 @@ navbuttons[1]=nbtn_right;
           <argument>
             <kind>1</kind>
             <string>/// Show inventory
-if(global.game_loaded == noone || room==rm_main_menu){
+if(global.game_loaded == noone 
+|| room==rm_main_menu
+|| room==rm_player_edit
+|| room==rm_intro
+){
     show = false;
     exit;
 }

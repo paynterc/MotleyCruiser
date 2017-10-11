@@ -29,8 +29,12 @@
 //sprite_index = -1;
 spr = noone;
 sprite_index = spr_human;
+if( sprite_exists(global.player_sprite) ){
+    sprite_index = global.player_sprite;
+}
 
 // Get player appearance selections
+/***
 var pm = scr_get_player_model();
 if(pm[6]==1){
     sprite_index = spr_human_fml;
@@ -51,6 +55,7 @@ hat = hats[pm[5]];
 if(skincolor != noone){
     image_blend = skincolor;
 }
+***/
 
 
 type = 1//player team
@@ -396,8 +401,10 @@ if(ds_map_exists(global.equipped,"weapon")){
             <kind>1</kind>
             <string>/// Healthbar
 draw_self();
+/***
 draw_sprite_ext(spr_human_hair1,0,x,y,image_xscale,image_yscale,0,c_white,1);
 draw_sprite_ext(spr_goggles1,0,x,y,image_xscale,image_yscale,0,c_white,1);
+***/
 draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
 </string>
           </argument>
@@ -420,6 +427,7 @@ draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_
           <argument>
             <kind>1</kind>
             <string>// Draw model
+/***
 if(hair != noone){
     draw_sprite_ext(hair,0,x,y, image_xscale, 1, 0,haircolor,1);
 }
@@ -435,6 +443,7 @@ if(eye != noone){
 if(hat != noone){
     draw_sprite_ext(hat,0,x,y, image_xscale, 1, 0,c_white,1);
 }
+***/
 
 </string>
           </argument>

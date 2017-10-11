@@ -1,6 +1,7 @@
 ///Load a saved game from file or create a new one. This would probably be called from a select menu.
 // scr_game_load(GAME_ID)
 var game = argument0;
+var rm = noone;//next room
 scr_new_game_defaults();
 
 inventory_clear();
@@ -90,11 +91,13 @@ if(ini_section_exists(game)){
     global.objective_inc =  ini_read_real(game, "objective_inc", 0);
     global.credits =  ini_read_real(game, "credits", 0);
     
-    // Equipment - created map in obj_game_control
-
-        
+    scr_load_player_sprite();
+    
+    // Equipment - created map in obj_game_control        
     //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
     //random_set_seed(global.galaxy_seed);
+    
+    rm = rm_space;
     
 }else{
 
@@ -117,8 +120,7 @@ if(ini_section_exists(game)){
     ds_map_add(global.equipped, "hot1", 2);//flash
     ds_map_add(global.equipped, "hot2", 53);//grenade
     
-    
-    
+    rm = rm_player_edit;
     
 }
 ini_close();
@@ -144,4 +146,4 @@ global.game_loaded = game;
 
 scr_ev_game_loaded();
 
-room_goto(rm_space);
+room_goto(rm);

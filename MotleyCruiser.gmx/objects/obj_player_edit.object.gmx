@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 depth=1000;
+savesprite=false;
 
 genders = noone;
 genders[0]=spr_human;
@@ -104,9 +105,12 @@ cont_button = instance_create(xx+72+32+16,y_model - 24,obj_exit_button);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Save selections
+            <string>/// Save selections, next room
+// body, skin color, hair, hair color, chest, hat, eyes
 global.player_model = selections;
 scr_write_array(selections,global.game_loaded,"player_model",SAVE_GAME_FILE);
+savesprite = true;// Build sprite in the draw step.
+
 </string>
           </argument>
         </arguments>
@@ -192,6 +196,14 @@ if(selections[4]&gt;=array_length_1d(hats)){
 }
 scr_draw_selection(hats,selections[4]);
 
+if(savesprite){
+    savesprite=false;
+    var spr = scr_make_player_sprite();
+    var filename=scr_get_player_sprite_filename();
+    sprite_save_strip(spr, filename);
+    global.player_sprite = spr;
+    room_goto(rm_space);
+}
 
 
 </string>
