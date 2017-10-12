@@ -108,7 +108,11 @@ cont_button = instance_create(xx+72+32+16,y_model - 24,obj_exit_button);
             <string>/// Save selections, next room
 // body, skin color, hair, hair color, chest, hat, eyes
 global.player_model = selections;
-scr_write_array(selections,global.game_loaded,"player_model",SAVE_GAME_FILE);
+
+
+scr_new_game();
+scr_game_save();
+
 savesprite = true;// Build sprite in the draw step.
 
 </string>
@@ -202,7 +206,7 @@ if(savesprite){
     var filename=scr_get_player_sprite_filename();
     sprite_save_strip(spr, filename);
     global.player_sprite = spr;
-    room_goto(rm_space);
+    room_goto(rm_intro);
 }
 
 

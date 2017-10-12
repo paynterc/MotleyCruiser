@@ -32,7 +32,7 @@ sprite_index = spr_human;
 if( sprite_exists(global.player_sprite) ){
     sprite_index = global.player_sprite;
 }
-
+var test =1;
 // Get player appearance selections
 /***
 var pm = scr_get_player_model();

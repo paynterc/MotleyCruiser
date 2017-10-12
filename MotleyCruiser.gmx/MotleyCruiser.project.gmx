@@ -599,6 +599,7 @@
       <script>scripts\scr_new_game_defaults.gml</script>
       <script>scripts\scr_screen_shake.gml</script>
       <script>scripts\scr_set_gui_vars.gml</script>
+      <script>scripts\scr_new_game.gml</script>
     </scripts>
     <scripts name="_gui">
       <scripts name="_gui_package">
@@ -1128,8 +1129,6 @@
       <object>objects\obj_dialog_control</object>
       <objects name="_flywriter">
         <object>objects\obj_flybox</object>
-        <object>objects\obj_flybox_bu2</object>
-        <object>objects\obj_flybox_bu</object>
         <object>objects\obj_flyoption</object>
         <object>objects\obj_flytest</object>
       </objects>
@@ -1258,10 +1257,6 @@
       <object>objects\obj_form_textbox</object>
       <object>objects\obj_form_button</object>
     </objects>
-    <object>objects\obj_impact</object>
-    <object>objects\obj_explosion_OLD</object>
-    <object>objects\obj_explosion</object>
-    <object>objects\obj_flash_timer</object>
     <objects name="_player_edit">
       <object>objects\obj_player_edit</object>
       <object>objects\obj_player_model</object>
@@ -1275,7 +1270,6 @@
       <object>objects\obj_bug</object>
       <object>objects\obj_critter</object>
     </objects>
-    <object>objects\obj_laserbolt</object>
     <objects name="_intro">
       <object>objects\obj_intro_control</object>
       <object>objects\obj_intro_oldgirl</object>
@@ -1292,6 +1286,11 @@
       <object>objects\obj_intro_child1</object>
       <object>objects\obj_intro_child2</object>
     </objects>
+    <object>objects\obj_laserbolt</object>
+    <object>objects\obj_explosion_OLD</object>
+    <object>objects\obj_flash_timer</object>
+    <object>objects\obj_explosion</object>
+    <object>objects\obj_impact</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
