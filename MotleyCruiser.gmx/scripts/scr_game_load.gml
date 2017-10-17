@@ -2,10 +2,11 @@
 // scr_game_load(GAME_ID)
 var game = argument0;
 var rm = noone;//next room
+
+
 scr_new_game_defaults();
 global.game_loaded = game;
 
-inventory_clear();
 
 ini_open(SAVE_GAME_FILE);
 if(ini_section_exists(game)){
@@ -36,56 +37,25 @@ if(ini_section_exists(game)){
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
     
-    
-    
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "suns", "");
-    ds_list_read(read_list,str);
-    global.suns = read_list[| 0];
-    ds_list_destroy(read_list);
-    
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "planets", "");
-    ds_list_read(read_list,str);
-    global.planets = read_list[| 0];
-    ds_list_destroy(read_list);
-    
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "moons", "");
-    ds_list_read(read_list,str);
-    global.moons = read_list[| 0];
-    ds_list_destroy(read_list);
-    
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "stations", "");
-    ds_list_read(read_list,str);
-    global.stations = read_list[| 0];
-    ds_list_destroy(read_list);
-    
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "ships", "");
-    ds_list_read(read_list,str);
-    global.ships = read_list[| 0];
-    ds_list_destroy(read_list);
-    
+        
+    /***
     read_list = ds_list_create();
     var str = ini_read_string(game, "npcs", "");
     ds_list_read(read_list,str);
     global.npcs = read_list[| 0];
     ds_list_destroy(read_list);
-    
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "galaxy", "");
-    ds_list_read(read_list,str);
-    global.galaxy = read_list[| 0];
-    ds_list_destroy(read_list);
-    
-    
+    ***/
+      
+    scr_load_galaxy(game);
     scr_inv_load(game);
     
 
-    global.current_sector_row =  ini_read_real(game, "current_sector_row", 10);
-    global.current_sector_col =  ini_read_real(game, "current_sector_col", 10);
+    global.current_sector_row =  ini_read_real(game, "current_sector_row", 10);//TODO: remove
+    global.current_sector_col =  ini_read_real(game, "current_sector_col", 10);//TODO: remove
+    
+    global.sector_x =  ini_read_real(game, "sector_x", 0);
+    global.sector_y =  ini_read_real(game, "sector_y", 0);
+    
     global.player_x =  ini_read_real(game, "player_x", 0);
     global.player_y =  ini_read_real(game, "player_y", 0);
     global.mission_id =  ini_read_real(game, "mission_id", 0);
@@ -94,7 +64,13 @@ if(ini_section_exists(game)){
     
     scr_load_player_sprite();
     
-    // Equipment - created map in obj_game_control        
+    // Equipment - created map in obj_game_control
+    ds_map_clear(global.equipped);
+    ds_map_add(global.equipped, "weapon", 55);
+    ds_map_add(global.equipped, "hot0", 42);//med
+    ds_map_add(global.equipped, "hot1", 2);//flash
+    ds_map_add(global.equipped, "hot2", 53);//grenade
+      
     //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
     //random_set_seed(global.galaxy_seed);
     

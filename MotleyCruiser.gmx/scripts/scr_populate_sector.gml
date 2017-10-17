@@ -1,136 +1,104 @@
 /// instantiate objects based on galaxy map
+var sx = global.sector_x;
+var sy = global.sector_y;
 
-if(global.galaxy == noone){
-    return false;
+var sector_key = "x"+string(sx)+"y"+string(sy);
+var sector_seed = ds_map_find_value(global.galaxy,sector_key);
+if(is_undefined(sector_seed)){
+    // We haven't been here yet. Create a new sector.
+    randomize();
+    ds_map_add(global.galaxy, sector_key, random_get_seed());
+}else{
+    random_set_seed(sector_seed);
 }
-// get the current sector from globals
-var g_row = global.current_sector_row;
-var g_col = global.current_sector_col;
 
-var sector = global.galaxy[g_row,g_col];
-var suns = sector[SECTOR_SUNS]; //This should be a list of indexes that you can use to cross-reference with global.suns
 var curdepth = 1000;
 
-for(var i = 0; i < array_length_1d(suns); i++){
-
-    if(suns[i] < 0 || suns[i] >= array_length_1d(global.suns)){
-        continue;
-    }
-
-    var sun = global.suns[suns[i]];
-    // Instanitate an object with properties
-    var sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
+// Add suns
+var c = irandom(3);
+var sun;
+var sun_obj;
+for(var i=0; i<c; i++){
+    sun = scr_make_sun(sx,sy);
+    sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
+    sun_obj.data = sun;
     with(sun_obj){
-        var size_mod = sun[SUN_W1] / sprite_get_width(spr_sun); 
+        var size_mod = data[SUN_W1] / sprite_get_width(spr_sun); 
         image_xscale = size_mod;
         image_yscale = size_mod;
-        image_blend = sun[SUN_COLOR];
+        image_blend = data[SUN_COLOR];
         depth = curdepth;
         faction = FACTION_NEUTRAL;
     }
-    
-    if(is_array(sun[SUN_PLANETS])){
-        var planets = sun[SUN_PLANETS];
-        for(var p = 0; p< array_length_1d(planets); p++){
-            if(planets[p] < 0 || planets[p] >= array_length_1d(global.planets)){
-                continue;
-            }
-            var planet = global.planets[planets[p]];     
-            if(is_array(planet)){
-                var planet_obj = instance_create(planet[PLANET_X1],planet[PLANET_Y1],obj_planet);
-                with(planet_obj){
-                    var psize_mod = planet[PLANET_W1] / sprite_get_width(spr_planet); 
-                    image_xscale = psize_mod;
-                    image_yscale = psize_mod;
-                    image_blend = planet[PLANET_COLOR];
-                    image_index = planet[PLANET_SPRITE_INDEX];                  
-                    depth = curdepth;
-                    global_index = planets[p];                  
-                    global_type = "planet";
-                    faction = FACTION_NEUTRAL;
-                    var tname = planet[PLANET_NAME];
-                    name = tname[0];
-                }
-                
-                // Moons
-                if(is_array(planet[PLANET_MOONS])){
-                    var moons = planet[PLANET_MOONS];
-                    for(var m=0; m<array_length_1d(moons); m++){
-                        if(moons[m] < 0 || moons[m] >= array_length_1d(global.moons)){
-                            continue;
-                        }
-                    
-                        var moon = global.moons[moons[m]];
-                        if(is_array(moon)){
-                            var moon_obj = instance_create(moon[MOON_X1],moon[MOON_Y1],obj_moon);
-                            with(moon_obj){
-                                var msize_mod = moon[MOON_W1] / sprite_get_width(spr_moon); 
-                                image_xscale = msize_mod;
-                                image_yscale = msize_mod;
-                                image_blend = moon[MOON_COLOR];
-                                image_index = moon[MOON_SPRITE_INDEX];
-                                depth = curdepth;
-                                global_index = moons[m];
-                                global_type = "moon";
-                                faction = FACTION_NEUTRAL;
-                                var tname = moon[MOON_NAME];
-                                name = tname[0];
-                            }
-                        }
-                    }// End Moons loop
-                }
-            } 
-        }// End Planets loop
-    }
-}// End Suns loop
+}
 
-var stations = sector[SECTOR_STATIONS]; //This should be a list of indexes that you can use to cross-reference with global.stations.
-for(var i = 0; i < array_length_1d(stations); i++){
-
-    if(stations[i] < 0 || stations[i] >= array_length_1d(global.stations)){
-        continue;
+// Add planets
+var c = irandom(5);
+var planet;
+var planet_obj;
+for(var i=0; i<c; i++){
+    planet = scr_make_planet(sx,sy);
+    planet_obj = instance_create(planet[PLANET_X1],planet[PLANET_Y1],obj_planet);
+    planet_obj.data = planet;
+    with(planet_obj){
+        var psize_mod = planet[PLANET_W1] / sprite_get_width(spr_planet); 
+        image_xscale = psize_mod;
+        image_yscale = psize_mod;
+        image_blend = planet[PLANET_COLOR];
+        image_index = planet[PLANET_SPRITE_INDEX];                  
+        depth = curdepth;
+        //global_index = planets[p];                  
+        global_type = "planet";
+        faction = FACTION_NEUTRAL;
+        var tname = planet[PLANET_NAME];
+        name = tname[0];
     }
-    
-    var station = global.stations[stations[i]];
-    // Instanitate an object with properties
-    var station_obj = instance_create(station[STATION_X1],station[STATION_Y1],obj_station);
+}
+
+
+// Add moons
+var c = irandom(5);
+var moon;
+var moon_obj;
+for(var i=0; i<c; i++){
+    moon = scr_make_moon(sx,sy);
+    moon_obj = instance_create(moon[MOON_X1],moon[MOON_Y1],obj_moon);
+    moon_obj.data = moon;
+    with(moon_obj){
+        var msize_mod = moon[MOON_W1] / sprite_get_width(spr_moon); 
+        image_xscale = msize_mod;
+        image_yscale = msize_mod;
+        image_blend = moon[MOON_COLOR];
+        image_index = moon[MOON_SPRITE_INDEX];
+        depth = curdepth;
+        //global_index = moons[m];
+        global_type = "moon";
+        faction = FACTION_NEUTRAL;
+        var tname = moon[MOON_NAME];
+        name = tname[0];
+    }
+}
+
+// Add stations
+var c = irandom(5);
+var station;
+var station_obj;
+for(var i=0; i<c; i++){
+    station = scr_make_station(sx,sy);
+    station_obj = instance_create(station[STATION_X1],station[STATION_Y1],obj_station);
     with(station_obj){
         var ssize_mod = station[STATION_W1] / sprite_get_width(spr_station); 
         image_xscale = ssize_mod;
         image_yscale = ssize_mod;
         image_blend = station[STATION_COLOR];
         depth = curdepth;
-        global_index = stations[i];
+        //global_index = stations[i];
         global_type = "station";
         faction = FACTION_NEUTRAL;
         var tname = station[STATION_NAME];
         name = tname[0];
     }
-    
-    
 }
-
-/***
-var max_ships = 2;
-var min_ships = 1;
-var num_ships = irandom_range(min_ships,max_ships);
-for(var i=1; i<=num_ships; i++){
-    
-    var ship_obj = instance_create(100,100,obj_npc_ship);
-    with(ship_obj){  
-        //var ship_map = scr_make_ship(g_row,g_col); 
-        
-        x = clamp( irandom(global.sector_width ), 1, global.sector_width );
-        y = clamp( irandom(global.sector_width ), 1, global.sector_width );   
-        faction = FACTION_PIRATE; 
-        disposition = DISPOSITION_HOSTILE;
-        ship_data = scr_array_random(global.ship_library);
-        scr_instantiate_ship();
-     
-    } 
-}
-***/
-
 
 
 // Position the player ship.
@@ -214,6 +182,9 @@ if(global.landed_on != noone && global.landed_type!=noone){
     global.landed_type = noone;
     
 }
+
+
+
 
 if(instance_exists(obj_player_ship)){
     with(obj_player_ship){

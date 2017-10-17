@@ -564,6 +564,7 @@
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_populate_sector.gml</script>
+      <script>scripts\scr_populate_sector_OLD.gml</script>
       <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_galaxy_WEIGHTED.gml</script>
@@ -587,8 +588,14 @@
       <script>scripts\scr_find_landable_target.gml</script>
       <script>scripts\scr_faction_centers.gml</script>
       <script>scripts\scr_location_translate.gml</script>
+      <scripts name="_galaxy_admin">
+        <script>scripts\scr_save_galaxy.gml</script>
+        <script>scripts\scr_load_galaxy.gml</script>
+        <script>scripts\scr_clear_galaxy.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_game_control">
+      <script>scripts\scr_new_game.gml</script>
       <script>scripts\scr_pause_menu.gml</script>
       <script>scripts\scr_load_game_menu.gml</script>
       <script>scripts\scr_main_menu.gml</script>
@@ -599,7 +606,6 @@
       <script>scripts\scr_new_game_defaults.gml</script>
       <script>scripts\scr_screen_shake.gml</script>
       <script>scripts\scr_set_gui_vars.gml</script>
-      <script>scripts\scr_new_game.gml</script>
     </scripts>
     <scripts name="_gui">
       <scripts name="_gui_package">

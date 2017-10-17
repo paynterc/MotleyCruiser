@@ -25,7 +25,6 @@ global.credits = 1000;
 /****************************************************************/
 /*                      GALAXY VARS                             */
 /****************************************************************/
-global.galaxy=noone;
 global.galaxy_seed = noone;
 
 
@@ -34,8 +33,10 @@ global.galaxy_seed = noone;
 /****************************************************************/
 global.landed_on = noone;
 global.landed_type = noone;
-global.current_sector_row = global.galaxy_width/2;
+global.current_sector_row = global.galaxy_width/2;// old galaxy navigation values
 global.current_sector_col = global.galaxy_width/2;
+global.sector_x=0;
+global.sector_y=0;
 global.player_x = global.galaxy_width/2;
 global.player_y = global.galaxy_width/2;
 

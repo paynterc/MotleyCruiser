@@ -75,14 +75,15 @@ global.box_height = 100;
 /****************************************************************/
 /*                      BASELINE GALAXY SETTINGS                */
 /****************************************************************/
-global.galaxy_width = 20;
+global.galaxy = ds_map_create();// Destroy at game end
+global.galaxy_width = 20;// Not needed
 global.sector_width = 10000;//width in pixels of space combat room
-
 global.hull_repair_cost = 10; // Cost per hull unit
 
 scr_new_game_defaults();
 
 scr_faction_centers();
+
 
 /****************************************************************/
 /*                      DYNAMIC PLAYER DATA                     */
@@ -641,10 +642,15 @@ if part_type_exists(global.ptcl_gate)
     part_type_destroy(global.ptcl_gate);
 }
 
+if(ds_exists(global.galaxy,ds_type_map)){
+    ds_map_destroy(global.galaxy);
+}
 
 if(ds_exists(global.equipped,ds_type_map)){
     ds_map_destroy(global.equipped);
 }
+
+// Inventory gets destroyed in  obj_inventory
 
 if(sprite_exists(global.player_sprite)){
     sprite_delete(global.player_sprite);

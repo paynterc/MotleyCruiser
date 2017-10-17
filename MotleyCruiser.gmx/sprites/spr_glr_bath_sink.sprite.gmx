@@ -17,8 +17,8 @@
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>48</width>
-  <height>37</height>
+  <width>0</width>
+  <height>0</height>
   <frames>
     <frame index="0">images\spr_glr_bath_sink_0.png</frame>
   </frames>

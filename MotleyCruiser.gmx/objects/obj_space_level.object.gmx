@@ -140,7 +140,8 @@ shieldH = sprite_get_height(spr_shield);
 
 ls = 15;//line spacing
 
-npc_count = array_length_1d(global.npcs);
+//npc_count = array_length_1d(global.npcs);
+npc_count = 0;
 
 // Need this for npcs that target this object by default
 disabled = false;

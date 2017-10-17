@@ -390,13 +390,13 @@ if(debug_mode){
     if(keyboard_check(vk_shift) &amp;&amp; can_move){
     
         if(keyboard_check_pressed(vk_up)){
-            scr_move_to_sector(global.current_sector_row - 1,global.current_sector_col);
+            scr_move_to_sector(global.sector_x,global.sector_y-1);
         }else if(keyboard_check_pressed(vk_down)){
-            scr_move_to_sector(global.current_sector_row + 1,global.current_sector_col);
+            scr_move_to_sector(global.sector_x,global.sector_y+1);
         }else if(keyboard_check_pressed(vk_left)){
-            scr_move_to_sector(global.current_sector_row,global.current_sector_col-1);
+            scr_move_to_sector(global.sector_x-1,global.sector_y);
         }else if(keyboard_check_pressed(vk_right)){
-            scr_move_to_sector(global.current_sector_row,global.current_sector_col+1);
+            scr_move_to_sector(global.sector_x+1,global.sector_y);
         }else{
             // Do nothing
         }
