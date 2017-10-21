@@ -1,8 +1,10 @@
-/// instantiate objects based on galaxy map
+/// instantiate objects based on SEED
 var sx = global.sector_x;
 var sy = global.sector_y;
+var gxindex = 0; // Use this to generate a dsmap index for each location.
+var gxkey;
 
-var sector_key = "x"+string(sx)+"y"+string(sy);
+var sector_key = "x"+string(sx)+"y"+string(sy)+"seed";
 var sector_seed = ds_map_find_value(global.galaxy,sector_key);
 if(is_undefined(sector_seed)){
     // We haven't been here yet. Create a new sector.
@@ -30,6 +32,7 @@ for(var i=0; i<c; i++){
         depth = curdepth;
         faction = FACTION_NEUTRAL;
     }
+    gxindex++;
 }
 
 // Add planets
@@ -37,22 +40,30 @@ var c = irandom(5);
 var planet;
 var planet_obj;
 for(var i=0; i<c; i++){
-    planet = scr_make_planet(sx,sy);
-    planet_obj = instance_create(planet[PLANET_X1],planet[PLANET_Y1],obj_planet);
+    planet = scr_make_planet(sx,sy,gxindex);
+    planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
     planet_obj.data = planet;
+    
+    /***
+    if(!scr_gx_loc_exists(sx,sy,gxindex)){
+        scr_gx_loc_array_to_map(planet);// Insert to global.gx_locations
+    }
+    ***/
+    
     with(planet_obj){
-        var psize_mod = planet[PLANET_W1] / sprite_get_width(spr_planet); 
+        var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
         image_xscale = psize_mod;
         image_yscale = psize_mod;
-        image_blend = planet[PLANET_COLOR];
-        image_index = planet[PLANET_SPRITE_INDEX];                  
+        image_blend = planet[LOC_COLOR];
+        image_index = planet[LOC_SPRITE];                  
         depth = curdepth;
-        //global_index = planets[p];                  
+        global_index = planet[LOC_INDEX];                  
         global_type = "planet";
         faction = FACTION_NEUTRAL;
-        var tname = planet[PLANET_NAME];
+        var tname = planet[LOC_NAME];
         name = tname[0];
     }
+    gxindex++;
 }
 
 
@@ -61,22 +72,23 @@ var c = irandom(5);
 var moon;
 var moon_obj;
 for(var i=0; i<c; i++){
-    moon = scr_make_moon(sx,sy);
-    moon_obj = instance_create(moon[MOON_X1],moon[MOON_Y1],obj_moon);
+    moon = scr_make_moon(sx,sy,gxindex);
+    moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_moon);
     moon_obj.data = moon;
     with(moon_obj){
-        var msize_mod = moon[MOON_W1] / sprite_get_width(spr_moon); 
+        var msize_mod = moon[LOC_W1] / sprite_get_width(spr_moon); 
         image_xscale = msize_mod;
         image_yscale = msize_mod;
-        image_blend = moon[MOON_COLOR];
-        image_index = moon[MOON_SPRITE_INDEX];
+        image_blend = moon[LOC_COLOR];
+        image_index = moon[LOC_SPRITE];
         depth = curdepth;
-        //global_index = moons[m];
+        global_index = moon[LOC_INDEX];
         global_type = "moon";
         faction = FACTION_NEUTRAL;
-        var tname = moon[MOON_NAME];
+        var tname = moon[LOC_NAME];
         name = tname[0];
     }
+    gxindex++;
 }
 
 // Add stations
@@ -84,20 +96,22 @@ var c = irandom(5);
 var station;
 var station_obj;
 for(var i=0; i<c; i++){
-    station = scr_make_station(sx,sy);
-    station_obj = instance_create(station[STATION_X1],station[STATION_Y1],obj_station);
+    station = scr_make_station(sx,sy,gxindex);
+    station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
     with(station_obj){
-        var ssize_mod = station[STATION_W1] / sprite_get_width(spr_station); 
+        var ssize_mod = station[LOC_W1] / sprite_get_width(spr_station); 
         image_xscale = ssize_mod;
         image_yscale = ssize_mod;
-        image_blend = station[STATION_COLOR];
+        image_blend = station[LOC_COLOR];
+        image_index = station[LOC_SPRITE];
         depth = curdepth;
-        //global_index = stations[i];
+        global_index = station[LOC_INDEX];
         global_type = "station";
         faction = FACTION_NEUTRAL;
-        var tname = station[STATION_NAME];
+        var tname = station[LOC_NAME];
         name = tname[0];
     }
+    gxindex++;
 }
 
 
@@ -155,29 +169,7 @@ if(global.ship_boarded != noone){
 
 if(global.landed_on != noone && global.landed_type!=noone){
 
-    var location = noone;
-    if(global.landed_type=="station"){
-        
-        location = global.stations[global.landed_on];
-        player_x = location[STATION_X1];
-        player_y = location[STATION_Y1];
-        
-    }else if(global.landed_type=="planet"){
-    
-        location = global.planets[global.landed_on];
-        player_x = location[PLANET_X1];
-        player_y = location[PLANET_Y1];
-        
-    }else if(global.landed_type=="moon"){
-    
-        location = global.moons[global.landed_on];
-        player_x = location[MOON_X1];
-        player_y = location[MOON_Y1];
-        
-    }else{
-        location = noone;
-    }
-    
+
     global.landed_on = noone;
     global.landed_type = noone;
     

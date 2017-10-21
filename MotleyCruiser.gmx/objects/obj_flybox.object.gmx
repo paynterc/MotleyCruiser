@@ -28,28 +28,35 @@
             <string>/// Init
 
 // These can be overwritten
-spd = .90;
-
+text = "";
+font = fnt_messagebox; 
 boxx1 = x;
 boxy1 = y;
 boxw = room_width;
 boxh = 200;
+spd = .90;
+pad_l=16;
+pad_r=16;
+pad_t=16;
+pad_b=16;
+drawbox = true;
+yoffset_max = room_height - boxy1;/// Max offset from bottom
+popspeed = 400;
+
+
+// These dependant variables will be updated in the parsing step
 boxx2 = boxx1 + boxw;
 boxy2 = boxy1 + boxh;
-drawbox = true;
-
-xpadding=16;
-ypadding=16;
-
-maxlength = room_width-xpadding;
-maxheight = boxh;
-text = "";
-font = fnt_messagebox;      
+maxlength = boxw - pad_l - pad_r;
+maxheight = boxh - pad_t - pad_b;
 text_length = string_length(text);
 font_size = font_get_size(font);
 draw_set_font(font);
 text_width = string_width_ext(text,font_size+(font_size/2),maxlength);
 text_height = string_height_ext(text,font_size+(font_size/2),maxlength);
+maxlines=0;
+yoffset = 0;// decrease yoffset when moving
+
 
 // State variables. Leave as-is.
 state = "init";//parsing,moving,printing,displaying_options,waiting_for_option,option_selected,sending_option
@@ -58,8 +65,8 @@ depth = -100000;
 destroy=false;
 words=noone;// An array of words to be fed to the typewriter script
 
+
 //popup
-popspeed = room_speed;
 desty=noone;
 
 
@@ -100,6 +107,7 @@ option_selected = false;
             <kind>1</kind>
             <string>/// States
 
+
 if(destroy){
     if(instance_exists(obj_flyoption)){
         with(obj_flyoption){
@@ -110,8 +118,23 @@ if(destroy){
 }
 if(state="parsing")
 {
+    if(portrait){
+        pwidth = round(boxw/6);
+        pheight = pwidth;        
+        pad_l = pad_l + pwidth;
+    }
     
-    maxheight = boxh - ypadding;
+
+    boxx2 = boxx1 + boxw;
+    boxy2 = boxy1 + boxh;
+    maxlength = boxw - pad_l - pad_r;
+    maxheight = boxh - pad_t - pad_b;
+    text_length = string_length(text);
+    font_size = font_get_size(font);
+    draw_set_font(font);
+    text_width = string_width_ext(text,font_size+(font_size/2),maxlength);
+    text_height = string_height_ext(text,font_size+(font_size/2),maxlength);
+
     maxlines = round(maxheight/(font_size + font_size/2)); 
     words = scr_stringtowords(text);
     
@@ -126,22 +149,23 @@ if(state="parsing")
 else if(state == "moving")
 {
 
+    // yoffset is used to calculate y coordinate in the Draw event.
     if(desty!=noone){
-        var ydist = y - desty;
-        if(abs(ydist)&lt;=popspeed){
-            y = desty;
+        var ydist = yoffset_max - yoffset;
+        var mv = popspeed/room_speed;
+        var test2 = 1;
+        if( yoffset &lt;= mv ){
+            yoffset = 0;
             state="printing";
         }else{
-            y -= popspeed;
-        }
+            yoffset -= mv;
+            var test = 1;
+        }       
+        
     }else{
         state="printing";
     }
     
-    boxx1 = x;
-    boxy1 = y;
-    boxx2 = boxx1 + boxw;
-    boxy2 = boxy1+boxh;
 
 }
 else if(state == "displaying_options")
@@ -153,8 +177,8 @@ else if(state == "displaying_options")
         }
     }
     if(options!=noone){
-        var xx=boxx1;
-        var yy=boxy2+4;
+        var xx=boxx1+16;
+        var yy=boxy2 - (sprite_get_height(spr_flyoption)/2);
         var op;
         for(var i=0;i&lt;array_length_1d(options);i++){
             op = instance_create(xx,yy,obj_flyoption);
@@ -166,11 +190,14 @@ else if(state == "displaying_options")
                 op.option_target = option_target;
             }
             op.option_index = option_index;
+            op.depth=depth-10;
             xx += op.sprite_width + 8;
         }
     }
-}
-else if(state == "option_selected")
+}else if(state=="waiting_for_option"){
+    //
+
+}else if(state == "option_selected")
 {
     state="sending_option";
     if(instance_exists(obj_flyoption)){
@@ -204,29 +231,43 @@ else if(state == "option_selected")
           <argument>
             <kind>1</kind>
             <string>/// Render textbox &amp; text
+if(view_visible[0]){
+    boxx1=view_xview[0];
+    boxy1=view_yview[0] + view_hview[0] - (yoffset_max - yoffset);
+    boxx2 = boxx1+boxw;
+    boxy2 = boxy1+boxh;
+}else{
+    boxx1=0;
+    boxy1=room_height - (yoffset_max - yoffset);
+    boxx2 = boxx1+boxw;
+    boxy2 = boxy1+boxh;
+}
+
+
 if(drawbox){
-    draw_set_color(c_black);
-    draw_rectangle(boxx1,boxy1,boxx2,boxy2,false);
     draw_set_color(c_white);
-    draw_line(boxx1,boxy1,boxx2,boxy1);
-    draw_line(boxx1,boxy2,boxx2,boxy2);
-    
-    draw_line(boxx1,boxy1+3,boxx2,boxy1+3);
-    draw_line(boxx1,boxy2-3,boxx2,boxy2-3);
+    draw_rectangle(boxx1,boxy1,boxx2,boxy2,false);
+    //draw_set_color(c_white);
+    //draw_line(boxx1,boxy1,boxx2,boxy1);
+    //draw_line(boxx1,boxy2,boxx2,boxy2);   
+    //draw_line(boxx1,boxy1+3,boxx2,boxy1+3);
+    //draw_line(boxx1,boxy2-3,boxx2,boxy2-3);
     
     draw_set_color(c_dkgray);
     draw_rectangle(boxx1,boxy1+4,boxx2,boxy2-4,false);
 }
 
 if(portrait){
+
+    draw_set_color(c_white);
+    draw_rectangle(boxx1+6, boxy1+10, boxx1+pwidth+2, boxy1+pwidth+2, false);
     draw_set_color(c_black);
-    draw_rectangle(boxx1+8, boxy1+8, boxx1+8+pwidth, boxy1+8+pheight, false);
-    draw_set_color(c_lime);
-    draw_rectangle(boxx1+8,boxy1+8,boxx1+8+pwidth,boxy1+8+pheight,true);
+    draw_rectangle(boxx1+8, boxy1+12, boxx1+pwidth, boxy1+pwidth, false);
+
     
     swidth = sprite_get_width(portrait);
     scl = round( pwidth/swidth ) - 1;
-    draw_sprite_part_ext(portrait, 0, 0, 0, swidth, swidth, boxx1+12, boxy1+12, scl, scl, c_white, 1);
+    draw_sprite_part_ext(portrait, 0, (swidth/2)-8, 0, 16, 16, boxx1+14, boxy1+14, scl, scl, c_white, 1);
 }
 
 
@@ -244,7 +285,7 @@ if(state == "printing"){
     }
 }
 
-scr_typewriter(words, x + xpadding, y + ypadding, maxlength, floor(time));
+scr_typewriter(words, boxx1 + pad_l, boxy1 + pad_t, maxlength, floor(time));
 
 
 

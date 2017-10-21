@@ -271,7 +271,9 @@ show=false;
 clickable = false;
 scr_gui_return_context();
 global.paused = false;
-scr_script_parse(script);
+if(script!=noone){
+    scr_script_parse(script);
+}
 </string>
           </argument>
         </arguments>

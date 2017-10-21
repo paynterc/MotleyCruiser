@@ -1,7 +1,6 @@
 /// Create a planet with attributes
-// scr_make_planet(sector_row, sector_column)
-var map = scr_ent_planet();
-
+// scr_make_planet(sector_row, sector_column, location index)
+var map = scr_location();
 
 var x1=0;
 var y1=0;
@@ -13,30 +12,26 @@ var max_width = sprite_get_width(spr_planet) * 3;
 var sector = noone;
 sector[0]=argument0;
 sector[1]=argument1;
-
-var moons = noone;
-var moonmax = 3;
-
-
+loc_index = argument2;
 
 w1 = max(min_width, irandom(max_width));
 x1 = clamp( global.sector_width, w1/2, irandom(global.sector_width - (w1/2) ) );
 y1 = clamp( global.sector_width, w1/2, irandom(global.sector_width - (w1/2) ) );
 
-
-
-map[PLANET_X1]=x1;
-map[PLANET_Y1]=y1;
-map[PLANET_W1]=w1;
-map[PLANET_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
-map[PLANET_MOONS]=noone;
-map[PLANET_SPRITE_INDEX]=floor(random(sprite_get_number(spr_planet)));
-map[PLANET_SECTOR]=sector;
-map[PLANET_NPCS] = noone;
-map[PLANET_SUN] = noone;
-map[PLANET_NAME] = totro_plus(1,4,1,0,0);
-map[PLANET_ECONOMY]=irandom(3);
-map[PLANET_ECON_MOD] = random_range(.25,1.25);
-map[PLANET_ECON_OFFSET] = random(1);
+map[LOC_TYPE]=GX_PLANET;
+map[LOC_X1]=x1;
+map[LOC_Y1]=y1;
+map[LOC_W1]=w1;
+map[LOC_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
+map[LOC_SPRITE]=floor(random(sprite_get_number(spr_planet)));
+map[LOC_SECTOR]=sector;
+map[LOC_NPCS] = noone;
+map[LOC_INDEX]=scr_make_loc_index(argument0,argument1,argument2);
+var name = totro_plus(1,4,1,1,0);
+map[LOC_NAME] = name;
+map[LOC_NAME_1] = name[0];
+map[LOC_ECONOMY]=irandom(3);
+map[LOC_ECON_MOD] = random_range(.25,1.25);
+map[LOC_ECON_OFFSET] = random(1);
 
 return map;

@@ -26,19 +26,42 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-print = "";// text to be printed to the screen each frame. Will increase by one character at a time.
+
+// These can be overwritten
+spd = .90;
+
+boxx1 = x;
+boxy1 = y;
+boxw = room_width;
+boxh = 200;
+boxx2 = boxx1 + boxw;
+boxy2 = boxy1 + boxh;
+drawbox = true;
+
+xpadding=16;
+ypadding=16;
+
+maxlength = room_width-xpadding;
+maxheight = boxh;
+text = "";
+font = fnt_messagebox;      
+text_length = string_length(text);
+font_size = font_get_size(font);
+draw_set_font(font);
+text_width = string_width_ext(text,font_size+(font_size/2),maxlength);
+text_height = string_height_ext(text,font_size+(font_size/2),maxlength);
+
+// State variables. Leave as-is.
+state = "init";//parsing,moving,printing,displaying_options,waiting_for_option,option_selected,sending_option
 time = 0;// increment this by print speed setting
-starttext = true;// Can be set to false to delay printing text.
 depth = -100000;
 destroy=false;
+words=noone;// An array of words to be fed to the typewriter script
 
 //popup
 popspeed = room_speed;
 desty=noone;
 
-// box params
-boxx1 = x;
-boxy1 = y;
 
 // portrait
 portrait = noone;
@@ -75,49 +98,54 @@ option_selected = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Move, Destroy
+            <string>/// States
+
+
 if(destroy){
+    if(instance_exists(obj_flyoption)){
+        with(obj_flyoption){
+            destroy=true;
+        }
+    }
     instance_destroy();
 }
-
-if(desty!=noone){
-    var ydist = y - desty;
-    if(abs(ydist)&lt;=popspeed){
-        y = desty;
-        starttext=true;
+if(state="parsing")
+{
+    
+    maxheight = boxh - ypadding;
+    maxlines = round(maxheight/(font_size + font_size/2)); 
+    words = scr_stringtowords(text);
+    
+    if(desty!=noone){
+        state="moving";
     }else{
-        y -= popspeed;
+        state="printing";
     }
+    
+    
 }
+else if(state == "moving")
+{
 
+    if(desty!=noone){
+        var ydist = boxy1 - desty;
+        if(abs(ydist)&lt;=popspeed){
+            boxy1 = desty;
+            state="printing";
+        }else{
+            boxy1 -= popspeed;
+        }
+    }else{
+        state="printing";
+    }
 
-boxx1 = x;
-boxy1 = y;
-boxx2 = boxx1 + boxw;
-boxy2 = boxy1+boxh;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Options
-if(showoptions){
-    showoptions=false;
+    boxx2 = boxx1 + boxw;
+    boxy2 = boxy1+boxh;
+
+}
+else if(state == "displaying_options")
+{
+    state="waiting_for_option";
     if(instance_exists(obj_flyoption)){
         with(obj_flyoption){
             destroy=true;
@@ -125,7 +153,7 @@ if(showoptions){
     }
     if(options!=noone){
         var xx=boxx1;
-        var yy=boxy2+ypadding;
+        var yy=boxy2+4;
         var op;
         for(var i=0;i&lt;array_length_1d(options);i++){
             op = instance_create(xx,yy,obj_flyoption);
@@ -141,15 +169,17 @@ if(showoptions){
         }
     }
 }
-
-if(option_selected){
-    option_selected=false;
+else if(state == "option_selected")
+{
+    state="sending_option";
     if(instance_exists(obj_flyoption)){
         with(obj_flyoption){
             destroy=true;
         }
-    }   
+    }
+    destroy=true;
 }
+
 </string>
           </argument>
         </arguments>
@@ -172,52 +202,28 @@ if(option_selected){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Add letters over time
-if( time &lt; text_length ){
-    if(starttext){
-        time += spd;
-        print = string_copy(text,0,time);
-    }
-}else{
-    if(!options_triggered){
-        options_triggered=true;
-        showoptions = true;
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Render textbox &amp; text
+if(view_visible[0]){
+    boxx1=view_xview[0];
+    boxy1=view_yview[0] + view_hview[0] - boxh;
+    boxx2 = boxx1+boxw;
+    boxy2 = boxy1+boxh;
+}
 
-draw_set_color(c_black);
-draw_rectangle(boxx1,boxy1,boxx2,boxy2,false);
-draw_set_color(c_white);
-draw_line(boxx1,boxy1,boxx2,boxy1);
-draw_line(boxx1,boxy2,boxx2,boxy2);
 
-draw_line(boxx1,boxy1+3,boxx2,boxy1+3);
-draw_line(boxx1,boxy2-3,boxx2,boxy2-3);
-
-draw_set_color(c_dkgray);
-draw_rectangle(boxx1,boxy1+4,boxx2,boxy2-4,false);
-
+if(drawbox){
+    draw_set_color(c_black);
+    draw_rectangle(boxx1,boxy1,boxx2,boxy2,false);
+    draw_set_color(c_white);
+    draw_line(boxx1,boxy1,boxx2,boxy1);
+    draw_line(boxx1,boxy2,boxx2,boxy2);
+    
+    draw_line(boxx1,boxy1+3,boxx2,boxy1+3);
+    draw_line(boxx1,boxy2-3,boxx2,boxy2-3);
+    
+    draw_set_color(c_dkgray);
+    draw_rectangle(boxx1,boxy1+4,boxx2,boxy2-4,false);
+}
 
 if(portrait){
     draw_set_color(c_black);
@@ -235,14 +241,18 @@ draw_set_font(font);
 draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-draw_text_ext
-(
-    x + xpadding,
-    y + ypadding,
-    print,
-    font_size + (font_size/2),
-    maxlength
-);
+
+
+if(state == "printing"){
+    if( time &lt; text_length ){
+        time += spd;
+    }else{
+        state="displaying_options";
+    }
+}
+
+scr_typewriter(words, boxx1 + xpadding, boxy1 + ypadding, maxlength, floor(time));
+
 
 
 </string>

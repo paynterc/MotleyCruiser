@@ -239,13 +239,24 @@ for(var yy = 0; yy &lt; height; yy++){
               
             }
             
-            // Maybe place some cover
-             var cOdds = 60;
-             if(irandom(cOdds) == cOdds){
-                var cover = instance_create(ex,ey,obj_crate);
-                with(cover){
+
+             
+             var lOdds = 3;
+             if(irandom(lOdds) == lOdds){
+                var cred = instance_create(ex,ey,obj_da_loot);
+                with(cred){
                     depth = -y;
+                    credits=10;
                 }         
+             }else{
+                // Maybe place some cover
+                 var cOdds = 60;
+                 if(irandom(cOdds) == cOdds){
+                    var cover = instance_create(ex,ey,obj_crate);
+                    with(cover){
+                        depth = -y;
+                    }         
+                 }
              }
 
             // Place light

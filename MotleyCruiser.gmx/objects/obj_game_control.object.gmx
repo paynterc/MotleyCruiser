@@ -80,6 +80,8 @@ global.galaxy_width = 20;// Not needed
 global.sector_width = 10000;//width in pixels of space combat room
 global.hull_repair_cost = 10; // Cost per hull unit
 
+global.gx_locations = ds_map_create();// Destroy at game end
+
 scr_new_game_defaults();
 
 scr_faction_centers();
@@ -644,6 +646,10 @@ if part_type_exists(global.ptcl_gate)
 
 if(ds_exists(global.galaxy,ds_type_map)){
     ds_map_destroy(global.galaxy);
+}
+
+if(ds_exists(global.gx_locations,ds_type_map)){
+    ds_map_destroy(global.gx_locations);
 }
 
 if(ds_exists(global.equipped,ds_type_map)){

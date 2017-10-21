@@ -107,10 +107,15 @@ cont_button = instance_create(xx+72+32+16,y_model - 24,obj_exit_button);
             <kind>1</kind>
             <string>/// Save selections, next room
 // body, skin color, hair, hair color, chest, hat, eyes
-global.player_model = selections;
-scr_new_game();
-scr_game_save();
-savesprite = true;// Build sprite in the draw step.
+
+if(name_field.txt != ''){
+    global.player_model = selections;
+    scr_new_game();
+    scr_game_save();
+    savesprite = true;// Build sprite in the draw step.
+}else{
+    scr_display_message_simple("What about a name?");
+}
 
 </string>
           </argument>
@@ -203,7 +208,7 @@ if(savesprite){
     var filename=scr_get_player_sprite_filename();
     sprite_save_strip(spr, filename);
     global.player_sprite = spr;
-    room_goto(rm_space);
+    room_goto(rm_intro);
 }
 
 

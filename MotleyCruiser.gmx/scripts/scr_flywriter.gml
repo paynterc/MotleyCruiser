@@ -27,39 +27,48 @@ var options = args[3];
 var option_target = args[4];
 var ytarget = args[5];
 
+var boxw, boxh, boxx1, boxy1, frame_bottom, boxw;
+if(view_visible[0]){
 
-var boxw = room_width;
-var boxh = 200;
-var boxx1 = 0;
-var boxy1;
-if(ytarget!=noone){
-    boxy1 = ytarget;
+    boxw = view_wview[0];
+    boxh = view_hview[0]/2;
+    boxx1 = view_xview[0];
+    frame_bottom=view_yview[0] + view_hview[0];
+    
+    if(ytarget!=noone){
+        boxy1 = view_yview[0] + ytarget;
+    }else{
+        boxy1 = frame_bottom - boxh - (sprite_get_height(spr_flyoption)/2);
+    }
+
+
 }else{
-    boxy1 = (room_height/2) - (boxh/2);
+
+    boxw = room_width;
+    boxh = 200;
+    boxx1 = 0;
+    if(ytarget!=noone){
+        boxy1 = ytarget;
+    }else{
+        boxy1 = (room_height/2) - (boxh/2);
+    }
+    frame_bottom = room_height;
 }
+
+
+
 
 
 var tbox;
 if(popup){
-    tbox = instance_create(boxx1,room_height,obj_flybox);
+    tbox = instance_create(boxx1,frame_bottom,obj_flybox);
 }else{
     tbox = instance_create(boxx1,boxy1,obj_flybox);
 }
-with(tbox){
 
-    spd = .90;
-    xpadding=16;
-    ypadding=16;
-    maxlength = room_width-xpadding;
-    text = args[0];
-    font = fnt_messagebox;      
-    text_length = string_length(text);
-    font_size = font_get_size(font);
-    draw_set_font(font);
-    text_width = string_width_ext(text,font_size+(font_size/2),maxlength);
-    text_height = string_height_ext(text,font_size+(font_size/2),maxlength);
-     
-}
+// text
+tbox.text = args[0];
+
 tbox.boxy1 = boxy1;
 tbox.boxw = boxw;
 tbox.boxh = boxh;
@@ -69,18 +78,15 @@ tbox.boxy2 = boxy1+boxh;
 // portrait
 if(portrait){
     tbox.portrait = portrait;
-    tbox.pwidth = round(boxw/6);
-    tbox.pheight = round(boxw/6);
-    tbox.maxlength = room_width - tbox.pwidth - tbox.xpadding;
-    tbox.xpadding = tbox.xpadding + tbox.pwidth;
 }
 
 // popup
 if(popup){
 
     tbox.desty=boxy1;
-    tbox.y = room_height;
-    tbox.boxy1 = room_height;
+    tbox.yoffset_max = frame_bottom-tbox.boxy1;
+    tbox.yoffset=tbox.yoffset_max;
+    tbox.boxy1 = frame_bottom;
     tbox.boxy2 = tbox.boxy1 + tbox.boxh;
 
 }

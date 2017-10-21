@@ -1,9 +1,12 @@
 /*************
 EVENT: Docked
 Scripts to run when player lands on a planet, moon or station
+TODO: Come back to this later. I'm changing the way we track locations.
 *************/
 
 // See if we are meeting a mission objective
+
+/*** 
 var objectives = scr_get_entity_objectives(global.landed_type,global.landed_on);
 if(objectives != noone){
 
@@ -14,3 +17,4 @@ if(objectives != noone){
     }
     
 }
+***/

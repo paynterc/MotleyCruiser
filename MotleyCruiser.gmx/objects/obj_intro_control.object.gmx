@@ -68,41 +68,6 @@ scr_flywriter(str1,noone,false,"4,Hell yeah!,No thanks",self,224);
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="6">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Old Salt intro
-if(instance_exists(obj_intro_old_salt)){
-    with(obj_intro_old_salt){
-        x=room_width;
-        image_alpha=1;
-        image_speed = .25;
-        image_xscale=-1;
-    }
-    str1 = "A stranger has arrived in town. You strike up a conversation with him and learn that he is a starship captain from a distant sector."
-    scr_flywriter(str1,noone,true,noone,self,224);
-    state="old_salt_walking";
-    alarm[7]=room_speed * 8;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="2" enumb="5">
       <action>
         <libid>1</libid>
@@ -133,7 +98,7 @@ if(instance_exists(obj_flybox)){
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="4">
+    <event eventtype="2" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -160,106 +125,6 @@ if(instance_exists(obj_intro_player)){
 }
 
 state="player_running";
-    
-str1 = "If only you could get off this planet. You'd go after those killers and show them the true meaning of regret."
-scr_flywriter(str1,noone,false,noone,self,224);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="3">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Taking family
-str1 = "A year ago they took your family. Leaving you alone to tend the farm. Where they are now is anyone's guess."
-scr_flywriter(str1,noone,false,noone,self,224);
-state = "march_family";
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Ship has landed. Second text. Pirates take family
-with(obj_intro_window){
-    image_blend=c_white;
-}
-pirate1=instance_create(pship.x,horizon,obj_intro_pirate);
-pirate2=instance_create(pship.x-24,horizon,obj_intro_pirate);
-pirate3=instance_create(pship.x+24,horizon,obj_intro_pirate);
-with(obj_intro_pirate){
-    depth=obj_intro_control.depth_person;
-    image_speed = .25;
-    image_xscale=-1;
-}
-
-state="pirates_charging";
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Pirate ship lands
-if(instance_exists(obj_flybox)){
-    with(obj_flybox){
-        destroy=true;
-    }
-}
-pfire = instance_create(pship.x,pship.y,obj_piratefire);
-pfire.depth=-100000;
-state = "pshiplanding";
-
-
 </string>
           </argument>
         </arguments>
@@ -283,12 +148,7 @@ state = "pshiplanding";
           <argument>
             <kind>1</kind>
             <string>/// First text, show horizon
-str1 = "Raised on a backwater world in a backwater arm of the galaxy, you don't know much about space. You know there are ships that travel between the stars, but your only experience with them has been the pirates that land occasionally, take what they want, and leave."
-scr_flywriter(str1,noone,true,noone,self,224);
-if(instance_exists(obj_horizon)){
-    obj_horizon.showme=true;
-}
-alarm[1]=room_speed * 15;
+state = "begin";
 </string>
           </argument>
         </arguments>
@@ -312,7 +172,35 @@ alarm[1]=room_speed * 15;
           <argument>
             <kind>1</kind>
             <string>/// Condition selected
-if(state=="pshiplanding"){
+if(state="begin"){
+    
+    str1 = "Raised on a backwater world in a backwater arm of the galaxy, you don't know much about space. You know there are ships that travel between the stars, but your only experience with them has been the pirates that land occasionally, take what they want, and leave."
+    scr_flywriter(str1,noone,true,"0,Continue",self,224);
+    if(instance_exists(obj_horizon)){
+        obj_horizon.showme=true;
+    }
+    state = "first_text";
+    
+}else if(state=="first_text"){
+
+    if( fly_conditionals[0]==1 )
+    {       
+        fly_conditionals[0]=0;
+
+        if(instance_exists(obj_flybox)){
+            with(obj_flybox){
+                destroy=true;
+            }
+        }
+        pfire = instance_create(pship.x,pship.y,obj_piratefire);
+        pfire.depth=-100000;
+        state = "pshiplanding";
+                   
+    }
+    
+
+}else if(state=="pshiplanding"){
+    
     with(pship){
         y+=20/room_speed;
     }
@@ -323,17 +211,34 @@ if(state=="pshiplanding"){
     
     
     if( pship.y &gt;= horizon ){
-        state = "pshiplanded";
+        state = "pirate_landed";
         if(instance_exists(pfire)){
             with(pfire){
                 image_alpha=0;
             }
         }
-        alarm[2]=1;
     }
     
     
+}else if(state=="pirate_landed"){
+
+    /// Ship has landed. Second text. Pirates take family
+    with(obj_intro_window){
+        image_blend=c_white;
+    }
+    pirate1=instance_create(pship.x,horizon,obj_intro_pirate);
+    pirate2=instance_create(pship.x-24,horizon,obj_intro_pirate);
+    pirate3=instance_create(pship.x+24,horizon,obj_intro_pirate);
+    with(obj_intro_pirate){
+        depth=obj_intro_control.depth_person;
+        image_speed = .25;
+        image_xscale=-1;
+    }
+    
+    state="pirates_charging";
+
 }else if(state=="pirates_charging"){
+
     if(instance_exists(obj_intro_pirate)){
         with(obj_intro_pirate){
             x-=60/room_speed;
@@ -342,15 +247,35 @@ if(state=="pshiplanding"){
             }    
         }
     }
+    
 }else if(state=="found_family"){
 
     if(instance_exists(obj_intro_parent1)){
         with(obj_intro_parent1){
             image_alpha=1;
         }
-    }    
+    }
+    str1 = "A year ago they took your family. Leaving you alone to tend the farm. Where they are now is anyone's guess."
+    scr_flywriter(str1,noone,false,"1,Continue",self,224);  
     state="family_wating";
-    alarm[3]=room_speed;
+
+    
+}else if(state=="family_wating"){
+
+
+    // You can continue now
+    if( fly_conditionals[1]==1 )
+    {       
+        if(instance_exists(obj_flybox)){
+            with(obj_flybox){
+                destroy=true;
+            }
+        }
+        
+        fly_conditionals[1]=0;
+        state="march_family";
+    }
+
     
 }else if(state=="march_family"){
     
@@ -372,6 +297,8 @@ if(state=="pshiplanding"){
               
         }
     }
+    
+
     
 }else if(state=="march_all"){
     
@@ -403,15 +330,14 @@ if(state=="pshiplanding"){
     
 }else if(state=="pirates_boarded"){
 
-
-        
-        if(instance_exists(pfire)){
-            with(pfire){
-                image_alpha=1;
-            }
+  
+    if(instance_exists(pfire)){
+        with(pfire){
+            image_alpha=1;
         }
-        alarm[4]=room_speed*3;       
-        state="pirateship_leaving";
+    }
+    alarm[1]=room_speed*2;
+    state="pirateship_leaving";
         
 
 }else if(state=="pirateship_leaving"){
@@ -445,7 +371,10 @@ if(state=="pshiplanding"){
 
     }
     
+    
 }else if(state=="player_waiting"){
+
+
 
     with(pship){
         y-=30/room_speed;
@@ -456,12 +385,36 @@ if(state=="pshiplanding"){
     }
 
     if( pfire.y &lt; 0 - pfire.sprite_height ){
-        alarm[5]=room_speed;
+        //alarm[5]=room_speed;
+        
+        str1 = "If only you could get off this planet. You'd go after those killers and show them the true meaning of regret."
+        scr_flywriter(str1,noone,false,"2,Continue",self,224);
+        
         state="ship_offscreen";
     }
     
 
+    
+
+}else if(state=="ship_offscreen"){
+
+
+    if( fly_conditionals[2]==1 )
+    { 
+        fly_conditionals[2]=0;
+        if(instance_exists(obj_flybox)){
+            with(obj_flybox){
+                destroy=true;
+            }
+        }
+        state="sunrise";
+    }
+
 }else if(state=="sunrise"){
+   
+    pship.y=-1000;
+    pfire.y=-1000;
+
     value += round(20/room_speed);
     
     hsv = make_color_hsv(0,0,value);
@@ -487,7 +440,24 @@ if(state=="pshiplanding"){
     background_blend=hsv;
     if(value&gt;=255){
         state="morning";
-        alarm[6]=1;
+        //alarm[6]=1;
+    }
+    
+
+
+}else if(state == "morning"){
+
+    /// Old Salt intro
+    if(instance_exists(obj_intro_old_salt)){
+        with(obj_intro_old_salt){
+            x=room_width;
+            image_alpha=1;
+            image_speed = .25;
+            image_xscale=-1;
+        }
+
+        state="old_salt_walking";
+        //alarm[7]=room_speed * 8;
     }
 
 }else if(state="old_salt_walking"){
@@ -496,9 +466,64 @@ if(state=="pshiplanding"){
         obj_intro_old_salt.x -= 40/room_speed;
         if(obj_intro_old_salt.x &lt;= obj_intro_player.x+32){
             obj_intro_old_salt.image_speed=0;
-            state="old_salt_talking";
+            
+            str1 = "A stranger has arrived in town. You strike up a conversation with him and learn that he is a starship captain from a distant sector."
+            scr_flywriter(str1,noone,true,"3,Continue",self,224);
+            
+            state="old_salt_waiting";
         }
     }
+    
+    
+}else if(state=="old_salt_waiting"){
+    
+    if( fly_conditionals[3]==1 )
+    { 
+        fly_conditionals[3]=0;
+        
+        str1 = "Blown off course and without maps of the local system, he has no way to find his way back, but doesn't much seem to care. He's tired of the spacefaring life and ready to live out his remaining years with firm soil beneath his feet. Problem is, he has no land or property. You're a farmer, right? He offers a trade. Your farm for his ship."
+        scr_flywriter(str1,noone,false,"4,Hell yeah!,No thanks",self,224);
+        
+        state="old_salt_talking";
+        //alarm[7]=1;
+    }
+
+}else if(state=="old_salt_talking"){
+    
+    if( fly_conditionals[4]==2 )
+    {
+        fly_conditionals[4]=0;
+        str1 = "How disappointing. I hope someone more interesting comes along soon."
+        scr_flywriter(str1,noone,true,"4,No! wait!",self,224);
+    }
+    
+    if( fly_conditionals[4]==1 )
+    {
+        fly_conditionals[4]=0;
+        str1 = "Allright then. Let me show you around the old girl."
+        scr_flywriter(str1,noone,true,"5,Continue",self,224);
+        
+        if(instance_exists(obj_intro_oldgirl)){
+            with(obj_intro_oldgirl){
+                x=room_width/2;
+                image_alpha=1;
+                image_speed = .10;
+                y=0;
+            }
+            if(instance_exists(obj_ogfire)){
+                with(obj_ogfire){
+                    image_alpha=1;
+                    y=obj_intro_oldgirl.y;
+                }
+            
+            }
+        }
+            
+              
+        state="oldgirl_descending";
+    }
+
+
 }else if(state="oldgirl_descending"){
     
     with(obj_intro_oldgirl){
@@ -521,70 +546,20 @@ if(state=="pshiplanding"){
         state = "oldgirl_landed";
     }
 
-}
-
-if(fly_conditionals != noone){
+    if( fly_conditionals[5]==1 )
+    {
+        fly_conditionals[5]=0;
+        room_goto(rm_space);
+    }
     
-    if( fly_conditionals[0]==1 )
-    {
-        
-        fly_conditionals[0]=0;
-        str1 = "A year ago they took your family. Leaving you alone to tend the farm. Where they are now is anyone's guess."
-        scr_flywriter(str1,noone,false,"1,Continue",self,224);
-        alarm[1]=1;
-        
-    }
-    else if( fly_conditionals[1]==1 )
-    {
-        fly_conditionals[1]=0;
-        str1 = "If only you could get off this planet. You'd go after those killers and show the true meaning of regret."
-        scr_flywriter(str1,noone,false,"2,Continue",self,224);
-    }
-    else if( fly_conditionals[2]==1 )
-    {
-        fly_conditionals[2]=0;
-        str1 = "A stranger has arrived in town. You strike up a conversation with him and learn that he is a starship captain from a distant sector."
-        scr_flywriter(str1,noone,true,"3,Continue",self,224);
-    }
-    else if( fly_conditionals[3]==1 )
-    {
-        fly_conditionals[3]=0;
-        str1 = "Blown off course and without maps of the local system, he has no way to find his way back, but doesn't much seem to care. He's tired of the spacefaring life and ready to live out his remaining years with firm soil beneath his feet. Problem is, he has no land or property. You're a farmer, right? He offers a trade. Your farm for his ship."
-        scr_flywriter(str1,noone,false,"4,Hell yeah!,No thanks",self,224);
-    }
-    else if( fly_conditionals[4]==1 )
-    {
-        fly_conditionals[4]=0;
-        str1 = "Allright then. Let me show you around the old girl."
-        scr_flywriter(str1,noone,false,"5,Continue",self,224);
-        
-        if(instance_exists(obj_intro_oldgirl)){
-            with(obj_intro_oldgirl){
-                image_alpha=1;
-            }
-        }
-        
-        if(instance_exists(obj_ogfire)){
-            with(obj_ogfire){
-                image_alpha=1;
-            }
-        }
-        state="oldgirl_descending";
-        
-    }
-    else if( fly_conditionals[4]==2 )
-    {
-        fly_conditionals[4]=0;
-        str1 = "How disappointing. I hope someone more interesting comes along soon."
-        scr_flywriter(str1,noone,true,"4,No! wait!",self,224);
-    }
-    else if( fly_conditionals[5]==1 )
+    
+}else if(state == "oldgirl_landed"){
+    if( fly_conditionals[5]==1 )
     {
         fly_conditionals[5]=0;
         room_goto(rm_space);
     }
 }
-
 
 
 </string>
@@ -610,7 +585,7 @@ if(fly_conditionals != noone){
           <argument>
             <kind>1</kind>
             <string>/// Reset and start
-state = "begin";
+state = "init";
 fly_conditionals = noone;
 fly_conditionals = scr_array(0,0,0,0,0,0);
 

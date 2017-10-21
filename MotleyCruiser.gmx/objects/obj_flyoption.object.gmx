@@ -32,6 +32,12 @@ str = "";
 option_target = noone;
 option_index = noone;
 myfont = fnt_messagebox;
+init_xoffset = 0;
+int_yoffset=0;
+if(instance_exists(obj_flybox)){
+    int_xoffset = x - obj_flybox.boxx1;
+    int_yoffset = obj_flybox.boxy2 - y;
+}
 
 </string>
           </argument>
@@ -65,6 +71,7 @@ if mouse_check_button_pressed(mb_left) &amp;&amp; position_meeting(mouse_x,mouse
     if instance_exists(obj_flybox) {obj_flybox.state = "option_selected";}
 }
 
+
 </string>
           </argument>
         </arguments>
@@ -87,11 +94,16 @@ if mouse_check_button_pressed(mb_left) &amp;&amp; position_meeting(mouse_x,mouse
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>if(instance_exists(obj_flybox)){
+    x = obj_flybox.boxx1 + int_xoffset;
+    y  = obj_flybox.boxy2 - int_yoffset;
+}
+
+draw_self();
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_font(myfont);
-draw_set_color(c_lime);
+draw_set_color(c_white);
 
 draw_text(x+sprite_width/2,y+sprite_height/2,str);
 

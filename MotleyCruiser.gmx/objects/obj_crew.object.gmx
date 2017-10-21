@@ -355,7 +355,7 @@ if(hp_current&lt;1){
     corpse.sprite = sprite_index;
     //update data so we know this npc is dead
     scr_global_update(global.crew,crew_index,NPC_ACTIVE,false);
-    scr_global_update(global.npcs,global_index,NPC_ACTIVE,false);
+    //scr_global_update(global.npcs,global_index,NPC_ACTIVE,false);
     
     instance_destroy();
     

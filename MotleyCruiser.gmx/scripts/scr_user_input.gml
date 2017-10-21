@@ -56,7 +56,7 @@ if( scr_window_open() ){
             return gamepad_button_check_pressed(global.pad, gp_face1)
             break;
         case "menu_close":
-            return gamepad_button_check_pressed(global.pad, gp_face2)
+            return gamepad_button_check_pressed(global.pad, gp_face2) 
             break;          
         case "inventory_page_left":
             if( gamepad_is_connected(global.pad) ){

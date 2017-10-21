@@ -78,7 +78,7 @@ for(row=0; row < gwidth; row++){
             planetcount = irandom_range(0,planetmax);
             var sun_planets = noone;//an array of planet indexes to add to the sun record
             for(var p=0; p<planetcount; p++){
-                planet=scr_make_planet(row,col);
+                planet=scr_make_planet(row,col,0);
                 var planet_index = scr_push_array_1d(global.planets,planet);// Add planet to the global db of planets
                 scr_update_array_1d(global.planets[planet_index],PLANET_SUN,sun_index);
                 
@@ -104,7 +104,7 @@ for(row=0; row < gwidth; row++){
                 mooncount = irandom_range(0,moonmax);
                 var planet_moons = noone;
                 for(var m=0; m < mooncount; m++){
-                    moon=scr_make_moon(row,col);
+                    moon=scr_make_moon(row,col,0);
                     var moon_index = scr_push_array_1d(global.moons,moon);// Add moon to the global db of moons
                     scr_update_array_1d(global.moons[moon_index],MOON_PLANET,planet_index);
                     
@@ -135,7 +135,7 @@ for(row=0; row < gwidth; row++){
         
         stationcount = irandom(stationmax);
         for(i=0; i<stationcount; i++){
-            station=scr_make_station(row,col);
+            station=scr_make_station(row,col,0);
             var station_index = scr_push_array_1d(global.stations,station);
             stations[i]=station_index;
             

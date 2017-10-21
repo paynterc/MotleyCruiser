@@ -1,5 +1,5 @@
-/// Only works with dialog_control. We need to be speaking with a closest_sentient object
-//scr_add_npc_to_crew()
+/// scr_add_npc_to_crew(npc obj)
+closest_sentient=argument0;
 if(closest_sentient==noone){
     return false;
 }

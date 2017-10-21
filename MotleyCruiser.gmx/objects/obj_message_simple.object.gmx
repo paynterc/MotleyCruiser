@@ -26,15 +26,29 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-show = false;
-fly_conditionals=noone;
-sent = noone;
+depth=-10000000;
+text = "";
+boxw = room_width/2;
+boxh = room_height/2;
+boxx1= (room_width/2) - (boxw/2);
+boxx2 = boxx1 + boxw;
+boxy1 = (room_height/2) - (boxh/2);
+boxy2 = boxy1 + boxh;
+boxxc = boxx1 + (boxw/2);
+boxyc = boxy1 + (boxh/2);
+
+padding = 4;
+
+font = fnt_messagebox;
+font_size = font_get_size(font);
+maxlength = boxw - (padding*2);
+maxheight = boxh - (padding*2);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="5" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -51,31 +65,13 @@ sent = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// User interact
-if(scr_user_input("interact")){
-    event_user(0);
-}
-
-if(scr_user_input("menu_close")){
-    if(instance_exists(obj_flybox)){
-        with(obj_flybox){
-            destroy = true;
-        }
-    }
-}
-
-if(fly_conditionals!=noone){
-    if(fly_conditionals[0]==1){
-        fly_conditionals[0]=0;
-        scr_add_npc_to_crew(sent);
-    }
-}
+            <string>instance_destroy();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="10">
+    <event eventtype="6" enumb="53">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -92,51 +88,68 @@ if(fly_conditionals!=noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Open dialogue
+            <string>instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="72">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_color(c_white);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_alpha(1);
+draw_set_font(fnt_menus_sm);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_panel(spr_background,0,boxx1,boxy1,boxw,boxh,32);
 
-var this_sentient = noone;
-var closest_range = 0;
-var this_range = 0;
-
-
-for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
-    this_sentient = instance_find(obj_sentient,i);
-    this_range = point_distance(obj_player.x,obj_player.y,this_sentient.x,this_sentient.y);
-    if(this_range&lt;50){
-        if(sent==noone){
-            sent = this_sentient;
-            closest_range = this_range;
-        }else if(this_range&lt;closest_range){
-            sent = this_sentient;
-            closest_range = this_range;
-        }
-    }
-}
-
-if(sent != noone &amp;&amp; sent.name != noone){
-
-    if(sent.is_trader){
-        
-        if(instance_exists(obj_trade)){
-
-            with(obj_trade){
-                show = true;
-                event_user(0);
-            }           
-           
-        }
-    
-    }else{
-        
-        var txt = "This being goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ".";   
-        txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be a great fighter and would like to join your crew, for a reasonable wage.";
-    
-        scr_flywriter(txt,sent.sprite_index,true,"0,OK,Nope");             
-    }             
-}
-
-
-
+text_width = string_width_ext(text,font_size+(font_size/2), maxlength);
+text_height = string_height_ext(text,font_size+(font_size/2), maxlength);
+draw_text_ext
+(
+    boxxc,
+    boxyc,
+    text,
+    font_size + (font_size/2),
+    maxlength
+);
 </string>
           </argument>
         </arguments>

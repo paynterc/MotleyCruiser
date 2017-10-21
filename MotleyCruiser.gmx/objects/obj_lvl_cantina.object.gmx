@@ -139,34 +139,37 @@ if(instance_number(obj_enemy)&lt;1 &amp;&amp; z_wave&gt;2){
           <argument>
             <kind>1</kind>
             <string>/// Spawn zombies
-if(!instance_exists(obj_player)) exit;
+if(instance_exists(obj_player))
+{
 
-var beast = 0;
-var beast_count = instance_number(obj_beast2);
-var beast_odds = 30;
-
-if(instance_number(obj_enemy) &lt; 20 &amp;&amp; z_wave&lt;3){
-    z_wave++;
-    var width = room_width div CELL_WIDTH;
-    var height = room_height div CELL_HEIGHT;
-    var odds = 20;
-    for(var yy = 0; yy &lt; height; yy++){
-        for(var xx = 0; xx &lt; width; xx++){
-            var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
-            var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
-            if(global.grid[# xx, yy] == FLOOR){
-                if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){                    
-                    scr_instantiate_enemy(ex,ey,10,"hunt",noone,obj_melee_weapon);
-                    //instance_create(ex,ey,obj_drone);                  
-                }
-                if(beast==0 &amp;&amp; beast_count&lt;2 &amp;&amp; irandom(beast_odds) == beast_odds){
-                    beast=1;
-                    instance_create(ex,ey,obj_zombie_brute);
-                }
-            } 
-        }
-    }
+    var beast = 0;
+    var beast_count = instance_number(obj_beast2);
+    var beast_odds = 30;
     
+    if(instance_number(obj_enemy) &lt; 20 &amp;&amp; z_wave&lt;3){
+        z_wave++;
+        var width = room_width div CELL_WIDTH;
+        var height = room_height div CELL_HEIGHT;
+        var odds = 20;
+        for(var yy = 0; yy &lt; height; yy++){
+            for(var xx = 0; xx &lt; width; xx++){
+                var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
+                var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
+                if(global.grid[# xx, yy] == FLOOR){
+                    if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){                    
+                        scr_instantiate_enemy(ex,ey,10,"hunt",noone,obj_melee_weapon);
+                        //instance_create(ex,ey,obj_drone);                  
+                    }
+                    if(beast==0 &amp;&amp; beast_count&lt;2 &amp;&amp; irandom(beast_odds) == beast_odds){
+                        beast=1;
+                        instance_create(ex,ey,obj_zombie_brute);
+                    }
+                } 
+            }
+        }
+        
+    }
+
 }
 alarm[2] = room_speed * 15;
 </string>
@@ -192,45 +195,50 @@ alarm[2] = room_speed * 15;
           <argument>
             <kind>1</kind>
             <string>/// Populate the cantina
-if(populated == true) exit;
-populated = true;
-var b_listers = true; // spawn b-listers
-var make_trader = true;
-
-location_index = global.landed_on;
-location_type = global.landed_type;
-/**
-if(debug_mode){
-    location_index = 1;
-    location_type = "station";
-}
-**/
-var npc_index = noone;
-
-if(location_type=="station"){
-    location = global.stations[location_index];
-    npc_index = STATION_NPCS;
-}else if(location_type=="planet"){
-    location = global.planets[location_index];
-    npc_index = PLANET_NPCS;
-}else if(location_type=="moon"){
-    location = global.moons[location_index];
-    npc_index = MOON_NPCS;
-}
-
-
-
-npcs = location[npc_index];
-var s_count = instance_number(obj_sentient);
-if(array_length_1d(npcs)&gt;0){
-
-    // Place NPCs at sentient positions.
+if(!populated)
+{
+    populated = true;
+    var b_listers = true; // spawn b-listers
+    var make_trader = true;
     
-    var last_id = noone;
-    for(var i = 0; i &lt; s_count; i++) {
+    location_index = global.landed_on;
+    location_type = global.landed_type;
+    /**
+    if(debug_mode){
+        location_index = 1;
+        location_type = "station";
+    }
+    **/
+    var npc_index = noone;
     
-        var sentient = instance_find(obj_sentient,i);
-        if(i &lt; array_length_1d(npcs)){
+ /***  
+    if(location_type=="station"){
+        location = global.stations[location_index];
+        npc_index = STATION_NPCS;
+    }else if(location_type=="planet"){
+        location = global.planets[location_index];
+        npc_index = PLANET_NPCS;
+    }else if(location_type=="moon"){
+        location = global.moons[location_index];
+        npc_index = MOON_NPCS;
+    }
+    npcs = location[npc_index];
+***/   
+    
+
+    var s_count = instance_number(obj_sentient);
+    
+    /***
+    if(array_length_1d(npcs)&gt;0){
+    
+        // Place NPCs at sentient positions.
+        
+        var last_id = noone;
+        for(var i = 0; i &lt; s_count; i++) {
+        
+            var sentient = instance_find(obj_sentient,i);
+            if(i &lt; array_length_1d(npcs)){
+            
                 var npc = scr_npc();// Do this in case we've added any extra attributes since the last game save.
                 npc = scr_fill_array(npc,global.npcs[npcs[i]]);
                 if(scr_npc_in_crew(npcs[i]) || !npc[NPC_ACTIVE]) continue;// Don't instantiate if this one is already in the crew OR is dead
@@ -256,61 +264,65 @@ if(array_length_1d(npcs)&gt;0){
                 }else{
                     sentient.mission=npc[NPC_MISSION];
                 }
+        
+            }
+                
+        }
+    
+    }else{
+    
+        // Spawn zombies
+        z_wave=0;
+        obj_door_exit_spc.open=0;
+        var txt = "An unholy stench permeates this room. The dim lighting reveals a scene in disarray. Broken equipment and furniture are strewn everywhere. Something violent and aweful has occurred here. The exit is jammed.";
+        scr_display_message(txt,"scr_start_alarm,"+string(id)+",2,5");
+        b_listers=false;
+    }
+***/  
+    
+    /// Fill in the B-listers
+    /************
+    B-listers do not exist in the global index. Their global_index variable will be set to noone.
+    B-listers do not have missions and can not be hired.
+    They may provide tips.
+    
+    **************/
+    
+    for(var i = 0; i &lt; s_count; i++) {
+    
+        var sentient = instance_find(obj_sentient,i);
+        
+        if(sentient.name==noone){
+    
+            if(b_listers){
+                sentient.active = 1;//Set to active so the placeholder object won't delete itself. See obj_sentient.
+                //var npc = scr_make_npc(global.landed_type + "," + string(global.landed_on) + "," + string(global.current_sector_row) + "," + string(global.current_sector_col));
+                var npc = scr_gx_make_npc(global.sector_x,global.sector_y);
+                
+                sentient.npc_data = npc;
+                with(sentient){
+                    scr_npc_map_to_object();
+                }
+                if(make_trader){
+                    make_trader = false;
+                    sentient.is_trader = true;
+                }
+                
+                if(npc[NPC_RACE_INDEX]!=5 &amp;&amp; npc[NPC_RACE_INDEX]!=7){
+                    // I like Pudnings to move
+                    sentient.image_speed = 0;
+                }
+                
+            }else{
+                sentient.active=0
+            }       
+    
     
         }
             
     }
 
-}else{
-
-    // Spawn zombies
-    z_wave=0;
-    obj_door_exit_spc.open=0;
-    var txt = "An unholy stench permeates this room. The dim lighting reveals a scene in disarray. Broken equipment and furniture are strewn everywhere. Something violent and aweful has occurred here. The exit is jammed.";
-    scr_display_message(txt,"scr_start_alarm,"+string(id)+",2,5");
-    b_listers=false;
-}
-
-
-/// Fill in the B-listers
-/************
-B-listers do not exist in the global index. Their global_index variable will be set to noone.
-B-listers do not have missions and can not be hired.
-They may provide tips.
-
-**************/
-
-for(var i = 0; i &lt; s_count; i++) {
-
-    var sentient = instance_find(obj_sentient,i);
-    
-    if(sentient.name==noone){
-
-        if(b_listers){
-            sentient.active = 1;//Set to active so the placeholder object won't delete itself. See obj_sentient.
-            var npc = scr_make_npc(global.landed_type + "," + string(global.landed_on) + "," + string(global.current_sector_row) + "," + string(global.current_sector_col));
-            sentient.npc_data = npc;
-            with(sentient){
-                scr_npc_map_to_object();
-            }
-            if(make_trader){
-                make_trader = false;
-                sentient.is_trader = true;
-            }
-            
-            if(npc[NPC_RACE_INDEX]!=5 &amp;&amp; npc[NPC_RACE_INDEX]!=7){
-                // I like Pudnings to move
-                sentient.image_speed = 0;
-            }
-        }else{
-            sentient.active=0
-        }       
-
-
-    }
-        
-}
-
+}//END FIRST CHECK
 </string>
           </argument>
         </arguments>

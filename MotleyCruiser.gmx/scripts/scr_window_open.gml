@@ -9,7 +9,8 @@ if(instance_exists(obj_dialog_control)){
     obj_message_box.show || 
     obj_dialog_control.show ||
     obj_game_control.panel_pause[4] ||
-    obj_game_control.panel_load_game[4]
+    obj_game_control.panel_load_game[4] ||
+    instance_exists(obj_flybox)
     );
 }else{
     return (obj_trade.show || 
@@ -17,6 +18,7 @@ if(instance_exists(obj_dialog_control)){
     obj_inventory.show || 
     obj_message_box.show ||
     obj_game_control.panel_pause[4] ||
-    obj_game_control.panel_load_game[4]
+    obj_game_control.panel_load_game[4] ||
+    instance_exists(obj_form_textbox)
     );
 }

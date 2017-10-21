@@ -91,6 +91,7 @@ if (inv_id != noone &amp;&amp; sprite==sprite_default){
           <argument>
             <kind>1</kind>
             <string>/// LOOOT!
+var test = 1;
 if(credits!=noone){
     global.credits += credits;
     audio_play_sound(snd_pickup_credit,2,0);

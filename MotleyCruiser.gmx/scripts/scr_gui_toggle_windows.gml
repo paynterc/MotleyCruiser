@@ -37,7 +37,7 @@ switch (open)
         if(instance_exists(obj_dialog_control)){
             obj_dialog_control.show="false";
         }
-        
+
         break;
 }
 

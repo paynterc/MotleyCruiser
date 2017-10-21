@@ -1,6 +1,9 @@
 /// A generic array that can be used for planets, stations or moons
 //scr_location()
 var loc = noone;
+
+loc[LOC_INDEX]=noone;
+
 loc[LOC_X1]=noone;
 loc[LOC_Y1]=noone;
 loc[LOC_NAME]=noone;
@@ -12,5 +15,9 @@ loc[LOC_NAME_1]=noone;// Names usually come in more than one part. This can hold
 loc[LOC_ECONOMY]=noone;
 loc[LOC_ECON_MOD]=noone;
 loc[LOC_ECON_OFFSET]=noone;
+loc[LOC_W1]=noone;
+loc[LOC_COLOR]=noone;
+loc[LOC_SPRITE]=noone;
+
 
 return loc;

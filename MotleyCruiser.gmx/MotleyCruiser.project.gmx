@@ -495,8 +495,9 @@
       <script>scripts\scr_array.gml</script>
     </scripts>
     <scripts name="_crew">
-      <script>scripts\scr_remove_from_crew.gml</script>
       <script>scripts\scr_instantiate_all_crew.gml</script>
+      <script>scripts\scr_remove_from_crew.gml</script>
+      <script>scripts\scr_add_npc_to_crew.gml</script>
       <script>scripts\scr_get_active_crew_count.gml</script>
       <script>scripts\scr_npc_in_crew.gml</script>
       <script>scripts\scr_daily_expenses.gml</script>
@@ -513,7 +514,6 @@
       <script>scripts\scr_make_dialogue_button.gml</script>
       <script>scripts\scr_delete_button.gml</script>
       <script>scripts\scr_change_hire_price.gml</script>
-      <script>scripts\scr_add_npc_to_crew.gml</script>
       <script>scripts\scr_repair_ship.gml</script>
       <script>scripts\scr_repair_all_ships.gml</script>
       <script>scripts\scr_repair_all_ship_cost.gml</script>
@@ -592,6 +592,12 @@
         <script>scripts\scr_save_galaxy.gml</script>
         <script>scripts\scr_load_galaxy.gml</script>
         <script>scripts\scr_clear_galaxy.gml</script>
+        <script>scripts\scr_loc_add.gml</script>
+        <script>scripts\scr_make_loc_index.gml</script>
+        <script>scripts\scr_gx_loc_array_to_map.gml</script>
+        <script>scripts\scr_gx_loc_find_value.gml</script>
+        <script>scripts\scr_gx_loc_exists.gml</script>
+        <script>scripts\scr_gx_make_npc.gml</script>
       </scripts>
     </scripts>
     <scripts name="_game_control">
@@ -1025,6 +1031,7 @@
     </scripts>
     <scripts name="_messages">
       <script>scripts\scr_display_message.gml</script>
+      <script>scripts\scr_display_message_simple.gml</script>
     </scripts>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
@@ -1133,11 +1140,13 @@
     <object>objects\obj_damager</object>
     <objects name="_dialogue">
       <object>objects\obj_dialog_control</object>
+      <object>objects\obj_dialog_control_OLD</object>
       <objects name="_flywriter">
         <object>objects\obj_flybox</object>
         <object>objects\obj_flyoption</object>
         <object>objects\obj_flytest</object>
       </objects>
+      <object>objects\obj_message_simple</object>
     </objects>
     <objects name="_gui">
       <object>objects\obj_gui_control</object>
@@ -1315,7 +1324,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="328">
+  <constants number="335">
     <constant name="CELL_WIDTH">32</constant>
     <constant name="CELL_HEIGHT">32</constant>
     <constant name="FLOOR">-5</constant>
@@ -1586,6 +1595,10 @@
     <constant name="LOC_ECONOMY">8</constant>
     <constant name="LOC_ECON_MOD">9</constant>
     <constant name="LOC_ECON_OFFSET">10</constant>
+    <constant name="LOC_W1">11</constant>
+    <constant name="LOC_COLOR">12</constant>
+    <constant name="LOC_SPRITE">13</constant>
+    <constant name="LOC_INDEX">14</constant>
     <constant name="EQUIP_WEAPON1">0</constant>
     <constant name="EQUIP_WEAPON2">1</constant>
     <constant name="EQUIP_HEAD">2</constant>
@@ -1644,6 +1657,9 @@
     <constant name="CRITTER_HAS_TEETH">21</constant>
     <constant name="CRITTER_TOOTH_COUNT">22</constant>
     <constant name="CRITTER_SPEED">23</constant>
+    <constant name="GX_PLANET">0</constant>
+    <constant name="GX_MOON">1</constant>
+    <constant name="GX_STATION">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
