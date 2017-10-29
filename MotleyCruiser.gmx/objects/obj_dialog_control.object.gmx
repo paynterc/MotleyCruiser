@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 show = false;
-fly_conditionals=noone;
+fly_conditionals=scr_array_size(10);
 sent = noone;
 </string>
           </argument>
@@ -57,6 +57,7 @@ if(scr_user_input("interact")){
 }
 
 if(scr_user_input("menu_close")){
+    sent=noone;
     if(instance_exists(obj_flybox)){
         with(obj_flybox){
             destroy = true;
@@ -65,10 +66,27 @@ if(scr_user_input("menu_close")){
 }
 
 if(fly_conditionals!=noone){
+
     if(fly_conditionals[0]==1){
         fly_conditionals[0]=0;
-        scr_add_npc_to_crew(sent);
+        var bunks = obj_ship_data.bunks;
+        
+        if( obj_ship_data.bunks &lt;= scr_get_active_crew_count()+1 ){     
+            scr_flywriter("You don't have enough bunks on your ship to hire more crew.",noone,0,"10,OK");
+        }else{
+            scr_add_npc_to_crew(sent);
+        }
+        sent=noone;
     }
+    if(fly_conditionals[1]==1){
+        fly_conditionals[1]=0;
+        sent=noone;
+    }
+    if(fly_conditionals[10]==1){
+        //Reserved for generic messages and error messages.
+        fly_conditionals[10]=0;
+        sent=noone;
+    }      
 }
 </string>
           </argument>
@@ -113,7 +131,17 @@ for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
     }
 }
 
+
+
 if(sent != noone &amp;&amp; sent.name != noone){
+
+    var occ;
+    if(sent.npc_data[NPC_OCCUPATION]!=noone &amp;&amp; sent.npc_data[NPC_OCCUPATION]&lt;array_length_1d(global.npc_occupations)){
+        occ = global.npc_occupations[sent.npc_data[NPC_OCCUPATION]];   
+    }else{
+        occ = noone;
+    }
+
 
     if(sent.is_trader){
         
@@ -126,13 +154,20 @@ if(sent != noone &amp;&amp; sent.name != noone){
            
         }
     
-    }else{
+    }else if( scr_in_array(global.hirable_occupations,occ) ){
         
-        var txt = "This being goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ".";   
-        txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be a great fighter and would like to join your crew, for a reasonable wage.";
+        var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
+        txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be an excellent " + occ + ". Would like them to join your crew? It will cost " + string(sent.npc_data[NPC_HIRE_PRICE]) + "C per day.";  
+        scr_flywriter(txt,sent.sprite_index,true,"0,OK,Nope");
+        
+                     
+    }else{
     
-        scr_flywriter(txt,sent.sprite_index,true,"0,OK,Nope");             
-    }             
+        var txt = "Buzz off.";    
+        scr_flywriter(txt,sent.sprite_index,true,"1,OK");    
+    }
+    
+               
 }
 
 

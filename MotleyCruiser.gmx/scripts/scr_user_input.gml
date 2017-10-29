@@ -167,6 +167,12 @@ if( scr_window_open() ){
             && keyboard_check(vk_shift)
             && debug_mode;
             break;
+        case "inventory_room":
+            return  
+            keyboard_check_pressed(ord("N"))
+            && keyboard_check(vk_shift)
+
+            break;         
         case "auto_capture":
             return  
             keyboard_check_pressed(ord("C"))

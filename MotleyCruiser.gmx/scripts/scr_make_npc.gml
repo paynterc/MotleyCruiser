@@ -36,7 +36,7 @@ switch(race_index){
     case(1):
         names = totro_plus(2,3,irandom_range(2,4),0,0);// chicken
         for(var i=0;i<array_length_1d(names); i++){
-            names[i]=names[i] + choose("KaKaw!","Bak!","Bok!","Akw!","Clk");
+            names[i]=names[i] + choose("KaKaw!","Bak!","Bok!","Awk!","Clk");
         }
         break;
     case(2):
@@ -83,5 +83,7 @@ if(map[NPC_SEX]==1){
 }else{
     map[NPC_SPRITE] = asset_get_index ( scr_array_random( scr_str_split( global.races[map[NPC_RACE_INDEX], RACE_SPR],",") ) );           
 }
+
+map[NPC_HIRE_PRICE]=choose(100,150,200,250);
 
 return map;

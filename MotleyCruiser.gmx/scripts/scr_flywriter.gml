@@ -74,6 +74,7 @@ tbox.boxw = boxw;
 tbox.boxh = boxh;
 tbox.boxx2 = boxx1 + boxw;
 tbox.boxy2 = boxy1+boxh;
+tbox.yoffset_max = frame_bottom-tbox.boxy1;
 
 // portrait
 if(portrait){

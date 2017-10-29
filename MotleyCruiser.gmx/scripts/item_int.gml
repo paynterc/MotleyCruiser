@@ -547,12 +547,14 @@ item_add(idx,9,50) //Base price
 
 idx=51;
 item_add(51,0,"Blaster Type 1") //Title
-item_add(51,1,10) //Max Stack
+item_add(51,1,1) //Max Stack
 item_add(51,2,spr_rifle1) //Sprite
 item_add(51,3,true) //Does have effect?
 item_add(51,4,"scr_equip_weapon,51")  //If yes, put script here on string, if not, just put ""
 item_add(51,5,"Your basic space gun") //Description
 item_add(51,6,obj_blaster1) //Object to equip
+item_add(51,10,4) //Icon scale
+
 
 idx=52;
 item_add(52,0,"Crate Master Card")
@@ -569,50 +571,56 @@ item_add(53,2,spr_ItemIcon_Grenade)
 item_add(53,3,false)
 item_add(53,4,"")
 item_add(53,5,"A powerful bomb. Amazingly, still safe to use on spaceships.")
+item_add(idx,10,1)
 
 idx=54;
 item_add(54,0,"Flamethrower A1") //Title
-item_add(54,1,10) //Max Stack
+item_add(54,1,1) //Max Stack
 item_add(54,2,spr_flamer1) //Sprite
 item_add(54,3,true) //Does have effect?
 item_add(54,4,"scr_equip_weapon,54")  //If yes, put script here on string, if not, just put ""
 item_add(54,5,"An advanced flamethrower") //Description
 item_add(54,6,obj_flamethrower1) //Object to equip
+item_add(idx,10,2)
 
 idx=55;
 item_add(55,0,"Warp Sword") //Title
-item_add(55,1,10) //Max Stack
+item_add(55,1,1) //Max Stack
 item_add(55,2,spr_laser_sword) //Sprite
 item_add(55,3,true) //Does have effect?
 item_add(55,4,"scr_equip_weapon,55")  //If yes, put script here on string, if not, just put ""
 item_add(55,5,"A mysterious weapon of unknown origin.") //Description
 item_add(55,6,obj_warp_sword) //Object to equip
+item_add(idx,10,4)
 
 idx=56;
 item_add(56,0,"Heavy Blaster Type 1") //Title
-item_add(56,1,10) //Max Stack
+item_add(56,1,1) //Max Stack
 item_add(56,2,spr_rifle2) //Sprite
 item_add(56,3,true) //Does have effect?
 item_add(56,4,"scr_equip_weapon,56")  //If yes, put script here on string, if not, just put ""
 item_add(56,5,"Larger and heavier than a standard hand blaster.") //Description
 item_add(56,6,obj_heavy_blaster1) //Object to equip
+item_add(idx,10,2)
 
 idx=57;
 item_add(57,0,"Singularity Cannon") //Title
-item_add(57,1,10) //Max Stack
+item_add(57,1,1) //Max Stack
 item_add(57,2,spr_singularity_gun) //Sprite
 item_add(57,3,true) //Does have effect?
 item_add(57,4,"scr_equip_weapon,57")  //If yes, put script here on string, if not, just put ""
 item_add(57,5,"Fires a miniature black hole. Slow moving but unstoppable, the singularity will suck up all projectiles it comes in contact with.") //Description
 item_add(57,6,obj_singularity_gun) //Object to equip
+item_add(idx,10,2)
 
 idx=58;
 item_add(idx,0,"Shotgun 1") //Title
-item_add(idx,1,10) //Max Stack
+item_add(idx,1,1) //Max Stack
 item_add(idx,2,spr_shotgun1) //Sprite
 item_add(idx,3,true) //Does have effect?
 item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
 item_add(idx,5,"Fires three bullets simultaneously.") //Description
 item_add(idx,6,obj_shotgun1) //Object to equip
+item_add(idx,10,3)
 
 global.item_lib_count = idx+1;

@@ -91,6 +91,8 @@ scr_faction_centers();
 /*                      DYNAMIC PLAYER DATA                     */
 /****************************************************************/
 
+global.player_sprite = noone;// Overwrite this on game load
+
 // PLAYER SHIP: An array containing current ship state.
 global.player_ship = noone;
 
@@ -118,11 +120,18 @@ global.credits = 1000;
 global.day = 0;
 
 // Inventory
-global.base_inventory_rows = 2;
+item_int();//Inventory Items
+
+var cols = 1;
+var rows = 21;
+inventory_int(cols,rows);
+global.base_inventory_cols = cols;
+global.base_inventory_rows = rows;
+// Equipped items
 global.equipped = ds_map_create();
 scr_hotbar_init();
 
-global.player_sprite = noone;// Overwrite this on game load
+
 
 /****************************************************************/
 /*                      MENUS                                   */
@@ -456,6 +465,11 @@ if(scr_user_input("menu_close")){
     exit;
 }
 
+if(scr_user_input("inventory_room")){
+    room_goto(rm_inventory);
+    exit;
+}
+
 
 /****
 Debug navigation commands
@@ -656,7 +670,19 @@ if(ds_exists(global.equipped,ds_type_map)){
     ds_map_destroy(global.equipped);
 }
 
-// Inventory gets destroyed in  obj_inventory
+// Inventory
+if(ds_exists(global.item_id,ds_type_map)){
+    ds_map_destroy(global.item_id);
+}
+
+if(ds_exists(global.inventory,ds_type_map)){
+    ds_map_destroy(global.inventory);
+}
+
+if(ds_exists(global.ChestList,ds_type_list)){
+    ds_list_destroy(global.ChestList);
+}
+
 
 if(sprite_exists(global.player_sprite)){
     sprite_delete(global.player_sprite);

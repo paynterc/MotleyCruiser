@@ -85,4 +85,6 @@ if(map[NPC_SEX]==1){
     map[NPC_SPRITE] = asset_get_index ( scr_array_random( scr_str_split( global.races[map[NPC_RACE_INDEX], RACE_SPR],",") ) );           
 }
 
+map[NPC_HIRE_PRICE]=choose(50,100,150,200);
+
 return map;

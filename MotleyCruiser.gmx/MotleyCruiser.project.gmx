@@ -92,6 +92,10 @@
         </sprites>
       </sprites>
       <sprite>sprites\spr_androne</sprite>
+      <sprite>sprites\spr_sam3</sprite>
+      <sprite>sprites\spr_sammy2</sprite>
+      <sprite>sprites\spr_sam1</sprite>
+      <sprite>sprites\spr_shrimpbug</sprite>
       <sprite>sprites\spr_androne_eyes</sprite>
       <sprite>sprites\spr_androne_fml</sprite>
       <sprite>sprites\spr_antinoid</sprite>
@@ -130,6 +134,7 @@
       <sprite>sprites\spr_pudning</sprite>
       <sprite>sprites\spr_pudning_OLD</sprite>
       <sprite>sprites\spr_selgesh</sprite>
+      <sprite>sprites\spr_selgesh2</sprite>
       <sprite>sprites\spr_selwat</sprite>
       <sprite>sprites\spr_skeleton</sprite>
       <sprite>sprites\spr_vaylit</sprite>
@@ -149,6 +154,8 @@
       <sprite>sprites\spr_field</sprite>
       <sprite>sprites\sprite337</sprite>
       <sprite>sprites\spr_flyoption</sprite>
+      <sprite>sprites\spr_arrow</sprite>
+      <sprite>sprites\spr_arrow_4</sprite>
     </sprites>
     <sprites name="_furniture">
       <sprite>sprites\spr_room_reactor</sprite>
@@ -311,6 +318,9 @@
     <sprites name="HuleInventorySprites">
       <sprites name="HuleInventoryGUI">
         <sprite>sprites\spr_slot</sprite>
+        <sprite>sprites\spr_modelframe1</sprite>
+        <sprite>sprites\spr_slot_lg</sprite>
+        <sprite>sprites\spr_nav_up</sprite>
         <sprite>sprites\spr_background</sprite>
         <sprite>sprites\spr_background2</sprite>
       </sprites>
@@ -451,6 +461,7 @@
       <sprite>sprites\spr_into_window</sprite>
       <sprite>sprites\spr_horizon</sprite>
     </sprites>
+    <sprite>sprites\spr_slot_sm</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -493,6 +504,8 @@
       <script>scripts\scr_array_remove.gml</script>
       <script>scripts\scr_get_array_1d.gml</script>
       <script>scripts\scr_array.gml</script>
+      <script>scripts\scr_in_array.gml</script>
+      <script>scripts\scr_array_size.gml</script>
     </scripts>
     <scripts name="_crew">
       <script>scripts\scr_instantiate_all_crew.gml</script>
@@ -501,6 +514,8 @@
       <script>scripts\scr_get_active_crew_count.gml</script>
       <script>scripts\scr_npc_in_crew.gml</script>
       <script>scripts\scr_daily_expenses.gml</script>
+      <script>scripts\scr_crew_get_equip.gml</script>
+      <script>scripts\scr_crew_set_equip.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -601,9 +616,9 @@
       </scripts>
     </scripts>
     <scripts name="_game_control">
+      <script>scripts\scr_load_game_menu.gml</script>
       <script>scripts\scr_new_game.gml</script>
       <script>scripts\scr_pause_menu.gml</script>
-      <script>scripts\scr_load_game_menu.gml</script>
       <script>scripts\scr_main_menu.gml</script>
       <script>scripts\scr_game_save.gml</script>
       <script>scripts\scr_game_load.gml</script>
@@ -637,6 +652,7 @@
         <scripts name="Inventory System">
           <script>scripts\inventory_int.gml</script>
           <script>scripts\inventory_draw.gml</script>
+          <script>scripts\inventory_draw_GUI.gml</script>
           <script>scripts\inventory_draw_BACKUP.gml</script>
           <script>scripts\inventory_clear.gml</script>
           <script>scripts\inventory_load.gml</script>
@@ -1135,9 +1151,9 @@
     <object>objects\obj_game_control</object>
     <object>objects\obj_sound_control</object>
     <object>objects\obj_ship_data</object>
+    <object>objects\obj_damager</object>
     <object>objects\obj_object_pool</object>
     <object>objects\obj_module</object>
-    <object>objects\obj_damager</object>
     <objects name="_dialogue">
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_dialog_control_OLD</object>
@@ -1152,7 +1168,6 @@
       <object>objects\obj_gui_control</object>
       <object>objects\obj_trade</object>
       <object>objects\obj_mission_log</object>
-      <object>objects\obj_inventory</object>
       <object>objects\obj_message_box</object>
       <object>objects\obj_main_menu</object>
       <object>objects\obj_button_basic</object>
@@ -1164,11 +1179,6 @@
       <object>objects\obj_crew</object>
       <object>objects\obj_enemy</object>
       <object>objects\obj_sentient</object>
-      <object>objects\obj_room_level</object>
-      <object>objects\obj_lvl_ship_deck_rnd</object>
-      <object>objects\obj_lvl_ship_control</object>
-      <object>objects\obj_lvl_cantina</object>
-      <object>objects\obj_lvl_arena</object>
       <object>objects\obj_core</object>
       <object>objects\obj_mortal</object>
       <object>objects\obj_drone</object>
@@ -1176,20 +1186,7 @@
       <object>objects\obj_arm</object>
       <object>objects\obj_wall_invis</object>
       <object>objects\obj_floor</object>
-      <object>objects\obj_da_loot</object>
       <object>objects\obj_corpse</object>
-      <objects name="_furniture">
-        <object>objects\obj_workstation</object>
-        <object>objects\obj_room_reactor</object>
-        <object>objects\obj_crate</object>
-        <object>objects\obj_cover</object>
-        <object>objects\obj_door</object>
-        <object>objects\obj_door_exit_spc</object>
-        <object>objects\obj_jefferies</object>
-        <object>objects\obj_panel_decor</object>
-        <object>objects\obj_viewscreen_decor</object>
-        <object>objects\obj_table</object>
-      </objects>
       <objects name="_critters">
         <object>objects\obj_beast2</object>
         <object>objects\obj_zombie_brute</object>
@@ -1222,26 +1219,48 @@
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
+      <object>objects\obj_inventory</object>
+      <object>objects\obj_inventory_room</object>
     </objects>
-    <objects name="_room_combat">
-      <object>objects\obj_bullet</object>
-      <object>objects\obj_gun</object>
-      <object>objects\obj_heavy_blaster1</object>
-      <object>objects\obj_singularity_gun</object>
-      <object>objects\obj_blaster1</object>
-      <object>objects\obj_beam_gun</object>
-      <object>objects\obj_shotgun1</object>
-      <object>objects\obj_flamethrower1</object>
-      <object>objects\obj_melee_weapon</object>
-      <object>objects\obj_warp_sword</object>
-      <object>objects\obj_melee_attack</object>
-      <object>objects\obj_melee_animation</object>
-      <object>objects\obj_spawner</object>
-      <object>objects\obj_aoe</object>
-      <object>objects\obj_master_panel</object>
-      <object>objects\obj_grenade</object>
-      <object>objects\obj_turret</object>
-      <object>objects\obj_singularity</object>
+    <objects name="_room">
+      <objects name="_personal_weapons">
+        <object>objects\obj_singularity</object>
+        <object>objects\obj_blaster1</object>
+        <object>objects\obj_gun</object>
+        <object>objects\obj_bullet</object>
+        <object>objects\obj_singularity_gun</object>
+        <object>objects\obj_heavy_blaster1</object>
+        <object>objects\obj_turret</object>
+        <object>objects\obj_shotgun1</object>
+        <object>objects\obj_melee_animation</object>
+        <object>objects\obj_beam_gun</object>
+        <object>objects\obj_flamethrower1</object>
+        <object>objects\obj_spawner</object>
+        <object>objects\obj_aoe</object>
+        <object>objects\obj_master_panel</object>
+        <object>objects\obj_grenade</object>
+        <object>objects\obj_melee_attack</object>
+        <object>objects\obj_warp_sword</object>
+        <object>objects\obj_melee_weapon</object>
+      </objects>
+      <object>objects\obj_lvl_ship_deck_rnd</object>
+      <object>objects\obj_lvl_ship_control</object>
+      <object>objects\obj_lvl_cantina</object>
+      <object>objects\obj_lvl_arena</object>
+      <object>objects\obj_room_level</object>
+      <objects name="_furniture">
+        <object>objects\obj_workstation</object>
+        <object>objects\obj_room_reactor</object>
+        <object>objects\obj_crate</object>
+        <object>objects\obj_cover</object>
+        <object>objects\obj_door</object>
+        <object>objects\obj_door_exit_spc</object>
+        <object>objects\obj_jefferies</object>
+        <object>objects\obj_panel_decor</object>
+        <object>objects\obj_viewscreen_decor</object>
+        <object>objects\obj_table</object>
+      </objects>
+      <object>objects\obj_da_loot</object>
     </objects>
     <objects name="_light">
       <object>objects\obj_glare_controller_ORIGINAL</object>
@@ -1320,346 +1339,348 @@
     </rooms>
     <room>rooms\rm_ship_edit</room>
     <room>rooms\rm_player_edit</room>
+    <room>rooms\rm_inventory</room>
     <room>rooms\rm_planetside</room>
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="335">
-    <constant name="CELL_WIDTH">32</constant>
-    <constant name="CELL_HEIGHT">32</constant>
-    <constant name="FLOOR">-5</constant>
-    <constant name="WALL">-6</constant>
-    <constant name="VOID">-7</constant>
-    <constant name="RACE_NAME">0</constant>
-    <constant name="RACE_BASE_HP">1</constant>
-    <constant name="RACE_BASE_SPD">2</constant>
-    <constant name="RACE_SPR">3</constant>
-    <constant name="RACE_SEXES">4</constant>
-    <constant name="RACE_SPR_FML">5</constant>
-    <constant name="NPC_RACE_INDEX">0</constant>
-    <constant name="NPC_NAME">1</constant>
-    <constant name="NPC_RUN_SPD">2</constant>
-    <constant name="NPC_HP">3</constant>
-    <constant name="NPC_HP_CURRENT">4</constant>
-    <constant name="NPC_NAME_FIRST">5</constant>
-    <constant name="NPC_NAME_LAST">6</constant>
-    <constant name="NPC_MISSION">7</constant>
-    <constant name="NPC_LOCATION">8</constant>
-    <constant name="NPC_ACTIVE">9</constant>
-    <constant name="NPC_GLOBAL_INDEX">10</constant>
-    <constant name="NPC_TRAIT">11</constant>
-    <constant name="NPC_OCCUPATION">12</constant>
-    <constant name="NPC_SEX">13</constant>
-    <constant name="NPC_HIRE_PRICE">14</constant>
-    <constant name="NPC_SPRITE">15</constant>
-    <constant name="NPC_EQUIPMENT">16</constant>
-    <constant name="D_BRANCH_TEXT">0</constant>
-    <constant name="D_BRANCH_TYPE">1</constant>
-    <constant name="D_BRANCH_BUTTONS">2</constant>
-    <constant name="D_BUTTON_TEXT">0</constant>
-    <constant name="D_BUTTON_ACTION">1</constant>
-    <constant name="D_BUTTON_LINKINDEX">2</constant>
-    <constant name="D_BUTTON_SCRIPT">3</constant>
-    <constant name="D_BUTTON_RECORD">4</constant>
-    <constant name="SECTOR_SUNS">0</constant>
-    <constant name="SECTOR_PLANETS">1</constant>
-    <constant name="SECTOR_MOONS">2</constant>
-    <constant name="SECTOR_STATIONS">3</constant>
-    <constant name="SECTOR_SHIPS">4</constant>
-    <constant name="SECTOR_NPCS">5</constant>
-    <constant name="SUN_X1">0</constant>
-    <constant name="SUN_Y1">1</constant>
-    <constant name="SUN_W1">2</constant>
-    <constant name="SUN_COLOR">3</constant>
-    <constant name="SUN_PLANETS">4</constant>
-    <constant name="SUN_SECTOR">5</constant>
-    <constant name="PLANET_X1">0</constant>
-    <constant name="PLANET_Y1">1</constant>
-    <constant name="PLANET_W1">2</constant>
-    <constant name="PLANET_COLOR">3</constant>
-    <constant name="PLANET_MOONS">4</constant>
-    <constant name="PLANET_SPRITE_INDEX">5</constant>
-    <constant name="PLANET_NPCS">6</constant>
-    <constant name="PLANET_SECTOR">7</constant>
-    <constant name="PLANET_SUN">8</constant>
-    <constant name="PLANET_NAME">9</constant>
-    <constant name="PLANET_GLOBAL_INDEX">10</constant>
-    <constant name="PLANET_ECONOMY">11</constant>
-    <constant name="PLANET_ECON_MOD">12</constant>
-    <constant name="PLANET_ECON_OFFSET">13</constant>
-    <constant name="MOON_X1">0</constant>
-    <constant name="MOON_Y1">1</constant>
-    <constant name="MOON_W1">2</constant>
-    <constant name="MOON_COLOR">3</constant>
-    <constant name="MOON_SPRITE_INDEX">4</constant>
-    <constant name="MOON_NPCS">5</constant>
-    <constant name="MOON_SECTOR">6</constant>
-    <constant name="MOON_PLANET">7</constant>
-    <constant name="MOON_NAME">8</constant>
-    <constant name="MOON_GLOBAL_INDEX">9</constant>
-    <constant name="MOON_ECONOMY">10</constant>
-    <constant name="MOON_ECON_MOD">11</constant>
-    <constant name="MOON_ECON_OFFSET">12</constant>
-    <constant name="STATION_X1">0</constant>
-    <constant name="STATION_Y1">1</constant>
-    <constant name="STATION_W1">2</constant>
-    <constant name="STATION_COLOR">3</constant>
-    <constant name="STATION_SPRITE_INDEX">4</constant>
-    <constant name="STATION_NPCS">5</constant>
-    <constant name="STATION_SECTOR">6</constant>
-    <constant name="STATION_NAME">7</constant>
-    <constant name="STATION_GLOBAL_INDEX">8</constant>
-    <constant name="STATION_ECONOMY">9</constant>
-    <constant name="STATION_ECON_MOD">10</constant>
-    <constant name="STATION_ECON_OFFSET">11</constant>
-    <constant name="SHIP_TURN_SPEED">0</constant>
-    <constant name="SHIP_MAX_SPEED">1</constant>
-    <constant name="SHIP_MAX_FWD">2</constant>
-    <constant name="SHIP_MAX_RVS">3</constant>
-    <constant name="SHIP_ACC_FWD">4</constant>
-    <constant name="SHIP_ACC_RVS">5</constant>
-    <constant name="SHIP_SHIELDS">6</constant>
-    <constant name="SHIP_SHIELDS_REGEN_SPD">7</constant>
-    <constant name="SHIP_SHIELDS_REGEN_PTS">8</constant>
-    <constant name="SHIP_HULL">9</constant>
-    <constant name="SHIP_ENERGY">10</constant>
-    <constant name="SHIP_ENERGY_REGEN_SPD">11</constant>
-    <constant name="SHIP_ENERGY_REGEN_PTS">12</constant>
-    <constant name="SHIP_WEAPON_SPD">13</constant>
-    <constant name="SHIP_X1">14</constant>
-    <constant name="SHIP_Y1">15</constant>
-    <constant name="SHIP_IMAGE_INDEX">16</constant>
-    <constant name="SHIP_SECTOR">17</constant>
-    <constant name="SHIP_NPCS">18</constant>
-    <constant name="SHIP_SPRITE_INDEX">19</constant>
-    <constant name="SHIP_MODULES">20</constant>
-    <constant name="SHIP_SCAFFOLD_SIZE">21</constant>
-    <constant name="SHIP_ANGLE">22</constant>
-    <constant name="SHIP_SHIELDS_CUR">23</constant>
-    <constant name="SHIP_HULL_CUR">24</constant>
-    <constant name="SHIP_ENERGY_CUR">25</constant>
-    <constant name="SHIP_MASS">26</constant>
-    <constant name="SHIP_CARGO_CAP">27</constant>
-    <constant name="SHIP_BUNKS">28</constant>
-    <constant name="SHIP_CARGO">29</constant>
-    <constant name="FACTION_PLAYER">0</constant>
-    <constant name="FACTION_PIRATE">1</constant>
-    <constant name="FACTION_TRADER">2</constant>
-    <constant name="FACTION_EMPIRE">3</constant>
-    <constant name="FACTION_FEDERATION">4</constant>
-    <constant name="FACTION_BOUNTYHUNTER">5</constant>
-    <constant name="FACTION_REBEL">6</constant>
-    <constant name="FACTION_NEUTRAL">7</constant>
-    <constant name="FACTION_CRYPTOLID">8</constant>
-    <constant name="FACTION_ZOMBOID">9</constant>
-    <constant name="FACTION_ANTINOID">10</constant>
-    <constant name="FACTION_FLOWRIDIAN">11</constant>
-    <constant name="FACTION_PUDNING">12</constant>
-    <constant name="FACTION_ANDRONE">13</constant>
-    <constant name="FACTION_ARCNID">14</constant>
-    <constant name="FACTION_GORGAN">15</constant>
-    <constant name="FACTION_HURGAN">16</constant>
-    <constant name="FACTION_BOT">17</constant>
-    <constant name="FACTION_CHICKEN">18</constant>
-    <constant name="FACTION_VAYLIT">19</constant>
-    <constant name="FACTION_SELWAT">20</constant>
-    <constant name="FACTION_FION">21</constant>
-    <constant name="FACTION_MIOTA">22</constant>
-    <constant name="FACTION_SELGESH">23</constant>
-    <constant name="FACTION_HUMAN">24</constant>
-    <constant name="DISPOSITION_NEUTRAL">0</constant>
-    <constant name="DISPOSITION_HOSTILE">1</constant>
-    <constant name="DISPOSITION_HELPFUL">2</constant>
-    <constant name="MODE_ATTACKING">0</constant>
-    <constant name="MODE_PATROLING">1</constant>
-    <constant name="MODE_FLEEING">2</constant>
-    <constant name="MODE_WAITING">3</constant>
-    <constant name="MODE_LANDING">4</constant>
-    <constant name="MODE_FOLLOWING">5</constant>
-    <constant name="MODE_DEFENDING">6</constant>
-    <constant name="MODE_TRAVELING">7</constant>
-    <constant name="MODE_BOARDING">8</constant>
-    <constant name="MODE_JUMPING">9</constant>
-    <constant name="SCAFFOLD_ROWS">0</constant>
-    <constant name="SCAFFOLD_COLS">1</constant>
-    <constant name="SCAFFOLD_GRID">2</constant>
-    <constant name="SCAFFOLD_SCALE">3</constant>
-    <constant name="MODULE_TYPE">0</constant>
-    <constant name="MODULE_SPRITE_INDEX">3</constant>
-    <constant name="MODULE_XSCALE">4</constant>
-    <constant name="MODULE_YSCALE">5</constant>
-    <constant name="MODULE_COLOR">6</constant>
-    <constant name="MODULE_DEPTH">9</constant>
-    <constant name="MODULE_NAME">10</constant>
-    <constant name="MODULE_DESCRIPTION">11</constant>
-    <constant name="MODULE_TYPE_INDEX">12</constant>
-    <constant name="MODULE_TURN_MOD">13</constant>
-    <constant name="MODULE_THRUSTFWD_MOD">14</constant>
-    <constant name="MODULE_THRUSTRVS_MOD">15</constant>
-    <constant name="MODULE_ACCFWD_MOD">16</constant>
-    <constant name="MODULE_ACCBWD_MOD">17</constant>
-    <constant name="MODULE_SHIELD_MOD">18</constant>
-    <constant name="MODULE_SHIELDREGEN_MOD">19</constant>
-    <constant name="MODULE_SHIELDREGENPOINTS_MOD">20</constant>
-    <constant name="MODULE_HULL_MOD">21</constant>
-    <constant name="MODULE_ENERGY_MOD">22</constant>
-    <constant name="MODULE_ENERGYREGEN_MOD">23</constant>
-    <constant name="MODULE_ENERGYREGENPOINTS_MOD">24</constant>
-    <constant name="MODULE_CARGO_MOD">25</constant>
-    <constant name="MODULE_BUNKS_MOD">26</constant>
-    <constant name="MODULE_MORALE_MOD">27</constant>
-    <constant name="MODULE_MASS_MOD">28</constant>
-    <constant name="GUN_DAMAGE">0</constant>
-    <constant name="GUN_SPEED">1</constant>
-    <constant name="GUN_SPRITE">2</constant>
-    <constant name="GUN_BULLET_SPRITE">3</constant>
-    <constant name="GUN_RANGE">4</constant>
-    <constant name="GUN_BULLET_SPEED">5</constant>
-    <constant name="GUN_BULLET_TYPE">6</constant>
-    <constant name="GUN_BULLET_COLOR">7</constant>
-    <constant name="MISSION_ID">0</constant>
-    <constant name="MISSION_NAME">1</constant>
-    <constant name="MISSION_DESCRIP">2</constant>
-    <constant name="MISSION_TYPE">3</constant>
-    <constant name="MISSION_START_LOCATION">4</constant>
-    <constant name="MISSION_END_LOCATION">5</constant>
-    <constant name="MISSION_REWARD">6</constant>
-    <constant name="MISSION_OBJECTIVES">7</constant>
-    <constant name="MISSION_STATE">8</constant>
-    <constant name="MISSION_TEXT">9</constant>
-    <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
-    <constant name="MISSION_SCRIPT_START">11</constant>
-    <constant name="MISSION_GRANTED_BY">12</constant>
-    <constant name="MISSION_ILLEGAL">13</constant>
-    <constant name="OBJECTIVE_DESCRIPTION">0</constant>
-    <constant name="OBJECTIVE_ACHIEVED">1</constant>
-    <constant name="OBJECTIVE_TYPE">2</constant>
-    <constant name="OBJECTIVE_TARGET_TYPE">3</constant>
-    <constant name="OBJECTIVE_TARGET_INDEX">4</constant>
-    <constant name="OBJECTIVE_TARGET_COUNT">5</constant>
-    <constant name="OBJECTIVE_REQUIRED_INVENTORY">6</constant>
-    <constant name="OBJECTIVE_REQUIRED_INVENTORY_COUNT">7</constant>
-    <constant name="OBJECTIVE_TARGET_COUNT_CURRENT">8</constant>
-    <constant name="OBJECTIVE_STATE">9</constant>
-    <constant name="OBJECTIVE_SCRIPT_END">10</constant>
-    <constant name="OBJECTIVE_MISSION_ID">11</constant>
-    <constant name="OBJECTIVE_ID">12</constant>
-    <constant name="OBJECTIVE_TARGET_FACTION">13</constant>
-    <constant name="OBJECTIVE_REQUIRED_NPC">14</constant>
-    <constant name="OBJECTIVE_TEXT_END">15</constant>
-    <constant name="SCAFF_CELL_SIZE">16</constant>
-    <constant name="DATA_FILE">"motleydata.ini"</constant>
-    <constant name="SAVE_GAME_FILE">"motleysave.ini"</constant>
-    <constant name="I_MODULE_INDEX">0</constant>
-    <constant name="I_MODULE_COORDS">1</constant>
-    <constant name="I_MODULE_OFFSETS">2</constant>
-    <constant name="I_MODULE_XSCALE">3</constant>
-    <constant name="I_MODULE_YSCALE">4</constant>
-    <constant name="I_MODULE_COLOR">5</constant>
-    <constant name="I_MODULE_DEPTH">6</constant>
-    <constant name="TURRET_TURN_SPEED">0</constant>
-    <constant name="TURRET_GUN_INDEX">1</constant>
-    <constant name="BULLET_BASE_SPEED">15</constant>
-    <constant name="BTN_X">0</constant>
-    <constant name="BTN_Y">1</constant>
-    <constant name="BTN_W">2</constant>
+  <constants number="336">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
-    <constant name="BTN_TXT">5</constant>
     <constant name="BTN_SHOW">6</constant>
-    <constant name="GLOBAL_SHIP_LIMIT">100</constant>
-    <constant name="TRAIT_KIND">0</constant>
-    <constant name="TRAIT_CRUEL">1</constant>
-    <constant name="TRAIT_GENEROUS">2</constant>
-    <constant name="TRAIT_GREEDY">3</constant>
-    <constant name="TRAIT_BRAVE">4</constant>
-    <constant name="TRAIT_COWARDLY">5</constant>
-    <constant name="TRAIT_AGGRESSIVE">6</constant>
-    <constant name="TRAIT_PASSIVE">7</constant>
-    <constant name="TRAIT_HONEST">8</constant>
-    <constant name="TRAIT_DISHONEST">9</constant>
-    <constant name="TRAIT_LOYAL">10</constant>
-    <constant name="TRAIT_TREACHEROUS">11</constant>
-    <constant name="TRAIT_HUMBLE">12</constant>
-    <constant name="TRAIT_ARROGANT">13</constant>
-    <constant name="TRAIT_MORAL">14</constant>
-    <constant name="TRAIT_IMMORAL">15</constant>
-    <constant name="LOC_X1">0</constant>
-    <constant name="LOC_Y1">1</constant>
-    <constant name="LOC_NAME">2</constant>
-    <constant name="LOC_NPCS">3</constant>
-    <constant name="LOC_SECTOR">4</constant>
-    <constant name="LOC_GLOBAL_INDEX">5</constant>
-    <constant name="LOC_TYPE">6</constant>
-    <constant name="LOC_NAME_1">7</constant>
-    <constant name="LOC_ECONOMY">8</constant>
-    <constant name="LOC_ECON_MOD">9</constant>
-    <constant name="LOC_ECON_OFFSET">10</constant>
-    <constant name="LOC_W1">11</constant>
-    <constant name="LOC_COLOR">12</constant>
-    <constant name="LOC_SPRITE">13</constant>
-    <constant name="LOC_INDEX">14</constant>
-    <constant name="EQUIP_WEAPON1">0</constant>
-    <constant name="EQUIP_WEAPON2">1</constant>
-    <constant name="EQUIP_HEAD">2</constant>
-    <constant name="EQUIP_BODY">3</constant>
-    <constant name="EQUIP_BELT">4</constant>
-    <constant name="CC_AGRICULTURE">0</constant>
-    <constant name="CC_MINING">1</constant>
-    <constant name="CC_INDUSTRIAL">2</constant>
-    <constant name="CC_TECH">3</constant>
-    <constant name="PL_W_LOW">0</constant>
-    <constant name="PL_W_HIGH">1</constant>
-    <constant name="PL_H_LOW">2</constant>
-    <constant name="PL_H_HIGH">3</constant>
-    <constant name="PL_LEAF_SHAPE">4</constant>
-    <constant name="PL_LEAF_COLOR">5</constant>
-    <constant name="PL_LEAF_SIZE_LOW">6</constant>
-    <constant name="PL_LEAF_SIZE_HIGH">7</constant>
-    <constant name="PL_LEAF_COUNT_LOW">8</constant>
-    <constant name="PL_LEAF_COUNT_HIGH">9</constant>
-    <constant name="PL_BRANCH_COLOR">10</constant>
-    <constant name="PL_BRANCH_COUNT_LOW">11</constant>
-    <constant name="PL_BRANCH_COUNT_HIGH">12</constant>
-    <constant name="PL_LEAF_COLOR2">13</constant>
-    <constant name="PL_BRANCH_SHAPE">14</constant>
-    <constant name="BUG_W_LOW">0</constant>
-    <constant name="BUG_W_HIGH">1</constant>
-    <constant name="BUG_H_LOW">2</constant>
+    <constant name="BTN_TXT">5</constant>
+    <constant name="BTN_W">2</constant>
+    <constant name="BTN_X">0</constant>
+    <constant name="BTN_Y">1</constant>
+    <constant name="BUG_BODY_COLOR">8</constant>
+    <constant name="BUG_BODY_SHAPE">9</constant>
     <constant name="BUG_H_HIGH">3</constant>
-    <constant name="BUG_WING_SHAPE">4</constant>
+    <constant name="BUG_H_LOW">2</constant>
+    <constant name="BUG_W_HIGH">1</constant>
+    <constant name="BUG_W_LOW">0</constant>
     <constant name="BUG_WING_COLOR">5</constant>
     <constant name="BUG_WING_COLOR2">6</constant>
     <constant name="BUG_WING_COUNT">7</constant>
-    <constant name="BUG_BODY_COLOR">8</constant>
-    <constant name="BUG_BODY_SHAPE">9</constant>
-    <constant name="CRITTER_W_LOW">0</constant>
-    <constant name="CRITTER_W_HIGH">1</constant>
-    <constant name="CRITTER_H_LOW">2</constant>
+    <constant name="BUG_WING_SHAPE">4</constant>
+    <constant name="BULLET_BASE_SPEED">15</constant>
+    <constant name="CC_AGRICULTURE">0</constant>
+    <constant name="CC_INDUSTRIAL">2</constant>
+    <constant name="CC_MINING">1</constant>
+    <constant name="CC_TECH">3</constant>
+    <constant name="CELL_HEIGHT">32</constant>
+    <constant name="CELL_WIDTH">32</constant>
+    <constant name="CRITTER_BODY_COLOR">8</constant>
+    <constant name="CRITTER_BODY_SHAPE">9</constant>
+    <constant name="CRITTER_EYE_COLOR">15</constant>
+    <constant name="CRITTER_EYE_COUNT">20</constant>
     <constant name="CRITTER_H_HIGH">3</constant>
-    <constant name="CRITTER_LEG_SHAPE">4</constant>
+    <constant name="CRITTER_H_LOW">2</constant>
+    <constant name="CRITTER_HAS_HORNS">17</constant>
+    <constant name="CRITTER_HAS_TEETH">21</constant>
+    <constant name="CRITTER_HEAD_SHAPE">12</constant>
+    <constant name="CRITTER_HEAD_SIZE_MOD_H">11</constant>
+    <constant name="CRITTER_HEAD_SIZE_MOD_W">10</constant>
+    <constant name="CRITTER_HORN_COUNT">18</constant>
+    <constant name="CRITTER_HORN_LENGTH">19</constant>
     <constant name="CRITTER_LEG_COLOR">5</constant>
     <constant name="CRITTER_LEG_COLOR2">6</constant>
     <constant name="CRITTER_LEG_COUNT">7</constant>
-    <constant name="CRITTER_BODY_COLOR">8</constant>
-    <constant name="CRITTER_BODY_SHAPE">9</constant>
-    <constant name="CRITTER_HEAD_SIZE_MOD_W">10</constant>
-    <constant name="CRITTER_HEAD_SIZE_MOD_H">11</constant>
-    <constant name="CRITTER_HEAD_SHAPE">12</constant>
-    <constant name="CRITTER_TAIL_L_LOW">13</constant>
-    <constant name="CRITTER_TAIL_L_HIGH">14</constant>
-    <constant name="CRITTER_EYE_COLOR">15</constant>
-    <constant name="CRITTER_SYMETRICAL">16</constant>
-    <constant name="CRITTER_HAS_HORNS">17</constant>
-    <constant name="CRITTER_HORN_COUNT">18</constant>
-    <constant name="CRITTER_HORN_LENGTH">19</constant>
-    <constant name="CRITTER_EYE_COUNT">20</constant>
-    <constant name="CRITTER_HAS_TEETH">21</constant>
-    <constant name="CRITTER_TOOTH_COUNT">22</constant>
+    <constant name="CRITTER_LEG_SHAPE">4</constant>
     <constant name="CRITTER_SPEED">23</constant>
-    <constant name="GX_PLANET">0</constant>
+    <constant name="CRITTER_SYMETRICAL">16</constant>
+    <constant name="CRITTER_TAIL_L_HIGH">14</constant>
+    <constant name="CRITTER_TAIL_L_LOW">13</constant>
+    <constant name="CRITTER_TOOTH_COUNT">22</constant>
+    <constant name="CRITTER_W_HIGH">1</constant>
+    <constant name="CRITTER_W_LOW">0</constant>
+    <constant name="D_BRANCH_BUTTONS">2</constant>
+    <constant name="D_BRANCH_TEXT">0</constant>
+    <constant name="D_BRANCH_TYPE">1</constant>
+    <constant name="D_BUTTON_ACTION">1</constant>
+    <constant name="D_BUTTON_LINKINDEX">2</constant>
+    <constant name="D_BUTTON_RECORD">4</constant>
+    <constant name="D_BUTTON_SCRIPT">3</constant>
+    <constant name="D_BUTTON_TEXT">0</constant>
+    <constant name="DATA_FILE">"motleydata.ini"</constant>
+    <constant name="DISPOSITION_HELPFUL">2</constant>
+    <constant name="DISPOSITION_HOSTILE">1</constant>
+    <constant name="DISPOSITION_NEUTRAL">0</constant>
+    <constant name="EQUIP_BELT">4</constant>
+    <constant name="EQUIP_BODY">3</constant>
+    <constant name="EQUIP_HEAD">2</constant>
+    <constant name="EQUIP_WEAPON1">0</constant>
+    <constant name="EQUIP_WEAPON2">1</constant>
+    <constant name="EQUIP_WEAPON3">2</constant>
+    <constant name="FACTION_ANDRONE">13</constant>
+    <constant name="FACTION_ANTINOID">10</constant>
+    <constant name="FACTION_ARCNID">14</constant>
+    <constant name="FACTION_BOT">17</constant>
+    <constant name="FACTION_BOUNTYHUNTER">5</constant>
+    <constant name="FACTION_CHICKEN">18</constant>
+    <constant name="FACTION_CRYPTOLID">8</constant>
+    <constant name="FACTION_EMPIRE">3</constant>
+    <constant name="FACTION_FEDERATION">4</constant>
+    <constant name="FACTION_FION">21</constant>
+    <constant name="FACTION_FLOWRIDIAN">11</constant>
+    <constant name="FACTION_GORGAN">15</constant>
+    <constant name="FACTION_HUMAN">24</constant>
+    <constant name="FACTION_HURGAN">16</constant>
+    <constant name="FACTION_MIOTA">22</constant>
+    <constant name="FACTION_NEUTRAL">7</constant>
+    <constant name="FACTION_PIRATE">1</constant>
+    <constant name="FACTION_PLAYER">0</constant>
+    <constant name="FACTION_PUDNING">12</constant>
+    <constant name="FACTION_REBEL">6</constant>
+    <constant name="FACTION_SELGESH">23</constant>
+    <constant name="FACTION_SELWAT">20</constant>
+    <constant name="FACTION_TRADER">2</constant>
+    <constant name="FACTION_VAYLIT">19</constant>
+    <constant name="FACTION_ZOMBOID">9</constant>
+    <constant name="FLOOR">-5</constant>
+    <constant name="GLOBAL_SHIP_LIMIT">100</constant>
+    <constant name="GUN_BULLET_COLOR">7</constant>
+    <constant name="GUN_BULLET_SPEED">5</constant>
+    <constant name="GUN_BULLET_SPRITE">3</constant>
+    <constant name="GUN_BULLET_TYPE">6</constant>
+    <constant name="GUN_DAMAGE">0</constant>
+    <constant name="GUN_RANGE">4</constant>
+    <constant name="GUN_SPEED">1</constant>
+    <constant name="GUN_SPRITE">2</constant>
     <constant name="GX_MOON">1</constant>
+    <constant name="GX_PLANET">0</constant>
     <constant name="GX_STATION">2</constant>
+    <constant name="I_MODULE_COLOR">5</constant>
+    <constant name="I_MODULE_COORDS">1</constant>
+    <constant name="I_MODULE_DEPTH">6</constant>
+    <constant name="I_MODULE_INDEX">0</constant>
+    <constant name="I_MODULE_OFFSETS">2</constant>
+    <constant name="I_MODULE_XSCALE">3</constant>
+    <constant name="I_MODULE_YSCALE">4</constant>
+    <constant name="LOC_COLOR">12</constant>
+    <constant name="LOC_ECON_MOD">9</constant>
+    <constant name="LOC_ECON_OFFSET">10</constant>
+    <constant name="LOC_ECONOMY">8</constant>
+    <constant name="LOC_GLOBAL_INDEX">5</constant>
+    <constant name="LOC_INDEX">14</constant>
+    <constant name="LOC_NAME_1">7</constant>
+    <constant name="LOC_NAME">2</constant>
+    <constant name="LOC_NPCS">3</constant>
+    <constant name="LOC_SECTOR">4</constant>
+    <constant name="LOC_SPRITE">13</constant>
+    <constant name="LOC_TYPE">6</constant>
+    <constant name="LOC_W1">11</constant>
+    <constant name="LOC_X1">0</constant>
+    <constant name="LOC_Y1">1</constant>
+    <constant name="MISSION_DESCRIP">2</constant>
+    <constant name="MISSION_END_LOCATION">5</constant>
+    <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
+    <constant name="MISSION_GRANTED_BY">12</constant>
+    <constant name="MISSION_ID">0</constant>
+    <constant name="MISSION_ILLEGAL">13</constant>
+    <constant name="MISSION_NAME">1</constant>
+    <constant name="MISSION_OBJECTIVES">7</constant>
+    <constant name="MISSION_REWARD">6</constant>
+    <constant name="MISSION_SCRIPT_START">11</constant>
+    <constant name="MISSION_START_LOCATION">4</constant>
+    <constant name="MISSION_STATE">8</constant>
+    <constant name="MISSION_TEXT">9</constant>
+    <constant name="MISSION_TYPE">3</constant>
+    <constant name="MODE_ATTACKING">0</constant>
+    <constant name="MODE_BOARDING">8</constant>
+    <constant name="MODE_DEFENDING">6</constant>
+    <constant name="MODE_FLEEING">2</constant>
+    <constant name="MODE_FOLLOWING">5</constant>
+    <constant name="MODE_JUMPING">9</constant>
+    <constant name="MODE_LANDING">4</constant>
+    <constant name="MODE_PATROLING">1</constant>
+    <constant name="MODE_TRAVELING">7</constant>
+    <constant name="MODE_WAITING">3</constant>
+    <constant name="MODULE_ACCBWD_MOD">17</constant>
+    <constant name="MODULE_ACCFWD_MOD">16</constant>
+    <constant name="MODULE_BUNKS_MOD">26</constant>
+    <constant name="MODULE_CARGO_MOD">25</constant>
+    <constant name="MODULE_COLOR">6</constant>
+    <constant name="MODULE_DEPTH">9</constant>
+    <constant name="MODULE_DESCRIPTION">11</constant>
+    <constant name="MODULE_ENERGY_MOD">22</constant>
+    <constant name="MODULE_ENERGYREGEN_MOD">23</constant>
+    <constant name="MODULE_ENERGYREGENPOINTS_MOD">24</constant>
+    <constant name="MODULE_HULL_MOD">21</constant>
+    <constant name="MODULE_MASS_MOD">28</constant>
+    <constant name="MODULE_MORALE_MOD">27</constant>
+    <constant name="MODULE_NAME">10</constant>
+    <constant name="MODULE_SHIELD_MOD">18</constant>
+    <constant name="MODULE_SHIELDREGEN_MOD">19</constant>
+    <constant name="MODULE_SHIELDREGENPOINTS_MOD">20</constant>
+    <constant name="MODULE_SPRITE_INDEX">3</constant>
+    <constant name="MODULE_THRUSTFWD_MOD">14</constant>
+    <constant name="MODULE_THRUSTRVS_MOD">15</constant>
+    <constant name="MODULE_TURN_MOD">13</constant>
+    <constant name="MODULE_TYPE_INDEX">12</constant>
+    <constant name="MODULE_TYPE">0</constant>
+    <constant name="MODULE_XSCALE">4</constant>
+    <constant name="MODULE_YSCALE">5</constant>
+    <constant name="MOON_COLOR">3</constant>
+    <constant name="MOON_ECON_MOD">11</constant>
+    <constant name="MOON_ECON_OFFSET">12</constant>
+    <constant name="MOON_ECONOMY">10</constant>
+    <constant name="MOON_GLOBAL_INDEX">9</constant>
+    <constant name="MOON_NAME">8</constant>
+    <constant name="MOON_NPCS">5</constant>
+    <constant name="MOON_PLANET">7</constant>
+    <constant name="MOON_SECTOR">6</constant>
+    <constant name="MOON_SPRITE_INDEX">4</constant>
+    <constant name="MOON_W1">2</constant>
+    <constant name="MOON_X1">0</constant>
+    <constant name="MOON_Y1">1</constant>
+    <constant name="NPC_ACTIVE">9</constant>
+    <constant name="NPC_EQUIPMENT">16</constant>
+    <constant name="NPC_GLOBAL_INDEX">10</constant>
+    <constant name="NPC_HIRE_PRICE">14</constant>
+    <constant name="NPC_HP_CURRENT">4</constant>
+    <constant name="NPC_HP">3</constant>
+    <constant name="NPC_LOCATION">8</constant>
+    <constant name="NPC_MISSION">7</constant>
+    <constant name="NPC_NAME_FIRST">5</constant>
+    <constant name="NPC_NAME_LAST">6</constant>
+    <constant name="NPC_NAME">1</constant>
+    <constant name="NPC_OCCUPATION">12</constant>
+    <constant name="NPC_RACE_INDEX">0</constant>
+    <constant name="NPC_RUN_SPD">2</constant>
+    <constant name="NPC_SEX">13</constant>
+    <constant name="NPC_SPRITE">15</constant>
+    <constant name="NPC_TRAIT">11</constant>
+    <constant name="OBJECTIVE_ACHIEVED">1</constant>
+    <constant name="OBJECTIVE_DESCRIPTION">0</constant>
+    <constant name="OBJECTIVE_ID">12</constant>
+    <constant name="OBJECTIVE_MISSION_ID">11</constant>
+    <constant name="OBJECTIVE_REQUIRED_INVENTORY_COUNT">7</constant>
+    <constant name="OBJECTIVE_REQUIRED_INVENTORY">6</constant>
+    <constant name="OBJECTIVE_REQUIRED_NPC">14</constant>
+    <constant name="OBJECTIVE_SCRIPT_END">10</constant>
+    <constant name="OBJECTIVE_STATE">9</constant>
+    <constant name="OBJECTIVE_TARGET_COUNT_CURRENT">8</constant>
+    <constant name="OBJECTIVE_TARGET_COUNT">5</constant>
+    <constant name="OBJECTIVE_TARGET_FACTION">13</constant>
+    <constant name="OBJECTIVE_TARGET_INDEX">4</constant>
+    <constant name="OBJECTIVE_TARGET_TYPE">3</constant>
+    <constant name="OBJECTIVE_TEXT_END">15</constant>
+    <constant name="OBJECTIVE_TYPE">2</constant>
+    <constant name="PL_BRANCH_COLOR">10</constant>
+    <constant name="PL_BRANCH_COUNT_HIGH">12</constant>
+    <constant name="PL_BRANCH_COUNT_LOW">11</constant>
+    <constant name="PL_BRANCH_SHAPE">14</constant>
+    <constant name="PL_H_HIGH">3</constant>
+    <constant name="PL_H_LOW">2</constant>
+    <constant name="PL_LEAF_COLOR">5</constant>
+    <constant name="PL_LEAF_COLOR2">13</constant>
+    <constant name="PL_LEAF_COUNT_HIGH">9</constant>
+    <constant name="PL_LEAF_COUNT_LOW">8</constant>
+    <constant name="PL_LEAF_SHAPE">4</constant>
+    <constant name="PL_LEAF_SIZE_HIGH">7</constant>
+    <constant name="PL_LEAF_SIZE_LOW">6</constant>
+    <constant name="PL_W_HIGH">1</constant>
+    <constant name="PL_W_LOW">0</constant>
+    <constant name="PLANET_COLOR">3</constant>
+    <constant name="PLANET_ECON_MOD">12</constant>
+    <constant name="PLANET_ECON_OFFSET">13</constant>
+    <constant name="PLANET_ECONOMY">11</constant>
+    <constant name="PLANET_GLOBAL_INDEX">10</constant>
+    <constant name="PLANET_MOONS">4</constant>
+    <constant name="PLANET_NAME">9</constant>
+    <constant name="PLANET_NPCS">6</constant>
+    <constant name="PLANET_SECTOR">7</constant>
+    <constant name="PLANET_SPRITE_INDEX">5</constant>
+    <constant name="PLANET_SUN">8</constant>
+    <constant name="PLANET_W1">2</constant>
+    <constant name="PLANET_X1">0</constant>
+    <constant name="PLANET_Y1">1</constant>
+    <constant name="RACE_BASE_HP">1</constant>
+    <constant name="RACE_BASE_SPD">2</constant>
+    <constant name="RACE_NAME">0</constant>
+    <constant name="RACE_SEXES">4</constant>
+    <constant name="RACE_SPR_FML">5</constant>
+    <constant name="RACE_SPR">3</constant>
+    <constant name="SAVE_GAME_FILE">"motleysave.ini"</constant>
+    <constant name="SCAFF_CELL_SIZE">16</constant>
+    <constant name="SCAFFOLD_COLS">1</constant>
+    <constant name="SCAFFOLD_GRID">2</constant>
+    <constant name="SCAFFOLD_ROWS">0</constant>
+    <constant name="SCAFFOLD_SCALE">3</constant>
+    <constant name="SECTOR_MOONS">2</constant>
+    <constant name="SECTOR_NPCS">5</constant>
+    <constant name="SECTOR_PLANETS">1</constant>
+    <constant name="SECTOR_SHIPS">4</constant>
+    <constant name="SECTOR_STATIONS">3</constant>
+    <constant name="SECTOR_SUNS">0</constant>
+    <constant name="SHIP_ACC_FWD">4</constant>
+    <constant name="SHIP_ACC_RVS">5</constant>
+    <constant name="SHIP_ANGLE">22</constant>
+    <constant name="SHIP_BUNKS">28</constant>
+    <constant name="SHIP_CARGO_CAP">27</constant>
+    <constant name="SHIP_CARGO">29</constant>
+    <constant name="SHIP_ENERGY_CUR">25</constant>
+    <constant name="SHIP_ENERGY_REGEN_PTS">12</constant>
+    <constant name="SHIP_ENERGY_REGEN_SPD">11</constant>
+    <constant name="SHIP_ENERGY">10</constant>
+    <constant name="SHIP_HULL_CUR">24</constant>
+    <constant name="SHIP_HULL">9</constant>
+    <constant name="SHIP_IMAGE_INDEX">16</constant>
+    <constant name="SHIP_MASS">26</constant>
+    <constant name="SHIP_MAX_FWD">2</constant>
+    <constant name="SHIP_MAX_RVS">3</constant>
+    <constant name="SHIP_MAX_SPEED">1</constant>
+    <constant name="SHIP_MODULES">20</constant>
+    <constant name="SHIP_NPCS">18</constant>
+    <constant name="SHIP_SCAFFOLD_SIZE">21</constant>
+    <constant name="SHIP_SECTOR">17</constant>
+    <constant name="SHIP_SHIELDS_CUR">23</constant>
+    <constant name="SHIP_SHIELDS_REGEN_PTS">8</constant>
+    <constant name="SHIP_SHIELDS_REGEN_SPD">7</constant>
+    <constant name="SHIP_SHIELDS">6</constant>
+    <constant name="SHIP_SPRITE_INDEX">19</constant>
+    <constant name="SHIP_TURN_SPEED">0</constant>
+    <constant name="SHIP_WEAPON_SPD">13</constant>
+    <constant name="SHIP_X1">14</constant>
+    <constant name="SHIP_Y1">15</constant>
+    <constant name="STATION_COLOR">3</constant>
+    <constant name="STATION_ECON_MOD">10</constant>
+    <constant name="STATION_ECON_OFFSET">11</constant>
+    <constant name="STATION_ECONOMY">9</constant>
+    <constant name="STATION_GLOBAL_INDEX">8</constant>
+    <constant name="STATION_NAME">7</constant>
+    <constant name="STATION_NPCS">5</constant>
+    <constant name="STATION_SECTOR">6</constant>
+    <constant name="STATION_SPRITE_INDEX">4</constant>
+    <constant name="STATION_W1">2</constant>
+    <constant name="STATION_X1">0</constant>
+    <constant name="STATION_Y1">1</constant>
+    <constant name="SUN_COLOR">3</constant>
+    <constant name="SUN_PLANETS">4</constant>
+    <constant name="SUN_SECTOR">5</constant>
+    <constant name="SUN_W1">2</constant>
+    <constant name="SUN_X1">0</constant>
+    <constant name="SUN_Y1">1</constant>
+    <constant name="TRAIT_AGGRESSIVE">6</constant>
+    <constant name="TRAIT_ARROGANT">13</constant>
+    <constant name="TRAIT_BRAVE">4</constant>
+    <constant name="TRAIT_COWARDLY">5</constant>
+    <constant name="TRAIT_CRUEL">1</constant>
+    <constant name="TRAIT_DISHONEST">9</constant>
+    <constant name="TRAIT_GENEROUS">2</constant>
+    <constant name="TRAIT_GREEDY">3</constant>
+    <constant name="TRAIT_HONEST">8</constant>
+    <constant name="TRAIT_HUMBLE">12</constant>
+    <constant name="TRAIT_IMMORAL">15</constant>
+    <constant name="TRAIT_KIND">0</constant>
+    <constant name="TRAIT_LOYAL">10</constant>
+    <constant name="TRAIT_MORAL">14</constant>
+    <constant name="TRAIT_PASSIVE">7</constant>
+    <constant name="TRAIT_TREACHEROUS">11</constant>
+    <constant name="TURRET_GUN_INDEX">1</constant>
+    <constant name="TURRET_TURN_SPEED">0</constant>
+    <constant name="VOID">-7</constant>
+    <constant name="WALL">-6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

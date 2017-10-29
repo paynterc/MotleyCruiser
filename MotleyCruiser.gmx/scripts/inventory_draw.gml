@@ -7,20 +7,20 @@ sprite_infobox = argument3;
 slot_gap = argument4;
 pre_col = draw_get_color();
 draw_set_color(argument5);
-
+draw_set_font(fnt_menus_med);
 
 /************************
 My additions - pagination
 ***********************/
 start_row = page * rows_per_page;
 page_rows = min(rows - start_row,rows_per_page);
-start_index = start_row * cols;// 0, 50, 100
+
 /************************
 end - pagination
 ***********************/
 
-var guix=device_mouse_x_to_gui(0);// My change. Adjusts mouse location to GUI layer. - cp
-var guiy=device_mouse_y_to_gui(0);
+var guix=mouse_x;
+var guiy=mouse_y;
 
 var slot_height;
 slot_width = slot;
@@ -39,7 +39,8 @@ var sprite;
 sprite = spr_ItemIcon_Default
 var spr_width, spr_height;
 spr_width = sprite_get_width(spritebox)
-spr_height = sprite_get_height(spritebox)
+spr_height = sprite_get_height(spritebox);
+// Draw boxes
 for (i=0; i<slot_height; i+=1)
 {
     for (j=0; j<slot_width; j+=1)
@@ -52,7 +53,7 @@ for (i=0; i<slot_height; i+=1)
               if mouse_check_button_pressed(mb_left){
                  global.ItemLastSelect = global.ItemSelected
               }
-                 draw_sprite(spritebox,1,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+              draw_sprite(spritebox,1,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
            }else{
               draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
            }
@@ -64,72 +65,41 @@ for (i=0; i<slot_height; i+=1)
     }
 }
 index = start_index;
-global.MouseOutside = true
+var _yoffset,_xoffset,_texty,_textx;
+global.MouseOutside = true;
+// Draw items
 for (i=0; i<slot_height; i+=1)
 {
     for (j=0; j<slot_width; j+=1)
     {
-           if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
-              global.ItemSelected = index
-              global.MouseOutside = false
-              if mouse_check_button(mb_right){
-                 if !global.MouseItem{
-                    global.MouseIndex = index
-                    global.MouseItem = true
-                 }
-                 global.ItemLastSelect = -1
-              }else if mouse_check_button_released(mb_right){
-                 if global.MouseItem{
-                    inventory_item_exchange(global.MouseIndex,index)
-                    global.MouseItem = false
-                    global.MouseIndex = -1
-                    global.ItemLastSelect = -1
-                 }
-              }
-           }
-        //
+        if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
+           global.ItemSelected = index;// Hovering over item
+           global.MouseOutside = false;        
+        }
+
         if ds_map_find_value(global.inventory,"slot"+string(index)) = true{
            item_id_va = ds_map_find_value(global.inventory,"ID"+string(index))
-           sprite = ds_map_find_value(global.item_id,"item["+string(item_id_va)+",2]")
-           var item_width, item_height;
-           item_width = sprite_get_width(sprite)
-           item_height = sprite_get_height(sprite)
+           sprite = ds_map_find_value(global.item_id,"item["+string(item_id_va)+",2]");
            
-           if global.MouseItem = false{
-              draw_sprite(sprite,image_index,_x+((spr_width+slot_gap)*j)+(spr_width/2)-(item_width/2),_y+((spr_height+slot_gap)*i)+(spr_height/2)-(item_height/2))
-              draw_text(_x+((spr_width+slot_gap)*j)+((spr_width+slot_gap)/2),_y+((spr_height+slot_gap)*i)+((spr_height+slot_gap)/2),string(ds_map_find_value(global.inventory,"Stack"+string(index))))
-           }else{
-              if global.MouseIndex != index{
-                 draw_sprite(sprite,image_index,_x+((spr_width+slot_gap)*j)+(spr_width/2)-(item_width/2),_y+((spr_height+slot_gap)*i)+(spr_height/2)-(item_height/2))
-                 draw_text(_x+((spr_width+slot_gap)*j)+((spr_width+slot_gap)/2),_y+((spr_height+slot_gap)*i)+((spr_height+slot_gap)/2),string(ds_map_find_value(global.inventory,"Stack"+string(index))))
-              }else{
-                 draw_sprite(sprite,image_index,guix-(item_width/2),guiy-(item_height/2)) 
-              }
+           var item_width, item_height, item_scale;
+           item_width = sprite_get_width(sprite);
+           item_height = sprite_get_height(sprite);
+           item_scale=ds_map_find_value(global.item_id,"item["+string(item_id_va)+",10]");
+           if(is_undefined(item_scale)){
+                item_scale=1;
            }
+           
+        
+           _yoffset = (spr_height+slot_gap) * i;
+           _textx =  (-spr_width/2) + 4;
+           _texty =  (-spr_height/2) + 6;
+           
+           draw_sprite_ext(sprite, image_index, _x, _y + _yoffset,item_scale,item_scale,0,c_white,1 );
+           draw_text(_x + _textx, _y + _yoffset + _texty,string(ds_map_find_value(global.inventory,"Stack"+string(index))));
+
         }
         index += 1
     };  
 };
-index = start_index;
-for (i=0; i<slot_height; i+=1)
-{
-    for (j=0; j<slot_width; j+=1)
-    {
-    if ds_map_find_value(global.inventory,"slot"+string(index)) = true{
-      if global.MouseItem = false{
-          if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
-             draw_panel(sprite_infobox,0,max(view_xview[0],guix-string_width(string(item_id_read(inventory_read("ID",index),0)))/2),floor(_y+((spr_height+slot_gap)*i)-5-string_height(string(item_id_read(inventory_read("ID",index),0)))/2-15),string_width(string(item_id_read(inventory_read("ID",index),0)))+10,string_height(string(item_id_read(inventory_read("ID",index),0)))+10,10)
-             draw_text(max(view_xview[0]+5,guix+5+-string_width(string(item_id_read(inventory_read("ID",index),0)))/2),floor(_y+((spr_height+slot_gap)*i)-string_height(string(item_id_read(inventory_read("ID",index),0)))/2-15),string(item_id_read(inventory_read("ID",index),0)))
-          }
-      }
-    }
-    index += 1
-    };
-};
-if mouse_check_button_released(mb_right){
-   if global.MouseOutside{
-      global.MouseIndex = -1
-      global.MouseItem = false
-   }
-}
+
 draw_set_color(pre_col);

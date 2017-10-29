@@ -79,7 +79,7 @@ if(ini_section_exists(game)){
     scr_ev_game_loaded();
     
     rm = rm_space;
-    
+    //rm = rm_inventory;
 }else{
 
     // Make a new player character
