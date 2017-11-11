@@ -128,7 +128,7 @@ inventory_int(cols,rows);
 global.base_inventory_cols = cols;
 global.base_inventory_rows = rows;
 // Equipped items
-global.equipped = ds_map_create();
+global.equipped = noone;
 scr_hotbar_init();
 
 
@@ -305,34 +305,6 @@ part_type_alpha3(global.ptcl_gate,1,0.8,0);
 part_type_blend(global.ptcl_gate,1);
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Equipment
-/***
-global.equipped = ds_map_create();
-ds_map_add(global.equipped, "weapon", 55);
-ds_map_add(global.equipped, "hot1", 42);
-ds_map_add(global.equipped, "hot2", 2);
-ds_map_add(global.equipped, "hot3", 53);
-***/
 </string>
           </argument>
         </arguments>
@@ -666,9 +638,7 @@ if(ds_exists(global.gx_locations,ds_type_map)){
     ds_map_destroy(global.gx_locations);
 }
 
-if(ds_exists(global.equipped,ds_type_map)){
-    ds_map_destroy(global.equipped);
-}
+
 
 // Inventory
 if(ds_exists(global.item_id,ds_type_map)){

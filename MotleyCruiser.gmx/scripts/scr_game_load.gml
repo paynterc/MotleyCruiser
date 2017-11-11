@@ -37,6 +37,11 @@ if(ini_section_exists(game)){
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
     
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "equipped", "");
+    ds_list_read(read_list,str);
+    global.equipped = read_list[| 0];
+    ds_list_destroy(read_list);
         
     /***
     read_list = ds_list_create();
@@ -65,11 +70,10 @@ if(ini_section_exists(game)){
     scr_load_player_sprite();
     
     // Equipment - created map in obj_game_control
-    ds_map_clear(global.equipped);
-    ds_map_add(global.equipped, "weapon", 55);
-    ds_map_add(global.equipped, "hot0", 42);//med
-    ds_map_add(global.equipped, "hot1", 2);//flash
-    ds_map_add(global.equipped, "hot2", 53);//grenade
+    global.equipped = noone;
+    global.equipped[2]=noone;
+    global.equipped[1]=noone;
+    global.equipped[0]=51;
       
     //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
     //random_set_seed(global.galaxy_seed);

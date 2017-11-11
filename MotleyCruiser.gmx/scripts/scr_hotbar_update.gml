@@ -1,7 +1,10 @@
+/// scr_hotbar_update(type,increment)
 /*****
 Update inventory count of each hotbar item
 *****/
-//scr_hotbar_update()
+var type = argument0;
+var increment = argument1;
+
 if(global.hotbar=noone){
     scr_hotbar_init();
 }
@@ -16,15 +19,11 @@ var hsprite;
 var iid;
 for(var i=0; i<array_height_2d(global.hotbar);i++){
     
-    amt = 0;
-    hsprite = noone;
-    iid = global.equipped[? "hot"+string(i) ];
-    if(iid!=noone){
-        amt = scr_inv_item_count(iid);
-        hsprite = item_id_read(iid,2);
+    if(global.hotbar[i,0]==type){
+        var amt = global.hotbar[i,1] + increment;       
+        global.hotbar[i,1] = clamp(amt, 1, global.hotbar[i,3]);
     }
-    global.hotbar[i,1] = amt;
-    global.hotbar[i,2] = hsprite;
+
 }
 
 //global.hot_counts = hot_counts;

@@ -9,6 +9,6 @@ if(instance_exists(obj_player)){
         var crewmem = instance_find(obj_crew,i);
         crewmem.hp_current = min(crewmem.hp, crewmem.hp_current + amt);    
     }
-    scr_hotbar_update();
+    scr_hotbar_update("heal",-1);
 }
 

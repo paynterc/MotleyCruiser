@@ -5,5 +5,5 @@ if(!global.bullet_time && instance_exists(obj_flash_timer)){
     with(obj_flash_timer){
         event_user(0);
     }
-    scr_hotbar_update();
+    //scr_hotbar_update("flash",-1);
 }

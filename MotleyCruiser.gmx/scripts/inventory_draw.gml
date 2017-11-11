@@ -40,30 +40,35 @@ sprite = spr_ItemIcon_Default
 var spr_width, spr_height;
 spr_width = sprite_get_width(spritebox)
 spr_height = sprite_get_height(spritebox);
+var _xb = _x-(spr_width/2);
 // Draw boxes
 for (i=0; i<slot_height; i+=1)
 {
     for (j=0; j<slot_width; j+=1)
     {
-        if global.ItemLastSelect = index{
+        if global.ItemLastSelect = index
+        {
            draw_sprite(spritebox,2,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
-        }else{
-        if index = global.ItemSelected{
-           if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
-              if mouse_check_button_pressed(mb_left){
-                 global.ItemLastSelect = global.ItemSelected
-              }
-              draw_sprite(spritebox,1,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
-           }else{
-              draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
-           }
-        }else{
-           draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
         }
+        else
+        {
+            if index = global.ItemSelected{
+               if( point_in_rectangle(guix, guiy, _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i)) ){
+                  if mouse_check_button_pressed(mb_left){
+                     global.ItemLastSelect = global.ItemSelected
+                  }
+                  draw_sprite(spritebox,1,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+               }else{
+                  draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+               }
+            }else{
+               draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+            }
         }
-        index += 1
+        index += 1;
     }
 }
+
 index = start_index;
 var _yoffset,_xoffset,_texty,_textx;
 global.MouseOutside = true;
@@ -72,7 +77,8 @@ for (i=0; i<slot_height; i+=1)
 {
     for (j=0; j<slot_width; j+=1)
     {
-        if point_in_rectangle(guix,guiy,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i),_x+((spr_width+slot_gap)*j)+spr_width,_y+((spr_height+slot_gap)*i)+spr_height){
+        draw_rectangle( _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i), true);
+        if point_in_rectangle(guix,guiy, _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i)){
            global.ItemSelected = index;// Hovering over item
            global.MouseOutside = false;        
         }

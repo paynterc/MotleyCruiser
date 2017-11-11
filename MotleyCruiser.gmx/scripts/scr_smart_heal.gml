@@ -26,9 +26,9 @@ if(!heal_crewmem && !heal_player){
 var heal1=42;// Item 42 is a healbag.
 
 
-if(scr_inv_item_count(heal1)>0){
-    scr_inv_item_decrement(heal1);
-    scr_script_parse(item_id_read(42,4));
+if(scr_hotbar_count("heal")>0){
+    scr_hotbar_update("heal",-1);
+    scr_heal_player(10);
     audio_play_sound(snd_heal,2,0);       
 }else{
     audio_play_sound(snd_fail,1,0);

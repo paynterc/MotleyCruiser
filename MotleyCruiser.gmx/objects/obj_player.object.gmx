@@ -214,17 +214,15 @@ if(weapon != noone){
         
     // Grenade
     if(scr_user_input("fire_alt")){
-        if(scr_inv_item_count(53)&gt;0){
-            scr_inv_item_decrement(53);
+        if(scr_hotbar_count("grenade")&gt;0){
+            scr_hotbar_update("grenade",-1);
             var grenade = instance_create(x,y,obj_grenade);
             grenade.depth = -200;
             grenade.direction = weapon.image_angle;
             grenade.speed = 4;
         }
     }
-    
-
-    
+     
 }
 
 // Heal
@@ -233,6 +231,7 @@ if(scr_user_input("hotslot1")){
 }
 
 // Flash
+/****
 if(scr_user_input("hotslot2")){
 
     if(scr_inv_item_count(2)&gt;0){
@@ -240,6 +239,7 @@ if(scr_user_input("hotslot2")){
         scr_script_parse(item_id_read(2,4));
     } 
 }
+***/
 </string>
           </argument>
         </arguments>
@@ -357,13 +357,13 @@ if(other.type==2){
           <argument>
             <kind>1</kind>
             <string>/// Equip weapon
-if(ds_map_exists(global.equipped,"weapon")){
+if(global.equipped!=noone){
     if(weapon!=noone &amp;&amp; instance_exists(weapon)){
         with(weapon){
             instance_destroy();// Remove the old weapon
         }
     }
-    var item_id = ds_map_find_value(global.equipped, "weapon");
+    var item_id = global.equipped[0];
     if(item_id!=noone){
     
         weapon_index = scr_inv_item_read(item_id,6);// Slot 6 holds the object name

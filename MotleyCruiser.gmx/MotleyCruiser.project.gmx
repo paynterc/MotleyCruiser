@@ -514,8 +514,6 @@
       <script>scripts\scr_get_active_crew_count.gml</script>
       <script>scripts\scr_npc_in_crew.gml</script>
       <script>scripts\scr_daily_expenses.gml</script>
-      <script>scripts\scr_crew_get_equip.gml</script>
-      <script>scripts\scr_crew_set_equip.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -578,9 +576,9 @@
       <script>scripts\scr_ev_game_loaded.gml</script>
     </scripts>
     <scripts name="_galaxy">
+      <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_populate_sector_OLD.gml</script>
-      <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_galaxy_WEIGHTED.gml</script>
       <script>scripts\scr_make_sun.gml</script>
@@ -691,6 +689,13 @@
       <script>scripts\scr_contraband.gml</script>
       <script>scripts\scr_npc_drops.gml</script>
       <script>scripts\scr_npc_weapons.gml</script>
+      <scripts name="inventory_room">
+        <script>scripts\scr_crew_get_equip.gml</script>
+        <script>scripts\scr_crew_set_equip.gml</script>
+        <script>scripts\scr_player_set_equip.gml</script>
+        <script>scripts\scr_player_get_equip.gml</script>
+        <script>scripts\scr_inventory_swap.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_libraries">
       <script>scripts\scr_guns.gml</script>
@@ -768,6 +773,7 @@
         <script>scripts\scr_smart_heal.gml</script>
         <script>scripts\scr_hotbar_init.gml</script>
         <script>scripts\scr_hotbar_update.gml</script>
+        <script>scripts\scr_hotbar_count.gml</script>
         <script>scripts\scr_inv_item_read.gml</script>
         <script>scripts\scr_equip_weapon.gml</script>
         <script>scripts\scr_grant_random_weapon.gml</script>

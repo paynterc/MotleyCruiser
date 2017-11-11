@@ -7,6 +7,7 @@ var game = global.game_loaded;
 scr_save_galaxy(game);
 scr_inv_save(game);
 
+scr_write_array(global.equipped,game,"equipped",SAVE_GAME_FILE);
 scr_write_array(global.player_ship,game,"player_ship",SAVE_GAME_FILE);
 scr_write_array(global.player_model,game,"player_model",SAVE_GAME_FILE);
 scr_write_array(global.fleet,game,"fleet",SAVE_GAME_FILE);

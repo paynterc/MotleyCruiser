@@ -20,8 +20,7 @@ if (inventory_read("ID",slot_id1) == inventory_read("ID",slot_id2) && (maxStack1
         }else{
             break;
         }
-        
-        
+               
     }    
     return true;
 }else{

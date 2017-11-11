@@ -98,8 +98,20 @@ if(credits!=noone){
 }
 
 if(inv_id != noone){
-    inventory_item_add(inv_id,inv_amount);
-    scr_hotbar_update();
+
+    if(inv_id == 42)
+    {
+        scr_hotbar_update("heal",1);
+    }
+    else if(inv_id == 53)
+    {
+        scr_hotbar_update("grenade",1);
+    }
+    else
+    {
+        inventory_item_add(inv_id,inv_amount);
+    }
+      
     audio_play_sound(snd_pickup,2,0);
 }
 

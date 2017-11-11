@@ -81,6 +81,13 @@ cws_index = noone;// index of crewmemnber last selected
 cws_slot = noone;// index of crew slot selected
 cws_item = noone;// inventory index of selected item.
 
+// Player Selected equipment variables
+pls_slot = noone;
+pls_item = noone;
+
+// Set array to keep track of slots that are hovered over and selected
+hvr = noone;
+event_user(0);
 
 // Pagination
 rows_per_page=7;
@@ -197,6 +204,46 @@ for(var i=0; i&lt;array_length_1d(navbuttons); i++){
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reset status. Set hover and selected
+
+global.ItemLastSelect = -1;
+id_last = -1;
+
+pls_slot = noone;
+pls_item = noone;
+                        
+cws_index = noone;// index of crewmemnber last selected
+cws_slot = noone;// index of crew slot selected
+cws_item = noone;
+
+
+for(var i = 3; i&gt;=0; i--){ // Four crew columns
+    for(var s=2; s&gt;=0; s--){ // Three slots each
+        hvr[i,s]=0;// Value can be 0,1 or 2. Corresponds to image_index
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -214,7 +261,7 @@ for(var i=0; i&lt;array_length_1d(navbuttons); i++){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Now you can draw Inventory here:
+            <string>/// Draw inventory:
 
 
 draw_set_font(font);
@@ -229,13 +276,143 @@ draw_set_halign(fa_center);
 draw_set_halign(fa_left);
 
 
-inventory_draw(box_hcenter, box_y+font_size+(padding*2), spr_slot_lg, spr_slot_lg, slot_gap, c_white);
+// MAIN INVENTORY - LEFT COLUMN
+//inventory_draw(box_hcenter, box_y+font_size+(padding*2), spr_slot_lg, spr_slot_lg, slot_gap, c_white);
+var _x, _y, slot_width, spritebox, sprite_infobox, pre_col;
+_x = box_hcenter;
+_y = box_y+font_size+(padding*2);
+spritebox = spr_slot_lg;
+sprite_infobox = spr_slot_lg;
 
-   
+pre_col = draw_get_color();
+draw_set_color(c_white);
+draw_set_font(fnt_menus_med);
+
+/************************
+- pagination
+***********************/
+start_row = page * rows_per_page;
+page_rows = min(rows - start_row,rows_per_page);
+
+/************************
+end - pagination
+***********************/
+
+var guix=mouse_x;
+var guiy=mouse_y;
+
+var slot_height;
+slot_width = slot;
+slot_height = page_rows;
+
+
+var j, index;
+j = 0;
+index = start_index;
+
+var item_id_va;
+item_id_va = -1
+var sprite;
+sprite = spr_ItemIcon_Default
+var spr_width, spr_height;
+spr_width = sprite_get_width(spritebox)
+spr_height = sprite_get_height(spritebox);
+var _xb = _x-(spr_width/2);
+// Draw boxes
+for (i=0; i&lt;slot_height; i+=1)
+{
+    for (j=0; j&lt;slot_width; j+=1)
+    {
+        if global.ItemLastSelect = index
+        {
+           draw_sprite(spritebox,2,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+        }
+        else
+        {
+            if index = global.ItemSelected{
+               if( point_in_rectangle(guix, guiy, _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i)) ){
+                  if mouse_check_button_pressed(mb_left){
+                    
+
+                    
+                    if(cws_item != noone)
+                    {
+                        // We have selected an item from crewmember inventory. PUT IT HERE
+                        var previous = scr_inventory_swap(index,cws_item)
+                        
+                        var pcrew = global.crew[cws_index];
+                        var pcrew_i = pcrew[NPC_EQUIPMENT];
+                        pcrew_i[@ cws_slot] = previous;
+                        
+                        event_user(0);// Reset status
+                    }else{
+                        global.ItemLastSelect = global.ItemSelected;
+                    }
+                    
+                    
+
+                  }
+                  draw_sprite(spritebox,1,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+               }else{
+                  draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+               }
+            }else{
+               draw_sprite(spritebox,0,_x+((spr_width+slot_gap)*j),_y+((spr_height+slot_gap)*i))
+            }
+        }
+        index += 1;
+    }
+}
+
+index = start_index;
+var _yoffset,_xoffset,_texty,_textx;
+global.MouseOutside = true;
+// Draw items
+for (var i=0; i&lt;slot_height; i+=1)
+{
+    for (j=0; j&lt;slot_width; j+=1)
+    {
+        draw_rectangle( _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i), true);
+        if point_in_rectangle(guix,guiy, _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i)){
+           global.ItemSelected = index;// Hovering over item
+           global.MouseOutside = false;        
+        }
+
+        if ds_map_find_value(global.inventory,"slot"+string(index)) = true{
+           item_id_va = ds_map_find_value(global.inventory,"ID"+string(index))
+           sprite = ds_map_find_value(global.item_id,"item["+string(item_id_va)+",2]");
+           
+           var item_width, item_height, item_scale;
+           item_width = sprite_get_width(sprite);
+           item_height = sprite_get_height(sprite);
+           item_scale=ds_map_find_value(global.item_id,"item["+string(item_id_va)+",10]");
+           if(is_undefined(item_scale)){
+                item_scale=1;
+           }
+           
+        
+           _yoffset = (spr_height+slot_gap) * i;
+           _textx =  (-spr_width/2) + 4;
+           _texty =  (-spr_height/2) + 6;
+           
+           draw_sprite_ext(sprite, image_index, _x, _y + _yoffset,item_scale,item_scale,0,c_white,1 );
+           draw_text(_x + _textx, _y + _yoffset + _texty,string(ds_map_find_value(global.inventory,"Stack"+string(index))));
+
+        }
+        index += 1
+    };  
+};
+
+draw_set_color(pre_col);
+// END MAIN INVENTORY - LEFT COLUMN
+
+
+
 var id_last = inventory_read("ID",inventory_last_select());
 
 
 //Read the script "item_int" for more information for item_id_read
+/***
 
 if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined(id_last) &amp;&amp; id_last!=-1 ){
     
@@ -249,11 +426,11 @@ if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined(id_last) &amp;&amp;
     "Item: " + string(item_id_read(id_last,0)) +
     "Stack: " + string(inventory_read("Stack",inventory_last_select())) + " / " + string(item_id_read(id_last,1))
     );
-    /**
+    
     draw_text(box_x+padding,box_vcenter+96,
     "Description: " + string(item_id_read(id_last,5))
     );
-    **/
+    
     draw_text_ext(box_x+padding,box_vcenter+96,
     string(item_id_read(id_last,5)),
     font_size,
@@ -261,11 +438,12 @@ if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined(id_last) &amp;&amp;
     );
     
 }
+***/
 
 draw_set_halign(fa_left);
 //draw_text(box_x+padding,box_bottom - padding - font_size,"CREDITS: " + string(global.credits));
 
-// Draw nav buttons
+// Draw nav buttons FOR MAIN INVENTORY
 var b;
 draw_set_color(c_lime);
 draw_set_halign(fa_center);
@@ -290,7 +468,9 @@ for(var i = 0; i&lt;array_length_1d(navbuttons); i++){
     }
     yscl=-1;
 }
-    
+
+
+// Player equipment
 var xx = box_x + boxwidth + padding;
 var yy = box_y + room_height/4;
 var hh = boxheight - room_height/4;
@@ -298,13 +478,99 @@ draw_panel(spr_background,0,xx*1,yy,boxwidth,hh,32);
 draw_sprite(spr_modelframe1,0,xx+(boxwidth/2),yy+24+padding);
 draw_sprite(global.player_sprite,0,xx+(boxwidth/2),yy+24+padding+4);
 
+var spr1, i_scale;
+// hover box
+var bw1 = sprite_get_width(spr_slot_lg);
+var bh1 = sprite_get_height(spr_slot_lg);
+var x1 = xx+(boxwidth/2);
 var y1=yy+75;
+var bx1 = x1-(bw1/2);
+var by1;
+
 for(var i=0;i&lt;3;i++){
-    draw_sprite(spr_slot_lg,0,xx+(boxwidth/2),y1);
-    draw_text(xx+(boxwidth/2),y1,string(y1) + " | " + string(y1-yy));
+
+    by1 = y1 - (bh1/2);
+    draw_sprite(spr_slot_lg,hvr[0,i],xx+(boxwidth/2),y1);
+    //draw_text(xx+(boxwidth/2),y1,string(y1) + " | " + string(y1-yy));
+
+    spr1=scr_player_get_equip(i,2);
+    if(spr1!=noone){
+        i_scale=scr_player_get_equip(i,10);
+        if(i_scale == noone){
+            i_scale=1;
+        }
+        
+        draw_sprite_ext(spr1, image_index, (xx)+(boxwidth/2), y1, i_scale, i_scale, 0, c_white, 1 );
+
+    }
+    
+    draw_rectangle( bx1, by1, bx1+bw1, by1+bh1, true);// hit box
+    if( point_in_rectangle(mouse_x, mouse_y, bx1, by1, bx1+bw1, by1+bh1) )
+    {
+        if(hvr[0,i]==0){
+            hvr[0,i]=1;
+        }
+        if(mouse_check_button_pressed(mb_left))
+        {
+
+        
+            if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined(id_last) &amp;&amp; id_last!=-1 )
+            {
+                inventory_item_delete(inventory_last_select(), 1);
+
+                var previous = scr_player_set_equip(i,id_last);
+                if(previous != noone){
+                    inventory_item_add(previous,1);
+                }
+                event_user(0);// Reset status
+            }
+            else if(cws_item != noone)
+            {
+                // We have selected an item from a crewmember slot
+                var previous = scr_player_set_equip(i,cws_item)
+                
+                var pcrew = global.crew[cws_index];
+                var pcrew_i = pcrew[NPC_EQUIPMENT];
+                pcrew_i[@ cws_slot] = previous;
+                
+                event_user(0);// Reset status
+            }
+            else if( pls_item!=noone )
+            {
+                // We have selected an item from a player slot
+                var previous = scr_player_set_equip(i,pls_item)                  
+                global.equipped[pls_slot] = previous;
+                
+                event_user(0);// Reset status
+            
+            }
+            else if(global.equipped[i] != noone)
+            {
+                // Pick up the item in this slot
+                event_user(0);//Reset status
+                
+                // Select an item in the players slot    
+                pls_slot = i;// index of player slot selected
+                pls_item = global.equipped[i];
+                
+                hvr[0,i]=2;                
+            } 
+        
+        }
+        
+    }
+    else
+    {
+        if(hvr[0,i]&lt;2){
+            hvr[0,i]=0;
+        }
+
+    }
+    
     y1+=sprite_get_height(spr_slot_lg) + slot_gap;
 }
 
+// Crew equipment
 var c_index = 0;//crew index
 var cmate, csprite;
 for(var i=2;i&lt;5;i++){
@@ -322,62 +588,88 @@ for(var i=2;i&lt;5;i++){
         draw_sprite(csprite,0,(xx*i)+(boxwidth/2),yy+24+padding+4);
         
         y1=yy+75;
-        var spr2, i_scale;
+
         var x1 = (xx*i)+(boxwidth/2);
-        var bw1 = sprite_get_width(spr_slot_lg);
-        var bh1 = sprite_get_height(spr_slot_lg);
-        var bx1 = x1-(bw1/2);
-        var by1;
+
+        bx1 = x1-(bw1/2);
+
         for(var i2=0;i2&lt;3;i2++){
             by1 = y1 - (bh1/2);
-            draw_sprite(spr_slot_lg,0,x1,y1);
-            if(mouse_check_button_pressed(mb_left))
+            draw_sprite(spr_slot_lg,hvr[i-1,i2],x1,y1);
+            draw_rectangle( bx1, by1, bx1+bw1, by1+bh1, true);
+            if( point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx1+bw1,by1+bh1) )
             {
-                if( point_in_rectangle(mouse_x,mouse_y,bx1,by1,bx1+bw1,by1+bh1) )
+                
+                if(hvr[i-1,i2]==0){
+                    hvr[i-1,i2]=1;
+                }
+
+            
+                if(mouse_check_button_pressed(mb_left))
                 {
+
                     var equipment = cmate[NPC_EQUIPMENT];
 
                     if( inventory_last_select() &gt;= 0 &amp;&amp; !is_undefined(id_last) &amp;&amp; id_last!=-1 )
                     {
+                        // We have selected an item from inventory.PUT IT HERE.
                         inventory_item_delete(inventory_last_select(), 1);
 
                         var previous = scr_crew_set_equip(c_index,i2,id_last);
                         if(previous != noone){
                             inventory_item_add(previous,1);
                         }
-                        global.ItemLastSelect = -1;
-                        id_last = -1;
+
+                        
+                        event_user(0);// Reset status
                    
                     }
                     else if(cws_item != noone)
                     {
-                        // We have selected an item from crewmember inventory
+                        // We have selected an item from crewmember inventory. PUT IT HERE
                         var previous = scr_crew_set_equip(c_index,i2,cws_item)
                         
                         var pcrew = global.crew[cws_index];
                         var pcrew_i = pcrew[NPC_EQUIPMENT];
                         pcrew_i[@ cws_slot] = previous;
                         
-                        cws_index = noone;// index of crewmemnber last selected
-                        cws_slot = noone;// index of crew slot selected
-                        cws_item = noone;
+                        event_user(0);// Reset status
+                    }
+                    else if( pls_item!=noone )
+                    {
+                        // We have selected an item from a player slot. PUT IT HERE
+                        var previous = scr_crew_set_equip(c_index,i2,pls_item)                  
+                        global.equipped[pls_slot] = previous;
+                        
+                        event_user(0);// Reset status
+                    
                     }
                     else if(equipment[i2] != noone)
                     {
+                        // Pick up the item in this slot
+                        event_user(0);// Reset status
                         cws_index = c_index;// index of crewmemnber last selected
                         cws_slot = i2;// index of crew slot selected
-                        cws_item = equipment[i2];                 
+                        cws_item = equipment[i2];
+                        hvr[i-1,i2]=2;                 
                     }             
                 }
             }
+            else
+            {
+                if(hvr[i-1,i2]==1){
+                    hvr[i-1,i2]=0;
+                }
+                       
+            }
             
-            spr2=scr_crew_get_equip(cmate,i2,2);
-            if(spr2!=noone){
+            spr1=scr_crew_get_equip(cmate,i2,2);
+            if(spr1!=noone){
                 i_scale=scr_crew_get_equip(cmate,i2,10);
                 if(i_scale == noone){
                     i_scale=1;
                 }
-                draw_sprite_ext(spr2, image_index, (xx*i)+(boxwidth/2), y1, i_scale, i_scale, 0, c_white, 1 );
+                draw_sprite_ext(spr1, image_index, (xx*i)+(boxwidth/2), y1, i_scale, i_scale, 0, c_white, 1 );
             }
             y1+=bh1 + slot_gap;
         }

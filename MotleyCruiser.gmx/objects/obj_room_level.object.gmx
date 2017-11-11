@@ -37,8 +37,6 @@ boom_light = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, room_he
 glr_light_set_static(boom_light, true);
 glr_light_set_active(boom_light,false);
 
-
-scr_hotbar_update();
 </string>
           </argument>
         </arguments>
@@ -245,14 +243,16 @@ var boxes = array_height_2d(global.hotbar);
 var boxw = 40;//box width
 var boxp = 4;//padding
 var boxm = 12;//margin
-var _x = (display_get_gui_width()/2) - boxw*2 - round(boxp*1.5);
+var _x = (display_get_gui_width()/2) - ( ( (boxes * boxw) + ((boxes-1)* boxm) ) /2 );
 var _y = 0 + boxm;
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+var spr;
 for(var i=0; i&lt;boxes; i++){
-    draw_panel(spr_background,0,_x,_y,boxw,boxw,16);   
-    if( !is_undefined(global.hotbar[i,2]) ){
-        draw_sprite_ext(global.hotbar[i,2],0,_x+boxp,_y+boxp,2,2,0,c_white,1);
+    draw_panel(spr_background,0,_x,_y,boxw,boxw,16);
+    spr = global.hotbar[i,2];   
+    if( spr!=noone ){
+        draw_sprite_ext(spr,0,_x+boxp + sprite_get_width(spr)/2,_y+boxp + sprite_get_height(spr)/2,2,2,0,c_white,1);
     }
     draw_text(_x,_y,string(global.hotbar[i,1]));  
     _x+=boxm+boxw;
