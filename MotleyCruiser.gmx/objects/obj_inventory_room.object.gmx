@@ -333,18 +333,29 @@ for (i=0; i&lt;slot_height; i+=1)
                if( point_in_rectangle(guix, guiy, _xb, (_y - (spr_height/2) ) + ((spr_height+slot_gap)*i), _xb + spr_width, (_y + (spr_height/2)) + ((spr_height+slot_gap)*i)) ){
                   if mouse_check_button_pressed(mb_left){
                     
+                  
 
                     
                     if(cws_item != noone)
                     {
                         // We have selected an item from crewmember inventory. PUT IT HERE
-                        var previous = scr_inventory_swap(index,cws_item)
+                        var previous = scr_inventory_swap(index,cws_item);
                         
                         var pcrew = global.crew[cws_index];
                         var pcrew_i = pcrew[NPC_EQUIPMENT];
                         pcrew_i[@ cws_slot] = previous;
                         
                         event_user(0);// Reset status
+                    }
+                    else if( pls_item!=noone )
+                    {
+                        // We have selected an item from a player slot
+                        var previous = scr_inventory_swap(index,pls_item) ;
+                                         
+                        global.equipped[pls_slot] = previous;
+                        
+                        event_user(0);// Reset status
+                    
                     }else{
                         global.ItemLastSelect = global.ItemSelected;
                     }
