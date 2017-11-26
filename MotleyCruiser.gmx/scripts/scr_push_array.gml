@@ -5,5 +5,3 @@ var new_value = argument1;
 my_array[array_length_1d( argument0 )] = new_value;
 
 return my_array;
-
-

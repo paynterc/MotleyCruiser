@@ -1,4 +1,4 @@
-/// Remove a value from array
+/// Remove a value from array. Shortens the array
 // scr_array_remove(array,value)
 var thearray = argument0;
 var thevalue = argument1;

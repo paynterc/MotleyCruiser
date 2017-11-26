@@ -36,12 +36,44 @@ if(ini_section_exists(game)){
     ds_list_read(read_list,str);
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
+    /***
+    global.crew = noone;
+    global.crew = scr_push_array( global.crew, scr_gx_make_npc(0,0) );
+    global.crew = scr_push_array(global.crew,scr_gx_make_npc(0,0));
+    global.crew = scr_push_array(global.crew,scr_gx_make_npc(0,0));
+    ***/
+    if(!is_array(global.crew))
+    {
+        global.crew = noone;
+
+    }
+
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "team", "");
+    ds_list_read(read_list,str);
+    global.team = read_list[| 0];
+    ds_list_destroy(read_list);
+    if(!is_array(global.team))
+    {
+        global.team = scr_array_size(3);
+    }
     
     read_list = ds_list_create();
     var str = ini_read_string(game, "equipped", "");
     ds_list_read(read_list,str);
     global.equipped = read_list[| 0];
     ds_list_destroy(read_list);
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "hotbar", "");
+    ds_list_read(read_list,str);
+    global.hotbar = read_list[| 0];
+    ds_list_destroy(read_list);
+    if(!is_array(global.hotbar))
+    {
+        scr_hotbar_init();
+
+    }
         
     /***
     read_list = ds_list_create();
@@ -70,10 +102,12 @@ if(ini_section_exists(game)){
     scr_load_player_sprite();
     
     // Equipment - created map in obj_game_control
+    /***
     global.equipped = noone;
     global.equipped[2]=noone;
     global.equipped[1]=noone;
     global.equipped[0]=51;
+    ***/
       
     //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
     //random_set_seed(global.galaxy_seed);

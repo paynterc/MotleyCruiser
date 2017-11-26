@@ -13,12 +13,15 @@ global.player_ship = scr_modules_to_ship_data(global.player_ship);
 global.new_ship=true;
 
 inventory_clear();
-scr_inv_item_add(55,1);//sword
+//scr_inv_item_add(55,1);//sword
 
 // Player Equipment
 global.equipped = noone;
 global.equipped[2]=noone;
 global.equipped[1]=noone;
 global.equipped[0]=51;
+
+global.crew = noone;
+global.crew = scr_push_array( global.crew, scr_npc_oldsalt() );
 
 scr_ev_game_loaded();

@@ -553,7 +553,7 @@ item_add(51,3,true) //Does have effect?
 item_add(51,4,"scr_equip_weapon,51")  //If yes, put script here on string, if not, just put ""
 item_add(51,5,"Your basic space gun") //Description
 item_add(51,6,obj_blaster1) //Object to equip
-item_add(51,10,4) //Icon scale
+item_add(51,10,4) //Icon scale for inventory screen
 
 
 idx=52;
@@ -591,7 +591,7 @@ item_add(55,3,true) //Does have effect?
 item_add(55,4,"scr_equip_weapon,55")  //If yes, put script here on string, if not, just put ""
 item_add(55,5,"A mysterious weapon of unknown origin.") //Description
 item_add(55,6,obj_warp_sword) //Object to equip
-item_add(idx,10,4)
+item_add(idx,10,2)
 
 idx=56;
 item_add(56,0,"Heavy Blaster Type 1") //Title

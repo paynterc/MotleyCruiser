@@ -1,8 +1,9 @@
+/// scr_smart_heal()
 /***
 Select the most appropriate healpack. Use whatever we have if there are no other
 options.
 ***/
-//scr_smart_heal()
+
 if(!instance_exists(obj_player)) return false;
 
 var heal_player = obj_player.hp_current<obj_player.hp;

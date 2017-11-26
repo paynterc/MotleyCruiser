@@ -82,9 +82,9 @@ if(fly_conditionals!=noone){
         fly_conditionals[1]=0;
         sent=noone;
     }
-    if(fly_conditionals[10]==1){
+    if(fly_conditionals[9]==1){
         //Reserved for generic messages and error messages.
-        fly_conditionals[10]=0;
+        fly_conditionals[9]=0;
         sent=noone;
     }      
 }

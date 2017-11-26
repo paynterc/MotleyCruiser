@@ -5,7 +5,7 @@ Update inventory count of each hotbar item
 var type = argument0;
 var increment = argument1;
 
-if(global.hotbar=noone){
+if(!is_array(global.hotbar)){
     scr_hotbar_init();
 }
 
@@ -21,7 +21,7 @@ for(var i=0; i<array_height_2d(global.hotbar);i++){
     
     if(global.hotbar[i,0]==type){
         var amt = global.hotbar[i,1] + increment;       
-        global.hotbar[i,1] = clamp(amt, 1, global.hotbar[i,3]);
+        global.hotbar[i,1] = clamp(amt, 0, global.hotbar[i,3]);
     }
 
 }

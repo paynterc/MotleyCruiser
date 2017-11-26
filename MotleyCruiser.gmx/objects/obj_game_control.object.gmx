@@ -104,7 +104,8 @@ global.fleet = noone;
 
 // PLAYER CREW: An array of arrays for crew. Maybe a dsmap or dslist.
 global.crew = noone;
-    
+global.team = scr_array_size(3);
+
 // PLAYER MISSIONS: An array of ds_maps for missions
 global.mission_id = 1000; //A number to start mission ids with. Increment this with each mission granted.
 global.missions = noone;
@@ -438,7 +439,7 @@ if(scr_user_input("menu_close")){
 }
 
 if(scr_user_input("inventory_room")){
-    room_goto(rm_inventory);
+    room_goto(rm_galley);
     exit;
 }
 
