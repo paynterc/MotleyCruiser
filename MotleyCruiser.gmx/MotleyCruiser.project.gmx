@@ -623,17 +623,17 @@
       </scripts>
     </scripts>
     <scripts name="_game_control">
-      <script>scripts\scr_load_game_menu.gml</script>
       <script>scripts\scr_new_game.gml</script>
-      <script>scripts\scr_pause_menu.gml</script>
-      <script>scripts\scr_main_menu.gml</script>
+      <script>scripts\scr_new_game_defaults.gml</script>
       <script>scripts\scr_game_save.gml</script>
       <script>scripts\scr_game_load.gml</script>
       <script>scripts\scr_game_delete.gml</script>
       <script>scripts\scr_get_saved_games.gml</script>
-      <script>scripts\scr_new_game_defaults.gml</script>
       <script>scripts\scr_screen_shake.gml</script>
       <script>scripts\scr_set_gui_vars.gml</script>
+      <script>scripts\scr_load_game_menu.gml</script>
+      <script>scripts\scr_pause_menu.gml</script>
+      <script>scripts\scr_main_menu.gml</script>
     </scripts>
     <scripts name="_gui">
       <scripts name="_gui_package">
@@ -1095,6 +1095,10 @@
       <script>scripts\scr_draw_plant.gml</script>
       <script>scripts\scr_make_plant.gml</script>
     </scripts>
+    <scripts name="_tutorial">
+      <script>scripts\scr_save_tutorial.gml</script>
+      <script>scripts\scr_tutorial_init.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1346,6 +1350,7 @@
     <object>objects\obj_impact</object>
     <objects name="_galley">
       <object>objects\obj_ship_galley</object>
+      <object>objects\obj_dialog_galley</object>
       <object>objects\obj_gal_button_inv</object>
       <object>objects\obj_gal_button_launch</object>
     </objects>

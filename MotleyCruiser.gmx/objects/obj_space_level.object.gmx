@@ -393,6 +393,34 @@ alarm[1] = room_speed * asteroid_rate;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Tutorial
+if(!global.tutorial[3]){
+    global.tutorial[3]=true;
+    txt = "Press R to activate radar. But be careful, the longer you have radar active, the easier it is for enemies to find you.";
+    scr_flywriter(txt,spr_old_salt,true,"0,OK");
+
+    scr_save_tutorial();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="0">
       <action>

@@ -81,16 +81,16 @@ if( scr_window_open() ){
             return mouse_check_button_released(mb_right) || gamepad_button_check_released(global.pad, gp_shoulderr);
             break;
         case "thrust":
-            return keyboard_check(vk_up) || gamepad_axis_value(global.pad, gp_axislv) < 0;
+            return keyboard_check(ord("W")) || gamepad_axis_value(global.pad, gp_axislv) < 0;
             break;
         case "turn_left":
-            return keyboard_check(vk_left) || gamepad_axis_value(global.pad, gp_axislh)< 0;
+            return keyboard_check(ord("A")) || gamepad_axis_value(global.pad, gp_axislh)< 0;
             break;
         case "turn_right":
-            return keyboard_check(vk_right)|| gamepad_axis_value(global.pad, gp_axislh)> 0;
+            return keyboard_check(ord("D"))|| gamepad_axis_value(global.pad, gp_axislh)> 0;
             break;
         case "thrust_reverse":
-            return keyboard_check(vk_down) || gamepad_axis_value(global.pad, gp_axislv) > 0;
+            return keyboard_check(ord("S")) || gamepad_axis_value(global.pad, gp_axislv) > 0;
             break;                          
         case "dock":
             return keyboard_check_pressed(ord("D"))

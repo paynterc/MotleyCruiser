@@ -15,6 +15,7 @@ scr_write_array(global.missions,game,"missions",SAVE_GAME_FILE);
 scr_write_array(global.crew,game,"crew",SAVE_GAME_FILE);
 scr_write_array(global.team,game,"team",SAVE_GAME_FILE);
 scr_write_array(global.hotbar,game,"hotbar",SAVE_GAME_FILE);
+scr_write_array(global.tutorial,game,"tutorial",SAVE_GAME_FILE);
 
 ini_open(SAVE_GAME_FILE);
 ini_write_real(game,"sector_x",global.sector_x);

@@ -24,4 +24,8 @@ global.equipped[0]=51;
 global.crew = noone;
 global.crew = scr_push_array( global.crew, scr_npc_oldsalt() );
 
+// Tutorial
+scr_tutorial_init();
+
 scr_ev_game_loaded();
+
