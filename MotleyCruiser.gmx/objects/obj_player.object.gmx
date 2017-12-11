@@ -154,8 +154,8 @@ if( gamepad_is_connected(0) ){
     hspd = gamepad_axis_value(0, gp_axislh) * spd;
     vspd = gamepad_axis_value(0, gp_axislv) * spd;
 }else{
-    hspd = (keyboard_check(vk_right) - keyboard_check(vk_left)) * spd;
-    vspd = (keyboard_check(vk_down) - keyboard_check(vk_up)) * spd;
+    hspd = (scr_user_input("turn_right") - scr_user_input("turn_left")) * spd;
+    vspd = (scr_user_input("thrust_reverse") - scr_user_input("thrust")) * spd;
 }
 
 

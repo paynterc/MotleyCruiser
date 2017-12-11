@@ -243,7 +243,8 @@ var boxes = array_height_2d(global.hotbar);
 var boxw = 40;//box width
 var boxp = 4;//padding
 var boxm = 12;//margin
-var _x = (display_get_gui_width()/2) - ( ( (boxes * boxw) + ((boxes-1)* boxm) ) /2 );
+
+var _x = (global.gui_width/2) - ( ( (boxes * boxw) + ((boxes-1)* boxm) ) /2 );
 var _y = 0 + boxm;
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);

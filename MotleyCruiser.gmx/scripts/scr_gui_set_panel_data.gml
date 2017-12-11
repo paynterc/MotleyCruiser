@@ -7,8 +7,8 @@ var pheight = argument2;
 var buttons = argument3;
 var padding = argument4;
 
-var top_x = ( display_get_gui_width() / 2 ) - (pwidth/2);
-var top_y = ( display_get_gui_height() / 2 ) - (pheight/2);
+var top_x = ( global.gui_width / 2 ) - (pwidth/2);
+var top_y = ( global.gui_height / 2 ) - (pheight/2);
 data[0] = top_x;
 data[1] = top_y;
 data[2] = pwidth; //width
@@ -37,7 +37,7 @@ if(buttons!=noone){
         bn=scr_gui_entity_button();//formatted button
         if(bs[BTN_X]==noone){
             // Center the button
-            bn[BTN_X] = ( display_get_gui_width() / 2 ) - (bs[BTN_W]/2);//topx
+            bn[BTN_X] = ( global.gui_width / 2 ) - (bs[BTN_W]/2);//topx
         }else{
             bn[BTN_X] = top_x + padding + bs[BTN_X];//topx
         }      

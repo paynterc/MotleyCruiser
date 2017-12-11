@@ -1,5 +1,6 @@
 /// scr_tutorial_init()
 /***
+0. tutorial complete?
 1. inventory
 2. launch button
 3. radar

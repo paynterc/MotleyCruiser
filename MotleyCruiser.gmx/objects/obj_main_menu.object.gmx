@@ -210,8 +210,8 @@ if(panel_load_game[4]){
           <argument>
             <kind>1</kind>
             <string>/// Draw the panel
-scr_gui_draw_panel(panel_main_menu);
-var pcenter = ( display_get_gui_width() / 2 ); //x
+scr_gui_draw_panel(panel_main_menu,1);
+var pcenter = ( global.gui_width / 2 ); //x
 var pheight = panel_main_menu[1] + (panel_main_menu[3]/3); //y
 draw_sprite(spr_main_title,0,pcenter,pheight);
 

@@ -105,8 +105,8 @@ tx=10;//top of rectangle
 ty=10;
 padding = 5;
 margin = 10;
-boxwidth = display_get_gui_width() - (margin * 2);
-boxheight = display_get_gui_height() - (margin * 2);
+boxwidth = global.gui_width - (margin * 2);
+boxheight = global.gui_height - (margin * 2);
 
 
 

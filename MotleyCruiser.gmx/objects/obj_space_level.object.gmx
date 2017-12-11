@@ -119,7 +119,7 @@ scr_populate_sector();
           <argument>
             <kind>1</kind>
             <string>/// Initiate GUI vars
-texture_set_interpolation(true);
+texture_set_interpolation(false);
 asteroid_rate = 3;
 ship_spawn_rate = 20;
 
@@ -473,6 +473,31 @@ draw_text(view_xview[0]+10, view_yview[0]+( ls * 9), "EEnergy: "+string(obj_enem
 draw_text(view_xview[0]+10, view_yview[0]+( ls * 10), "NPC Count: "+string(instance_number(obj_npc_ship)));
 draw_text(view_xview[0]+10, view_yview[0]+( ls * 11), "Sector: "+string(global.current_sector_row) + "," + string(global.current_sector_col));
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="10" enumb="89">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>txt = "Press R to activate radar. But be careful, the longer you have radar active, the easier it is for enemies to find you.";
+scr_flybark(txt,spr_old_salt,5);
 
 </string>
           </argument>

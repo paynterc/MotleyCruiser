@@ -30,6 +30,7 @@ show = false;
 clickable = false;
 depth = -1000000;
 
+// These defaults are reset in event user 0
 raw_text="";
 text = "";
 font = fnt_menus;
@@ -43,8 +44,8 @@ padding = 10;
 margin = 10;
 boxwidth = 640;
 boxheight = 480;
-tx=( display_get_gui_width() / 2 ) - (boxwidth/2);//top of rectangle
-ty=( display_get_gui_height() / 2 ) - (boxheight/2);
+tx=( global.gui_width / 2 ) - (boxwidth/2);//top of rectangle
+ty=( global.gui_height / 2 ) - (boxheight/2);
 script = noone;
 
 scroll=0;
@@ -138,8 +139,8 @@ if (keyboard_check_pressed(vk_anykey) == true)
 var can_click = clickable &amp;&amp; (scr_gui_get_context()=="message");
 
 if(can_click){
-    if( gamepad_is_connected(global.pad) ){
-    
+
+
         if( scr_user_input('menu_op_select') ){
             event_user(1);
         }
@@ -148,9 +149,6 @@ if(can_click){
             event_user(1);
         }
         
-        
-    }else{
-    
         var bx = tx + (boxwidth/2)-75;
         var by = ty + boxheight - 75;    
         var guix = device_mouse_x_to_gui(0);
@@ -159,7 +157,7 @@ if(can_click){
         xhover = ( guix == median(bx, guix, bx + 150) );
         yhover = ( guiy == median(by, guiy, by + 50) );
     
-    }   
+
 }else{
     xhover=false;
     yhover=false;
@@ -302,8 +300,8 @@ global.paused = true;
 // Reset defaults
 alltext=noone;
 scroll = 0;
-tx=( display_get_gui_width() / 2 ) - (boxwidth/2);//top of rectangle
-ty=( display_get_gui_height() / 2 ) - (boxheight/2);
+tx=( global.gui_width / 2 ) - (boxwidth/2);//top of rectangle
+ty=( global.gui_height / 2 ) - (boxheight/2);
 maxlength= boxwidth - (padding*2);
 maxheight= boxheight - (padding*5);
 maxlines = round(maxheight/(font_size + font_size/2)); 

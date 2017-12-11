@@ -136,16 +136,18 @@ if(sent != noone &amp;&amp; sent.name != noone){
 
 
     if(sent.npc_data[NPC_NAME]=="Old Salt"){
-        if(!scr_get_array_1d(global.tutorial,0)){
+        if(scr_tutorial_dostep(1)){
+        
+            scr_tutorial_completestep(1);
             txt = "Enter the inventory room to manage your team and equipment.";
             scr_flywriter(txt,spr_old_salt,true,"0,OK");
-            global.tutorial[0]=true;
-            scr_save_tutorial();
-        }else if(!scr_get_array_1d(global.tutorial,1)){
+
+        }else if(scr_tutorial_dostep(2)){
+        
+            scr_tutorial_completestep(2);
             txt = "Hit the launch button to enter space and fly your ship.";
             scr_flywriter(txt,spr_old_salt,true,"0,OK");
-            global.tutorial[1]=true;
-            scr_save_tutorial();
+
         }else{
             txt = "I don't have anything else to tell you right now.";    
             scr_flywriter(txt,sent.sprite_index,true,"0,OK"); 

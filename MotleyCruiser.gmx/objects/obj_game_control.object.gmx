@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-
+scr_set_gui_vars();
 
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
@@ -246,29 +246,6 @@ if gamepad_is_connected(global.pad){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set GUI size
-//scr_resize_gui();
-scr_set_gui_vars()
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Particle System
 
 global.Particles = part_system_create();
@@ -381,7 +358,6 @@ if(panel_pause[4]){
     display_set_gui_size(window_get_width(), window_get_height());
            if(instance_exists(obj_main_menu)){
             with(obj_main_menu){
-
                 scr_main_menu();
                 scr_load_game_menu();//panel_load_game
                 panel_main_menu[4]  = true;//Show menu
@@ -426,16 +402,14 @@ if(scr_user_input("pause")){
         
     }
 
-}
-
-if(scr_user_input("menu_close")){
+}else if(scr_user_input("menu_close")){
     panel_load_game[4]=false;
     
     if(panel_pause[4]){
         panel_pause[4] = false;
         global.paused = false;
     }
-    exit;
+
 }
 
 if(scr_user_input("inventory_room")){
@@ -464,10 +438,10 @@ if(scr_user_input("goto_shiplevel")){
 }
 
 if(scr_user_input("fullscreen")){
-    if (!window_get_fullscreen()){
+    if (!window_get_fullscreen()){        
         window_set_fullscreen(true);
-
-        scr_resize_gui();   
+        display_set_gui_maximise(round(display_get_width()/global.gui_width),round(display_get_height()/global.gui_height),0,0);
+        //scr_resize_gui();
         scr_pause_menu();
         if(instance_exists(obj_main_menu)){
             with(obj_main_menu){
@@ -476,14 +450,13 @@ if(scr_user_input("fullscreen")){
                 panel_main_menu[4]  = true;//Show menu
             }
         }
-
     }else{
-       window_set_fullscreen(false);      
-       scr_resize_gui();       
+       window_set_fullscreen(false); 
+       display_set_gui_size(global.gui_width, global.gui_height);  
+       //scr_resize_gui();       
        scr_pause_menu();
        if(instance_exists(obj_main_menu)){
             with(obj_main_menu){
-
                 scr_main_menu();
                 scr_load_game_menu();//panel_load_game
                 panel_main_menu[4]  = true;//Show menu
@@ -718,7 +691,20 @@ if(!instance_exists(obj_sound_control)){
     }
 
     draw_set_valign(fa_left);
-    draw_text(48, 32, "FPS Real: " + string(fps_real));
+    draw_text(96, 32, "FPS Real: " + string(fps_real));
+    
+    draw_text(96, 64, "D WIDTH: " + string(display_get_width()));
+    draw_text(96, 96, "D height: " + string(display_get_height()));
+    
+    draw_text(96, 128, "G WIDTH: " + string(display_get_gui_width()));
+    draw_text(96, 160, "G height: " + string(display_get_gui_height()));
+    
+    draw_text(96, 192, "W WIDTH: " + string(window_get_width()));
+    draw_text(96, 224, "W height: " + string(window_get_height()));
+    
+    draw_text(96, 256, "GB WIDTH: " + string(global.gui_width));
+    draw_text(96, 288, "GB height: " + string(global.gui_height));
+
     
     if(instance_exists(obj_planet_surface)){
             draw_text(48, 64, "Room index x: " + string(global.planet_room_index_x) );

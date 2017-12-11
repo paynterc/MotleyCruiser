@@ -454,7 +454,7 @@ if(instance_number(obj_enemy)&lt;1){
             <kind>1</kind>
             <string>/// Deck Clear message
 if(level_complete){
-    var xx = display_get_gui_width() / 2; var yy = display_get_gui_height() / 2;
+    var xx = global.gui_width / 2; var yy = global.gui_height / 2;
     draw_set_color(c_lime);
     draw_set_halign(fa_center);
     draw_text(xx, yy, "DECK CLEAR");

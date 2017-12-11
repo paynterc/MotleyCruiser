@@ -53,10 +53,10 @@ if( scr_window_open() ){
             break;
                            
         case "menu_op_select":
-            return gamepad_button_check_pressed(global.pad, gp_face1)
+            return gamepad_button_check_pressed(global.pad, gp_face1) || keyboard_check_pressed(ord("E")) || keyboard_check_pressed(vk_enter)
             break;
         case "menu_close":
-            return gamepad_button_check_pressed(global.pad, gp_face2) 
+            return gamepad_button_check_pressed(global.pad, gp_face2) || keyboard_check_pressed(vk_escape)
             break;          
         case "inventory_page_left":
             if( gamepad_is_connected(global.pad) ){

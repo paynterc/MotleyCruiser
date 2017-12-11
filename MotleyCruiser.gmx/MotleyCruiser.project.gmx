@@ -198,6 +198,7 @@
         <sprite>sprites\spr_command_16_1</sprite>
         <sprite>sprites\spr_command_16_2</sprite>
         <sprite>sprites\spr_command_16_3</sprite>
+        <sprite>sprites\spr_command_256</sprite>
         <sprite>sprites\spr_command_16_4</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
         <sprite>sprites\spr_generator_16_16_1</sprite>
@@ -550,6 +551,7 @@
       </scripts>
       <scripts name="_flywriter">
         <script>scripts\scr_flywriter.gml</script>
+        <script>scripts\scr_flybark.gml</script>
         <script>scripts\scr_typewriter.gml</script>
         <script>scripts\scr_stringtowords.gml</script>
       </scripts>
@@ -1098,6 +1100,8 @@
     <scripts name="_tutorial">
       <script>scripts\scr_save_tutorial.gml</script>
       <script>scripts\scr_tutorial_init.gml</script>
+      <script>scripts\scr_tutorial_dostep.gml</script>
+      <script>scripts\scr_tutorial_completestep.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -1153,6 +1157,7 @@
   <fonts name="fonts">
     <font>fonts\fnt</font>
     <font>fonts\fnt_messagebox</font>
+    <font>fonts\fnt_messagebox_lg</font>
     <font>fonts\glr_font_debug</font>
     <font>fonts\font3</font>
     <font>fonts\fnt_menus</font>
@@ -1166,6 +1171,7 @@
     </fonts>
     <font>fonts\font11</font>
     <font>fonts\font12</font>
+    <font>fonts\font14</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
@@ -1343,17 +1349,17 @@
       <object>objects\obj_intro_child2</object>
       <object>objects\obj_button_introskip</object>
     </objects>
-    <object>objects\obj_laserbolt</object>
-    <object>objects\obj_explosion_OLD</object>
-    <object>objects\obj_flash_timer</object>
-    <object>objects\obj_explosion</object>
-    <object>objects\obj_impact</object>
     <objects name="_galley">
       <object>objects\obj_ship_galley</object>
       <object>objects\obj_dialog_galley</object>
       <object>objects\obj_gal_button_inv</object>
       <object>objects\obj_gal_button_launch</object>
     </objects>
+    <object>objects\obj_laserbolt</object>
+    <object>objects\obj_explosion_OLD</object>
+    <object>objects\obj_flash_timer</object>
+    <object>objects\obj_explosion</object>
+    <object>objects\obj_impact</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -1392,7 +1398,7 @@
     <constant name="BUG_WING_COLOR2">6</constant>
     <constant name="BUG_WING_COUNT">7</constant>
     <constant name="BUG_WING_SHAPE">4</constant>
-    <constant name="BULLET_BASE_SPEED">15</constant>
+    <constant name="BULLET_BASE_SPEED">25</constant>
     <constant name="CC_AGRICULTURE">0</constant>
     <constant name="CC_INDUSTRIAL">2</constant>
     <constant name="CC_MINING">1</constant>

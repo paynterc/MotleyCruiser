@@ -1,6 +1,16 @@
 /// Show or hide a panel. Draw the panel and all of its text and buttons
-//scr_draw_panel(p)
-var p = argument0;
+//scr_draw_panel(panel_data)
+
+var args = noone;
+for (var i=0; i<16; i++)
+{
+    if (i < argument_count)
+        args[i] = argument[i];
+    else
+        args[i] = noone;
+}
+var p = args[0];
+var hide_background = args[1];
 if(p!=noone && p[4]){
     var thefont = fnt_menus;
     var font_size = font_get_size(thefont);    
@@ -8,8 +18,9 @@ if(p!=noone && p[4]){
     draw_set_color(c_lime);
     draw_set_valign(fa_center);
     draw_set_halign(fa_center);
-    draw_panel(spr_background,0,p[0],p[1],p[2],p[3],32);
-    
+    if(!hide_background){
+        draw_panel(spr_background,0,p[0],p[1],p[2],p[3],32);
+    }
     // Cancel button
     /***
     var cb = p[6];
@@ -30,7 +41,10 @@ if(p!=noone && p[4]){
         for(var i = 0; i<array_length_1d(btns); i++){
             var b = btns[i];
             if(b[BTN_SHOW]){
+                
                 draw_panel(spr_background,0,b[0],b[1],b[2],b[3],16);
+                
+                
                 if(b[4]){
                     draw_set_color(c_white);
                 }

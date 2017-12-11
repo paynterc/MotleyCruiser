@@ -151,7 +151,7 @@ if(scr_user_input("interact") &amp;&amp; hacking==0){
           <argument>
             <kind>1</kind>
             <string>if(hacking == 1){
-    var xx = display_get_gui_width() / 2; var yy = display_get_gui_height() / 2;
+    var xx = global.gui_width / 2; var yy = global.gui_height / 2;
     
     draw_healthbar(xx-64,yy-24,xx+64,yy-16, (hackremaining/hacktime) * 100,c_black,c_aqua,c_aqua,0,false,false);    
     draw_set_color(c_lime);

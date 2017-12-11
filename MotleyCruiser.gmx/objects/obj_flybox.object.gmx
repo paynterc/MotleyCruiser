@@ -29,19 +29,19 @@
 
 // These can be overwritten
 text = "";
-font = fnt_messagebox; 
-boxx1 = x;
-boxy1 = y;
+font = fnt_messagebox;
 boxw = room_width;
 boxh = 200;
-spd = .90;
-pad_l=16;
+boxx1 = x;
+boxy1 = y;
+pad_l = 16;
 pad_r=16;
 pad_t=16;
 pad_b=16;
 drawbox = true;
 yoffset_max = room_height - boxy1;/// Max offset from bottom
-popspeed = 400;
+popspeed = 1000;
+spd = 3;
 
 
 // These dependant variables will be updated in the parsing step
@@ -59,7 +59,7 @@ yoffset = 0;// decrease yoffset when moving
 
 
 // State variables. Leave as-is.
-state = "init";//parsing,moving,printing,displaying_options,waiting_for_option,option_selected,sending_option
+state = "init";//init,parsing,moving,printing,displaying_options,waiting_for_option,option_selected,sending_option
 time = 0;// increment this by print speed setting
 depth = -100000;
 destroy=false;
@@ -88,6 +88,30 @@ option_selected = false;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Destroy on timer
+destroy = true;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -106,8 +130,6 @@ option_selected = false;
           <argument>
             <kind>1</kind>
             <string>/// States
-
-
 if(destroy){
     if(instance_exists(obj_flyoption)){
         with(obj_flyoption){
@@ -116,7 +138,11 @@ if(destroy){
     }
     instance_destroy();
 }
-if(state="parsing")
+if(state=="init")
+{
+    // Do nothing. Waiting for go.
+}
+else if(state="parsing")
 {
     if(portrait){
         pwidth = round(boxw/6);
@@ -153,13 +179,11 @@ else if(state == "moving")
     if(desty!=noone){
         var ydist = yoffset_max - yoffset;
         var mv = popspeed/room_speed;
-        var test2 = 1;
         if( yoffset &lt;= mv ){
             yoffset = 0;
             state="printing";
         }else{
             yoffset -= mv;
-            var test = 1;
         }       
         
     }else{
@@ -208,6 +232,30 @@ else if(state == "displaying_options")
     destroy=true;
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Execute. Sets everything in motion. Call this once you have set all variables.
+state="parsing";
 </string>
           </argument>
         </arguments>
