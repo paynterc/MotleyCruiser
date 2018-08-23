@@ -14,6 +14,12 @@ if(is_undefined(sector_seed)){
     random_set_seed(sector_seed);
 }
 
+// ECONOMY. Just a count of each type of economy in the sector:
+// agriculture, mining, industrial, tech
+global.sector_economy = noone;
+global.sector_economy = scr_array(0,0,0,0);// Set all counts to zero.
+
+
 var curdepth = 1000;
 
 // Add suns
@@ -63,6 +69,7 @@ for(var i=0; i<c; i++){
         var tname = planet[LOC_NAME];
         name = tname[0];
     }
+    global.sector_economy[planet[LOC_ECONOMY]] += 1;
     gxindex++;
 }
 
@@ -88,6 +95,7 @@ for(var i=0; i<c; i++){
         var tname = moon[LOC_NAME];
         name = tname[0];
     }
+    global.sector_economy[moon[LOC_ECONOMY]] += 1;
     gxindex++;
 }
 
@@ -111,6 +119,7 @@ for(var i=0; i<c; i++){
         var tname = station[LOC_NAME];
         name = tname[0];
     }
+    global.sector_economy[station[LOC_ECONOMY]] += 1;
     gxindex++;
 }
 

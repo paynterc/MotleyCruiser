@@ -7,6 +7,7 @@ randomize();
 global.galaxy_seed = random_get_seed();// Call randomize before this
 global.sector_x=0;
 global.sector_y=0;
+global.sector_economy=noone;
 
 global.player_ship = global.ship_library[10];
 global.player_ship = scr_modules_to_ship_data(global.player_ship);

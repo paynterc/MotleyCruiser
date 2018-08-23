@@ -1185,6 +1185,7 @@
       <object>objects\obj_dialog_control_OLD</object>
       <objects name="_flywriter">
         <object>objects\obj_flybox</object>
+        <object>objects\obj_flybox_gui</object>
         <object>objects\obj_flyoption</object>
         <object>objects\obj_flytest</object>
       </objects>

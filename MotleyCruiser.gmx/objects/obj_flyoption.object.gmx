@@ -25,7 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = -100000;
+            <string>/// Init
+drawgui = true;
+
+depth = -100000;
 index = 0;
 destroy = false;
 str = "";
@@ -63,15 +66,63 @@ if(instance_exists(obj_flybox)){
             <kind>1</kind>
             <string>/// Destroy or check mouse
 if destroy {instance_destroy();}
-if mouse_check_button_pressed(mb_left) &amp;&amp; position_meeting(mouse_x,mouse_y,id)
-{
-    if(option_index!=noone){
-        option_target.fly_conditionals[option_index] = index;
+
+if(drawgui){
+    if mouse_check_button_pressed(mb_left) &amp;&amp; position_meeting(device_mouse_x_to_gui(0),device_mouse_y_to_gui(0),id)
+    {
+        if(option_index!=noone){
+            option_target.fly_conditionals[option_index] = index;
+        }
+        if instance_exists(obj_flybox) {obj_flybox.state = "option_selected";}
     }
-    if instance_exists(obj_flybox) {obj_flybox.state = "option_selected";}
+}else{
+    if mouse_check_button_pressed(mb_left) &amp;&amp; position_meeting(mouse_x,mouse_y,id)
+    {
+        if(option_index!=noone){
+            option_target.fly_conditionals[option_index] = index;
+        }
+        if instance_exists(obj_flybox) {obj_flybox.state = "option_selected";}
+    }
 }
 
 
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!drawgui) exit;
+if(instance_exists(obj_flybox)){
+    x = obj_flybox.boxx1 + int_xoffset;
+    y  = obj_flybox.boxy2 - int_yoffset;
+}
+
+draw_self();
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(myfont);
+draw_set_color(c_white);
+
+draw_text(x+sprite_width/2,y+sprite_height/2,str);
 </string>
           </argument>
         </arguments>
@@ -94,7 +145,8 @@ if mouse_check_button_pressed(mb_left) &amp;&amp; position_meeting(mouse_x,mouse
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(instance_exists(obj_flybox)){
+            <string>if(drawgui) exit;
+if(instance_exists(obj_flybox)){
     x = obj_flybox.boxx1 + int_xoffset;
     y  = obj_flybox.boxy2 - int_yoffset;
 }

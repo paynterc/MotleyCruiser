@@ -464,7 +464,8 @@ O = 0;// local economy offset modifier
 os = 0;/// offset point
 
 if(global.landed_on!=noone &amp;&amp; global.landed_type!=noone){
-    loc=scr_location_translate(global.landed_type,global.landed_on);
+    //loc=scr_location_translate(global.landed_type,global.landed_on);
+    loc = global.landed_on;
     switch (loc[LOC_ECONOMY]){
         case 0:
             economy_text="Agricultural";
@@ -488,7 +489,8 @@ if(loc!=noone){
     O=loc[LOC_ECON_OFFSET];   
 }
 
-sector_economy = scr_trade_sector_economy(true);
+//sector_economy = scr_trade_sector_economy(true);
+sector_economy = global.sector_economy; // This was populated in scr_populate_sector
 
 
 for(var i = 0; i &lt; global.item_lib_count; i++){

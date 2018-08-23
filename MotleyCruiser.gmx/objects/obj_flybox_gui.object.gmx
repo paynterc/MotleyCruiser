@@ -26,15 +26,14 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-drawgui = true;
 
-// These can be overwritten. They will be reapplied in the parsing step
+// These can be overwritten
 text = "";
 font = fnt_messagebox;
-boxw = room_width;// or view_width or gui_width
+boxw = room_width;
 boxh = 200;
-boxx1 = x;// Start x position. upper left
-boxy1 = y;// Start y position. upper left
+boxx1 = x;
+boxy1 = y;
 pad_l = 16;
 pad_r=16;
 pad_t=16;
@@ -45,7 +44,7 @@ popspeed = 1000;
 spd = 3;
 
 
-// These dependant variables will be updated in the parsing step according to the base settings above
+// These dependant variables will be updated in the parsing step
 boxx2 = boxx1 + boxw;
 boxy2 = boxy1 + boxh;
 maxlength = boxw - pad_l - pad_r;
@@ -68,7 +67,7 @@ words=noone;// An array of words to be fed to the typewriter script
 
 
 //popup
-desty=noone;// If moving the box up, this is the final y position
+desty=noone;
 
 
 // portrait
@@ -204,7 +203,6 @@ else if(state == "displaying_options")
     if(options!=noone){
         var xx=boxx1+16;
         var yy=boxy2 - (sprite_get_height(spr_flyoption)/2);
-        //var yy=boxy1;
         var op;
         for(var i=0;i&lt;array_length_1d(options);i++){
             op = instance_create(xx,yy,obj_flyoption);
@@ -263,76 +261,6 @@ state="parsing";
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Render textbox &amp; text
-if(!drawgui) exit;
-
-boxx1=0;
-boxy1= global.gui_height - (yoffset_max - yoffset);
-boxx2 = boxx1+boxw;
-boxy2 = boxy1+boxh;
-
-
-
-if(drawbox){
-    draw_set_color(c_white);
-    draw_rectangle(boxx1,boxy1,boxx2,boxy2,false);
-    
-    draw_set_color(c_dkgray);
-    draw_rectangle(boxx1,boxy1+4,boxx2,boxy2-4,false);
-}
-
-if(portrait){
-
-    draw_set_color(c_white);
-    draw_rectangle(boxx1+6, boxy1+10, boxx1+pwidth+2, boxy1+pwidth+2, false);
-    draw_set_color(c_black);
-    draw_rectangle(boxx1+8, boxy1+12, boxx1+pwidth, boxy1+pwidth, false);
-
-    
-    swidth = sprite_get_width(portrait);
-    scl = round( pwidth/swidth ) - 1;
-    draw_sprite_part_ext(portrait, 0, (swidth/2)-8, 0, 16, 16, boxx1+14, boxy1+14, scl, scl, c_white, 1);
-}
-
-
-draw_set_font(font);
-draw_set_color(c_white);
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-
-
-if(state == "printing"){
-    if( time &lt; text_length ){
-        time += spd;
-    }else{
-        state="displaying_options";
-    }
-}
-
-scr_typewriter(words, boxx1 + pad_l, boxy1 + pad_t, maxlength, floor(time));
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -351,8 +279,6 @@ scr_typewriter(words, boxx1 + pad_l, boxy1 + pad_t, maxlength, floor(time));
           <argument>
             <kind>1</kind>
             <string>/// Render textbox &amp; text
-if(drawgui) exit;
-
 if(view_visible[0]){
     boxx1=view_xview[0];
     boxy1=view_yview[0] + view_hview[0] - (yoffset_max - yoffset);

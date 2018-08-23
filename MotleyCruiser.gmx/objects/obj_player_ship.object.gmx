@@ -85,7 +85,8 @@ if(mode==MODE_LANDING){
     if(land_count&lt;1){
         
         // LAND 
-        global.landed_on = closest_landable.global_index;
+        //global.landed_on = closest_landable.global_index;
+        global.landed_on = closest_landable.data;
         global.landed_type = closest_landable.global_type;
         global.landed_name = closest_landable.name;
         global.player_x = x;
