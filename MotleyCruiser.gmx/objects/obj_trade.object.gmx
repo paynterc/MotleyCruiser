@@ -90,34 +90,27 @@ sector_economy[3]=0;//tech
 sector_economy_mod = .2;
 
 e_matrix=noone;// Economy matrix. Provides the value of products based on the current economy and the economy of origin
-e_matrix[0,0]=1.00;
-e_matrix[0,1]=1.15;
-e_matrix[0,2]=1.25;
-e_matrix[0,3]=1.50;
+e_matrix[CC_AGRICULTURE,CC_AGRICULTURE]=1.00;
+e_matrix[CC_AGRICULTURE,CC_MINING]=1.15;
+e_matrix[CC_AGRICULTURE,CC_INDUSTRIAL]=1.25;
+e_matrix[CC_AGRICULTURE,CC_TECH]=1.50;
 
-e_matrix[1,0]=1.50;
-e_matrix[1,1]=1.00;
-e_matrix[1,2]=1.15;
-e_matrix[1,3]=1.25;
+e_matrix[CC_MINING,CC_AGRICULTURE]=1.50;
+e_matrix[CC_MINING,CC_MINING]=1.00;
+e_matrix[CC_MINING,CC_INDUSTRIAL]=1.15;
+e_matrix[CC_MINING,CC_TECH]=1.25;
 
-e_matrix[2,0]=1.25;
-e_matrix[2,1]=1.50;
-e_matrix[2,2]=1.00;
-e_matrix[2,3]=1.15;
+e_matrix[CC_INDUSTRIAL,CC_AGRICULTURE]=1.25;
+e_matrix[CC_INDUSTRIAL,CC_MINING]=1.50;
+e_matrix[CC_INDUSTRIAL,CC_INDUSTRIAL]=1.00;
+e_matrix[CC_INDUSTRIAL,CC_TECH]=1.15;
 
-e_matrix[3,0]=1.15;
-e_matrix[3,1]=1.25;
-e_matrix[3,2]=1.50;
-e_matrix[3,3]=1.00;
+e_matrix[CC_TECH,CC_AGRICULTURE]=1.15;
+e_matrix[CC_TECH,CC_MINING]=1.25;
+e_matrix[CC_TECH,CC_INDUSTRIAL]=1.50;
+e_matrix[CC_TECH,CC_TECH]=1.00;
 
 
-commodities_g = noone;// Global commodities. All the commodities
-for(var i = 0; i &lt; global.item_lib_count; i++){
-    if(scr_inv_item_read(i,7)=="commodity"){
-        commodities_g=scr_push_array(commodities_g,i);
-    }
-}
-alength=array_length_1d(commodities_g); // array length. commodity items in library
 /****
 [position]itemid
 [0]1
@@ -128,9 +121,12 @@ alength=array_length_1d(commodities_g); // array length. commodity items in libr
 
 // Flip the array
 comms_flipped=noone;
+/***
 for(var n=0;n&lt;array_length_1d(commodities_g);n++){
     comms_flipped[commodities_g[n]]=n;
 }
+***/
+
 /****
 [item_id]position
 [0]null
@@ -143,7 +139,7 @@ for(var n=0;n&lt;array_length_1d(commodities_g);n++){
 ****/
 //event_user(0);// Create the trade grid
 
-
+showYoffset = 0;
 </string>
           </argument>
         </arguments>
@@ -312,7 +308,7 @@ if( gamepad_is_connected(global.pad) ){
     var guiy = device_mouse_y_to_gui(0);
 
     if(row1_y!=noone){
-        var rowh=boxw+boxm;
+        var rowh=boxw+(boxm*2);
         var yoffset=0;
         var yhover = false;
         var xh1,xh2,xh3,xh4;
@@ -320,13 +316,17 @@ if( gamepad_is_connected(global.pad) ){
         var in_hold = false;
         for(var i = scroll; i &lt; scroll + ipp &amp;&amp; i &lt; alength; i++){
             yoffset = row1_y + (rowh*(i-scroll));
-            yhover = ( guiy == median(yoffset, guiy, yoffset + rowh) );
+            yhover = ( guiy == median(yoffset + boxm, guiy, yoffset + rowh - boxm) );
+            if(yhover){
+                showYoffset = yoffset;// For testing
+                r_selected = i;
+            }
             xh1 = (guix == median(b1x, guix, b1x + b1w));
             xh2 = (guix == median(b2x, guix, b2x + b2w));
             xh3 = (guix == median(b3x, guix, b3x + b3w));
             xh4 = (guix == median(b4x, guix, b4x + b4w));
             sold_here = ds_grid_get(tradegrid,6,i);
-            in_hold = scr_inv_item_count(ds_grid_get(tradegrid,0,i));
+            in_hold = scr_cargo_item_count(ds_grid_get(tradegrid,0,i));
             
             buttons[i,0] = xh1  &amp;&amp; yhover &amp;&amp; sold_here;// buy
             buttons[i,1] = xh2  &amp;&amp; yhover &amp;&amp; sold_here;// buy all
@@ -447,6 +447,7 @@ if(show){
             <kind>1</kind>
             <string>/// Show window. Reset the list of items
 
+
 scr_gui_toggle_windows("trade");//Closes other windows and sets context to "trade"
 with(obj_inventory){
     event_user(1);// check inventory size
@@ -480,64 +481,33 @@ if(global.landed_on!=noone &amp;&amp; global.landed_type!=noone){
             economy_text="Technological";
             break;
     }
-}
-
-// local price = base_price * economy_mod * 
-if(loc!=noone){
+    
     L=loc[LOC_ECON_MOD];
     econ_id=loc[LOC_ECONOMY];
-    O=loc[LOC_ECON_OFFSET];   
+    O=loc[LOC_ECON_OFFSET]; 
 }
+
 
 //sector_economy = scr_trade_sector_economy(true);
-sector_economy = global.sector_economy; // This was populated in scr_populate_sector
+sector_economy = global.sector_economy; // This was populated in scr_populate_sector. It's an array containing the count of each economy type in the sector.
 
-
-for(var i = 0; i &lt; global.item_lib_count; i++){
-    if(scr_inv_item_read(i,7)=="commodity"){
-
-        if(scr_inv_item_count(i)&gt;0){
-            comm_in_hold = scr_push_array(comm_in_hold,i);
-        }else{
-            if(loc==noone){
-                comm_in_econ = scr_push_array(comm_in_econ,i);
-            }else{
-                if(scr_inv_item_read(i,8)==econ_id){
-                    comm_in_econ = scr_push_array(comm_in_econ,i);
-                }else{
-                    comm_out_stock = scr_push_array(comm_out_stock,i);
-                }
-            }
-        }
-           
-    }
-}
-
-var comm_econ_l = array_length_1d(comm_in_econ);
-if(loc!=noone){
-    os=round(comm_econ_l*O);// offset point
-}
-
-
-for(var i=0;i&lt;comm_econ_l;i++){
-    if( ( i &gt;= os &amp;&amp; i &lt; os + 5 ) || ( i &lt; os + 5 - comm_econ_l ) ){
-        comm_in_stock = scr_push_array(comm_in_stock,comm_in_econ[i]);
-    }else{
-        comm_out_stock = scr_push_array(comm_out_stock,comm_in_econ[i]);
-    }
-}
 
 // Set price offset modifiers for the location
 
 c_offsets = noone;
-for(var i=0;i&lt;array_length_1d(comms_flipped);i++){
-    c_offsets[i]=(comms_flipped[i]-os) * .1;
-}
 
 
 if(ds_exists(tradegrid, ds_type_grid)){
     ds_grid_destroy(tradegrid);
 }
+alength=0;
+for(n=0; n&lt; global.commodity_lib_count;n++){
+
+    if(scr_commodity_lib_read(n,5)=="default"){
+        alength++;
+    }
+}
+
 tradegrid = ds_grid_create(7, alength);
 
 var item_id;
@@ -546,94 +516,27 @@ var B;//Base price
 var cc; //commodity class
 var E;// economy modifier
 var P;//Price
-var o;// commodity offset modifier
-for(n=0; n&lt;array_length_1d(comm_in_hold);n++){
 
-    item_id = comm_in_hold[n];
-    ds_grid_set(tradegrid,0,n,item_id);// item_id
-    ds_grid_set(tradegrid,1,n,scr_inv_item_read(item_id,0));// name
-    ds_grid_set(tradegrid,2,n,scr_inv_item_read(item_id,2));// sprite
-    ds_grid_set(tradegrid,3,n,scr_inv_item_read(item_id,8));// class
-    ds_grid_set(tradegrid,4,n,scr_inv_item_count(item_id));// count in hold
+
+var test = 1;
+for(n=0; n&lt; global.commodity_lib_count;n++){
+
+    if(scr_commodity_lib_read(n,5)=="default"){
+        ds_grid_set(tradegrid,0,n,n);// item_id
+        ds_grid_set(tradegrid,1,n,scr_commodity_lib_read(n,0));// name
+        ds_grid_set(tradegrid,2,n,scr_commodity_lib_read(n,2));// sprite
+        ds_grid_set(tradegrid,3,n,scr_commodity_lib_read(n,1));// class
+        ds_grid_set(tradegrid,4,n,0);// count in hold. this gets updated in Draw GUI
+
+        P = scr_trade_calc_price(n,O,L);
+        //P = 1000;
     
-    P = scr_trade_calc_price(item_id);
-    
-    ds_grid_set(tradegrid,5,n,P);// local price
-    if(scr_inv_item_read(item_id,8)==econ_id){
+        ds_grid_set(tradegrid,5,n,P);// local price
         ds_grid_set(tradegrid,6,n,true);// sold here
-    }else{
-        ds_grid_set(tradegrid,6,n,false);// not sold here
+        //alength++;//increment the available items count
     }
-    
 }
-ds_grid_sort(tradegrid, 4, false);// sort by count in hold
-
-// Place comm_in_stock in a separate grid and sort by name
-stockgrid = ds_grid_create(7, array_length_1d(comm_in_stock));
-for(n=0; n&lt;array_length_1d(comm_in_stock);n++){
-    item_id = comm_in_stock[n];
-    ds_grid_set(stockgrid,0,n,item_id);// item_id
-    ds_grid_set(stockgrid,1,n,scr_inv_item_read(item_id,0));// name
-    ds_grid_set(stockgrid,2,n,scr_inv_item_read(item_id,2));// sprite
-    ds_grid_set(stockgrid,3,n,scr_inv_item_read(item_id,8));// class
-    ds_grid_set(stockgrid,4,n,0);// count in hold
-    
-    P = scr_trade_calc_price(item_id);
-    
-    ds_grid_set(stockgrid,5,n,P);// local price
-    ds_grid_set(stockgrid,6,n,true);// sold here
-}
-ds_grid_sort(stockgrid, 1, true);// sort by name
-
-
-// Insert the comm_in_stock values to the trade grid
-var gh = array_length_1d(comm_in_hold);
-for(n=0; n&lt;array_length_1d(comm_in_stock);n++){
-    ds_grid_set(tradegrid,0,gh+n,ds_grid_get(stockgrid,0,n));// item_id
-    ds_grid_set(tradegrid,1,gh+n,ds_grid_get(stockgrid,1,n));// name
-    ds_grid_set(tradegrid,2,gh+n,ds_grid_get(stockgrid,2,n));// sprite
-    ds_grid_set(tradegrid,3,gh+n,ds_grid_get(stockgrid,3,n));// class
-    ds_grid_set(tradegrid,4,gh+n,ds_grid_get(stockgrid,4,n));// count in hold
-    ds_grid_set(tradegrid,5,gh+n,ds_grid_get(stockgrid,5,n));// local price
-    ds_grid_set(tradegrid,6,gh+n,true);// sold here
-}
-
-// Destroy stockgrid grid
-ds_grid_destroy(stockgrid);
-
-// Place comm_out_stock in a separate grid and sort by name
-outstockgrid = ds_grid_create(7, array_length_1d(comm_out_stock));
-for(n=0; n&lt;array_length_1d(comm_out_stock);n++){
-    item_id = comm_out_stock[n];
-    ds_grid_set(outstockgrid,0,n,item_id);// item_id
-    ds_grid_set(outstockgrid,1,n,scr_inv_item_read(item_id,0));// name
-    ds_grid_set(outstockgrid,2,n,scr_inv_item_read(item_id,2));// sprite
-    ds_grid_set(outstockgrid,3,n,scr_inv_item_read(item_id,8));// class
-    ds_grid_set(outstockgrid,4,n,0);// count in hold
-    
-    P = scr_trade_calc_price(item_id);
-    
-    ds_grid_set(outstockgrid,5,n,P);// local price
-    ds_grid_set(outstockgrid,6,n,false);// not sold here
-}
-ds_grid_sort(outstockgrid, 1, true);// sort by name
-
-// Insert the comm_out_stock values to the trade grid
-var gs = array_length_1d(comm_in_stock);
-var gos = gh+gs;
-for(n=0; n&lt;array_length_1d(comm_out_stock);n++){
-    ds_grid_set(tradegrid,0,gos+n,ds_grid_get(outstockgrid,0,n));// item_id
-    ds_grid_set(tradegrid,1,gos+n,ds_grid_get(outstockgrid,1,n));// name
-    ds_grid_set(tradegrid,2,gos+n,ds_grid_get(outstockgrid,2,n));// sprite
-    ds_grid_set(tradegrid,3,gos+n,ds_grid_get(outstockgrid,3,n));// class
-    ds_grid_set(tradegrid,4,gos+n,ds_grid_get(outstockgrid,4,n));// count in hold
-    ds_grid_set(tradegrid,5,gos+n,ds_grid_get(outstockgrid,5,n));// local price
-    ds_grid_set(tradegrid,6,gos+n,false);// not sold here
-}
-
-// Destroy outstockgrid grid
-ds_grid_destroy(outstockgrid);
-
+//ds_grid_sort(tradegrid, 4, false);// sort by count in hold
 
 
 
@@ -646,7 +549,6 @@ for(var h=0; h&lt;alength; h++){
     buttons[h,3]=false;
 }
 var b=0;
-
 </string>
           </argument>
         </arguments>
@@ -719,16 +621,16 @@ if(show){
     
     draw_text(_x,_y,"CREDITS: " + string(global.credits) + "c");
     
+    if(instance_exists(obj_ship_data)){
+        draw_text(_x+300,_y,"CARGO CAPACITY: " + string(global.cargo_total) + "/" + string(obj_ship_data.cargo));
+    }
+    
     _y += boxw;
     draw_text(_x,_y,"ECONOMY: " + string(economy_text));
     
-    _x+=300;
-    draw_text(_x,_y,"L: " + string(L));
-    
-    _x+=100;
-    draw_text(_x,_y,"O: " + string(O));
         
-    _y += boxw;_x = tx+padding;
+    _y += boxw;
+    _x = tx+padding;
     draw_text(_x,_y,"ITEM");
     
     _x+=boxm+boxw+350;
@@ -747,7 +649,7 @@ if(show){
     draw_line(_x,_y,_x+boxwidth-(padding*2),_y);
     
     _y += boxw/2;
-    row1_y = _y; // keep track of the y on first row
+    row1_y = _y-boxw/2; // keep track of the y on first row
     
     var in_hold;
     for(var i = scroll; i &lt; scroll + ipp &amp;&amp; i &lt; alength; i++){
@@ -757,7 +659,9 @@ if(show){
             draw_line(_x,_y-boxw/2,_x+boxwidth-(padding*2),_y-boxw/2);
         }
         
-        draw_panel(spr_background,0,_x,_y-(boxw/4),boxw,boxw,16);     
+        draw_panel(spr_background,0,_x,_y-(boxw/4),boxw,boxw,16);
+        var sprt = ds_grid_get(tradegrid,2,i);
+        var stp = 11;
         draw_sprite_ext(ds_grid_get(tradegrid,2,i),0,_x+boxp,_y-(boxw/4)+boxp,2,2,0,c_white,1);
         
         _x+=boxm+boxw;
@@ -767,7 +671,7 @@ if(show){
         draw_text(_x,_y,string(string(ds_grid_get(tradegrid,5,i))+"c"));// price
         
         _x+=100;
-        in_hold = scr_inv_item_count(ds_grid_get(tradegrid,0,i));
+        in_hold = scr_cargo_item_count(ds_grid_get(tradegrid,0,i));
         draw_text(_x,_y,string( in_hold ) );// in hold
        
         _x+=150;   

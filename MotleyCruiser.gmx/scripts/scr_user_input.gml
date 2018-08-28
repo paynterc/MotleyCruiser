@@ -179,6 +179,13 @@ if( scr_window_open() ){
             && keyboard_check(vk_shift)
             && debug_mode;
             break;
+        case "grant_credits":
+            return  
+            keyboard_check_pressed(ord("C"))
+            && keyboard_check(vk_shift)
+            && keyboard_check(vk_control)
+            && debug_mode;
+            break;
         case "goto_shiplevel":
             return  
             keyboard_check_pressed(ord("R"))

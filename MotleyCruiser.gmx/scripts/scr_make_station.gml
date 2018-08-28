@@ -31,7 +31,7 @@ var name = totro_plus(1,4,1,1,0);
 map[LOC_NAME] = name;
 map[LOC_NAME_1] = name[0];
 map[LOC_ECONOMY]=irandom(3);
-map[LOC_ECON_MOD] = random_range(.25,1.25);
-map[LOC_ECON_OFFSET] = random(1);
+map[LOC_ECON_MOD] = random_range(.01,.05);
+map[LOC_ECON_OFFSET] = irandom(global.commodity_lib_count -1);
 
 return map;

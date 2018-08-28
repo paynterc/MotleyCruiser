@@ -174,24 +174,25 @@ speed = max(speed - 0.01, 0);
           <argument>
             <kind>1</kind>
             <string>/// Update module positions
-if(modules != noone)
-for(var m=0; m&lt;array_length_1d(modules); m++){
-    var module = modules[m]; 
-    if(module &amp;&amp; module!=noone){  
-        if(module.offsets!=noone){
-        
-            var d = module.offsets[0]; // distance
-            var a = module.offsets[1]; // angle
+if(modules != noone){
+    for(var m=0; m&lt;array_length_1d(modules); m++){
+        var module = modules[m]; 
+        if(module &amp;&amp; module!=noone){  
+            if(module.offsets!=noone){
             
-            module.x = x + lengthdir_x(d, image_angle + a);
-            module.y = y + lengthdir_y(d, image_angle + a);
-            if(module.module_type!="turret" || target==noone){
-                module.image_angle = image_angle;
+                var d = module.offsets[0]; // distance
+                var a = module.offsets[1]; // angle
+                
+                module.x = x + lengthdir_x(d, image_angle + a);
+                module.y = y + lengthdir_y(d, image_angle + a);
+                if(module.module_type!="turret" || target==noone){
+                    module.image_angle = image_angle;
+                }
+            
             }
-        
         }
+        
     }
-    
 }
 </string>
           </argument>
@@ -225,28 +226,30 @@ if(ship_data!=noone){
     if(hitrad==noone){
         hitrad = (ship_data[SHIP_SCAFFOLD_SIZE] * 16) / 2;
     }
-        
-    inst = collision_circle(x, y, hitrad, obj_damager, false, true);
-    
-    if inst != noone
-    {
-        
-        if(inst.type != faction){
-            
-            var impact = instance_create(inst.x,inst.y,obj_impact);
-            impact.image_blend = c_aqua;
-            
-            hitby = inst.firedby;
-            register_damage += inst.damage;
-            // Handle death in child object
-            with(inst){  
-                instance_destroy();
-            }
-        }
+}else{
+    hitrad = sprite_width / 2;
+}      
+inst = collision_circle(x, y, hitrad, obj_damager, false, true);
 
-    }
+if inst != noone
+{
     
+    if(inst.type != faction){
+        
+        var impact = instance_create(inst.x,inst.y,obj_impact);
+        impact.image_blend = c_aqua;
+        
+        hitby = inst.firedby;
+        register_damage += inst.damage;
+        // Handle death in child object
+        with(inst){  
+            instance_destroy();
+        }
+    }
+
 }
+    
+
 
 
 </string>

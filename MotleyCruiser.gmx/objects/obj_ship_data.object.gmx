@@ -25,7 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Calculate ship stats
+            <string>/****
+Calculate ship stats
+
+Some ship stats (like mass or total bunks) need to be calculated because they do not exist in the ship
+data array. For instance, ship data contains an array of all modules, but not the combined
+mass of all modules. This object makes it easier to access these stats without actually
+instantiating the ship.
+
+****/
+
 if(global.player_ship == noone) exit;
 scr_ship_defaults();
 

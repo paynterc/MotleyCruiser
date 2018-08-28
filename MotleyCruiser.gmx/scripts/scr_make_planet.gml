@@ -6,8 +6,8 @@ var x1=0;
 var y1=0;
 var w1=0;
 var clr=noone;
-var min_width = sprite_get_width(spr_planet) / 2;
-var max_width = sprite_get_width(spr_planet) * 3;
+var min_width = sprite_get_width(spr_planet) * 2;
+var max_width = sprite_get_width(spr_planet) * 4;
 
 var sector = noone;
 sector[0]=argument0;
@@ -27,11 +27,11 @@ map[LOC_SPRITE]=floor(random(sprite_get_number(spr_planet)));
 map[LOC_SECTOR]=sector;
 map[LOC_NPCS] = noone;
 map[LOC_INDEX]=scr_make_loc_index(argument0,argument1,argument2);
-var name = totro_plus(1,4,1,1,0);
+var name = totro_plus(1,4,3,1,0);
 map[LOC_NAME] = name;
 map[LOC_NAME_1] = name[0];
 map[LOC_ECONOMY]=irandom(3);
-map[LOC_ECON_MOD] = random_range(.25,1.25);
-map[LOC_ECON_OFFSET] = random(1);
+map[LOC_ECON_MOD] = random_range(.01,.05);
+map[LOC_ECON_OFFSET] = irandom(global.commodity_lib_count -1);
 
 return map;

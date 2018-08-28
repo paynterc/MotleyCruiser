@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 sprite_index = choose(spr_asteroid,spr_asteroid2,spr_asteroid3);
-scale = random_range(.25,2);
+scale = random_range(.25,.75);
 image_xscale = scale;
 image_yscale = scale;
 image_blend =  make_color_rgb(irandom(255),irandom(255),irandom(255));
@@ -35,6 +35,34 @@ image_blend =  make_color_rgb(irandom(255),irandom(255),irandom(255));
 damage = 5;
 damage_on = true;
 damage_interval = .5;
+does_self_destruct = true;
+destroy_ready = false;
+alarm[1]=room_speed * 5;// Allow the asteroid to be removed after 5 seconds.
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Ready to destroy
+destroy_ready = true;
 </string>
           </argument>
         </arguments>
@@ -104,12 +132,8 @@ image_angle += .5;
           <argument>
             <kind>1</kind>
             <string>/// Destroy if out of range
-if(!scr_instance_in_view(id)){
-    if(instance_exists(obj_player)){
-        if(distance_to_object(obj_player) &gt; 800){
-            instance_destroy();
-        }
-    }
+if(!scr_instance_in_view(id) &amp;&amp; destroy_ready &amp;&amp; does_self_destruct){
+    instance_destroy();
 }
 </string>
           </argument>
@@ -141,11 +165,16 @@ var spd = other.speed;
 
 with(other){
     var pdir2 = point_direction(other.x, other.y, x, y);
-    motion_add(pdir2, other.speed);
+    var addspd = other.speed;
+    if(addspd&lt;1){
+        addspd=1;
+    }
+    
+    motion_add(pdir2, addspd);
     if speed &gt; 5 speed = 5;
 }
 
-motion_add(pdir, spd);
+//motion_add(pdir, spd);
 if speed &gt; 5 speed = 5;
 
 if(damage_on){
@@ -155,7 +184,9 @@ if(damage_on){
     if(!audio_is_playing(snd_hit1)){
         audio_play_sound_at(snd_hit1,x,y,0,100,300,1,0,2);
     }
-    other.register_damage = damage;
+    if(other.speed&gt;10){
+        other.register_damage = damage;
+    }
     alarm[0] = room_speed * damage_interval;
 }
 </string>

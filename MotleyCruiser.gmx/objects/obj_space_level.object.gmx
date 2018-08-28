@@ -124,6 +124,9 @@ asteroid_rate = 3;
 ship_spawn_rate = 20;
 
 depth=-1000;
+
+
+
 guiXoffset = 12;
 guiYoffset = 3;
 zoom = false;
@@ -199,8 +202,8 @@ if(instance_exists(obj_player_ship)){
         var xx; var yy; var astr;
         var r_angle = irandom(40)-20;
         
-        xx = lengthdir_x(800, obj_player_ship.image_angle+r_angle);
-        yy = lengthdir_y(800, obj_player_ship.image_angle+r_angle);
+        xx = lengthdir_x(view_wview[0]/2 + 64, obj_player_ship.image_angle+r_angle);
+        yy = lengthdir_y(view_hview[0]/2 + 64, obj_player_ship.image_angle+r_angle);
         
         
         astr = instance_create(obj_player_ship.x + xx,obj_player_ship.y + yy,obj_asteroid);
@@ -208,8 +211,7 @@ if(instance_exists(obj_player_ship)){
         astr.speed = irandom(1);
         
     }
-    
-    
+
 }
 
 alarm[1] = room_speed * asteroid_rate;
@@ -411,6 +413,7 @@ alarm[1] = room_speed * asteroid_rate;
             <kind>1</kind>
             <string>/// Tutorial
 if(!global.tutorial[3]){
+
     global.tutorial[3]=true;
     txt = "Press R to activate radar. But be careful, the longer you have radar active, the easier it is for enemies to find you.";
     scr_flywriter(txt,spr_old_salt,true,"0,OK");

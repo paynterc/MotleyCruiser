@@ -85,6 +85,6 @@ ship_data[SHIP_ENERGY_REGEN_SPD]=energy_regen_speed;
 ship_data[SHIP_ENERGY_REGEN_PTS]=energy_regen_points;
 ship_data[SHIP_BUNKS]=bunks;
 ship_data[SHIP_MASS]=mass;
-ship_data[SHIP_CARGO]=cargo;
+ship_data[SHIP_CARGO]=cargo * 100;
 
 return ship_data;

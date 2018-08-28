@@ -14,6 +14,8 @@ global.player_ship = scr_modules_to_ship_data(global.player_ship);
 global.new_ship=true;
 
 inventory_clear();
+ds_map_clear(global.cargo_list);
+
 //scr_inv_item_add(55,1);//sword
 
 // Player Equipment

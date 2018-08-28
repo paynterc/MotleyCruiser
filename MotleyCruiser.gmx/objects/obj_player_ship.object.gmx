@@ -91,6 +91,11 @@ if(mode==MODE_LANDING){
         global.landed_name = closest_landable.name;
         global.player_x = x;
         global.player_y = y;
+        
+        // recharge shields
+        shields_current = ship_data[SHIP_SHIELDS];
+        
+        // ship_data should now be updated and persisted in the next step.
         scr_persist_game_state();
         room_goto(rm_cantina2);
     

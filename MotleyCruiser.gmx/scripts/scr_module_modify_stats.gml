@@ -2,6 +2,12 @@
 if(is_array(ship_data)){
     ship_data = scr_modules_to_ship_data(ship_data);
     
+    /****
+    These variables are set just to make them easier to access and accomodate older code. 
+    Hypothetically you could access everything via ship_data
+    but some code had already been written using these variables, so I thought it best to keep
+    them. These variables would be accessible in the ship object.
+    ****/
     hull = ship_data[SHIP_HULL];
     hull_current = hull;
     
@@ -22,7 +28,7 @@ if(is_array(ship_data)){
     max_spd_rvs = ship_data[SHIP_MAX_RVS];
     
     bunks = ship_data[SHIP_BUNKS];
-    cargo = ship_data[SHIP_CARGO];
+    cargo = ship_data[SHIP_CARGO];// Cargo capicity. A multiple of the number of cargo modules.
     mass = ship_data[SHIP_MASS];
 }
 

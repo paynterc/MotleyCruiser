@@ -123,6 +123,13 @@ global.day = 0;
 // Inventory
 item_int();//Inventory Items
 
+// Commodities
+scr_commoditiy_lib_int();
+
+// Cargo
+scr_cargo_init();
+
+// Inventory
 var cols = 1;
 var rows = 21;
 inventory_int(cols,rows);
@@ -355,8 +362,9 @@ if(panel_pause[4]){
           <argument>
             <kind>1</kind>
             <string>if(window_get_width()!=display_get_gui_width()){
-    display_set_gui_size(window_get_width(), window_get_height());
-           if(instance_exists(obj_main_menu)){
+        display_set_gui_size(window_get_width(), window_get_height());
+        // or, try this: display_set_gui_size(view_wport[0], view_hport[0]);
+        if(instance_exists(obj_main_menu)){
             with(obj_main_menu){
                 scr_main_menu();
                 scr_load_game_menu();//panel_load_game
@@ -465,6 +473,10 @@ if(scr_user_input("fullscreen")){
     }
 }
 
+if(scr_user_input("grant_credits")){
+    // shift, control, C in debug mode
+    global.credits+=1000;
+}
 
 
 
@@ -631,6 +643,12 @@ if(ds_exists(global.ChestList,ds_type_list)){
 if(sprite_exists(global.player_sprite)){
     sprite_delete(global.player_sprite);
 }
+
+// Cargo
+/// Destroy stuff
+if(ds_exists(global.cargo_list,ds_type_map)){
+    ds_map_destroy(global.cargo_list);
+}
 </string>
           </argument>
         </arguments>
@@ -702,8 +720,11 @@ if(!instance_exists(obj_sound_control)){
     draw_text(96, 192, "W WIDTH: " + string(window_get_width()));
     draw_text(96, 224, "W height: " + string(window_get_height()));
     
-    draw_text(96, 256, "GB WIDTH: " + string(global.gui_width));
-    draw_text(96, 288, "GB height: " + string(global.gui_height));
+    draw_text(96, 256, "VP WIDTH: " + string(view_wport[0]));
+    draw_text(96, 288, "VP height: " + string(view_hport[0]));
+    
+    draw_text(96, 352, "V WIDTH: " + string(view_wview[0]));
+    draw_text(96, 384, "V height: " + string(view_hview[0]));
 
     
     if(instance_exists(obj_planet_surface)){

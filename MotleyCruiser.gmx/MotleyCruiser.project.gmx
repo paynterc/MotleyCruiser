@@ -623,6 +623,7 @@
         <script>scripts\scr_gx_loc_exists.gml</script>
         <script>scripts\scr_gx_make_npc.gml</script>
       </scripts>
+      <script>scripts\scr_mining_area.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_new_game.gml</script>
@@ -1078,6 +1079,20 @@
       <script>scripts\scr_trade_sell_all.gml</script>
       <script>scripts\scr_trade_calc_price.gml</script>
       <script>scripts\scr_trade_sector_economy.gml</script>
+      <scripts name="_commodities">
+        <script>scripts\scr_commodity_lib_add.gml</script>
+        <script>scripts\scr_commodity_lib_read.gml</script>
+        <script>scripts\scr_commoditiy_lib_int.gml</script>
+      </scripts>
+      <scripts name="_cargo">
+        <script>scripts\scr_cargo_init.gml</script>
+        <script>scripts\scr_cargo_add.gml</script>
+        <script>scripts\scr_cargo_item_count.gml</script>
+        <script>scripts\scr_cargo_item_decrement.gml</script>
+        <script>scripts\scr_cargo_save.gml</script>
+        <script>scripts\scr_cargo_load.gml</script>
+        <script>scripts\scr_cargo_calc_ttl.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_player_editor">
       <script>scripts\scr_make_selector.gml</script>
@@ -1229,9 +1244,10 @@
         <object>objects\obj_player_ship</object>
         <object>objects\obj_npc_ship</object>
         <object>objects\obj_landing_ship</object>
+        <object>objects\obj_enemy_ship</object>
+        <object>objects\obj_mining_drone</object>
       </objects>
       <object>objects\obj_ship_module_turret</object>
-      <object>objects\obj_enemy_ship</object>
       <object>objects\obj_laser</object>
       <object>objects\obj_projectile</object>
       <object>objects\obj_planet</object>
@@ -1381,7 +1397,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="336">
+  <constants number="337">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1523,15 +1539,16 @@
     <constant name="MISSION_TEXT">9</constant>
     <constant name="MISSION_TYPE">3</constant>
     <constant name="MODE_ATTACKING">0</constant>
-    <constant name="MODE_BOARDING">8</constant>
-    <constant name="MODE_DEFENDING">6</constant>
-    <constant name="MODE_FLEEING">2</constant>
-    <constant name="MODE_FOLLOWING">5</constant>
-    <constant name="MODE_JUMPING">9</constant>
-    <constant name="MODE_LANDING">4</constant>
     <constant name="MODE_PATROLING">1</constant>
-    <constant name="MODE_TRAVELING">7</constant>
+    <constant name="MODE_FLEEING">2</constant>
     <constant name="MODE_WAITING">3</constant>
+    <constant name="MODE_LANDING">4</constant>
+    <constant name="MODE_FOLLOWING">5</constant>
+    <constant name="MODE_DEFENDING">6</constant>
+    <constant name="MODE_TRAVELING">7</constant>
+    <constant name="MODE_BOARDING">8</constant>
+    <constant name="MODE_JUMPING">9</constant>
+    <constant name="MODE_MINING">10</constant>
     <constant name="MODULE_ACCBWD_MOD">17</constant>
     <constant name="MODULE_ACCFWD_MOD">16</constant>
     <constant name="MODULE_BUNKS_MOD">26</constant>

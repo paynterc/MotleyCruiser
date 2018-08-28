@@ -7,7 +7,7 @@ var gxkey;
 var sector_key = "x"+string(sx)+"y"+string(sy)+"seed";
 var sector_seed = ds_map_find_value(global.galaxy,sector_key);
 if(is_undefined(sector_seed)){
-    // We haven't been here yet. Create a new sector.
+    // We haven't been here yet. Create a new sector and add it to the map.
     randomize();
     ds_map_add(global.galaxy, sector_key, random_get_seed());
 }else{
@@ -19,15 +19,26 @@ if(is_undefined(sector_seed)){
 global.sector_economy = noone;
 global.sector_economy = scr_array(0,0,0,0);// Set all counts to zero.
 
-
 var curdepth = 1000;
 
-// Add suns
-var c = irandom(3);
-var sun;
-var sun_obj;
-for(var i=0; i<c; i++){
+var c;// count of suns
+var sun, moon, planet, station;// data arrays
+var sun_obj, moon_obj, planet_obj, station_obj;// instantiated objects
+
+if(sx == 0 && sy == 0){
+    // Home sector
+    
+    var center_x = room_width/2;
+    var center_y = room_height/2;
+
+    c = irandom(3);
+    // Home system
     sun = scr_make_sun(sx,sy);
+    var sw = sprite_get_width(spr_sun) * 3;
+    sun[SUN_X1]=center_x-(sw/2);
+    sun[SUN_Y1]=center_y-(sw/2);
+    sun[SUN_W1]=sw;
+
     sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
     sun_obj.data = sun;
     with(sun_obj){
@@ -38,15 +49,15 @@ for(var i=0; i<c; i++){
         depth = curdepth;
         faction = FACTION_NEUTRAL;
     }
-    gxindex++;
-}
-
-// Add planets
-var c = irandom(5);
-var planet;
-var planet_obj;
-for(var i=0; i<c; i++){
+    
+    
     planet = scr_make_planet(sx,sy,gxindex);
+    planet[LOC_TYPE]=GX_PLANET;
+    planet[LOC_X1]=center_x;
+    planet[LOC_Y1]=center_y;
+    planet[LOC_W1]=sprite_get_width(spr_planet) * 2;
+    planet[LOC_ECONOMY]=CC_AGRICULTURE;
+
     planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
     planet_obj.data = planet;
     
@@ -71,58 +82,120 @@ for(var i=0; i<c; i++){
     }
     global.sector_economy[planet[LOC_ECONOMY]] += 1;
     gxindex++;
-}
+    
 
+    
+}else{
 
-// Add moons
-var c = irandom(5);
-var moon;
-var moon_obj;
-for(var i=0; i<c; i++){
-    moon = scr_make_moon(sx,sy,gxindex);
-    moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_moon);
-    moon_obj.data = moon;
-    with(moon_obj){
-        var msize_mod = moon[LOC_W1] / sprite_get_width(spr_moon); 
-        image_xscale = msize_mod;
-        image_yscale = msize_mod;
-        image_blend = moon[LOC_COLOR];
-        image_index = moon[LOC_SPRITE];
-        depth = curdepth;
-        global_index = moon[LOC_INDEX];
-        global_type = "moon";
-        faction = FACTION_NEUTRAL;
-        var tname = moon[LOC_NAME];
-        name = tname[0];
+    // Add suns
+    c = irandom(3);
+    for(var i=0; i<c; i++){
+      sun = scr_make_sun(sx,sy);
+        sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
+        sun_obj.data = sun;
+        with(sun_obj){
+            var size_mod = data[SUN_W1] / sprite_get_width(spr_sun); 
+            image_xscale = size_mod;
+            image_yscale = size_mod;
+            image_blend = data[SUN_COLOR];
+            depth = curdepth;
+            faction = FACTION_NEUTRAL;
+        }
+        gxindex++;
     }
-    global.sector_economy[moon[LOC_ECONOMY]] += 1;
-    gxindex++;
-}
-
-// Add stations
-var c = irandom(5);
-var station;
-var station_obj;
-for(var i=0; i<c; i++){
-    station = scr_make_station(sx,sy,gxindex);
-    station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
-    with(station_obj){
-        var ssize_mod = station[LOC_W1] / sprite_get_width(spr_station); 
-        image_xscale = ssize_mod;
-        image_yscale = ssize_mod;
-        image_blend = station[LOC_COLOR];
-        image_index = station[LOC_SPRITE];
-        depth = curdepth;
-        global_index = station[LOC_INDEX];
-        global_type = "station";
-        faction = FACTION_NEUTRAL;
-        var tname = station[LOC_NAME];
-        name = tname[0];
+    var LL = 3; //landable limit
+    var system_landables = irandom(LL);
+    // There won't be planets or moons if there are no suns
+    if(c>0){ 
+        // Add planets
+        c = irandom(system_landables);
+        for(var i=0; i<c; i++){
+            planet = scr_make_planet(sx,sy,gxindex);
+            planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
+            planet_obj.data = planet;
+            
+            /***
+            if(!scr_gx_loc_exists(sx,sy,gxindex)){
+                scr_gx_loc_array_to_map(planet);// Insert to global.gx_locations
+            }
+            ***/
+            
+            with(planet_obj){
+                var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
+                image_xscale = psize_mod;
+                image_yscale = psize_mod;
+                image_blend = planet[LOC_COLOR];
+                image_index = planet[LOC_SPRITE];                  
+                depth = curdepth;
+                global_index = planet[LOC_INDEX];                  
+                global_type = "planet";
+                faction = FACTION_NEUTRAL;
+                var tname = planet[LOC_NAME];
+                name = tname[0];
+            }
+            global.sector_economy[planet[LOC_ECONOMY]] += 1;
+            gxindex++;
+        }
+        
+        system_landables-=c;      
+        if(system_landables>0){
+            // Add moons
+            c = irandom(system_landables);
+            for(var i=0; i<c; i++){
+                moon = scr_make_moon(sx,sy,gxindex);
+                moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_moon);
+                moon_obj.data = moon;
+                with(moon_obj){
+                    var msize_mod = moon[LOC_W1] / sprite_get_width(spr_moon); 
+                    image_xscale = msize_mod;
+                    image_yscale = msize_mod;
+                    image_blend = moon[LOC_COLOR];
+                    image_index = moon[LOC_SPRITE];
+                    depth = curdepth;
+                    global_index = moon[LOC_INDEX];
+                    global_type = "moon";
+                    faction = FACTION_NEUTRAL;
+                    var tname = moon[LOC_NAME];
+                    name = tname[0];
+                }
+                global.sector_economy[moon[LOC_ECONOMY]] += 1;
+                gxindex++;
+            }
+            system_landables-=c;
+        }
+    
     }
-    global.sector_economy[station[LOC_ECONOMY]] += 1;
-    gxindex++;
+    
+    if(system_landables>0){
+        // Add stations
+        var c = irandom(system_landables);
+        for(var i=0; i<c; i++){
+            station = scr_make_station(sx,sy,gxindex);
+            station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
+            station_obj.data = station;
+            with(station_obj){
+                var ssize_mod = station[LOC_W1] / sprite_get_width(spr_station); 
+                image_xscale = ssize_mod;
+                image_yscale = ssize_mod;
+                image_blend = station[LOC_COLOR];
+                image_index = station[LOC_SPRITE];
+                depth = curdepth;
+                global_index = station[LOC_INDEX];
+                global_type = "station";
+                faction = FACTION_NEUTRAL;
+                var tname = station[LOC_NAME];
+                name = tname[0];
+            }
+            global.sector_economy[station[LOC_ECONOMY]] += 1;
+            gxindex++;
+        }
+    }
+}
+for(var i=0;i<irandom(5);i++){
+    scr_mining_area(noone,noone);
 }
 
+// END RANDOM STUFF
 
 // Position the player ship.
 var player_x;
@@ -205,6 +278,7 @@ if(instance_exists(obj_player_ship)){
     }
 }
 
+/****
 var gate1 = instance_create(room_width/2,0-room_width,obj_gate);
 gate1.spx=0;gate1.spy=-1;
 
@@ -216,7 +290,7 @@ gate3.spx=-1;gate2.spy=0;
 
 var gate4 = instance_create(room_width*2,room_width/2,obj_gate);
 gate4.spx=1;gate2.spy=0;
-
+****/
 
 
 

@@ -37,8 +37,8 @@ global.current_sector_row = global.galaxy_width/2;// old galaxy navigation value
 global.current_sector_col = global.galaxy_width/2;
 global.sector_x=0;
 global.sector_y=0;
-global.player_x = global.galaxy_width/2;
-global.player_y = global.galaxy_width/2;
+global.player_x = noone;// default to room_width/2
+global.player_y = noone;
 
 
 
