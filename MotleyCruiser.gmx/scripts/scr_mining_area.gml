@@ -28,6 +28,7 @@ for(var i=0;i<11;i++){
 // Generate a platform
 
 // Generate mining drones. They should automatically go after asteroids.
+dir=0;
 for(var i=0;i<11;i++){
     
     dist = irandom_range(200,1200);
@@ -36,3 +37,14 @@ for(var i=0;i<11;i++){
     dir+=30;
 }
 
+// Add some defense platforms
+var platform;
+dir=0;
+for(var i=0;i<5;i++){
+    dist = irandom_range(200,1200);
+    platform = scr_spawn_npc_ship_single(FACTION_NEUTRAL,20,x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir));
+    platform.turn_spd = 0;
+    platform.disposition = DISPOSITION_HOSTILE;
+    platform.ship_type = ship_types.defense_platform;
+    dir+=30;
+}

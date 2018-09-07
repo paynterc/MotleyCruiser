@@ -297,9 +297,12 @@ if(scr_user_input("fire") &amp;&amp; can_fire){
 
 if(scr_user_input("thrust") &amp;&amp; can_move){
     motion_add(image_angle,acc_spd_fwd);
+    thrust_fwd=true;
     if(speed &gt; max_spd_fwd){
         speed = max_spd_fwd;//clamp
     }
+}else{
+    thrust_fwd=false;
 }
 
 /***

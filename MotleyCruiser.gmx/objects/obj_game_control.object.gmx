@@ -77,7 +77,7 @@ global.box_height = 100;
 /****************************************************************/
 global.galaxy = ds_map_create();// Destroy at game end
 global.galaxy_width = 20;// Not needed
-global.sector_width = 10000;//width in pixels of space combat room
+global.sector_width = 50000;//width in pixels of space combat room
 global.hull_repair_cost = 10; // Cost per hull unit
 
 global.gx_locations = ds_map_create();// Destroy at game end
@@ -86,6 +86,8 @@ scr_new_game_defaults();
 
 scr_faction_centers();
 
+global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
+global.sector_map = noone;// An array of locations in this sector
 
 /****************************************************************/
 /*                      DYNAMIC PLAYER DATA                     */
@@ -171,7 +173,13 @@ global.races = scr_races();
 // Accessories
 scr_accessories();
 
-//Ships
+//Ships. Use this to identify ship types within a faction.
+enum ship_types{
+    ship=0,
+    mining_drone=1,
+    defense_platform=2
+}
+
 scr_ships();
 
 // Ship Modules
@@ -645,9 +653,12 @@ if(sprite_exists(global.player_sprite)){
 }
 
 // Cargo
-/// Destroy stuff
 if(ds_exists(global.cargo_list,ds_type_map)){
     ds_map_destroy(global.cargo_list);
+}
+
+if(ds_exists(global.galaxy_map,ds_type_map)){
+    ds_map_destroy(global.galaxy_map);
 }
 </string>
           </argument>
@@ -708,9 +719,10 @@ if(!instance_exists(obj_sound_control)){
         draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
     }
 
-    draw_set_valign(fa_left);
-    draw_text(96, 32, "FPS Real: " + string(fps_real));
     
+    draw_set_valign(fa_left);
+    draw_text(32, view_hport[0]-32, "FPS Real: " + string(fps_real));
+    /***
     draw_text(96, 64, "D WIDTH: " + string(display_get_width()));
     draw_text(96, 96, "D height: " + string(display_get_height()));
     
@@ -725,7 +737,7 @@ if(!instance_exists(obj_sound_control)){
     
     draw_text(96, 352, "V WIDTH: " + string(view_wview[0]));
     draw_text(96, 384, "V height: " + string(view_hview[0]));
-
+***/
     
     if(instance_exists(obj_planet_surface)){
             draw_text(48, 64, "Room index x: " + string(global.planet_room_index_x) );

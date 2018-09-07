@@ -120,6 +120,8 @@ bark = noone;
             <string>/// Landing animation
 if(mode==MODE_LANDING){
     
+    thrust_fwd = false;// Hide thruster flames
+    thrust_rvs = false;
     modAlpha -=.05;
     speed = 0;
     x = target.x;
@@ -129,7 +131,7 @@ if(mode==MODE_LANDING){
         m_object = modules[m];
         m_object.image_alpha = modAlpha;
     }
-      
+    
     if(modAlpha&lt;.10){
         for(var m=0; m&lt;array_length_1d(modules); m++){
             m_object = modules[m];
@@ -364,7 +366,7 @@ if(global.paused){
     } 
 }
 
-
+thrust_fwd=false;
 if(target != noone &amp;&amp; instance_exists(target)){
   
     if(can_move &amp;&amp; mode!=MODE_WAITING){
@@ -374,7 +376,7 @@ if(target != noone &amp;&amp; instance_exists(target)){
             var dd = angle_difference(target.image_angle, image_angle);
             image_angle += sin(degtorad(dd)) * turn_spd;             
             speed = target.speed;
-                  
+            thrust_fwd=true;     
         }else{
            //angleDiff = scr_gradually_rotate_2(id,target,turn_spd,accuracy);
            //scr_gradually_rotate_3(self.id,target,turn_spd,accuracy);
@@ -385,6 +387,7 @@ if(target != noone &amp;&amp; instance_exists(target)){
         if(tgt_dist&gt;300 || mode==MODE_TRAVELING){
             //Stop accelerating when we get close      
             motion_add(image_angle,acc_spd_fwd);
+            thrust_fwd=true;
         }       
     
     }
@@ -429,7 +432,12 @@ if(hull_current &lt; 1){
         var m_object = modules[m];
         instance_create(m_object.x,m_object.y,obj_impact);
         instance_deactivate_object(m_object);
+        // Why deactivate vs destroy?
+        // Deactivation is better in case there is any other object still trying to reference this object
     }
+    
+    scr_play_sound_at(snd_explosion_ship,x,y);
+    event_user(1);// Dead action
     instance_deactivate_object(self);
 }
 </string>
@@ -493,6 +501,33 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
         instance_change(obj_landing_ship,true);
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Drop loot when dead
+// Either minerals or ice
+var drop = instance_create(x,y,obj_cargo_drop);
+drop.cargo = irandom(7);//any basic commodity
+drop.qty = irandom(2)+1;
 </string>
           </argument>
         </arguments>

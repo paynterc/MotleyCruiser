@@ -4,6 +4,7 @@ var sy = global.sector_y;
 var gxindex = 0; // Use this to generate a dsmap index for each location.
 var gxkey;
 
+
 var sector_key = "x"+string(sx)+"y"+string(sy)+"seed";
 var sector_seed = ds_map_find_value(global.galaxy,sector_key);
 if(is_undefined(sector_seed)){
@@ -18,6 +19,7 @@ if(is_undefined(sector_seed)){
 // agriculture, mining, industrial, tech
 global.sector_economy = noone;
 global.sector_economy = scr_array(0,0,0,0);// Set all counts to zero.
+global.sector_map=scr_galaxy_map_find_sector(sx,sy);
 
 var curdepth = 1000;
 
@@ -28,8 +30,8 @@ var sun_obj, moon_obj, planet_obj, station_obj;// instantiated objects
 if(sx == 0 && sy == 0){
     // Home sector
     
-    var center_x = room_width/2;
-    var center_y = room_height/2;
+    var center_x = global.sector_width/2;
+    var center_y = global.sector_width/2;
 
     c = irandom(3);
     // Home system
@@ -83,7 +85,8 @@ if(sx == 0 && sy == 0){
     global.sector_economy[planet[LOC_ECONOMY]] += 1;
     gxindex++;
     
-
+    //scr_galaxy_map_add(1,1,1);
+    //global.sector_map = ds_map_find_value(global.galaxy_map, string(sx) + "," + string(sy));
     
 }else{
 
@@ -208,9 +211,10 @@ if(global.player_x!=noone){
     global.player_y = noone;
     
 }else{
-    player_x = room_width/2;
-    player_y = room_height/2;
+    player_x = global.sector_width/2;
+    player_y = global.sector_width/2;
 }
+
 
 var player_angle = 0;
 
@@ -276,7 +280,11 @@ if(instance_exists(obj_player_ship)){
             scr_restore_ship_state();
         }     
     }
+    
+
 }
+
+//scr_spawn_npc_ship_single(FACTION_PIRATE, 20, player_x+64, player_y+64);
 
 /****
 var gate1 = instance_create(room_width/2,0-room_width,obj_gate);
@@ -318,6 +326,11 @@ global.player_x = player_x;
 global.player_y = player_y;
 scr_game_save();
 
-// NPC Ships
+/*********************
+END SEEDED RANDOMIZATION. ADDING ANYTHING RANDOM ABOVE THIS POINT COULD CHANGE THE SAVED MAP.
+***************/
 randomize();
+// NPC Ships
 scr_spawn_npc_ships();
+
+scr_spawn_pirate_drones();

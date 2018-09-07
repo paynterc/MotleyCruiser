@@ -1,5 +1,5 @@
 /// Calculate offset for drawing image on a grid. Used for modular ships.
-// scr_scaffold_offsets(scale, magnitude, row, column, modifier);
+// scr_scaffold_offsets( magnitude, row, column, modifier);
 var offsets = noone;
 
 var mag = argument0; // Magnitude of grid (5 rows)

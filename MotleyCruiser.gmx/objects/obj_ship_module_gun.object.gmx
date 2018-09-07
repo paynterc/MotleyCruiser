@@ -41,6 +41,7 @@
             <kind>1</kind>
             <string>/// Init
 shooting = false;
+cooling_down = false;
 gundata = noone;
 weapon_speed = 1;
 weapon_range = 0;
@@ -49,9 +50,6 @@ hitobject = noone;
 
 //Instantiate a spark
 spark = instance_create(x,y,obj_spark);
-
-
-alarm[0]=room_speed;
 </string>
           </argument>
         </arguments>
@@ -77,7 +75,7 @@ alarm[0]=room_speed;
             <string>/// Deactivate spark
 with(spark){
     active = 0;
-    instance_destroy();
+    destroy_self=true;
 }
 </string>
           </argument>
@@ -101,59 +99,8 @@ with(spark){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Shoot a bullet
-
-//First populate the gun data using the module prototype
-if(gundata==noone){
-
-    if(m_proto!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]&lt;array_length_1d(global.guns)){
-        gundata = global.guns[m_proto[MODULE_TYPE_INDEX]];
-    }else{
-        gundata = global.guns[0];
-    }    
-    weapon_speed = gundata[GUN_SPEED];
-    weapon_range = gundata[GUN_RANGE]
-}
-
-if(shooting){
-
-
-    if(gundata[GUN_BULLET_TYPE]=="beam"){
-        if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
-            hitobject.register_damage += gundata[GUN_DAMAGE];
-            hitobject.hitby = id;
-        }   
-    }else if(gundata[GUN_BULLET_TYPE]=="bullet"){
-        var d = sprite_get_width(sprite_index)/2;
-        
-        var bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),obj_laser);
-        //bullet = scr_get_from_pool("projectile",obj_projectile);
-        //bullet.x = x + lengthdir_x(d, image_angle);
-        //bullet.y = y + lengthdir_y(d, image_angle);
-        bullet.type=faction;
-        bullet.firedby = id;
-        bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
-        bullet.depth = -200;
-        bullet.direction = image_angle;
-        bullet.image_angle = image_angle;
-        bullet.speed = BULLET_BASE_SPEED;
-        bullet.damage = gundata[GUN_DAMAGE];
-        
-        var b_sound = audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
-        //audio_sound_pitch(b_sound, random_range(.85,1.5));
-            
-    }
- 
-    
-    
-    parent_obj.energy_current -= 2;
-
-    
-
-
-}
-
-alarm[0] = room_speed * weapon_speed;
+            <string>/// Unset cooldown
+cooling_down=false;
 </string>
           </argument>
         </arguments>
@@ -177,6 +124,18 @@ alarm[0] = room_speed * weapon_speed;
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
+//First populate the gun data using the module prototype
+if(gundata==noone){
+
+    if(m_proto!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]!=noone &amp;&amp; m_proto[MODULE_TYPE_INDEX]&lt;array_length_1d(global.guns)){
+        gundata = global.guns[m_proto[MODULE_TYPE_INDEX]];
+    }else{
+        gundata = global.guns[0];
+    }    
+    weapon_speed = gundata[GUN_SPEED];
+    weapon_range = gundata[GUN_RANGE]
+}
+
 if(parent_obj!=noone 
 &amp;&amp; gundata != noone 
 &amp;&amp; parent_obj.energy_current&gt;0
@@ -186,6 +145,12 @@ if(parent_obj!=noone
     shooting = parent_obj.shooting;
 }else{
     shooting = false;
+}
+
+if(shooting &amp;&amp; !cooling_down){
+    cooling_down=true;
+    event_user(0);// shoot bullet
+    alarm[0] = room_speed * weapon_speed;// unset cooldown
 }
 </string>
           </argument>
@@ -208,6 +173,8 @@ if(parent_obj!=noone
           <argument>
             <kind>1</kind>
             <string>/// Check for beam hits
+hitpoint = noone;
+spark.active = 0;
 if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
 
     var x1, y1, x2, y2;
@@ -216,7 +183,7 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
     y1 = y + lengthdir_y(guntip, image_angle);
     x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
     y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
-    hitobject = collision_line(x1,y1,x2,y2,obj_ship,false,false); 
+    hitobject = collision_line(x1,y1,x2,y2,obj_space_solid,false,false); 
     if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
         hitpoint = scr_raycast(x1,y1,x2,y2,hitobject);// This will return an array with x,y coords
         if(hitpoint!=noone){
@@ -233,6 +200,64 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
     spark.active = 0;
     hitpoint = noone;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Shoot a bullet
+if(gundata[GUN_BULLET_TYPE]=="beam"){
+    if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
+        hitobject.register_damage += gundata[GUN_DAMAGE];
+        hitobject.hitby = id;
+    }   
+}else if(gundata[GUN_BULLET_TYPE]=="bullet"){
+    var d = sprite_get_width(sprite_index)/2;
+    
+    var bullet_obj = scr_get_array_1d(gundata,GUN_BULLET_OBJECT);
+    if(bullet_obj==noone){
+        bullet_obj=obj_laser;
+    }
+    
+    //bullet_obj = obj_bullet_spread;
+    
+    var bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),bullet_obj);
+    //bullet = scr_get_from_pool("projectile",obj_projectile);
+    //bullet.x = x + lengthdir_x(d, image_angle);
+    //bullet.y = y + lengthdir_y(d, image_angle);
+    bullet.type=faction;
+    bullet.firedby = id;
+    bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
+    bullet.depth = -200;
+    bullet.direction = image_angle;
+    bullet.image_angle = image_angle;
+    bullet.speed = gundata[GUN_BULLET_SPEED];
+
+    bullet.damage = gundata[GUN_DAMAGE];
+    
+    var b_sound = audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+    //audio_sound_pitch(b_sound, random_range(.85,1.5));
+        
+}
+
+parent_obj.energy_current -= 2;
 </string>
           </argument>
         </arguments>
@@ -259,19 +284,21 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
 if(shooting &amp;&amp;  gundata[GUN_BULLET_TYPE]=="beam"){
     var xscl=1;
     var spr = spr_laser;
+    var tipx = x + lengthdir_x(guntip, image_angle);
+    var tipy = y + lengthdir_y(guntip, image_angle);
     
     if(hitpoint!=noone){
         x2 = hitpoint[0];
         y2 = hitpoint[1];
+        xscl = point_distance(tipx,tipy,x2,y2) / sprite_get_width(spr);
     }else{
         x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
         y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
-        xscl = gundata[GUN_RANGE]/sprite_get_width(spr);
-        
+        xscl = gundata[GUN_RANGE]/sprite_get_width(spr);    
     }
 
     draw_set_colour(gundata[GUN_BULLET_COLOR]);
-    draw_sprite_ext(spr,0,x + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle),xscl,1,image_angle,c_white,1);
+    draw_sprite_ext(spr,0,tipx,tipy,xscl,1,image_angle,c_white,1);
     //draw_set_colour(c_white);
     //draw_line(x + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle), x2, y2);
 

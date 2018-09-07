@@ -195,7 +195,8 @@ alarm[0] = room_speed * ship_spawn_rate;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Spawn asteroid
+            <string>/// Spawn asteroid - stop doing this for now. could cause issue with tracking asteroids on map.
+/***
 if(instance_exists(obj_player_ship)){
     if(instance_number(obj_asteroid) &lt; 10){
     
@@ -215,6 +216,7 @@ if(instance_exists(obj_player_ship)){
 }
 
 alarm[1] = room_speed * asteroid_rate;
+***/
 </string>
           </argument>
         </arguments>

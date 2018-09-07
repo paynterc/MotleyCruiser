@@ -53,3 +53,13 @@ gun[GUN_BULLET_COLOR]=c_aqua;
 gun[GUN_RANGE]=200;
 global.guns[5]=gun;
 
+gun = scr_gun();
+gun[GUN_SPEED]=1;
+gun[GUN_DAMAGE]=8;
+gun[GUN_SPRITE]=spr_gun_16_48_1;
+gun[GUN_BULLET_SPRITE]=spr_bolt;
+gun[GUN_BULLET_SPEED]=6;
+gun[GUN_BULLET_OBJECT]=obj_bullet_spread;
+gun[GUN_RANGE]=1000;
+global.guns[6]=gun;
+

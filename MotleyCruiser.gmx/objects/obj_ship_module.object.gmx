@@ -30,7 +30,97 @@ parent_obj = noone;
 module_data = noone; // Installed module data
 m_proto = noone; // Module prototype
 guntip = sprite_get_width(sprite_index)/2;
+drawsprite=true;
+thruster_set=false;//for thruster modules
+thruster_obj = noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(thruster_obj!=noone){
+    with(thruster_obj){
+        instance_destroy();
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Add flames for thrusters
+if(m_proto!=noone){
+    if(m_proto[MODULE_TYPE]=="thrust" &amp;&amp; !thruster_set){
+        thruster_set=true;
+        var flame = instance_create(x,y,obj_thruster_flame);
+        flame.parent_obj = id;
+        flame.show = false;
+        thruster_obj=flame;        
+    }
+}
 
+if(parent_obj!=noone &amp;&amp; thruster_obj!=noone){
+    thruster_obj.show = parent_obj.thrust_fwd;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(drawsprite){
+    draw_self();
+}
 </string>
           </argument>
         </arguments>

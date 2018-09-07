@@ -191,7 +191,11 @@ if( scr_window_open() ){
             keyboard_check_pressed(ord("R"))
             && keyboard_check(vk_shift)
             && debug_mode;
-            break;        
+            break;  
+        case "toggle_minimap":
+            return  
+            keyboard_check_pressed(ord("M"))
+            break;     
         case "point_dir":
             var pdir = noone;
             if( gamepad_is_connected(global.pad) ){

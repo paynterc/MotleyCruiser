@@ -97,6 +97,7 @@ if(ini_section_exists(game)){
     scr_load_galaxy(game);
     scr_inv_load(game);
     scr_cargo_load(game);
+    scr_dsmap_load(global.galaxy_map,"gmap");
 
     global.current_sector_row =  ini_read_real(game, "current_sector_row", 10);//TODO: remove
     global.current_sector_col =  ini_read_real(game, "current_sector_col", 10);//TODO: remove

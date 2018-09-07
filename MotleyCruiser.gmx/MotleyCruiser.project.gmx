@@ -51,6 +51,7 @@
       <sound>sound\snd_pickup_credit</sound>
       <sound>sound\snd_pickup</sound>
       <sound>sound\snd_hit1</sound>
+      <sound>sound\snd_explosion_ship</sound>
     </sounds>
     <sounds name="_stringbean">
       <sound>sound\snd_beep</sound>
@@ -207,6 +208,7 @@
         <sprite>sprites\spr_gun_16_32_2</sprite>
         <sprite>sprites\spr_gun_16_48_1</sprite>
         <sprite>sprites\spr_thrust_16_1</sprite>
+        <sprite>sprites\spr_thruster_flame</sprite>
         <sprite>sprites\spr_thrust_16_2</sprite>
         <sprite>sprites\spr_thrust_16_3</sprite>
         <sprite>sprites\spr_thrust_lat_16_16_1</sprite>
@@ -215,15 +217,18 @@
         <sprite>sprites\spr_beam_1</sprite>
         <sprite>sprites\spr_turret_barrel_1</sprite>
         <sprite>sprites\spr_turret_1</sprite>
+        <sprite>sprites\spr_turret_2</sprite>
         <sprite>sprites\spr_beam_2</sprite>
       </sprites>
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
       </sprites>
+      <sprite>sprites\spr_platform</sprite>
     </sprites>
     <sprites name="_space_combat">
       <sprite>sprites\spr_ship</sprite>
       <sprite>sprites\spr_ship_en</sprite>
+      <sprite>sprites\spr_drone</sprite>
       <sprite>sprites\spr_stars</sprite>
       <sprite>sprites\spr_laser</sprite>
       <sprite>sprites\spr_laser_2</sprite>
@@ -470,6 +475,9 @@
       <sprite>sprites\spr_horizon</sprite>
     </sprites>
     <sprite>sprites\spr_slot_sm</sprite>
+    <sprite>sprites\spr_cargo_drop</sprite>
+    <sprite>sprites\spr_cargo_drop2</sprite>
+    <sprite>sprites\spr_cargo_drop3</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -603,27 +611,42 @@
       <script>scripts\scr_find_random_mission_target.gml</script>
       <script>scripts\totro_plus.gml</script>
       <script>scripts\totro.gml</script>
-      <script>scripts\scr_spawn_npc_ships.gml</script>
-      <script>scripts\scr_spawn_npc_ships_ext.gml</script>
       <script>scripts\scr_persist_game_state.gml</script>
       <script>scripts\scr_faction_location_weights.gml</script>
       <script>scripts\scr_change_location.gml</script>
       <script>scripts\scr_remove_npc_from_location.gml</script>
       <script>scripts\scr_find_landable_target.gml</script>
       <script>scripts\scr_faction_centers.gml</script>
-      <script>scripts\scr_location_translate.gml</script>
       <scripts name="_galaxy_admin">
         <script>scripts\scr_save_galaxy.gml</script>
         <script>scripts\scr_load_galaxy.gml</script>
         <script>scripts\scr_clear_galaxy.gml</script>
-        <script>scripts\scr_loc_add.gml</script>
-        <script>scripts\scr_make_loc_index.gml</script>
-        <script>scripts\scr_gx_loc_array_to_map.gml</script>
-        <script>scripts\scr_gx_loc_find_value.gml</script>
-        <script>scripts\scr_gx_loc_exists.gml</script>
+        <script>scripts\scr_location_translate.gml</script>
         <script>scripts\scr_gx_make_npc.gml</script>
+        <scripts name="gx_loc_DEPRECATED">
+          <script>scripts\scr_gx_loc_exists.gml</script>
+          <script>scripts\scr_gx_loc_find_value.gml</script>
+          <script>scripts\scr_gx_loc_array_to_map.gml</script>
+          <script>scripts\scr_make_loc_index.gml</script>
+          <script>scripts\scr_loc_add.gml</script>
+        </scripts>
       </scripts>
-      <script>scripts\scr_mining_area.gml</script>
+      <scripts name="_galaxy_map">
+        <script>scripts\scr_galaxy_map_add.gml</script>
+        <script>scripts\scr_galaxy_map_find_sector.gml</script>
+        <script>scripts\scr_sector_map_add.gml</script>
+      </scripts>
+      <scripts name="_ships">
+        <script>scripts\scr_spawn_npc_ships_ext.gml</script>
+        <script>scripts\scr_spawn_npc_ships.gml</script>
+        <script>scripts\scr_spawn_npc_ship_single.gml</script>
+      </scripts>
+      <scripts name="_events">
+        <script>scripts\scr_spawn_pirate_drones.gml</script>
+      </scripts>
+      <scripts name="_locations">
+        <script>scripts\scr_mining_area.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_new_game.gml</script>
@@ -637,6 +660,8 @@
       <script>scripts\scr_load_game_menu.gml</script>
       <script>scripts\scr_pause_menu.gml</script>
       <script>scripts\scr_main_menu.gml</script>
+      <script>scripts\scr_dsmap_save.gml</script>
+      <script>scripts\scr_dsmap_load.gml</script>
     </scripts>
     <scripts name="_gui">
       <scripts name="_gui_package">
@@ -656,6 +681,10 @@
       <script>scripts\scr_gui_set_last_context.gml</script>
       <script>scripts\scr_gui_get_context.gml</script>
       <script>scripts\scr_gui_return_context.gml</script>
+      <scripts name="minimap">
+        <script>scripts\scr_minimap.gml</script>
+        <script>scripts\scr_minimap_poll.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_inventory">
       <scripts name="Inventory">
@@ -795,6 +824,10 @@
       </scripts>
       <script>scripts\scr_color_random.gml</script>
       <script>scripts\scr_make_background.gml</script>
+      <scripts name="_sound">
+        <script>scripts\scr_play_sound.gml</script>
+        <script>scripts\scr_play_sound_at.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_ship_editor">
       <script>scripts\scr_save_ship.gml</script>
@@ -805,6 +838,8 @@
     </scripts>
     <scripts name="_ship_modules">
       <script>scripts\scr_instantiate_ship.gml</script>
+      <script>scripts\backup_instantiate_ship.gml</script>
+      <script>scripts\scr_instantiate_module.gml</script>
       <script>scripts\scr_simple_timer.gml</script>
       <script>scripts\scr_scaffold_offsets.gml</script>
       <script>scripts\scr_scaffold_grid.gml</script>
@@ -813,6 +848,7 @@
       <script>scripts\scr_restore_ship_state.gml</script>
       <script>scripts\scr_module_modify_stats.gml</script>
       <script>scripts\scr_modules_to_ship_data.gml</script>
+      <script>scripts\scr_modules_findbyname.gml</script>
     </scripts>
     <scripts name="_traits">
       <script>scripts\scr_npc_traits_library.gml</script>
@@ -831,7 +867,6 @@
       <script>scripts\scr_rotate_cycle.gml</script>
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
-      <script>scripts\scr_play_sound.gml</script>
     </scripts>
     <scripts name="_glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -1118,6 +1153,9 @@
       <script>scripts\scr_tutorial_dostep.gml</script>
       <script>scripts\scr_tutorial_completestep.gml</script>
     </scripts>
+    <scripts name="_example_scripts">
+      <script>scripts\scr_multi_arguments.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1214,6 +1252,7 @@
       <object>objects\obj_main_menu</object>
       <object>objects\obj_button_basic</object>
       <object>objects\obj_button_text</object>
+      <object>objects\obj_minimap</object>
     </objects>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
@@ -1238,7 +1277,9 @@
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
       <object>objects\obj_ship_module</object>
+      <object>objects\obj_ship_module_turret</object>
       <object>objects\obj_ship_module_gun</object>
+      <object>objects\obj_space_solid</object>
       <objects name="_ships">
         <object>objects\obj_ship</object>
         <object>objects\obj_player_ship</object>
@@ -1247,9 +1288,6 @@
         <object>objects\obj_enemy_ship</object>
         <object>objects\obj_mining_drone</object>
       </objects>
-      <object>objects\obj_ship_module_turret</object>
-      <object>objects\obj_laser</object>
-      <object>objects\obj_projectile</object>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
       <object>objects\obj_station</object>
@@ -1259,6 +1297,13 @@
       <object>objects\obj_spark</object>
       <object>objects\obj_gate</object>
       <object>objects\obj_asteroid</object>
+      <objects name="_bullets">
+        <object>objects\obj_laser</object>
+        <object>objects\obj_bullet_spread</object>
+        <object>objects\obj_projectile</object>
+      </objects>
+      <object>objects\obj_thruster_flame</object>
+      <object>objects\obj_cargo_drop</object>
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
@@ -1397,7 +1442,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="337">
+  <constants number="339">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1489,8 +1534,10 @@
     <constant name="FACTION_TRADER">2</constant>
     <constant name="FACTION_VAYLIT">19</constant>
     <constant name="FACTION_ZOMBOID">9</constant>
+    <constant name="FACTION_ASTEROID">25</constant>
     <constant name="FLOOR">-5</constant>
     <constant name="GLOBAL_SHIP_LIMIT">100</constant>
+    <constant name="GUN_BULLET_OBJECT">8</constant>
     <constant name="GUN_BULLET_COLOR">7</constant>
     <constant name="GUN_BULLET_SPEED">5</constant>
     <constant name="GUN_BULLET_SPRITE">3</constant>

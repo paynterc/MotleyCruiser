@@ -136,7 +136,7 @@ module[MODULE_DESCRIPTION]="Slow mass projector.";
 module[MODULE_TYPE]="gun";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_gun_16_32_2;
 module[MODULE_COLOR]=c_white;
-module[MODULE_TYPE_INDEX]=2;// index in library
+module[MODULE_TYPE_INDEX]=2;// index in GUN library
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
 
@@ -263,5 +263,30 @@ module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_CARGO_MOD]=3;
 module[MODULE_MASS_MOD]=300;
+scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Terran Platform 1";
+module[MODULE_DESCRIPTION]="A basic Terran platform module. Provides life support plus limited thrust and energy.";
+module[MODULE_TYPE]="command";// command, cargo, thrust, gun
+module[MODULE_SPRITE_INDEX] = spr_platform;
+module[MODULE_COLOR]=c_white;
+module[MODULE_TYPE_INDEX]=noone;
+module[MODULE_HULL_MOD]=10;
+module[MODULE_ENERGY_MOD]=200;
+module[MODULE_ENERGYREGENPOINTS_MOD]=3;
+module[MODULE_CARGO_MOD]=1;
+module[MODULE_BUNKS_MOD]=3;
+module[MODULE_MASS_MOD]=200;
+scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Terran Platform Cannon 1";
+module[MODULE_DESCRIPTION]="Fast, turret-mounted energy weapon.";
+module[MODULE_TYPE]="turret";// command, cargo, thrust, turret, gun
+module[MODULE_SPRITE_INDEX] = spr_turret_2;
+module[MODULE_COLOR]=c_white;
+module[MODULE_TYPE_INDEX]=3;// Index from gun library, turret library, etc.
+module[MODULE_MASS_MOD]=220;
 scr_push_array_1d(global.module_library, module);
 

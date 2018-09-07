@@ -29,6 +29,7 @@
 disabled = false;
 faction = FACTION_NEUTRAL;
 name = "xxx";
+discovered = false;// used for minimap function
 </string>
           </argument>
         </arguments>

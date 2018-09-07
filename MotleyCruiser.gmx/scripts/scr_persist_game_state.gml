@@ -31,6 +31,8 @@ if(instance_exists(obj_space_level)){
         }
     }
     
+    // Save the current sector map
+    scr_galaxy_map_add(global.sector_x,global.sector_y,global.sector_map);
 }
 
 // If we're in a room, persist npc and crew.

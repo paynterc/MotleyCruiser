@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_space_solid</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -35,10 +35,19 @@ image_blend =  make_color_rgb(irandom(255),irandom(255),irandom(255));
 damage = 5;
 damage_on = true;
 damage_interval = .5;
-does_self_destruct = true;
-destroy_ready = false;
+
+// We want asteroids to remove themselves in most cases so we don't have too many.
+does_self_destruct = true;//set to false if you want this to be permanent
+destroy_ready = false;// will be ready after timer expires
 alarm[1]=room_speed * 5;// Allow the asteroid to be removed after 5 seconds.
 
+discovered = false;// used for minimap function
+
+// Needed for ship targeting in some cases
+disabled=false;
+faction = FACTION_ASTEROID;
+register_damage = 0;
+hitby = noone;
 </string>
           </argument>
         </arguments>
@@ -61,7 +70,7 @@ alarm[1]=room_speed * 5;// Allow the asteroid to be removed after 5 seconds.
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Ready to destroy
+            <string>/// Ready to destroy
 destroy_ready = true;
 </string>
           </argument>

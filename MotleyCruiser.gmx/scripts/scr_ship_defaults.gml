@@ -29,3 +29,6 @@ weapon_speed = 0.1;//DEPRECATD: multiplied by 1 second or room_speed
 weapon_range = 600;//used for npcs
 
 bunks = 0;
+
+thrust_fwd = false;//Track when thrust is being applied
+thrust_rvs = false;
