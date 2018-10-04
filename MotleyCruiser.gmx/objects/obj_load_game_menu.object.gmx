@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_menu</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,9 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Use this object to manage other window interfaces
-has_ball=noone;// Who has the ball?
-ui_stack = ds_stack_create();// Stack previously open menus here so we can get back to them
+            <string>/// init
+show=false;
+panel_load_game = scr_load_game_menu();//panel_load_game
+depth = -1000000;
 </string>
           </argument>
         </arguments>
@@ -50,23 +51,12 @@ ui_stack = ds_stack_create();// Stack previously open menus here so we can get b
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// User GUI Commands
-
-if(scr_user_input("toggle_minimap") &amp;&amp; room==rm_space){
-    if(instance_exists(obj_minimap)){
-        if(!obj_minimap.show){
-            scr_gui_set_context(obj_minimap);
-        }else{
-            scr_gui_return_context();
-        }         
-    }
-}
+            <string>/// Show/hide
+panel_load_game[4]=show;
 </string>
           </argument>
         </arguments>
       </action>
-    </event>
-    <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -83,22 +73,116 @@ if(scr_user_input("toggle_minimap") &amp;&amp; room==rm_space){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Close all windows and show active
-/// Close all menus and reset
-var menu;
-for (i = 0; i &lt; instance_number(obj_menu); i++)
-{
-    menu = instance_find(obj_menu,i);
-    with(menu){
-        event_user(1);// hide
-    }
-}
-if(has_ball != noone &amp;&amp; instance_exists(has_ball)){
-    with(has_ball){
-        event_user(0);// show
-    }
+            <string>/// Check hover status on menus
+if(show){
+    scr_gui_button_state(panel_load_game);
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if gui button was pressed.
+if(show){
+
+    var load_game_button = scr_gui_button_click(panel_load_game);
+    if(load_game_button==0){
+        scr_game_load("GAME1");  
+    }
+       
+    if(load_game_button==1){
+        scr_game_load("GAME2");
+    }
+    
+    if(load_game_button==2){
+        scr_game_load("GAME3");
+    }
+    
+    // Back button
+    if(load_game_button==3){
+        scr_load_game_menu();//Reset    
+        scr_gui_return_context();
+    }
+    
+    // Delete game
+    if(load_game_button==4){
+        scr_update_button(panel_load_game,4,BTN_SHOW,false);
+        scr_update_button(panel_load_game,0,BTN_SHOW,false);
+        // Confirm
+        scr_update_button(panel_load_game,7,BTN_SHOW,true);
+        scr_update_button(panel_load_game,8,BTN_SHOW,true);
+        scr_update_button(panel_load_game,9,BTN_SHOW,true);
+        
+    }
+    
+    if(load_game_button==5){
+        scr_update_button(panel_load_game,5,BTN_SHOW,false);
+        scr_update_button(panel_load_game,1,BTN_SHOW,false);
+        // Confirm
+        scr_update_button(panel_load_game,10,BTN_SHOW,true);
+        scr_update_button(panel_load_game,11,BTN_SHOW,true);
+        scr_update_button(panel_load_game,12,BTN_SHOW,true);
+        
+    }
+    
+    if(load_game_button==6){
+        scr_update_button(panel_load_game,6,BTN_SHOW,false);
+        scr_update_button(panel_load_game,2,BTN_SHOW,false);
+        // Confirm
+        scr_update_button(panel_load_game,13,BTN_SHOW,true);
+        scr_update_button(panel_load_game,14,BTN_SHOW,true);
+        scr_update_button(panel_load_game,15,BTN_SHOW,true);
+
+    }
+    
+    // Confirm delete
+    if(load_game_button==8){
+        // Delete game 1
+        scr_game_delete("GAME1");
+        panel_load_game = scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+    if(load_game_button==11){
+        // Delete game 2
+        scr_game_delete("GAME2");
+        panel_load_game = scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+    if(load_game_button==14){
+        // Delete game 3
+        scr_game_delete("GAME3");
+        panel_load_game = scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+    
+    // Cancel delete
+    if(load_game_button==9 || load_game_button==12 || load_game_button==15){
+        panel_load_game = scr_load_game_menu();//Reset menu
+        panel_load_game[4]=true;// Show menu
+    }
+    
+}
 </string>
           </argument>
         </arguments>
@@ -121,24 +205,15 @@ if(has_ball != noone &amp;&amp; instance_exists(has_ball)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Close all menus and reset
-var menu;
-for (i = 0; i &lt; instance_number(obj_menu); i++)
-{
-    menu = instance_find(obj_menu,i);
-    with(menu){
-        event_user(1);// hide
-    }
-}
-
-has_ball=noone;// Who has the ball?
-ds_stack_clear(ui_stack);
+            <string>/// Show window
+panel_load_game = scr_load_game_menu();//panel_load_game
+show = true;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="3">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -155,10 +230,8 @@ ds_stack_clear(ui_stack);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Destroy stuff
-if(ds_exists(ui_stack,ds_type_stack)){
-    ds_map_destroy(ui_stack);
-}
+            <string>/// Draw menu
+scr_gui_draw_panel(panel_load_game,0);
 </string>
           </argument>
         </arguments>

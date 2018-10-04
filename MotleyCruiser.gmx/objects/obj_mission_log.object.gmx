@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_menu</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -85,29 +85,17 @@ if(global.game_loaded = noone
     exit;
 }
 
-if(obj_game_control.panel_pause[4]){
-    // if pause menu showing close this menu
-    show = false;
-    exit;
-}
-
-if(show &amp;&amp; scr_user_input("menu_close")){
-    scr_gui_set_context(noone);
-    show = false;
-    exit;
-}
-
-
+/***
 if(scr_user_input("mission_log")){
     show = !show;
     if(show){
-        scr_gui_toggle_windows("mission");
+
         event_user(0);
     }else{
-        scr_gui_set_context(noone);
+        scr_gui_set_context();
     }
 }
-
+***/
 
 
 
@@ -145,6 +133,20 @@ if(show){
       </action>
     </event>
     <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>

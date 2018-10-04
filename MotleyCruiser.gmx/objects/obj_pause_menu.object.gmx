@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>obj_menu</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,16 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init - start alarm
-
-show=false;// Show and hide commands are handled by obj_gui_control
-alarm[0]=room_speed;
+            <string>/// init
+show=false;
+panel_pause = scr_pause_menu();
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -51,9 +50,72 @@ alarm[0]=room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Poll sector
-scr_minimap_poll();
-alarm[0]=room_speed;
+            <string>/// Show/hide
+panel_pause[4]=show;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check hover status on menus
+if(panel_pause[4]){
+    scr_gui_button_state(panel_pause);
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if gui button was pressed.
+if(panel_pause[4]){
+    var pause_menu_button = scr_gui_button_click(panel_pause);
+    if(pause_menu_button==0){
+        global.paused = false;
+        scr_gui_return_context();
+    }else if(pause_menu_button==1){
+        // HELP MENU
+    }else if(pause_menu_button==2){
+        // SETTINGS MENU
+    }else if(pause_menu_button==3){
+        // MAIN MENU
+        global.paused = false;
+        room_goto(rm_main_menu);
+    }
+    
+}
 </string>
           </argument>
         </arguments>
@@ -76,10 +138,8 @@ alarm[0]=room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw Minimap
-if(show){
-    scr_minimap(10,10,view_wport[0]/2/global.sector_width);
-}
+            <string>/// Draw menu
+scr_gui_draw_panel(panel_pause,0);
 </string>
           </argument>
         </arguments>

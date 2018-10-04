@@ -42,4 +42,4 @@ bb[BTN_TXT]="MAIN MENU";//text
 buttons=scr_push_array(buttons,bb);
 
 
-panel_pause = scr_gui_set_panel_data(headertext,width,height,buttons,5);
+return scr_gui_set_panel_data(headertext,width,height,buttons,5);

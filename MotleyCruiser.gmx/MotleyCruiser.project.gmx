@@ -641,11 +641,16 @@
         <script>scripts\scr_spawn_npc_ships.gml</script>
         <script>scripts\scr_spawn_npc_ship_single.gml</script>
       </scripts>
-      <scripts name="_events">
+      <scripts name="_sector_events">
         <script>scripts\scr_spawn_pirate_drones.gml</script>
       </scripts>
       <scripts name="_locations">
         <script>scripts\scr_mining_area.gml</script>
+        <script>scripts\scr_spawn_derelict_trap.gml</script>
+      </scripts>
+      <scripts name="_boarding_scripts">
+        <script>scripts\scr_board_ship.gml</script>
+        <script>scripts\scr_trap_pirate_drones.gml</script>
       </scripts>
     </scripts>
     <scripts name="_game_control">
@@ -669,21 +674,24 @@
         <script>scripts\scr_gui_button_state.gml</script>
         <script>scripts\scr_gui_button_click.gml</script>
         <script>scripts\scr_gui_set_panel_data.gml</script>
+        <script>scripts\scr_update_button.gml</script>
         <scripts name="_entity">
           <script>scripts\scr_gui_entity_button.gml</script>
         </scripts>
       </scripts>
-      <script>scripts\scr_update_button.gml</script>
-      <script>scripts\scr_resize_gui.gml</script>
-      <script>scripts\scr_gui_toggle_windows.gml</script>
-      <script>scripts\scr_window_open.gml</script>
-      <script>scripts\scr_gui_set_context.gml</script>
-      <script>scripts\scr_gui_set_last_context.gml</script>
-      <script>scripts\scr_gui_get_context.gml</script>
-      <script>scripts\scr_gui_return_context.gml</script>
-      <scripts name="minimap">
+      <scripts name="_minimap">
         <script>scripts\scr_minimap.gml</script>
         <script>scripts\scr_minimap_poll.gml</script>
+      </scripts>
+      <scripts name="_messages">
+        <script>scripts\scr_display_message.gml</script>
+        <script>scripts\scr_display_message_simple.gml</script>
+      </scripts>
+      <scripts name="_gui_control">
+        <script>scripts\scr_gui_close_all.gml</script>
+        <script>scripts\scr_gui_return_context.gml</script>
+        <script>scripts\scr_gui_set_context.gml</script>
+        <script>scripts\scr_gui_has_context.gml</script>
       </scripts>
     </scripts>
     <scripts name="_inventory">
@@ -1099,10 +1107,6 @@
         </scripts>
       </scripts>
     </scripts>
-    <scripts name="_messages">
-      <script>scripts\scr_display_message.gml</script>
-      <script>scripts\scr_display_message_simple.gml</script>
-    </scripts>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
       <script>scripts\scr_flash.gml</script>
@@ -1225,6 +1229,7 @@
     <font>fonts\font11</font>
     <font>fonts\font12</font>
     <font>fonts\font14</font>
+    <font>fonts\font15</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
@@ -1243,16 +1248,24 @@
         <object>objects\obj_flytest</object>
       </objects>
       <object>objects\obj_message_simple</object>
+      <object>objects\obj_flash_message</object>
     </objects>
     <objects name="_gui">
       <object>objects\obj_gui_control</object>
-      <object>objects\obj_trade</object>
-      <object>objects\obj_mission_log</object>
-      <object>objects\obj_message_box</object>
-      <object>objects\obj_main_menu</object>
-      <object>objects\obj_button_basic</object>
-      <object>objects\obj_button_text</object>
-      <object>objects\obj_minimap</object>
+      <objects name="_gui_panels">
+        <object>objects\obj_menu</object>
+        <object>objects\obj_trade</object>
+        <object>objects\obj_mission_log</object>
+        <object>objects\obj_main_menu</object>
+        <object>objects\obj_message_box</object>
+        <object>objects\obj_minimap</object>
+        <object>objects\obj_pause_menu</object>
+        <object>objects\obj_load_game_menu</object>
+      </objects>
+      <objects name="_elements">
+        <object>objects\obj_button_text</object>
+        <object>objects\obj_button_basic</object>
+      </objects>
     </objects>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>

@@ -135,10 +135,11 @@ if(show &amp;&amp; scr_user_input("menu_close")){
     exit;
 }
 
+/***
 if(scr_user_input("inventory")){
     show = !show;
     if(show){
-        scr_gui_toggle_windows("inventory");
+
         event_user(1);//update inventory size
         page=0;
         global.ItemSelected=-1;
@@ -147,7 +148,7 @@ if(scr_user_input("inventory")){
         scr_gui_set_context(noone);
     }
 }
-
+***/
 if(!show) exit;
 
 

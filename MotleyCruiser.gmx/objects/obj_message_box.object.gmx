@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_menu</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -136,17 +136,17 @@ if (keyboard_check_pressed(vk_anykey) == true)
           <argument>
             <kind>1</kind>
             <string>/// Button select
-var can_click = clickable &amp;&amp; (scr_gui_get_context()=="message");
+var can_click = clickable &amp;&amp; show;
 
 if(can_click){
 
 
         if( scr_user_input('menu_op_select') ){
-            event_user(1);
+            event_user(3);
         }
         
         if(  scr_user_input('menu_close') ){
-            event_user(1);
+            event_user(3);
         }
         
         var bx = tx + (boxwidth/2)-75;
@@ -161,32 +161,6 @@ if(can_click){
 }else{
     xhover=false;
     yhover=false;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Show/Hide
-
-if(obj_game_control.panel_pause[4]){
-    // if pause menu showing close this menu
-    show = false;
 }
 </string>
           </argument>
@@ -212,72 +186,14 @@ if(obj_game_control.panel_pause[4]){
             <kind>1</kind>
             <string>/// Check if button clicked
 if(xhover &amp;&amp; yhover){
-    event_user(1)
+    event_user(3); // run script
 }
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="12">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Show message
-event_user(0);
-show = true;
-scr_gui_set_context("message");
-alarm[0]=room_speed;//Delay before button is clickable
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="11">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// User selects OK
-show=false;
-clickable = false;
-scr_gui_return_context();
-global.paused = false;
-if(script!=noone){
-    scr_script_parse(script);
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="10">
+    <event eventtype="7" enumb="14">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -326,6 +242,90 @@ if(is_array(word_array)){
     }
 }
 alltext = scr_push_array(alltext,word_string);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// User selects OK
+show=false;
+clickable = false;
+scr_gui_return_context();
+global.paused = false;
+if(script!=noone){
+    scr_script_parse(script);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Show message
+event_user(4);
+show = true;
+scr_gui_set_context("message");
+alarm[0]=room_speed;//Delay before button is clickable
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Parse and Show message
+event_user(4);
+alarm[0]=room_speed;//Delay before button is clickable
+show = true;
 
 </string>
           </argument>

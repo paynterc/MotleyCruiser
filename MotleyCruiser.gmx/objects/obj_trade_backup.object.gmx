@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>-1</persistent>
-  <parentName>obj_menu</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -111,12 +111,6 @@ e_matrix[CC_TECH,CC_INDUSTRIAL]=1.50;
 e_matrix[CC_TECH,CC_TECH]=1.00;
 
 
-// exit button
-bexitw=96;// button width
-bexitx=tx+boxwidth-bexitw-padding;
-bexity=ty+padding;
-exitHover = false;
-
 /****
 [position]itemid
 [0]1
@@ -152,6 +146,57 @@ showYoffset = 0;
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Show/Hide
+if(global.game_loaded == noone || room==rm_main_menu){
+    show = false;
+    exit;
+}
+if(instance_exists(obj_game_control)){
+    if(obj_game_control.panel_pause[4]){
+        // if pause menu showing close this menu
+        show = false;
+        exit;
+    }
+}
+
+if(scr_gui_get_context()=="trade" &amp;&amp; scr_user_input("menu_close")){
+
+    scr_gui_set_context(noone);
+    show = false;
+    exit;
+} 
+
+if(scr_user_input("open_trade_window")){
+    // shift T in debug
+    show = !show;
+
+    if(show){
+        event_user(0);// build grid and show window
+    }
+}
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -291,8 +336,6 @@ if( gamepad_is_connected(global.pad) ){
               
         }
     }
-    
-    exitHover = (guix == median(bexitx, guix, bexitx + bexitw)) &amp;&amp; (guiy == median(bexity, guiy, bexity + 24));
 
 }
     
@@ -379,11 +422,6 @@ if(show){
         }
     
     }
-    
-    if(exitHover){
-        scr_gui_return_context();
-        exit;
-    }
 }
 </string>
           </argument>
@@ -408,8 +446,12 @@ if(show){
           <argument>
             <kind>1</kind>
             <string>/// Show window. Reset the list of items
-show = true;
 
+
+scr_gui_toggle_windows("trade");//Closes other windows and sets context to "trade"
+with(obj_inventory){
+    event_user(1);// check inventory size
+}
 scroll = 0;
 b_selected = noone; // Use to increment selected button via gampad
 comm_in_hold = noone;
@@ -507,7 +549,6 @@ for(var h=0; h&lt;alength; h++){
     buttons[h,3]=false;
 }
 var b=0;
-
 </string>
           </argument>
         </arguments>
@@ -572,18 +613,12 @@ if(show){
     draw_set_alpha(1);
     draw_set_font(font);
     
-        // Exit button
-    if(exitHover){
-        draw_set_color(c_white);
-    }
-    draw_text(bexitx,bexity,"EXIT &gt;&gt;");
-    draw_set_color(c_lime);
+    
     
     var _x = tx+padding;
     var _y = ty+padding+header_height+padding;
     var item = noone;
     
-     
     draw_text(_x,_y,"CREDITS: " + string(global.credits) + "c");
     
     if(instance_exists(obj_ship_data)){

@@ -333,4 +333,7 @@ randomize();
 // NPC Ships
 scr_spawn_npc_ships();
 
-scr_spawn_pirate_drones();
+scr_spawn_derelict_trap(player_x+100,player_y+100);
+
+
+scr_flybark("WHAT UP DOG?",spr_old_salt,3,true);

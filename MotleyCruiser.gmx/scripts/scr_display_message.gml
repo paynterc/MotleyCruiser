@@ -2,7 +2,5 @@
 if(instance_exists(obj_message_box)){
     obj_message_box.raw_text = argument0;
     obj_message_box.script = argument1;
-    with(obj_message_box){
-        event_user(2);
-    }
+    scr_gui_set_context(obj_message_box);
 }

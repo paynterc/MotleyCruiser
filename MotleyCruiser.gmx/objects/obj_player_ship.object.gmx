@@ -139,23 +139,17 @@ if(mode==MODE_BOARDING){
     board_count--;
     if(board_count&lt;1){
         
-        // BOARD SHIP   
-        global.ship_boarded = closest_boardable.ship_data;
-        global.ship_boarded[SHIP_X1] = closest_boardable.x;
-        global.ship_boarded[SHIP_Y1] = closest_boardable.y;
-        global.ship_boarded[SHIP_ANGLE] = closest_boardable.image_angle;
-        global.paused = true;
-        global.player_x = obj_player_ship.x;
-        global.player_y = obj_player_ship.y;
-        scr_persist_game_state();
-        view_object[0]=closest_boardable;
-        obj_space_level.zoom=true;
-        
+        // BOARD SHIP
+        var scriptToCall = asset_get_index(closest_boardable.boarding_script);
+        if(scriptToCall){
+            script_execute(scriptToCall);
+        }        
         exit;
+        
     }else if( 
-    scr_user_input("interact_hold") &amp;&amp;
-    instance_exists(closest_boardable) &amp;&amp; 
-    distance_to_object(closest_boardable)&lt;interact_range){
+        scr_user_input("interact_hold") &amp;&amp;
+        instance_exists(closest_boardable) &amp;&amp; 
+        distance_to_object(closest_boardable)&lt;interact_range){
         alarm[3]=room_speed * board_spd;
     }else{
         board_count=board_count_max;

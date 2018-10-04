@@ -115,7 +115,7 @@ if(fly_conditionals!=noone){
 var this_sentient = noone;
 var closest_range = 0;
 var this_range = 0;
-
+sent = noone;
 
 for(var i = 0; i &lt; instance_number(obj_sentient); i++) {
     this_sentient = instance_find(obj_sentient,i);
@@ -145,14 +145,7 @@ if(sent != noone &amp;&amp; sent.name != noone){
 
     if(sent.is_trader){
         
-        if(instance_exists(obj_trade)){
-
-            with(obj_trade){
-                show = true;
-                event_user(0);
-            }           
-           
-        }
+        scr_gui_set_context(obj_trade);
     
     }else if( scr_in_array(global.hirable_occupations,occ) ){
         

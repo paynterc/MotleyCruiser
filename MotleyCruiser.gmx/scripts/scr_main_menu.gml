@@ -43,4 +43,4 @@ bb[BTN_H]=bheight;//h
 bb[BTN_TXT]="QUIT";//text
 buttons=scr_push_array(buttons,bb);
 
-panel_main_menu = scr_gui_set_panel_data(headertext,width,height,buttons,padding);
+return scr_gui_set_panel_data(headertext,width,height,buttons,padding);

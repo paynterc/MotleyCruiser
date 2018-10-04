@@ -11,12 +11,14 @@ switch(argument0){
     case "mission_log":
         return keyboard_check_pressed(ord("L"));
         break;
-        
+    case "toggle_minimap":
+        return keyboard_check_pressed(ord("M"))
+        break; 
 }
         
         
 
-if( scr_window_open() ){
+if( scr_gui_has_context() ){
 
     switch(argument0){
         case "inventory-drop":
@@ -53,7 +55,7 @@ if( scr_window_open() ){
             break;
                            
         case "menu_op_select":
-            return gamepad_button_check_pressed(global.pad, gp_face1) || keyboard_check_pressed(ord("E")) || keyboard_check_pressed(vk_enter)
+            return gamepad_button_check_pressed(global.pad, gp_face1) ||  keyboard_check_pressed(vk_enter)
             break;
         case "menu_close":
             return gamepad_button_check_pressed(global.pad, gp_face2) || keyboard_check_pressed(vk_escape)
@@ -192,10 +194,7 @@ if( scr_window_open() ){
             && keyboard_check(vk_shift)
             && debug_mode;
             break;  
-        case "toggle_minimap":
-            return  
-            keyboard_check_pressed(ord("M"))
-            break;     
+    
         case "point_dir":
             var pdir = noone;
             if( gamepad_is_connected(global.pad) ){

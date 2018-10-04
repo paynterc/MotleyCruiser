@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_menu</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,16 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init - start alarm
-
-show=false;// Show and hide commands are handled by obj_gui_control
-alarm[0]=room_speed;
+            <string>/// Init
+show=false;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="0">
+    <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -51,15 +49,14 @@ alarm[0]=room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Poll sector
-scr_minimap_poll();
-alarm[0]=room_speed;
+            <string>/// Hide window
+show = false;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -76,10 +73,8 @@ alarm[0]=room_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw Minimap
-if(show){
-    scr_minimap(10,10,view_wport[0]/2/global.sector_width);
-}
+            <string>/// Show window
+show = true;
 </string>
           </argument>
         </arguments>

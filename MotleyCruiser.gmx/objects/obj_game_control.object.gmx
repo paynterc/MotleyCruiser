@@ -142,13 +142,6 @@ global.equipped = noone;
 scr_hotbar_init();
 
 
-
-/****************************************************************/
-/*                      MENUS                                   */
-/****************************************************************/
-scr_pause_menu();
-
-
 /****************************************************************/
 /*                      ROOM LEVELS                             */
 /****************************************************************/
@@ -206,6 +199,8 @@ scr_npc_occupation_library();
 /*                      GLOBALS                                 */
 /****************************************************************/
 global.grid = noone;
+
+
 
 // Planet side stuff
 global.planet_seed = noone;
@@ -344,88 +339,16 @@ scr_display_message("You have died.","scr_game_load,"+string(global.game_loaded)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check hover status on menus
-if(panel_pause[4]){
-    scr_gui_button_state(panel_pause);
-}
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(window_get_width()!=display_get_gui_width()){
-        display_set_gui_size(window_get_width(), window_get_height());
-        // or, try this: display_set_gui_size(view_wport[0], view_hport[0]);
-        if(instance_exists(obj_main_menu)){
-            with(obj_main_menu){
-                scr_main_menu();
-                scr_load_game_menu();//panel_load_game
-                panel_main_menu[4]  = true;//Show menu
-            }
-        }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// User input
+            <string>/// Pause game,  Debug commands
 if(scr_user_input("pause")){   
-    
-    if(room!=rm_main_menu){
+    if(room!=room_init &amp;&amp; room!=rm_main_menu){
         global.paused = !global.paused;
-    
-        /// Show/hide the paused game menu
-    
-        panel_pause[4] = global.paused;
-        if(!global.paused){
-            panel_load_game[4]=false;
+        if(global.paused){
+            scr_gui_set_context(obj_pause_menu);
         }else{
-            // Close all other windows
-            scr_gui_toggle_windows("all");
+            scr_gui_return_context();
         }
-        
-    }
-
-}else if(scr_user_input("menu_close")){
-    panel_load_game[4]=false;
-    
-    if(panel_pause[4]){
-        panel_pause[4] = false;
-        global.paused = false;
-    }
-
+    }   
 }
 
 if(scr_user_input("inventory_room")){
@@ -456,28 +379,8 @@ if(scr_user_input("goto_shiplevel")){
 if(scr_user_input("fullscreen")){
     if (!window_get_fullscreen()){        
         window_set_fullscreen(true);
-        display_set_gui_maximise(round(display_get_width()/global.gui_width),round(display_get_height()/global.gui_height),0,0);
-        //scr_resize_gui();
-        scr_pause_menu();
-        if(instance_exists(obj_main_menu)){
-            with(obj_main_menu){
-                scr_main_menu();
-                scr_load_game_menu();//panel_load_game
-                panel_main_menu[4]  = true;//Show menu
-            }
-        }
     }else{
-       window_set_fullscreen(false); 
-       display_set_gui_size(global.gui_width, global.gui_height);  
-       //scr_resize_gui();       
-       scr_pause_menu();
-       if(instance_exists(obj_main_menu)){
-            with(obj_main_menu){
-                scr_main_menu();
-                scr_load_game_menu();//panel_load_game
-                panel_main_menu[4]  = true;//Show menu
-            }
-        }       
+        window_set_fullscreen(false);       
     }
 }
 
@@ -490,45 +393,6 @@ if(scr_user_input("grant_credits")){
 
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="6" enumb="53">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// See if gui button was pressed.
-if(panel_pause[4]){
-    var pause_menu_button = scr_gui_button_click(panel_pause);
-    if(pause_menu_button==0){
-        global.paused = false;
-        panel_pause[4] = false;
-    }else if(pause_menu_button==1){
-        // HELP MENU
-    }else if(pause_menu_button==2){
-        // SETTINGS MENU
-    }else if(pause_menu_button==3){
-        // MAIN MENU
-        global.paused = false;
-        room_goto(rm_main_menu);
-    }
-    
-}
 </string>
           </argument>
         </arguments>
@@ -554,6 +418,7 @@ if(panel_pause[4]){
             <string>/// Player died - death animation then message
 global.paused = true;
 alarm[0]=room_speed*3;
+// Do something with gui
 </string>
           </argument>
         </arguments>
@@ -577,9 +442,8 @@ alarm[0]=room_speed*3;
           <argument>
             <kind>1</kind>
             <string>/// Close menus
-scr_pause_menu();
-panel_pause[4]=false;
-panel_load_game[4]=false;
+
+// Have obj_gui_control close menus
 </string>
           </argument>
         </arguments>
@@ -660,6 +524,8 @@ if(ds_exists(global.cargo_list,ds_type_map)){
 if(ds_exists(global.galaxy_map,ds_type_map)){
     ds_map_destroy(global.galaxy_map);
 }
+
+
 </string>
           </argument>
         </arguments>
@@ -789,8 +655,8 @@ if(!instance_exists(obj_sound_control)){
           <argument>
             <kind>1</kind>
             <string>/// Menu Panels
-scr_gui_draw_panel(panel_pause);
-scr_gui_draw_panel(panel_load_game);
+//scr_gui_draw_panel(panel_pause);
+//scr_gui_draw_panel(panel_load_game);
 </string>
           </argument>
         </arguments>

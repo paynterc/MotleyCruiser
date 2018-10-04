@@ -207,4 +207,4 @@ buttons=scr_push_array(buttons,bb);
 
 
 
-panel_load_game = scr_gui_set_panel_data(headertext,width,height,buttons,5);
+return scr_gui_set_panel_data(headertext,width,height,buttons,5);

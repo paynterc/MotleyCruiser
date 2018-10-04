@@ -370,7 +370,7 @@ scr_daily_expenses()
           <argument>
             <kind>1</kind>
             <string>/// Close Windows
-scr_gui_toggle_windows("all");
+scr_gui_close_all();
 </string>
           </argument>
         </arguments>

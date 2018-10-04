@@ -71,6 +71,9 @@ angleDiff = 100;
 alarm[3] = room_speed * 1;
 
 bark = noone;
+
+// This can be overwritten with some special event script
+boarding_script = "scr_board_ship";
 </string>
           </argument>
         </arguments>

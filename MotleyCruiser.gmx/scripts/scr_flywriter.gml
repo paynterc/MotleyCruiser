@@ -26,9 +26,22 @@ var popup = args[2];
 var options = args[3];
 var option_target = args[4];
 var ytarget = args[5];
+var drawgui = true;
 
 var boxw, boxh, boxx1, boxy1, frame_bottom, boxw;
-if(view_visible[0]){
+if(drawgui){
+
+    boxw = display_get_gui_width();
+    boxh = display_get_gui_height() / 2;
+    boxx1 = 0;
+    if(ytarget!=noone){
+        boxy1 = ytarget;
+    }else{
+        boxy1 = (display_get_gui_height()/2) - (boxh/2);
+    }
+    frame_bottom = display_get_gui_height();
+
+}else if(view_visible[0]){
 
     boxw = view_wview[0];
     boxh = view_hview[0]/2;
@@ -126,7 +139,7 @@ if(options!="" && options!=noone){
     if(option_target!=noone){
         tbox.option_target = option_target;
     }else{
-        tbox.option_target = self;// The object that called this script
+        tbox.option_target = self;// The object that called this script. It should contain conditional statements that refer to the selected option.
     }
 
 }
