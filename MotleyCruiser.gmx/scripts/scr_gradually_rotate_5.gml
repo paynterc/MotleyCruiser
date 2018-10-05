@@ -1,12 +1,13 @@
-/// scr_gradually_rotate_5(object, target, speed)
+/// scr_gradually_rotate_5(object, target x, target y, speed)
 //myangle, targetangle, speed
 
 var ob = argument0;
-var tg = argument1;
-var rspeed = argument2;
+var tgx = argument1;
+var tgy = argument2;
+var rspeed = argument3;
 
 var cur_angle = ob.image_angle;
-var tgt_angle = point_direction(ob.x,ob.y,tg.x,tg.y);
+var tgt_angle = point_direction(ob.x,ob.y,tgx,tgy);
 
 
 var diff;

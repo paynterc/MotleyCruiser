@@ -643,6 +643,7 @@
       </scripts>
       <scripts name="_sector_events">
         <script>scripts\scr_spawn_pirate_drones.gml</script>
+        <script>scripts\scr_spawn_patrol.gml</script>
       </scripts>
       <scripts name="_locations">
         <script>scripts\scr_mining_area.gml</script>
