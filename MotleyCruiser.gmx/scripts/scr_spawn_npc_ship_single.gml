@@ -25,11 +25,12 @@ with(ship_obj){
     
          
     if(ship_index==noone){
-        ship_i = irandom(array_length_1d(global.ship_library)-1);
+        //ship_i = irandom(array_length_1d(global.ship_library)-1);
+        ship_i = irandom(array_length_1d(scr_ship_index("ship"))-1);
     }else{
         ship_i = ship_index;
     }
-    ship_data = global.ship_library[ship_index];
+    ship_data = global.ship_library[ship_i];
     scr_instantiate_ship();
         
 }

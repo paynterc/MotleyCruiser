@@ -73,7 +73,7 @@ if (d &lt;  sprite_width/2)
     m_object.start_y = y;
     m_object.dragging = true;
     
-
+    obj_ship_editor.module_selected = module_data;
 } 
 </string>
           </argument>

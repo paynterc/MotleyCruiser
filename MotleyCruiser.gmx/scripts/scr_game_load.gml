@@ -64,6 +64,7 @@ if(ini_section_exists(game)){
     global.equipped = read_list[| 0];
     ds_list_destroy(read_list);
     
+    /***
     read_list = ds_list_create();
     var str = ini_read_string(game, "hotbar", "");
     ds_list_read(read_list,str);
@@ -74,6 +75,9 @@ if(ini_section_exists(game)){
         scr_hotbar_init();
 
     }
+    ***/
+    scr_hotbar_init();
+    
     
     read_list = ds_list_create();
     var str = ini_read_string(game, "tutorial", "");

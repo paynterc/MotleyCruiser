@@ -42,7 +42,7 @@ var platform;
 dir=0;
 for(var i=0;i<5;i++){
     dist = irandom_range(200,1200);
-    platform = scr_spawn_npc_ship_single(FACTION_NEUTRAL,20,x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir));
+    platform = scr_spawn_npc_ship_single(FACTION_NEUTRAL,22,x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir));
     platform.turn_spd = 0;
     platform.disposition = DISPOSITION_HOSTILE;
     platform.ship_type = ship_types.defense_platform;

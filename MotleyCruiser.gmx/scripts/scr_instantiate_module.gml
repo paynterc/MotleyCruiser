@@ -45,8 +45,9 @@ if(m_proto[MODULE_TYPE]=="gun"){
 m_object.offsets = offsets;
 m_object.sprite_index = m_proto[MODULE_SPRITE_INDEX];
 m_object.image_blend = module_record[I_MODULE_COLOR];
-m_object.image_xscale = module_record[I_MODULE_XSCALE];
-m_object.image_yscale = module_record[I_MODULE_YSCALE];
+m_object.image_xscale = m_proto[MODULE_XSCALE];
+m_object.image_yscale = m_proto[MODULE_YSCALE];
+
 m_object.depth = depth - module_record[I_MODULE_DEPTH];
 m_object.faction = faction;
 m_object.module_data = module_record;

@@ -29,6 +29,7 @@
 
 image_speed = 0;
 pressed = false;
+_font = fnt_menus_sm;
 </string>
           </argument>
         </arguments>
@@ -181,7 +182,7 @@ pressed = true;
           <argument>
             <kind>1</kind>
             <string>/// Set font
-draw_set_font(fnt_menus_sm);
+draw_set_font(_font);
 </string>
           </argument>
         </arguments>

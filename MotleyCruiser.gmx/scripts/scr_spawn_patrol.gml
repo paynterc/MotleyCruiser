@@ -14,7 +14,7 @@ wp3 = scr_array(_x,_y);
 
 for(var i = 0; i < _qty; i++){
     
-    pship = scr_spawn_npc_ship_single(_faction,1,_x,_y);
+    pship = scr_spawn_npc_ship_single(_faction,noone,_x,_y);
     
     pship.waypoints = scr_array(wp1,wp2,wp3);
     pship.mode = MODE_PATROLING;

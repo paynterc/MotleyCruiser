@@ -43,7 +43,7 @@
 
 // Overwrite defaults
 //turn_spd = 7;
-
+testme = false; // flag for debugging
 
 // Custom defaults
 dispostion = DISPOSITION_NEUTRAL;
@@ -74,6 +74,17 @@ bark = noone;
 
 // This can be overwritten with some special event script
 boarding_script = "scr_board_ship";
+
+// Waypoints, for patroling
+waypoints = noone;
+waypoint_index = 0;
+waypoint_current = noone;// An array with the current x,y waypoint
+/***
+var wp1 = scr_array(irandom(room_width),irandom(room_height));
+var wp2 = scr_array(irandom(room_width),irandom(room_height));
+var wp3 = scr_array(irandom(room_width),irandom(room_height));
+waypoints = scr_array(wp1,wp2,wp3);
+***/
 </string>
           </argument>
         </arguments>
@@ -197,17 +208,32 @@ hull_current = 0;
 // consider three attributes: FACTION, DISPOSITION and MODE.
 if(hitby!=noone &amp;&amp; disposition != DISPOSITION_HOSTILE){
     if(hitby.faction == FACTION_PLAYER &amp;&amp; faction != FACTION_PLAYER){
+        dispostion_save = disposition;
         disposition = DISPOSITION_HOSTILE;
     }
 }
 
+if(faction == FACTION_PIRATE){
+    disposition=DISPOSITION_HOSTILE;
+    dispostion_save = disposition;
+}
+
+if(faction == FACTION_PLAYER){
+    // Player faction vessels should never be hostile
+    disposition=DISPOSITION_HELPFUL;
+    dispostion_save = disposition;
+}
 
 if(disposition == DISPOSITION_HOSTILE){
     
-    if(faction=FACTION_PLAYER){
-        // Player faction vessels should never be hostile
-        disposition=DISPOSITION_HELPFUL;
-    }else{
+
+        // If i'm hostile and I'm close enough to see, go on attack.    
+
+    if( scr_instance_in_view(id) ){
+          
+
+
+        
         var s_count = instance_number(obj_ship);
         var cdist = noone;
         var closest = noone;
@@ -225,14 +251,17 @@ if(disposition == DISPOSITION_HOSTILE){
         if(closest != noone){
             target = closest;
             tgt_dist = distance_to_object(target);
+            mode_save = mode;
             mode = MODE_ATTACKING;
         }else{
             // Could not find an enabled player unit
             // All player units must have been disabled or destroyed.
-            // GOOD LUCK, DOUCHE!
-            disposition = DISPOSITION_NEUTRAL;
-            mode = MODE_TRAVELING;
+            // GOOD LUCK!
+            disposition = dispostion_save;
+            mode = mode_save;
             hitby = noone;
+            
+
             if(target_save!=noone){
                 // Reset to original target. Planet, moon or whatever.
                 target = target_save;
@@ -244,7 +273,6 @@ if(disposition == DISPOSITION_HOSTILE){
             event_user(0);
             
         }
-    
     }
 
 }else if(disposition == DISPOSITION_HELPFUL){
@@ -268,8 +296,7 @@ if(disposition == DISPOSITION_HOSTILE){
         }else{
             target = obj_player_ship;
         }
-        
-        
+            
     }
 
 }
@@ -332,7 +359,9 @@ alarm[3] = room_speed * 1;
           <argument>
             <kind>1</kind>
             <string>/// Update distance to target
-if(target != noone &amp;&amp; instance_exists(target)){
+if( mode = MODE_PATROLING &amp;&amp; waypoint_current != noone){
+    tgt_dist = point_distance(x,y,waypoint_current[0],waypoint_current[1]);
+}else if(target != noone &amp;&amp; instance_exists(target)){
     tgt_dist = distance_to_object(target);
 }
 </string>
@@ -370,19 +399,95 @@ if(global.paused){
 }
 
 thrust_fwd=false;
+
+var dd;// Angle diference
+
+if(can_move){
+    switch (mode)
+    {
+        case MODE_WAITING:
+            // do nothing
+            break;
+        case MODE_FOLLOWING:
+        
+            if(target != noone &amp;&amp; tgt_dist&lt;200){
+                dd = angle_difference(target.image_angle, image_angle);
+                image_angle += sin(degtorad(dd)) * turn_spd;             
+                speed = target.speed;
+                thrust_fwd=true;  
+            }
+        
+            break;
+            
+        case MODE_DEFENDING:
+        
+            if(target == obj_player_ship &amp;&amp; tgt_dist&lt;200){
+                dd = angle_difference(target.image_angle, image_angle);
+                image_angle += sin(degtorad(dd)) * turn_spd;             
+                speed = target.speed;
+                thrust_fwd=true;  
+            }    
+            break;
+        
+        case MODE_TRAVELING:
+            if(target != noone){
+                angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+            }
+
+            motion_add(image_angle,acc_spd_fwd);
+            thrust_fwd=true;
+            
+            break;
+            
+        case MODE_PATROLING:
+            
+            if(tgt_dist&lt;200){
+                waypoint_index ++;
+                if( waypoint_index &gt;= array_length_1d(waypoints) ){
+                    waypoint_index = 0;
+                }
+                waypoint_current = waypoints[waypoint_index];
+            }
+        
+            
+            if(waypoint_current != noone){
+                angleDiff = scr_gradually_rotate_5(id,waypoint_current[0],waypoint_current[1],turn_spd);
+            }
+
+            motion_add(image_angle,acc_spd_fwd);
+            thrust_fwd=true;
+            
+            break;
+            
+            
+        default:
+            
+            if(target != noone){
+                angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+            }
+            if(target != noone &amp;&amp; tgt_dist &gt; 300){
+                //Stop accelerating when we get close      
+                motion_add(image_angle,acc_spd_fwd);
+                thrust_fwd=true;
+            }  
+            break;
+    }               
+}
+
+
+/*** Old logic. Replaced with the switch statement above
 if(target != noone &amp;&amp; instance_exists(target)){
   
     if(can_move &amp;&amp; mode!=MODE_WAITING){
         
         if( ( mode==MODE_FOLLOWING || (mode==MODE_DEFENDING &amp;&amp; target==obj_player_ship) ) &amp;&amp; tgt_dist&lt;200){           
-            //image_angle = target.image_angle;
+
             var dd = angle_difference(target.image_angle, image_angle);
             image_angle += sin(degtorad(dd)) * turn_spd;             
             speed = target.speed;
             thrust_fwd=true;     
         }else{
-           //angleDiff = scr_gradually_rotate_2(id,target,turn_spd,accuracy);
-           //scr_gradually_rotate_3(self.id,target,turn_spd,accuracy);
+
            angleDiff = scr_gradually_rotate_5(id,target,turn_spd);
            
         }
@@ -395,9 +500,8 @@ if(target != noone &amp;&amp; instance_exists(target)){
     
     }
     
-
 }
-
+***/
 
 if(speed &gt; max_spd_fwd){
     speed = max_spd_fwd;

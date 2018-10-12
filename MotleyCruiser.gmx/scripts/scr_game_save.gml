@@ -1,5 +1,8 @@
 /**********************
 Save the game in its current state to a file
+
+DO NOT SAVE REFERENCES TO SPRITES! THEIR IDS COULD CHANGE. Save a reference to a database record that gets initialized with each
+game load.
 **********************/
 // Create an array for all game data
 var game = global.game_loaded;
@@ -17,7 +20,7 @@ scr_write_array(global.fleet,game,"fleet",SAVE_GAME_FILE);
 scr_write_array(global.missions,game,"missions",SAVE_GAME_FILE);
 scr_write_array(global.crew,game,"crew",SAVE_GAME_FILE);
 scr_write_array(global.team,game,"team",SAVE_GAME_FILE);
-scr_write_array(global.hotbar,game,"hotbar",SAVE_GAME_FILE);
+//scr_write_array(global.hotbar,game,"hotbar",SAVE_GAME_FILE); this was screwed up. I was saving refrences to sprites
 scr_write_array(global.tutorial,game,"tutorial",SAVE_GAME_FILE);
 
 ini_open(SAVE_GAME_FILE);

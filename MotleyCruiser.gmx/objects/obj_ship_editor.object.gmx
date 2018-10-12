@@ -38,12 +38,16 @@ grid_centers2 = noone;
 grid_centers = noone;
 painting = false;
 
+/***
 scaffold_sizes = noone;
 scaffold_sizes[0]=3;
 scaffold_sizes[1]=5;
 scaffold_sizes[2]=7;
+***/
 
-
+font = fnt_menus_med;
+font_size = font_get_size(font);
+font_vspc = font_size/2; 
 
 
 // Load ship library
@@ -66,38 +70,59 @@ loaded_ship_index = noone;
 instance_deactivate_object(obj_paint_drag);
 
 //Center view
-view_xview[0]=x-(view_wview[0]/2);
-view_yview[0]=y-(view_hview[0]/2);
+//view_xview[0]=x-(view_wview[0]/2);
+//view_yview[0]=y-(view_hview[0]/2);
 
 
 // GUI: Settings panel
+var pbtnY=32;
+var pbtnH=32;
 var btns = noone;
 var btn1 = scr_gui_entity_button();
 btn1[BTN_X]=noone;//x (from panel boarder+padding)
-btn1[BTN_Y]=50;//y
+btn1[BTN_Y]=pbtnY;//y
 btn1[BTN_W]=300;//w
-btn1[BTN_H]=20;//h
+btn1[BTN_H]=pbtnH;//h
 btn1[BTN_TXT]="3x3";//text
 
+pbtnY+= pbtnH + (pbtnH/2);
 var btn2 = scr_gui_entity_button();
 btn2[BTN_X]=noone;//x (from panel boarder+padding)
-btn2[BTN_Y]=80;//y
+btn2[BTN_Y]=pbtnY;//y
 btn2[BTN_W]=300;//w
-btn2[BTN_H]=20;//h
+btn2[BTN_H]=pbtnH;//h
 btn2[BTN_TXT]="5x5";//text
 
+pbtnY+= pbtnH + (pbtnH/2);
 var btn3 = scr_gui_entity_button();
 btn3[BTN_X]=noone;//x (from panel boarder+padding)
-btn3[BTN_Y]=110;//y
+btn3[BTN_Y]=pbtnY;//y
 btn3[BTN_W]=300;//w
-btn3[BTN_H]=20;//h
+btn3[BTN_H]=pbtnH;//h
 btn3[BTN_TXT]="7x7";//text
+
+pbtnY+= pbtnH + (pbtnH/2);
+var btn4 = scr_gui_entity_button();
+btn4[BTN_X]=noone;//x (from panel boarder+padding)
+btn4[BTN_Y]=pbtnY;//y
+btn4[BTN_W]=300;//w
+btn4[BTN_H]=pbtnH;//h
+btn4[BTN_TXT]="11x11";//text
+
+pbtnY+= pbtnH + (pbtnH/2);
+var btn5 = scr_gui_entity_button();
+btn5[BTN_X]=noone;//x (from panel boarder+padding)
+btn5[BTN_Y]=pbtnY;//y
+btn5[BTN_W]=300;//w
+btn5[BTN_H]=pbtnH;//h
+btn5[BTN_TXT]="15x15";//text
 
 btns[0]=btn1;
 btns[1]=btn2;
 btns[2]=btn3;
-
-panel_settings = scr_gui_set_panel_data("SETTINGS",400,200,btns,5);
+btns[3]=btn4;
+btns[4]=btn5;
+panel_settings = scr_gui_set_panel_data("SETTINGS",400,264,btns,5);
 
 
 
@@ -111,17 +136,22 @@ boxheight = global.gui_height - (margin * 2);
 
 
 // Draw Module Menu
-var mx=x-(5*SCAFF_CELL_SIZE);
-var my=y-(5*SCAFF_CELL_SIZE);
+//var mx=x-(5*SCAFF_CELL_SIZE);
+//var my=-(5*SCAFF_CELL_SIZE);
+var mx = 32;
+var my = 64;
 var my_start = my;
 var mx_start = mx;
+module_selected = noone;//Use this to display module_data
 
 //Instantiate module selection
+var mCount = 0;// keep track current column
 for(var m=0; m&lt;array_length_1d(global.module_library); m++){
     
-    if(mx&gt;mx_start+(SCAFF_CELL_SIZE*15)){
+    if(mCount&gt;4){
         mx=mx_start;
-        my+= SCAFF_CELL_SIZE + (SCAFF_CELL_SIZE/2)
+        my+= SCAFF_CELL_SIZE + (SCAFF_CELL_SIZE * 2);
+        mCount=0;
     }
 
     module_record = global.module_library[m];   
@@ -135,7 +165,7 @@ for(var m=0; m&lt;array_length_1d(global.module_library); m++){
     m_object.start_y = m_object.y;
     m_object.depth = depth-1;
     mx+= SCAFF_CELL_SIZE + (SCAFF_CELL_SIZE/2);
-    
+    mCount++;
 
 }
 
@@ -226,7 +256,7 @@ for(var i = 0; i &lt; s_count; i++) {
     var module_record = module_obj.module_data;
     module_data = scr_push_array(module_data,module_record);
 }
-
+ship_data[SHIP_MODULES] = module_data;
 scr_module_modify_stats();
 
 alarm[0]=room_speed;
@@ -295,13 +325,17 @@ if(pressed_setting!=noone){
         scaffold_size = 5;
     }else if(pressed_setting==2){
         scaffold_size = 7;
+    }else if(pressed_setting==3){
+        scaffold_size = 11;
+    }else if(pressed_setting==4){
+        scaffold_size = 15;
     }else{
         scaffold_size = 3;
     }
     
     // Create scaffold grids
     scr_shipedit_create_grids();
-    
+    panel_settings[4] = false;
 }
 </string>
           </argument>
@@ -328,17 +362,39 @@ if(pressed_setting!=noone){
             <string>/// Ship stats
 scr_gui_draw_panel(panel_settings);
 
-draw_text(32, 96, "Mass: " + string(mass));
-draw_text(32, 112, "MaxFwd: " + string(max_spd_fwd));
-draw_text(32, 128, "Acc: " + string(acc_spd_fwd));
-draw_text(32, 144, "Turn: " + string(turn_spd));
-draw_text(32, 161, "TurnMOD: " + string(turn_mod));
+draw_set_font(font);
+draw_set_halign(fa_left);
+var start_x = 246;
+var start_y = 420;
+if(loaded_ship_index != noone){
+    var idx = 0;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Ship Index: " + string(loaded_ship_index)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Mass: " + string(mass)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx) ,"Max Speed: " + string(max_spd_fwd)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Acceleration: " + string(acc_spd_fwd)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Turn Speed: " + string(turn_spd)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Turn Mod: " + string(turn_mod)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Shields: " + string(shields)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Energy: " + string(energy)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Hull: " + string(hull)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Bunks: " + string(bunks)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Cargo Space: " + string(cargo)); idx++;
+}
 
-draw_text(32, 177, "guiwidth: " + string(display_get_gui_width()));
 
-draw_text(32, 187, "guix: " + string(device_mouse_x_to_gui(0)));
 
-draw_text(32, 197, "guiy: " + string(device_mouse_y_to_gui(0)));
+if(module_selected!=noone){
+    idx = 0;
+    start_x = 32;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Module: " + string(module_selected[MODULE_NAME])); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Mass: " + string(module_selected[MODULE_MASS_MOD])); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Hull: " + string(module_selected[MODULE_HULL_MOD])); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Acceleration: " + string(module_selected[MODULE_ACCFWD_MOD])); idx++;
+
+}
+
+draw_text(16, 16, "guix: " + string(device_mouse_x_to_gui(0)));
+draw_text(16, 16 + (font_size + font_vspc), "guiy: " + string(device_mouse_y_to_gui(0)));
 </string>
           </argument>
         </arguments>

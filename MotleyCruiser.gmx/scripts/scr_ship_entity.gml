@@ -24,5 +24,13 @@ map[SHIP_SECTOR]=noone;
 map[SHIP_NPCS] = noone;
 map[SHIP_MODULES] = noone;
 map[SHIP_SCAFFOLD_SIZE] = 3;
+map[SHIP_SCAFFOLD_SIZE] = 3;
+
+map[SHIP_NAME_PERSONAL] = "Ship";
+map[SHIP_FACTION] = FACTION_NEUTRAL;
+map[SHIP_FUNCTION] = "trader";// trader, military, transport
+map[SHIP_CLASS] = noone;// fighter, corvette, destroyer, frigate, cruiser, battleship, carrier, dreadnought courier, freighter, tanker, miner
+map[SHIP_NAME_MODEL] = "ship";
+
 
 return map;
