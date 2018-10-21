@@ -50,6 +50,7 @@ hitobject = noone;
 
 //Instantiate a spark
 spark = instance_create(x,y,obj_spark);
+flash=false;//draw muzzle flash
 </string>
           </argument>
         </arguments>
@@ -251,9 +252,11 @@ if(gundata[GUN_BULLET_TYPE]=="beam"){
     bullet.speed = gundata[GUN_BULLET_SPEED];
 
     bullet.damage = gundata[GUN_DAMAGE];
-    
-    var b_sound = audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+    audio_sound_pitch(snd_laser4, random_range(.95,1.2));
+    var b_sound = audio_play_sound_at(snd_laser4,x,y,0,100,100,1,false,2);
+
     //audio_sound_pitch(b_sound, random_range(.85,1.5));
+    flash=true;
         
 }
 
@@ -304,6 +307,33 @@ if(shooting &amp;&amp;  gundata[GUN_BULLET_TYPE]=="beam"){
 
     //draw_line(x + 1 + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle), x2+1, y2);
 
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw muzzleflash
+if(flash){
+    flash=false;
+    var xpoint = x + lengthdir_x(guntip, image_angle);
+    var ypoint = y + lengthdir_y(guntip, image_angle);
+    draw_sprite_ext(spr_muzzleflash,0,xpoint,ypoint,1,1,image_angle,c_white,1);
 }
 </string>
           </argument>

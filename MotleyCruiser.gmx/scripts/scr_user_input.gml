@@ -2,8 +2,34 @@
 // scr_user_input(input_name)
 // "fire", "moveleft", "moveup", "interact"
 // Gamepad setup (thresholds, etc.) is done in obj_game_control
+var test = 1;
+
+if(room==rm_ship_edit){
+    test = 2;
+    switch(argument0){
+        case "flip-right":
+            return keyboard_check_pressed(vk_right)
+            break;           
+        case "flip-left":
+            return keyboard_check_pressed(vk_left);
+            break;            
+        case "flip-up":
+            return keyboard_check_pressed(vk_up);
+            break;
+        case "flip-down":
+            return keyboard_check_pressed(vk_down);  
+            break;          
+    }
+
+    return false;
+}
 
 //Any context
+
+
+
+
+
 switch(argument0){
     case "inventory":
         return keyboard_check_pressed(ord("I"));

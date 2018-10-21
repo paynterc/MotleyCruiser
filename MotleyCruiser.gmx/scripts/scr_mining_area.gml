@@ -45,6 +45,6 @@ for(var i=0;i<5;i++){
     platform = scr_spawn_npc_ship_single(FACTION_NEUTRAL,22,x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir));
     platform.turn_spd = 0;
     platform.disposition = DISPOSITION_HOSTILE;
-    platform.ship_type = ship_types.defense_platform;
+    platform.ship_type = ship_types.platform;
     dir+=30;
 }

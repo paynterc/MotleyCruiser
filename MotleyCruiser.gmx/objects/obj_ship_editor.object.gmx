@@ -222,6 +222,26 @@ for(var r = 0; r&lt;array_height_2d(colors); r++){
 
 scr_ship_defaults();
 
+var tby = 384;
+field_ship_type = instance_create(520,tby,obj_form_textbox);tby+=32;
+field_ship_type.field_label="Ship Type";
+
+field_ship_name = instance_create(520,tby,obj_form_textbox);tby+=32;
+field_ship_name.field_label="Ship Model";
+
+field_ship_faction = instance_create(520,tby,obj_form_textbox);tby+=32;
+field_ship_faction.field_label="Ship Faction";
+
+field_ship_function = instance_create(520,tby,obj_form_textbox);tby+=32;
+field_ship_function.field_label="Ship Function";
+
+field_ship_class = instance_create(520,tby,obj_form_textbox);
+field_ship_class.field_label="Ship Class";
+
+with(obj_form_textbox){
+    labelposition="right";
+}
+
 alarm[0]=room_speed;
 </string>
           </argument>
@@ -369,6 +389,9 @@ var start_y = 420;
 if(loaded_ship_index != noone){
     var idx = 0;
     draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Ship Index: " + string(loaded_ship_index)); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Ship Name: " + string(loaded_ship[SHIP_NAME_MODEL])); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Ship Faction: " + string(loaded_ship[SHIP_FACTION])); idx++;
+    draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Ship Function: " + string(loaded_ship[SHIP_FUNCTION])); idx++;
     draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Mass: " + string(mass)); idx++;
     draw_text(start_x, start_y + ((font_size + font_vspc) * idx) ,"Max Speed: " + string(max_spd_fwd)); idx++;
     draw_text(start_x, start_y + ((font_size + font_vspc) * idx), "Acceleration: " + string(acc_spd_fwd)); idx++;

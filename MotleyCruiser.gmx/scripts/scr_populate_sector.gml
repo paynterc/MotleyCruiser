@@ -341,6 +341,6 @@ for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(room_width),irandom(room_height),FACTION_PIRATE,irandom(3)+1);
 }
 
-scr_spawn_npc_ship_single(FACTION_PIRATE,23,player_x + 120,player_y+120);
+scr_spawn_npc_ship_single(FACTION_PIRATE,noone,player_x + 120,player_y+120);
 
 //scr_flybark("WHAT UP DOG?",spr_old_salt,3,true);

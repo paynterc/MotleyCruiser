@@ -47,7 +47,9 @@ testme = false; // flag for debugging
 
 // Custom defaults
 dispostion = DISPOSITION_NEUTRAL;
+dispostion_save = disposition;
 mode = MODE_WAITING;//attack, flee, wait, patrol
+mode_save = mode;
 accuracy = .9;
 boardable = true; // May be boardable in some circumstances
 

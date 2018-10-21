@@ -12,6 +12,11 @@ if(ship_index!=noone){
     // Create a ship
     ship = scr_ship_entity();
 }
+ship[SHIP_NAME_MODEL] = obj_ship_editor.field_ship_name.txt;
+ship[SHIP_FACTION] = real(obj_ship_editor.field_ship_faction.txt);
+ship[SHIP_FUNCTION] = real(obj_ship_editor.field_ship_function.txt);
+ship[SHIP_CLASS] = real(obj_ship_editor.field_ship_class.txt);
+ship[SHIP_TYPE] = real(obj_ship_editor.field_ship_type.txt);
 
 ship[SHIP_SCAFFOLD_SIZE]=obj_ship_editor.scaffold_size;
 var s_count = instance_number(obj_place_module);

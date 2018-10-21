@@ -48,7 +48,7 @@ max_spd_rvs = 10;
 
 mode = MODE_MINING;
 faction = FACTION_NEUTRAL;
-ship_type = ship_types.mining_drone;
+ship_type = ship_types.drone;
 
 
 shields = global.ship_default_shields / 2;
@@ -195,7 +195,7 @@ if(disposition == DISPOSITION_HOSTILE){
         var closest = noone;
         for(var i = 0; i &lt; s_count; i++) {
             var s_ship = instance_find(obj_npc_ship,i);
-            if(s_ship.faction == faction &amp;&amp; !s_ship.disabled &amp;&amp; s_ship.ship_type == ship_types.defense_platform){
+            if(s_ship.faction == faction &amp;&amp; !s_ship.disabled &amp;&amp; s_ship.ship_type == ship_types.platform){
                 var pdist = point_distance(s_ship.x,s_ship.y,x,y);
                 if(cdist==noone || pdist&lt;cdist){
                     closest = s_ship;

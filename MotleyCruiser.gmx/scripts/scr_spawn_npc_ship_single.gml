@@ -20,17 +20,27 @@ if(ship_index >= array_length_1d(global.ship_library)){
 
 var ship_obj = instance_create(x1,y1,obj_npc_ship);
     ship_obj.faction = faction;
-
+var found_ship = noone;
 with(ship_obj){  
     
          
     if(ship_index==noone){
         //ship_i = irandom(array_length_1d(global.ship_library)-1);
-        ship_i = irandom(array_length_1d(scr_ship_index("ship"))-1);
+        var ship_results = scr_ship_search(ship_types.ship,noone,faction);
+        if(ship_results != noone){
+            ship_data = scr_array_random(ship_results);
+        }else{
+            ship_data=global.ship_library[0];
+        }
+
     }else{
-        ship_i = ship_index;
+        if(ship_index<array_length_1d(global.ship_library)){
+            ship_data = global.ship_library[ship_index];
+        }else{
+            ship_data=global.ship_library[0];
+        }   
     }
-    ship_data = global.ship_library[ship_i];
+    
     scr_instantiate_ship();
         
 }

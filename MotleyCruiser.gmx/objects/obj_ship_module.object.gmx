@@ -31,8 +31,8 @@ module_data = noone; // Installed module data
 m_proto = noone; // Module prototype
 guntip = sprite_get_width(sprite_index)/2;
 drawsprite=true;
-thruster_set=false;//for thruster modules
-thruster_obj = noone;
+image_speed = .25;
+
 </string>
           </argument>
         </arguments>
@@ -84,18 +84,21 @@ thruster_obj = noone;
             <kind>1</kind>
             <string>/// Add flames for thrusters
 if(m_proto!=noone){
-    if(m_proto[MODULE_TYPE]=="thrust" &amp;&amp; !thruster_set){
-        thruster_set=true;
-        var flame = instance_create(x,y,obj_thruster_flame);
-        flame.parent_obj = id;
-        flame.show = false;
-        thruster_obj=flame;        
+    if(m_proto[MODULE_TYPE]=="thrust"){
+
+        if(parent_obj.thrust_fwd){
+            var d = sprite_get_width(sprite_index)/2;
+            var _x = x - lengthdir_x(d, image_angle);
+            var _y = y - lengthdir_y(d, image_angle);
+            part_type_direction(global.ptcl_jet, image_angle+175, image_angle+185, 0, 0);
+            part_particles_create(global.Particles, _x, _y, global.ptcl_jet, 1);
+        }
+              
     }
+    
 }
 
-if(parent_obj!=noone &amp;&amp; thruster_obj!=noone){
-    thruster_obj.show = parent_obj.thrust_fwd;
-}
+
 </string>
           </argument>
         </arguments>

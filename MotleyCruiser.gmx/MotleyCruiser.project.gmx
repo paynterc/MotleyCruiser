@@ -35,6 +35,7 @@
       <sound>sound\snd_laser1</sound>
       <sound>sound\snd_laser2</sound>
       <sound>sound\snd_laser3</sound>
+      <sound>sound\snd_laser4</sound>
       <sound>sound\snd_pulse1</sound>
       <sound>sound\snd_singularity_charge</sound>
       <sound>sound\snd_singularity_launch</sound>
@@ -194,17 +195,25 @@
       <sprites name="16">
         <sprite>sprites\spr_armor_16_16_1</sprite>
         <sprite>sprites\spr_armor_16_16_2</sprite>
+        <sprite>sprites\spr_armor_16_16_3</sprite>
         <sprite>sprites\spr_armor_16_32_1</sprite>
+        <sprite>sprites\spr_armor_16_16_6</sprite>
+        <sprite>sprites\spr_armor_16_16_8</sprite>
+        <sprite>sprites\spr_armor_16_16_9</sprite>
+        <sprite>sprites\spr_armor_16_16_7</sprite>
         <sprite>sprites\spr_cargo_16_1</sprite>
         <sprite>sprites\spr_cargo_16_2</sprite>
         <sprite>sprites\spr_cargo_16_3</sprite>
+        <sprite>sprites\spr_cargo_16_4</sprite>
         <sprite>sprites\spr_command_16_1</sprite>
         <sprite>sprites\spr_command_16_2</sprite>
         <sprite>sprites\spr_command_16_3</sprite>
         <sprite>sprites\spr_command_256</sprite>
         <sprite>sprites\spr_command_16_4</sprite>
+        <sprite>sprites\spr_command_16_5</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
         <sprite>sprites\spr_generator_16_16_1</sprite>
+        <sprite>sprites\sprite377</sprite>
         <sprite>sprites\spr_gun_16_16_1</sprite>
         <sprite>sprites\spr_gun_16_32_1</sprite>
         <sprite>sprites\spr_gun_16_32_2</sprite>
@@ -221,12 +230,15 @@
         <sprite>sprites\spr_turret_1</sprite>
         <sprite>sprites\spr_turret_2</sprite>
         <sprite>sprites\spr_beam_2</sprite>
-        <sprite>sprites\spr_command_128_1</sprite>
       </sprites>
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
       </sprites>
       <sprite>sprites\spr_platform</sprite>
+      <sprites name="64">
+        <sprite>sprites\spr_command_64</sprite>
+        <sprite>sprites\spr_passenger_64</sprite>
+      </sprites>
     </sprites>
     <sprites name="_space_combat">
       <sprite>sprites\spr_ship</sprite>
@@ -245,6 +257,7 @@
         <sprite>sprites\spr_indicator</sprite>
       </sprites>
       <sprite>sprites\spr_spark</sprite>
+      <sprite>sprites\spr_muzzleflash</sprite>
     </sprites>
     <sprites name="_space_objects">
       <sprite>sprites\spr_moon</sprite>
@@ -761,7 +774,7 @@
       <script>scripts\scr_npc_occupation_library.gml</script>
       <script>scripts\scr_accessories.gml</script>
       <scripts name="_indexes">
-        <script>scripts\scr_ship_index.gml</script>
+        <script>scripts\scr_ship_search.gml</script>
       </scripts>
     </scripts>
     <scripts name="_mission">
@@ -850,6 +863,7 @@
       <script>scripts\scr_clear_editor.gml</script>
       <script>scripts\scr_clear_modules.gml</script>
       <script>scripts\scr_shipedit_create_grids.gml</script>
+      <script>scripts\scr_update_all_ships.gml</script>
     </scripts>
     <scripts name="_ship_modules">
       <script>scripts\scr_instantiate_ship.gml</script>
@@ -1388,6 +1402,7 @@
       <object>objects\obj_paintbrush</object>
       <object>objects\obj_paint_drag</object>
       <object>objects\obj_btn_save</object>
+      <object>objects\obj_btn_updateall</object>
       <object>objects\obj_button_load</object>
       <object>objects\obj_button_delete</object>
       <object>objects\obj_btn_update</object>
@@ -1462,7 +1477,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="344">
+  <constants number="345">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1740,10 +1755,13 @@
     <constant name="SHIP_BUNKS">28</constant>
     <constant name="SHIP_CARGO_CAP">27</constant>
     <constant name="SHIP_CARGO">29</constant>
+    <constant name="SHIP_CLASS">32</constant>
     <constant name="SHIP_ENERGY_CUR">25</constant>
     <constant name="SHIP_ENERGY_REGEN_PTS">12</constant>
     <constant name="SHIP_ENERGY_REGEN_SPD">11</constant>
     <constant name="SHIP_ENERGY">10</constant>
+    <constant name="SHIP_FACTION">30</constant>
+    <constant name="SHIP_FUNCTION">31</constant>
     <constant name="SHIP_HULL_CUR">24</constant>
     <constant name="SHIP_HULL">9</constant>
     <constant name="SHIP_IMAGE_INDEX">16</constant>
@@ -1752,6 +1770,8 @@
     <constant name="SHIP_MAX_RVS">3</constant>
     <constant name="SHIP_MAX_SPEED">1</constant>
     <constant name="SHIP_MODULES">20</constant>
+    <constant name="SHIP_NAME_MODEL">33</constant>
+    <constant name="SHIP_NAME_PERSONAL">29</constant>
     <constant name="SHIP_NPCS">18</constant>
     <constant name="SHIP_SCAFFOLD_SIZE">21</constant>
     <constant name="SHIP_SECTOR">17</constant>
@@ -1763,12 +1783,8 @@
     <constant name="SHIP_TURN_SPEED">0</constant>
     <constant name="SHIP_WEAPON_SPD">13</constant>
     <constant name="SHIP_X1">14</constant>
+    <constant name="SHIP_TYPE">34</constant>
     <constant name="SHIP_Y1">15</constant>
-    <constant name="SHIP_NAME_PERSONAL">29</constant>
-    <constant name="SHIP_FACTION">30</constant>
-    <constant name="SHIP_FUNCTION">31</constant>
-    <constant name="SHIP_CLASS">32</constant>
-    <constant name="SHIP_NAME_MODEL">33</constant>
     <constant name="STATION_COLOR">3</constant>
     <constant name="STATION_ECON_MOD">10</constant>
     <constant name="STATION_ECON_OFFSET">11</constant>

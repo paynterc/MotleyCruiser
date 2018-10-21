@@ -6,7 +6,7 @@ module = scr_ship_module();
 module[MODULE_NAME]="Terran Command 1";
 module[MODULE_DESCRIPTION]="A basic Terran command module. Provides life support plus limited thrust and energy.";
 module[MODULE_TYPE]="command";// command, cargo, thrust, gun
-module[MODULE_SPRITE_INDEX] = spr_command_128_1;
+module[MODULE_SPRITE_INDEX] = spr_command_16_1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_HULL_MOD]=10;
@@ -15,10 +15,7 @@ module[MODULE_ENERGYREGENPOINTS_MOD]=3;
 module[MODULE_CARGO_MOD]=1;
 module[MODULE_BUNKS_MOD]=3;
 module[MODULE_MASS_MOD]=200;
-module[MODULE_XSCALE]=.125;
-module[MODULE_YSCALE]=.125;
 scr_push_array_1d(global.module_library, module);
-
 
 module = scr_ship_module();
 module[MODULE_NAME]="Terran Command 2";
@@ -35,12 +32,11 @@ module[MODULE_BUNKS_MOD]=3;
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
 
-
 module = scr_ship_module();
 module[MODULE_NAME]="Terran Command 3";
 module[MODULE_DESCRIPTION]="A basic Terran command module. Provides life support plus limited thrust and energy.";
 module[MODULE_TYPE]="command";// command, cargo, thrust, gun
-module[MODULE_SPRITE_INDEX] = spr_command_128_1;
+module[MODULE_SPRITE_INDEX] = spr_command_16_3;
 module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=noone;
 module[MODULE_HULL_MOD]=10;
@@ -49,10 +45,7 @@ module[MODULE_ENERGYREGENPOINTS_MOD]=3;
 module[MODULE_CARGO_MOD]=1;
 module[MODULE_BUNKS_MOD]=3;
 module[MODULE_MASS_MOD]=200;
-module[MODULE_XSCALE]=.125;
-module[MODULE_YSCALE]=.125;
 scr_push_array_1d(global.module_library, module);
-
 
 module = scr_ship_module();
 module[MODULE_NAME]="Terran Cargo Module 1";
@@ -107,10 +100,6 @@ module[MODULE_ACCBWD_MOD]=.1;
 module[MODULE_MASS_MOD]=120;
 scr_push_array_1d(global.module_library, module);
 
-
-
-
-
 module = scr_ship_module();
 module[MODULE_NAME]="Plasma Cannon1";
 module[MODULE_DESCRIPTION]="Medium speed energy weapon.";
@@ -121,8 +110,6 @@ module[MODULE_TYPE_INDEX]=0;// index in library
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
 
-
-
 module = scr_ship_module();
 module[MODULE_NAME]="Pulse Repeater 1";
 module[MODULE_DESCRIPTION]="Fast energy weapon.";
@@ -132,7 +119,6 @@ module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=1;// index in library
 module[MODULE_MASS_MOD]=200;
 scr_push_array_1d(global.module_library, module);
-
 
 module = scr_ship_module();
 module[MODULE_NAME]="Rail 1";
@@ -164,12 +150,10 @@ module[MODULE_MASS_MOD]=100;
 module[MODULE_TURN_MOD]=100;
 scr_push_array_1d(global.module_library, module);
 
-
-
 module = scr_ship_module();
 module[MODULE_NAME]="Armor 1";
 module[MODULE_DESCRIPTION]="Basic armor.";
-module[MODULE_TYPE]="lateral";// command, cargo, thrust, lateral, gun
+module[MODULE_TYPE]="armor";// command, cargo, thrust, lateral, gun
 module[MODULE_SPRITE_INDEX] = spr_armor_16_16_1;
 module[MODULE_COLOR]=c_white;
 module[MODULE_MASS_MOD]=10;
@@ -246,7 +230,6 @@ module[MODULE_TYPE_INDEX]=5;
 module[MODULE_MASS_MOD]=220;
 scr_push_array_1d(global.module_library, module);
 
-
 module = scr_ship_module();
 module[MODULE_NAME]="Terran Cargo Module 2";
 module[MODULE_DESCRIPTION]="You're basic cargo module.";
@@ -297,7 +280,7 @@ scr_push_array_1d(global.module_library, module);
 module = scr_ship_module();
 module[MODULE_NAME]="Armor 2";
 module[MODULE_DESCRIPTION]="Basic armor.";
-module[MODULE_TYPE]="lateral";// command, cargo, thrust, lateral, gun
+module[MODULE_TYPE]="armor";// command, cargo, thrust, lateral, gun
 module[MODULE_SPRITE_INDEX] = spr_armor_16_16_2;
 module[MODULE_COLOR]=c_white;
 module[MODULE_MASS_MOD]=10;
@@ -305,12 +288,22 @@ module[MODULE_HULL_MOD]=5;
 scr_push_array_1d(global.module_library, module);
 
 module = scr_ship_module();
-module[MODULE_NAME]="Armor 3";
-module[MODULE_DESCRIPTION]="Basic armor.";
-module[MODULE_TYPE]="lateral";// command, cargo, thrust, lateral, gun
+module[MODULE_NAME]="Armor L1";
+module[MODULE_DESCRIPTION]="Large armor plate.";
+module[MODULE_TYPE]="armor";// command, cargo, thrust, lateral, gun
 module[MODULE_SPRITE_INDEX] = spr_armor_16_32_1;
 module[MODULE_COLOR]=c_white;
-module[MODULE_MASS_MOD]=20;
+module[MODULE_MASS_MOD]=40;
 module[MODULE_HULL_MOD]=10;
+scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Armor 3";
+module[MODULE_DESCRIPTION]="Basic armor.";
+module[MODULE_TYPE]="armor";// command, cargo, thrust, lateral, gun
+module[MODULE_SPRITE_INDEX] = spr_armor_16_16_3;
+module[MODULE_COLOR]=c_white;
+module[MODULE_MASS_MOD]=10;
+module[MODULE_HULL_MOD]=5;
 scr_push_array_1d(global.module_library, module);
 

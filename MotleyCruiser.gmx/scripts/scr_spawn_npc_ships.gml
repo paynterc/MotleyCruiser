@@ -54,8 +54,12 @@ for(var i=1; i<=num_ships; i++){
         x = clamp( irandom(global.sector_width ), 1, global.sector_width );
         y = clamp( irandom(global.sector_width ), 1, global.sector_width );
         //ship_index = irandom(array_length_1d(global.ship_library)-1);
-        ship_index = irandom(array_length_1d(scr_ship_index("ship"))-1);
-        ship_data = global.ship_library[ship_index];
+        var ship_results = scr_ship_search(ship_types.ship);
+        if(ship_results != noone){
+            ship_data = scr_array_random(ship_results);
+        }else{
+            ship_data=global.ship_library[0];
+        }
         scr_instantiate_ship();
         scr_update_ship_data();    
     }

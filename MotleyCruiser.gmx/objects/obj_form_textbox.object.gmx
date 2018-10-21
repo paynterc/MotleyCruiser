@@ -35,6 +35,7 @@ field_label = "Name";
 font = fnt_menus_med;
 alarm[0] = room_speed;
 show=true;
+labelposition="center";//left, right, center
 
 </string>
           </argument>
@@ -164,16 +165,22 @@ if(show){
     
     if(selected){
         if(!blink){
-            draw_text(xx,yy,txt+" ");
+            draw_text(xx,yy,string(txt)+" ");
         }else{
-            draw_text(xx,yy,txt+"|");
+            draw_text(xx,yy,string(txt)+"|");
         }
     }else{
         if(txt == ""){
-            draw_text(xx,yy, field_label);
+            if(labelposition=="center"){
+                draw_text(xx,yy, field_label);
+            }
+
         }else{
             draw_text(xx,yy, txt);
         }
+    }
+    if(labelposition=="right"){
+        draw_text(xx - sprite_get_width(sprite_index)/2,yy, field_label);
     }
 }
 </string>
