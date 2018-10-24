@@ -79,6 +79,20 @@ instance_destroy();
             <string>/// Add some cargo
 scr_cargo_add(cargo,qty);
 scr_play_sound(snd_pickup);
+
+// Announce pickup
+var cargoName = scr_commodity_lib_read(cargo,0);
+var barkTxt = string(qty) + " units of " + string(cargoName) + " retrieved!";
+var randomSprite;
+if(global.crew!=noone){
+    var randomCrew = scr_array_random(global.crew);
+    randomSprite = randomCrew[NPC_SPRITE];
+}else{
+    randomSprite = spr_old_salt;
+}
+scr_flybark(barkTxt,randomSprite,3,true);
+
+// Destroy self
 instance_destroy();
 </string>
           </argument>

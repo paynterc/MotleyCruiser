@@ -88,7 +88,7 @@ tbox.boxh = boxh;
 tbox.boxx2 = boxx1 + boxw;
 tbox.boxy2 = boxy1+boxh;
 tbox.yoffset_max = frame_bottom-tbox.boxy1;
-
+tbox.popspeed = 3000;
 // portrait
 if(portrait){
     tbox.portrait = portrait;

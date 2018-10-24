@@ -333,7 +333,11 @@ randomize();
 // NPC Ships
 scr_spawn_npc_ships();
 
-//scr_spawn_derelict_trap(player_x+100,player_y+100);
+var trapcount = irandom(2)+1;
+for(var i=0; i<trapcount; i++){
+    scr_spawn_derelict_trap(irandom(room_width),irandom(room_height));
+}
+
 
 // Pirate patrols
 var ppcount = irandom(3)+1;
@@ -341,6 +345,6 @@ for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(room_width),irandom(room_height),FACTION_PIRATE,irandom(3)+1);
 }
 
-scr_spawn_npc_ship_single(FACTION_PIRATE,noone,player_x + 120,player_y+120);
+//scr_spawn_npc_ship_single(FACTION_PIRATE,noone,player_x + 120,player_y+120);
 
 //scr_flybark("WHAT UP DOG?",spr_old_salt,3,true);

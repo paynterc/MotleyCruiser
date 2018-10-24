@@ -29,5 +29,10 @@
     <frame index="6">images\spr_pudning_6.png</frame>
     <frame index="7">images\spr_pudning_7.png</frame>
     <frame index="8">images\spr_pudning_8.png</frame>
+    <frame index="9">images\spr_pudning_9.png</frame>
+    <frame index="10">images\spr_pudning_10.png</frame>
+    <frame index="11">images\spr_pudning_11.png</frame>
+    <frame index="12">images\spr_pudning_12.png</frame>
+    <frame index="13">images\spr_pudning_13.png</frame>
   </frames>
 </sprite>

@@ -28,7 +28,9 @@
             <string>/// Init
 drawgui = true;
 
-// These can be overwritten. They will be reapplied in the parsing step
+/***
+These can be overwritten. They will be reapplied and calculated in the parsing state. See Step event.
+***/
 text = "";
 font = fnt_messagebox;
 boxw = room_width;// or view_width or gui_width
@@ -41,8 +43,15 @@ pad_t=16;
 pad_b=16;
 drawbox = true;
 yoffset_max = room_height - boxy1;/// Max offset from bottom
-popspeed = 1000;
+popspeed = 1000;// speed the window moves at.
 spd = 3;
+desty=noone;// If moving the box up, this is the final y position
+portrait = noone;// A sprite
+options=noone;
+option_target=noone;// The object to send the answer to. It should contain conditional statements that refer to the selected option and an array called fly_conditionals.
+option_index=noone;// The index of the question currently being asked. The option_target object should have an array called fly_conditionals.
+
+
 
 
 // These dependant variables will be updated in the parsing step according to the base settings above
@@ -67,19 +76,11 @@ destroy=false;
 words=noone;// An array of words to be fed to the typewriter script
 
 
-//popup
-desty=noone;// If moving the box up, this is the final y position
-
-
-// portrait
-portrait = noone;
+// portrait tracking - do not overwrite
 pwidth = 0;
 pheight = 0;
 
-// options
-options=noone;
-option_target=noone;// The object to send the answer to
-option_index=noone;// The index of the question answered. Object should have an array called fly_conditionals
+// options tracking - do not overwrite
 options_triggered=false;// Ready to show options
 showoptions=false;
 option_selected = false;

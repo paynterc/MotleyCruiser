@@ -413,7 +413,8 @@ if(scr_user_input("fullscreen")){
     if (!window_get_fullscreen()){        
         window_set_fullscreen(true);
     }else{
-        window_set_fullscreen(false);       
+        window_set_fullscreen(false);
+     
     }
 }
 
@@ -650,7 +651,7 @@ if(!instance_exists(obj_sound_control)){
             draw_text(48, 128, "planet seed: " + string(global.planet_seed) );
             draw_text(48, 160, "room seed: " + string(obj_planet_surface.seed) );
     }
-/***
+
 
     draw_text(48, 64, "D WIDTH: " + string(display_get_width()));
     draw_text(48, 96, "D height: " + string(display_get_height()));
@@ -660,7 +661,7 @@ if(!instance_exists(obj_sound_control)){
     
     draw_text(48, 192, "W WIDTH: " + string(window_get_width()));
     draw_text(48, 224, "W height: " + string(window_get_height()));
-    
+    /***
     
     
 
