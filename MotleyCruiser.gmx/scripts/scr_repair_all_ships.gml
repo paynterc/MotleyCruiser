@@ -1,6 +1,8 @@
-//scr_repair_all_ships()
-var repair_cost = scr_repair_all_ship_cost();
-
+//scr_repair_all_ships(cost)
+var cost = argument0;
+if(cost<0){
+    cost=0;
+}
 global.player_ship = scr_repair_ship(global.player_ship);
 
 if(global.fleet!=noone){
@@ -9,4 +11,4 @@ if(global.fleet!=noone){
     }
 }
 
-global.credits -= repair_cost;
+global.credits -= cost;

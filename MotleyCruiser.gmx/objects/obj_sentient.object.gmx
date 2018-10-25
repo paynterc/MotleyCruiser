@@ -46,6 +46,7 @@ dialogue = noone;
 image_speed = .25;
 
 is_trader = false;
+is_shipwright = false;
 
 
 </string>
@@ -126,6 +127,8 @@ if(active == 0){
             <kind>1</kind>
             <string>if(is_trader){
     draw_sprite(spr_trade_icon,0,x, y - sprite_height - sprite_get_height(spr_trade_icon)/2);
+}else if(is_shipwright){
+    draw_sprite(spr_shipwright_icon,0,x, y - sprite_height - sprite_get_height(spr_shipwright_icon)/2);
 }
 </string>
           </argument>

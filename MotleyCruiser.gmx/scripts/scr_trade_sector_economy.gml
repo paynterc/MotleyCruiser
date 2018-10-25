@@ -1,6 +1,6 @@
 /***********
 Calculates impact of all economy types in the sector. 
-Having too many agrarian economies will lower the value
+i.e., Having too many agrarian economies will lower the value
 of agrarian goods.
 ***********/
 //scr_trade_sector_economy(exclude_landed)

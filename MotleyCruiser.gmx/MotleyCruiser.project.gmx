@@ -467,6 +467,7 @@
     <sprite>sprites\sprite241</sprite>
     <sprite>sprites\spr_melee_area</sprite>
     <sprite>sprites\spr_trade_icon</sprite>
+    <sprite>sprites\spr_shipwright_icon</sprite>
     <sprite>sprites\spr_flame_area</sprite>
     <sprite>sprites\spr_exit</sprite>
     <sprite>sprites\spr_exit_inactive</sprite>
@@ -775,7 +776,7 @@
       <script>scripts\scr_ships.gml</script>
       <script>scripts\scr_npc_occupation_library.gml</script>
       <script>scripts\scr_accessories.gml</script>
-      <scripts name="_indexes">
+      <scripts name="_searches">
         <script>scripts\scr_ship_search.gml</script>
       </scripts>
     </scripts>
@@ -898,6 +899,10 @@
       <script>scripts\scr_rotate_cycle.gml</script>
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
+    </scripts>
+    <scripts name="_powerups">
+      <script>scripts\scr_heal_player.gml</script>
+      <script>scripts\scr_flash.gml</script>
     </scripts>
     <scripts name="_glare">
       <script>scripts\glr_Documentation.gml</script>
@@ -1129,10 +1134,6 @@
           <script>scripts\glr_directional_custom_get_subimage_new.gml</script>
         </scripts>
       </scripts>
-    </scripts>
-    <scripts name="_powerups">
-      <script>scripts\scr_heal_player.gml</script>
-      <script>scripts\scr_flash.gml</script>
     </scripts>
     <scripts name="_trade">
       <script>scripts\scr_trade_buy.gml</script>

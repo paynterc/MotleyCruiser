@@ -51,7 +51,10 @@ sent = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// User interact
+            <string>/// Capture user response
+/***
+"sent" refers to the npc sending the message.
+***/
 if(scr_user_input("interact")){
     event_user(0);
 }
@@ -76,6 +79,20 @@ if(fly_conditionals!=noone){
         }else{
             scr_add_npc_to_crew(sent);
         }
+        sent=noone;
+    }
+    if(fly_conditionals[2]==1){
+        
+        fly_conditionals[2]=0;
+        var repairCost = scr_repair_all_ship_cost();
+        if(repairCost&lt;=global.credits || repairCost == 0 ){
+            scr_repair_all_ships(repairCost);
+            scr_flywriter("Thank you for your business. Your ships will be reapaired by the time you depart.",sent.sprite_index,true,"1,OK");
+        }else{
+            scr_flywriter("You can't afford it. Come back when you've earned enough credits.",sent.sprite_index,true,"1,OK");
+        }
+        
+
         sent=noone;
     }
     if(fly_conditionals[1]==1){
@@ -147,6 +164,12 @@ if(sent != noone &amp;&amp; sent.name != noone){
         
         scr_gui_set_context(obj_trade);
     
+    }else if(sent.is_shipwright){
+    
+        var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
+        txt += sent.npc_data[NPC_NAME_FIRST] + " is a shipwright. Would like them to repair your ships? It will cost " + string(scr_repair_all_ship_cost()) + "C.";  
+        scr_flywriter(txt,sent.sprite_index,true,"2,OK,Nope");
+        
     }else if( scr_in_array(global.hirable_occupations,occ) ){
         
         var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   

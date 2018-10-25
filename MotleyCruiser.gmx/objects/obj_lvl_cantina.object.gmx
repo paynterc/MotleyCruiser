@@ -200,6 +200,7 @@ if(!populated)
     populated = true;
     var b_listers = true; // spawn b-listers
     var make_trader = true;
+    var make_shipwright = true;
     
     location_index = global.landed_on;
     location_type = global.landed_type;
@@ -303,16 +304,22 @@ if(!populated)
                 with(sentient){
                     scr_npc_map_to_object();
                 }
-                if(make_trader){
-                    make_trader = false;
-                    sentient.is_trader = true;
-                }
+
                 
                 if(npc[NPC_RACE_INDEX]!=5 &amp;&amp; npc[NPC_RACE_INDEX]!=7){
                     // I like Pudnings to move
                     sentient.image_speed = 0;
                 }
-                
+                if(make_trader){
+                    make_trader = false;
+                    sentient.is_trader = true;
+                    continue;
+                }
+                if(make_shipwright){
+                    make_shipwright = false;
+                    sentient.is_shipwright = true;
+                    continue;
+                }
             }else{
                 sentient.active=0
             }       
