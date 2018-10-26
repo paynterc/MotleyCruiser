@@ -29,6 +29,8 @@
 type=1//player team
 depth = -y;
 
+// npc_data = noone; // This causes a problem on instance_change
+
 // data indexes
 global_index = noone;
 crew_index = noone;
@@ -65,6 +67,11 @@ sublight = noone;
 
 alarm[0] = room_speed;
 alarm[1] = room_speed * r_speed;
+
+
+custom_sprite=false;// Set this so we can delete the sprite 
+
+accessories = noone;
 </string>
           </argument>
         </arguments>
@@ -109,6 +116,10 @@ if(weapon != noone){
 
 if(path_exists(path)) {
     path_delete(path);
+}
+
+if(custom_sprite!=noone){
+    sprite_delete(custom_sprite);
 }
 </string>
           </argument>
@@ -493,6 +504,9 @@ scr_move(hspd, vspd);
 if(path_exists(path)) {
     path_delete(path);
 }
+if(custom_sprite!=noone){
+    sprite_delete(custom_sprite);
+}
 </string>
           </argument>
         </arguments>
@@ -544,6 +558,16 @@ if(sublight!=noone){
             <string>draw_self();
 draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
 
+if(is_array(accessories)){
+    for(var i = 0; i&lt;array_length_1d(accessories); i++){
+        var aData = accessories[i];
+        if(is_array(aData)){
+            if(aData[0]!=noone){
+                draw_sprite_ext(aData[0],0,x,y, image_xscale, 1, 0,aData[1],1);
+            }
+        }
+    }
+}
 </string>
           </argument>
         </arguments>

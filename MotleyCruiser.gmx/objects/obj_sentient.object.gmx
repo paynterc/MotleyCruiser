@@ -48,11 +48,11 @@ image_speed = .25;
 is_trader = false;
 is_shipwright = false;
 
-hair=noone;
-top=noone;
-eye=noone;
-hat=noone;
-custom_sprite=false;// Set this so we can delete the sprite 
+
+custom_sprite=noone;// Set this so we can delete the sprite if needed
+accessories = noone;// This will be set through scripting. Probaly data in npc_data 
+
+
 </string>
           </argument>
         </arguments>
@@ -102,7 +102,7 @@ glr_light_set_static(llight, true);/// Light
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(custom_sprite){
+            <string>if(custom_sprite!=noone){
     sprite_delete(custom_sprite);
 }
 </string>
@@ -131,6 +131,32 @@ glr_light_set_static(llight, true);/// Light
 if(active == 0){
     glr_light_destroy(llight);
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// cleanup
+if(custom_sprite!=noone){
+    sprite_delete(custom_sprite);
 }
 </string>
           </argument>
@@ -182,23 +208,17 @@ if(active == 0){
           <argument>
             <kind>1</kind>
             <string>draw_self();
-/***
-if(hair != noone){
-    draw_sprite_ext(hair,0,x,y, image_xscale, 1, 0,haircolor,1);
-}
 
-if(top != noone){
-    draw_sprite_ext(top,0,x,y, image_xscale, 1, 0,c_white,1);
+if(is_array(accessories)){
+    for(var i = 0; i&lt;array_length_1d(accessories); i++){
+        var aData = accessories[i];
+        if(is_array(aData)){
+            if( sprite_exists(aData[0]) ){
+                draw_sprite_ext(aData[0],0,x,y, image_xscale, 1, 0,aData[1],1);
+            }
+        }
+    }
 }
-
-if(eye != noone){
-    draw_sprite_ext(eye,0,x,y, image_xscale, 1, 0,c_white,1);
-}
-
-if(hat != noone){
-    draw_sprite_ext(hat,0,x,y, image_xscale, 1, 0,c_white,1);
-}
-***/
 
 </string>
           </argument>

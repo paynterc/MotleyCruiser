@@ -90,4 +90,67 @@ if(map[NPC_SEX]==1){
 
 map[NPC_HIRE_PRICE]=choose(50,100,150,200);
 
+accessories = noone;
+acc_colors = noone;
+
+if(race_index==0){
+    skincolor = scr_array_random(global.skincolors);
+    if(skincolor != noone){
+        map[NPC_SKIN_COLOR] = skincolor;
+    }
+}
+    
+//global.accessories[race_index]
+if(global.accessories[race_index] != noone){
+    
+    var accessories = global.accessories[race_index];
+    var a_chance = 5;
+    var acc_record = scr_array(noone,c_white);// Acc index, color
+    //chest   
+    var tops = accessories[0];
+    var top = acc_record;
+    if(tops != noone){
+        //choose chest
+        if( irandom(a_chance)!= a_chance ){
+            top[0] = scr_array_random(tops);
+        }       
+    }
+    
+    
+    
+    //hair
+    var hairs = accessories[1];
+    var hair =acc_record;
+    if(hairs != noone){
+        //choose hair
+        if(irandom(a_chance)!=a_chance){
+            hair[0] = scr_array_random(hairs);
+            hair[1] = scr_array_random(global.haircolors);;
+        }
+    }
+    
+    
+    //head
+    var heads = accessories[2];
+    var head = acc_record;
+    if(heads != noone){
+        //choose heads
+        if(irandom(a_chance)==a_chance){
+            head[0] = scr_array_random(heads);
+        }
+    }
+    
+    //eyes
+    var eyes = accessories[3];
+    var eye = acc_record;
+    if(eyes != noone){
+        //choose eyes
+        if(irandom(a_chance)==a_chance){
+            eye[0] = scr_array_random(eyes);
+        }
+    }
+    
+    map[NPC_ACCESSORIES] = scr_array(top,hair,head,eye);
+}
+
 return map;

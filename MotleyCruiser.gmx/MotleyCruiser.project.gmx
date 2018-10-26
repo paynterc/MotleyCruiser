@@ -123,9 +123,11 @@
       <sprite>sprites\spr_gorgan</sprite>
       <sprite>sprites\spr_hairbeast</sprite>
       <sprite>sprites\spr_human</sprite>
+      <sprite>sprites\sprite376</sprite>
       <sprite>sprites\spr_human_BU</sprite>
       <sprite>sprites\spr_old_salt</sprite>
       <sprite>sprites\spr_human_fml</sprite>
+      <sprite>sprites\sprite375</sprite>
       <sprite>sprites\spr_human_fml_BU2</sprite>
       <sprite>sprites\spr_human_helm</sprite>
       <sprite>sprites\spr_hurgan</sprite>
@@ -1295,12 +1297,12 @@
     </objects>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
+      <object>objects\obj_mortal</object>
       <object>objects\obj_team</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_enemy</object>
       <object>objects\obj_sentient</object>
       <object>objects\obj_core</object>
-      <object>objects\obj_mortal</object>
       <object>objects\obj_drone</object>
       <object>objects\obj_health_bar</object>
       <object>objects\obj_arm</object>
@@ -1482,7 +1484,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="345">
+  <constants number="347">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1691,6 +1693,8 @@
     <constant name="NPC_SEX">13</constant>
     <constant name="NPC_SPRITE">15</constant>
     <constant name="NPC_TRAIT">11</constant>
+    <constant name="NPC_ACCESSORIES">18</constant>
+    <constant name="NPC_SKIN_COLOR">19</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ID">12</constant>

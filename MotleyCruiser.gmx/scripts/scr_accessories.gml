@@ -23,7 +23,7 @@ global.haircolors = haircolors;
 
 
 var skincolors = noone;
-skincolors = scr_push_array(skincolors,c_white);
+skincolors = scr_push_array(skincolors,make_colour_rgb(249, 234, 232));
 skincolors = scr_push_array(skincolors,make_colour_rgb(255,210,210));
 skincolors = scr_push_array(skincolors,make_colour_rgb(255,220,160));
 skincolors = scr_push_array(skincolors,make_colour_rgb(160,140,100));
