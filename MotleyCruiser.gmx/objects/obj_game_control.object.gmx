@@ -85,6 +85,7 @@ global.gx_locations = ds_map_create();// Destroy at game end
 scr_new_game_defaults();
 
 scr_faction_centers();
+global.racial_centers = noone;// set this at new game or game load.
 
 global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
 global.sector_map = noone;// An array of locations in this sector

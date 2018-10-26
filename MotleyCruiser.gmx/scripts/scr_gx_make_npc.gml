@@ -16,15 +16,18 @@ for(var i = 0; i<array_height_2d(global.faction_centers); i++){
 // Pick a random, weighted faction
 var random_faction = scr_random_weighted(thefactions,faction_weights);
 ***/
-random_faction = noone;
-
+var random_faction = noone;
+var available_races = scr_racial_center_lookup(sector_x,sector_y);
 // Pick a race
-var race_index;
+var race_index = scr_array_random(available_races);
+
+/***
 if(random_faction!=noone){
     race_index = global.faction_races[ random_faction, irandom( array_length_2d(global.faction_races,random_faction)-1 ) ];
 }else{
     race_index = irandom(array_height_2d(global.races) - 1);
 }
+***/
 
 
 var run_modifier = irandom(4)-2;

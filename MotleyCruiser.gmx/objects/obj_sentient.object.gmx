@@ -48,7 +48,11 @@ image_speed = .25;
 is_trader = false;
 is_shipwright = false;
 
-
+hair=noone;
+top=noone;
+eye=noone;
+hat=noone;
+custom_sprite=false;// Set this so we can delete the sprite 
 </string>
           </argument>
         </arguments>
@@ -76,6 +80,31 @@ llight = glr_light_create(spr_glr_light_mask_point, 0, x, y, c_white, 0);
 glr_light_set_scaling(llight,.35,.35);
 glr_light_set_static(llight, true);/// Light
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(custom_sprite){
+    sprite_delete(custom_sprite);
+}
 </string>
           </argument>
         </arguments>
@@ -130,6 +159,47 @@ if(active == 0){
 }else if(is_shipwright){
     draw_sprite(spr_shipwright_icon,0,x, y - sprite_height - sprite_get_height(spr_shipwright_icon)/2);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+/***
+if(hair != noone){
+    draw_sprite_ext(hair,0,x,y, image_xscale, 1, 0,haircolor,1);
+}
+
+if(top != noone){
+    draw_sprite_ext(top,0,x,y, image_xscale, 1, 0,c_white,1);
+}
+
+if(eye != noone){
+    draw_sprite_ext(eye,0,x,y, image_xscale, 1, 0,c_white,1);
+}
+
+if(hat != noone){
+    draw_sprite_ext(hat,0,x,y, image_xscale, 1, 0,c_white,1);
+}
+***/
+
 </string>
           </argument>
         </arguments>

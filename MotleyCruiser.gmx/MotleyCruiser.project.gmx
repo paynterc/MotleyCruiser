@@ -530,6 +530,7 @@
     <scripts name="_arrays">
       <script>scripts\scr_str_split.gml</script>
       <script>scripts\scr_array_random.gml</script>
+      <script>scripts\scr_array_random_2d.gml</script>
       <script>scripts\scr_new_array.gml</script>
       <script>scripts\scr_push_array.gml</script>
       <script>scripts\scr_push_array_1d.gml</script>
@@ -636,6 +637,8 @@
       <script>scripts\scr_remove_npc_from_location.gml</script>
       <script>scripts\scr_find_landable_target.gml</script>
       <script>scripts\scr_faction_centers.gml</script>
+      <script>scripts\scr_racial_centers.gml</script>
+      <script>scripts\scr_racial_center_lookup.gml</script>
       <scripts name="_galaxy_admin">
         <script>scripts\scr_save_galaxy.gml</script>
         <script>scripts\scr_load_galaxy.gml</script>

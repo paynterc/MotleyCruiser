@@ -1,6 +1,6 @@
 /*************
 Coordinates of sectors that are the center for each faction
-
+- DEPRECATED. USING RACIAL CENTERS NOW.
 **************/
 
 var fc = noone;// Faction centers

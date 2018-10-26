@@ -125,10 +125,18 @@ if(ini_section_exists(game)){
     global.equipped[0]=51;
     ***/
       
-    //global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
-    //random_set_seed(global.galaxy_seed);
     
     global.player_ship = scr_modules_to_ship_data(global.player_ship);
+    
+    /***
+    GALAXY LEVEL RANDOMIZATION
+    ***/
+    global.galaxy_seed = ini_read_real(game, "galaxy_seed", 0);
+    random_set_seed(global.galaxy_seed);
+    scr_racial_centers();// random racial map of galaxy
+    /***
+    END GALAXY LEVEL RANDOMIZATION
+    ***/
     
     scr_ev_game_loaded();
     
