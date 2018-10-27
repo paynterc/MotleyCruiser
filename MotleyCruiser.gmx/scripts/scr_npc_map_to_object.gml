@@ -12,6 +12,6 @@ hire_price = npc_data[NPC_HIRE_PRICE];
 
 skincolor = scr_get_array_1d(npc_data,NPC_SKIN_COLOR);
 if(skincolor != noone){
-    image_blend = skincolor;
+    //image_blend = skincolor;
 }
 accessories = scr_get_array_1d(npc_data,NPC_ACCESSORIES);

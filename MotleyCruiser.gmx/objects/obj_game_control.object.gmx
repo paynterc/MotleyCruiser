@@ -566,6 +566,15 @@ if(ds_exists(global.galaxy_map,ds_type_map)){
     ds_map_destroy(global.galaxy_map);
 }
 
+// Crew temp sprites
+for(var i=0; i&lt;array_length_1d(global.crew); i++){
+    var npc_data = global.crew[i];
+    var _sprite_index=scr_get_array_1d(npc_data,NPC_SPRITE_TEMP);
+    if(sprite_exists(_sprite_index)){
+        sprite_delete(_sprite_index);
+    }
+}
+
 
 </string>
           </argument>

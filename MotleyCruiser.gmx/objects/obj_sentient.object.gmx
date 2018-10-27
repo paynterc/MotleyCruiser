@@ -208,7 +208,7 @@ if(custom_sprite!=noone){
           <argument>
             <kind>1</kind>
             <string>draw_self();
-
+/***
 if(is_array(accessories)){
     for(var i = 0; i&lt;array_length_1d(accessories); i++){
         var aData = accessories[i];
@@ -219,6 +219,7 @@ if(is_array(accessories)){
         }
     }
 }
+***/
 
 </string>
           </argument>

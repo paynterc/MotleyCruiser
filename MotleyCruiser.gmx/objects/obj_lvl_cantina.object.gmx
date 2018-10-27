@@ -303,6 +303,7 @@ if(!populated)
                 sentient.npc_data = npc;
                 with(sentient){
                     scr_npc_map_to_object();
+                    scr_set_npc_sprite();
                 }
 
                 

@@ -36,17 +36,49 @@ if(ini_section_exists(game)){
     ds_list_read(read_list,str);
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
-    /***
-    global.crew = noone;
-    global.crew = scr_push_array( global.crew, scr_gx_make_npc(0,0) );
-    global.crew = scr_push_array(global.crew,scr_gx_make_npc(0,0));
-    global.crew = scr_push_array(global.crew,scr_gx_make_npc(0,0));
-    ***/
+    
     if(!is_array(global.crew))
     {
         global.crew = noone;
 
+    }else{
+    
+        /***
+        global.crew = noone;
+        global.crew = scr_push_array( global.crew, scr_gx_make_npc(0,0) );
+        global.crew = scr_push_array(global.crew,scr_gx_make_npc(0,0));
+        global.crew = scr_push_array(global.crew,scr_gx_make_npc(0,0));
+        ***/
+        
+        // Make crew sprites with all accessories. 
+        // DELETE THESE AT THE END OF THE GAME.
+        // We need these for popup dialog boxes.
+        for(var i=0; i<array_length_1d(global.crew); i++){
+        
+            if( !is_array(global.crew[i]) ){
+                continue;
+            }
+            var npc_entity = scr_npc();
+            var npc_data = scr_fill_array(npc_entity,global.crew[i]);
+            var _sprite_index=scr_get_array_1d(npc_data,NPC_SPRITE);
+            var skincolor = scr_get_array_1d(npc_data,NPC_SKIN_COLOR);
+            var accessories = scr_get_array_1d(npc_data,NPC_ACCESSORIES);
+            
+            var bodyData = scr_array(_sprite_index,skincolor);
+    
+            // Submit all sprites to a script to merge them and draw them to a surface
+            var spriteArray = scr_array(bodyData);
+            for(var n=0;n<array_length_1d(accessories); n++){
+                spriteArray = scr_push_array(spriteArray,accessories[n]);
+            }
+            
+            npc_data[NPC_SPRITE_TEMP] = scr_surface_to_sprite(spriteArray);
+            
+            global.crew[i]=npc_data; 
+        }
+        
     }
+    
 
     read_list = ds_list_create();
     var str = ini_read_string(game, "team", "");
@@ -149,23 +181,6 @@ if(ini_section_exists(game)){
     
 }
 ini_close();
-
-
-
-/***
-
-//Random crew
-for(var i=0; i<2; i++){
-    global.crew[i]=scr_array_random(global.npcs);
-}
-
-//Random fleet
-global.fleet = noone;
-for(var i=0; i<20; i++){
-    global.fleet[i]=scr_array_random(global.ship_library);
-}
-
-***/
 
 
 

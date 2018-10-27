@@ -833,6 +833,7 @@
       <script>scripts\scr_drop_loot.gml</script>
       <script>scripts\scr_make_control_room.gml</script>
       <script>scripts\scr_npc_map_to_object.gml</script>
+      <script>scripts\scr_set_npc_sprite.gml</script>
       <script>scripts\scr_start_alarm.gml</script>
     </scripts>
     <scripts name="_service">
@@ -841,7 +842,6 @@
       <script>scripts\scr_view_zoom.gml</script>
       <script>scripts\scr_gamepad_detect.gml</script>
       <script>scripts\scr_surface_to_sprite.gml</script>
-      <script>scripts\scr_surface_to_sprite_bu.gml</script>
       <scripts name="_inventory">
         <script>scripts\scr_inv_item_count.gml</script>
         <script>scripts\scr_inv_item_decrement.gml</script>
@@ -1484,7 +1484,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="347">
+  <constants number="348">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1695,6 +1695,7 @@
     <constant name="NPC_TRAIT">11</constant>
     <constant name="NPC_ACCESSORIES">18</constant>
     <constant name="NPC_SKIN_COLOR">19</constant>
+    <constant name="NPC_SPRITE_TEMP">20</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ID">12</constant>
