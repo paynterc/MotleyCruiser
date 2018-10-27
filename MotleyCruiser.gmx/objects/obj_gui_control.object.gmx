@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>/// Use this object to manage other window interfaces
+scr_set_gui_vars();
+
 has_ball=noone;// Who has the ball?
 ui_stack = ds_stack_create();// Stack previously open menus here so we can get back to them
 </string>
@@ -159,6 +161,114 @@ ds_stack_clear(ui_stack);
 if(ds_exists(ui_stack,ds_type_stack)){
     ds_map_destroy(ui_stack);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw Space Gui
+// supplies, credits, locatin
+if(room == rm_space){
+    var _xStart = 32;
+    var _yStart = 40;
+    var x1=_xStart;
+    var y1=_yStart;
+    var rw = 1;
+    
+    if(instance_exists(obj_ship_data)){
+        draw_set_halign(fa_left);
+        draw_set_valign(fa_bottom);
+        var spacing = 40;
+        
+        draw_rectangle_color(x1, y1, x1+global.supply_food, y1+16, c_red, c_red, c_red, c_red, true);
+        draw_set_color(c_red);
+        draw_text(x1,y1,"FOOD: " + string(obj_ship_data.cargo_food));
+        
+        rw += 1;
+        y1 = (spacing*rw);
+        draw_rectangle_color(x1, y1, x1+global.supply_water, y1+16, c_aqua, c_aqua, c_aqua, c_aqua, true);
+        draw_set_color(c_aqua);
+        draw_text(x1,y1,"WATER: " + string(obj_ship_data.cargo_water));
+        
+        rw += 1;
+        y1 = (spacing*rw);
+        draw_rectangle_color(x1, y1, x1+global.supply_fuel, y1+16, c_orange, c_orange, c_orange, c_orange, true);
+        draw_set_color(c_orange);
+        draw_text(x1,y1,"FUEL: " + string(obj_ship_data.cargo_fuel));
+        
+        rw += 1;
+        y1 = (spacing*rw);
+        draw_rectangle_color(x1, y1, x1+global.supply_oxygen, y1+16, c_silver, c_silver, c_silver, c_silver, true);
+        draw_set_color(c_silver);
+        draw_text(x1,y1,"OXYGEN: " + string(obj_ship_data.cargo_oxygen));
+    
+    }
+    
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_bottom);
+    x1= gui_width / 2;
+    y1=_yStart;
+    draw_set_color(c_lime);
+    draw_text(x1,y1,"CREDITS: " + string(global.credits));
+    
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_bottom);
+    x1= _xStart;
+    y1 = gui_height - 16;
+    draw_set_color(c_lime);
+    draw_text(x1,y1,"SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_x) );
+    
+    if(instance_exists(obj_player_ship)){
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_bottom);
+        x1= gui_width / 2;
+        draw_set_color(c_lime);
+        draw_text(x1,y1,"COORDINATES: x:" + string(round(obj_player_ship.x)) + " | y:" + + string(round(obj_player_ship.y)) );
+    }
+
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Debug text
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_bottom);
+    draw_text(gui_width-32, gui_height-16, "FPS Real: " + string(fps_real));
 </string>
           </argument>
         </arguments>

@@ -29,13 +29,17 @@
 /***
 Reduce the supply of each on a timer. When a resource reaches zero, take a unit 
 from cargo.
+
+Use global varialbes
+global.supply_food // 1 cargo food = 1 day food = 3 meals;
+global.supply_water/ / 1 cargo water = 2 days water
+global.supply_fuel
+global.supply_oxygen
+
 ***/
 day = 60;//seconds per day
 
-supply_food=100;// 1 cargo food = 1 day food = 3 meals;
-supply_water=100;// 1 cargo water = 2 days water
-supply_fuel=100;
-supply_oxygen=100;
+
 
 time_food = 3;// ticks per day
 time_water = 25;// ticks per day
@@ -79,18 +83,18 @@ alarm[3]=room_speed *  (day / time_oxygen);//
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(room == rm_space){
-    supply_oxygen -= inc_oxygen;
+            <string>/// Increment oxygen
+if(room == rm_space){
+    global.supply_oxygen -= inc_oxygen;
 
 }
-if(supply_oxygen&lt;1){
-    supply_oxygen=0;
+if(global.supply_oxygen&lt;1){
     if(cargo_oxygen&gt;0){
         scr_cargo_item_decrement(1,1);
         cargo_oxygen=scr_cargo_item_count(1);
-        supply_oxygen = 100;
+        global.supply_oxygen = 100;
     }else{
-        supply_oxygen=0;
+        global.supply_oxygen=0;
     }
     
 }
@@ -117,24 +121,25 @@ alarm[3]=room_speed *  (day / time_oxygen);//
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(room == rm_space){
+            <string>/// Increment fuel
+if(room == rm_space &amp;&amp; !global.paused){
     
     if(instance_exists(obj_player_ship)){
         if(obj_player_ship.thrust_fwd){
-                supply_fuel -= inc_fuel;
+                global.supply_fuel -= inc_fuel;
         }
     }
 
 
 }
-if(supply_fuel&lt;1){
+if(global.supply_fuel&lt;1){
 
     if(cargo_fuel&gt;0){
         scr_cargo_item_decrement(4,1);
         cargo_fuel=scr_cargo_item_count(4);
-        supply_fuel = 100;
+        global.supply_fuel = 100;
     }else{
-        supply_fuel=0;
+        global.supply_fuel=0;
     }
     
 }
@@ -161,16 +166,19 @@ alarm[2]=room_speed *  (day / time_fuel);//
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(room == rm_space){
-    supply_water -= inc_water;
-}
-if(supply_water&lt;1){
-    if(cargo_water&gt;0){
-        scr_cargo_item_decrement(3,1);
-        cargo_water=scr_cargo_item_count(3);
-        supply_water = 100;
-    }else{
-        supply_water=0;
+            <string>/// Increment water
+if(!global.paused){
+    if(room == rm_space){
+        global.supply_water -= inc_water;
+    }
+    if(global.supply_water&lt;1){
+        if(cargo_water&gt;0){
+            scr_cargo_item_decrement(3,1);
+            cargo_water=scr_cargo_item_count(3);
+            global.supply_water = 100;
+        }else{
+            global.supply_water=0;
+        }
     }
 }
 alarm[1]=room_speed *  (day / time_water);//
@@ -196,19 +204,23 @@ alarm[1]=room_speed *  (day / time_water);//
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(room == rm_space){
-    supply_food -= inc_food;
-}
-
-if(supply_food&lt;1){
-    if(cargo_food&gt;0){
-        scr_cargo_item_decrement(0,1);
-        cargo_food=scr_cargo_item_count(0);
-        supply_food = 100;
-    }else{
-        supply_food=0;
+            <string>/// Increment food
+if(!global.paused){
+    if(room == rm_space){
+        global.supply_food -= inc_food;
+    }
+    
+    if(global.supply_food&lt;1){
+        if(cargo_food&gt;0){
+            scr_cargo_item_decrement(0,1);
+            cargo_food=scr_cargo_item_count(0);
+            global.supply_food = 100;
+        }else{
+            global.supply_food=0;
+        }
     }
 }
+
 alarm[0]=room_speed * (day / time_food);//food 3 times a day
 </string>
           </argument>
@@ -274,13 +286,22 @@ scr_module_modify_stats();
 /***
 Reduce the supply of each on a timer. When a resource reaches zero, take a unit 
 from cargo.
+Draw this out in obj_gui_control
 ***/
 day = 60;//seconds per day
 
+cargo_food = scr_cargo_item_count(0);
+cargo_oxygen = scr_cargo_item_count(1);
+cargo_water = scr_cargo_item_count(3);
+cargo_fuel = scr_cargo_item_count(4);
+
+/****
+These have moved to globals
 supply_food=100;// 1 cargo food = 1 day food = 3 meals;
 supply_water=100;// 1 cargo water = 2 days water
 supply_fuel=100;
 supply_oxygen=100;
+***/
 
 time_food = 3;// ticks per day
 time_water = 25;// ticks per day
@@ -292,11 +313,6 @@ inc_water = 1;
 inc_fuel = 1;
 inc_oxygen = 1;
 
-cargo_food = 0;
-cargo_oxygen = 0;
-cargo_water = 0;
-cargo_fuel = 0;
-
 
 alarm[0]=room_speed * (day / time_food);//food 3 times a day
 alarm[1]=room_speed *  (day / time_water);//
@@ -304,63 +320,6 @@ alarm[2]=room_speed *  (day / time_fuel);//
 alarm[3]=room_speed *  (day / time_oxygen);//
 
 
-cargo_food = scr_cargo_item_count(0);
-cargo_oxygen = scr_cargo_item_count(1);
-cargo_water = scr_cargo_item_count(3);
-cargo_fuel = scr_cargo_item_count(4);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw supplies
-if(room == rm_space){
-    var x1=32;
-    var y1=40;
-    var rw = 1;
-    draw_set_halign(fa_left);
-    draw_set_valign(fa_bottom);
-    var spacing = 40;
-    
-    draw_rectangle_color(x1, y1, x1+supply_food, y1+16, c_red, c_red, c_red, c_red, true);
-    draw_set_color(c_red);
-    draw_text(x1,y1,"FOOD: " + string(cargo_food));
-    
-    rw += 1;
-    y1 = (spacing*rw);
-    draw_rectangle_color(x1, y1, x1+supply_water, y1+16, c_aqua, c_aqua, c_aqua, c_aqua, true);
-    draw_set_color(c_aqua);
-    draw_text(x1,y1,"WATER: " + string(cargo_water));
-    
-    rw += 1;
-    y1 = (spacing*rw);
-    draw_rectangle_color(x1, y1, x1+supply_fuel, y1+16, c_orange, c_orange, c_orange, c_orange, true);
-    draw_set_color(c_orange);
-    draw_text(x1,y1,"FUEL: " + string(cargo_fuel));
-    
-    rw += 1;
-    y1 = (spacing*rw);
-    draw_rectangle_color(x1, y1, x1+supply_oxygen, y1+16, c_silver, c_silver, c_silver, c_silver, true);
-    draw_set_color(c_silver);
-    draw_text(x1,y1,"OXYGEN: " + string(cargo_oxygen));
-}
 
 </string>
           </argument>

@@ -32,4 +32,8 @@ ini_write_real(game,"galaxy_seed",global.galaxy_seed);
 ini_write_real(game,"mission_id",global.mission_id);// Current mission increment
 ini_write_real(game,"objective_inc",global.objective_inc);// Current objective increment.
 ini_write_real(game,"credits",global.credits);// Current credits.
+ini_write_real(game,"supply_food",global.supply_food);// Current supply.
+ini_write_real(game,"supply_water",global.supply_water);// Current supply.
+ini_write_real(game,"supply_fuel",global.supply_fuel);// Current supply.
+ini_write_real(game,"supply_oxygen",global.supply_oxygen);// Current supply.
 ini_close();

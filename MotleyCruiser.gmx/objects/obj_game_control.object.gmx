@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-scr_set_gui_vars();
+
 
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
@@ -197,7 +197,6 @@ scr_npc_occupation_library();
 global.grid = noone;
 
 
-
 // Planet side stuff
 global.planet_seed = noone;
 global.planet_map = noone;// 2d array
@@ -234,6 +233,12 @@ enum ship_class {
     tanker=10,
     freighter=11
 }
+
+// Supplies
+global.supply_food = 0;
+global.supply_water = 0;
+global.supply_fuel = 0;
+global.supply_oxygen = 0;
 </string>
           </argument>
         </arguments>
@@ -636,8 +641,7 @@ if(!instance_exists(obj_sound_control)){
     }
 
     
-    draw_set_valign(fa_left);
-    draw_text(32, view_hport[0]-32, "FPS Real: " + string(fps_real));
+
     /***
     draw_text(96, 64, "D WIDTH: " + string(display_get_width()));
     draw_text(96, 96, "D height: " + string(display_get_height()));
@@ -662,7 +666,7 @@ if(!instance_exists(obj_sound_control)){
             draw_text(48, 160, "room seed: " + string(obj_planet_surface.seed) );
     }
 
-
+/****
     draw_text(48, 64, "D WIDTH: " + string(display_get_width()));
     draw_text(48, 96, "D height: " + string(display_get_height()));
     
@@ -671,8 +675,6 @@ if(!instance_exists(obj_sound_control)){
     
     draw_text(48, 192, "W WIDTH: " + string(window_get_width()));
     draw_text(48, 224, "W height: " + string(window_get_height()));
-    /***
-    
     
 
     if(instance_exists(obj_player_ship)){

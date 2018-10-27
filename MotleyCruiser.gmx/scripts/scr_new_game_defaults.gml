@@ -40,5 +40,11 @@ global.sector_y=0;
 global.player_x = noone;// default to room_width/2
 global.player_y = noone;
 
-
+/****************************************************************/
+/*                      SUPPLIES                                */
+/****************************************************************/
+global.supply_food = 100;
+global.supply_water = 100;
+global.supply_fuel = 100;
+global.supply_oxygen = 100;
 

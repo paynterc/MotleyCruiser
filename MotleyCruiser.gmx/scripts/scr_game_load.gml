@@ -146,6 +146,10 @@ if(ini_section_exists(game)){
     global.mission_id =  ini_read_real(game, "mission_id", 0);
     global.objective_inc =  ini_read_real(game, "objective_inc", 0);
     global.credits =  ini_read_real(game, "credits", 0);
+    global.supply_food =  ini_read_real(game, "supply_food", 0);
+    global.supply_water =  ini_read_real(game, "supply_water", 0);
+    global.supply_fuel =  ini_read_real(game, "supply_fuel", 0);
+    global.supply_oxygen =  ini_read_real(game, "supply_oxygen", 0);
     
     scr_load_player_sprite();
     
