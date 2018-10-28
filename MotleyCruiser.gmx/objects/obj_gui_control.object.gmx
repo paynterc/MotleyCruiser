@@ -233,7 +233,7 @@ if(room == rm_space){
     x1= _xStart;
     y1 = gui_height - 16;
     draw_set_color(c_lime);
-    draw_text(x1,y1,"SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_x) );
+    draw_text(x1,y1,"SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_y) );
     
     if(instance_exists(obj_player_ship)){
         draw_set_halign(fa_center);
