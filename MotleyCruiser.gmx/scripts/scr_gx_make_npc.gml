@@ -93,10 +93,13 @@ map[NPC_HIRE_PRICE]=choose(50,100,150,200);
 accessories = noone;
 acc_colors = noone;
 
-if(race_index==0){
-    skincolor = scr_array_random(global.skincolors);
-    if(skincolor != noone){
-        map[NPC_SKIN_COLOR] = skincolor;
+// TODO: Should I declare skincolor as var here?
+if( scr_get_array_1d(global.skincolors, race_index)!=noone ){
+    if(is_array(global.skincolors[race_index])){
+        skincolor = scr_array_random(global.skincolors[race_index]);
+        if(skincolor != noone){
+            map[NPC_SKIN_COLOR] = skincolor;
+        }
     }
 }
     
@@ -120,12 +123,18 @@ if(global.accessories[race_index] != noone){
     
     //hair
     var hairs = accessories[1];
-    var hair =acc_record;
+    var hair = acc_record;
     if(hairs != noone){
         //choose hair
         if(irandom(a_chance)!=a_chance){
             hair[0] = scr_array_random(hairs);
-            hair[1] = scr_array_random(global.haircolors);;
+            
+            if( scr_get_array_1d(global.haircolors, race_index)!=noone ){
+                if( is_array(global.haircolors[race_index]) ){
+                    hair[1] = scr_array_random(global.haircolors[race_index]);
+                }
+            }
+            
         }
     }
     

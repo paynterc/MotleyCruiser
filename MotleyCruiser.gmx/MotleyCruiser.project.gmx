@@ -92,6 +92,21 @@
           <sprite>sprites\spr_chicken_helm3</sprite>
           <sprite>sprites\spr_chicken_helm4</sprite>
         </sprites>
+        <sprites name="_flowridian">
+          <sprite>sprites\sprite391</sprite>
+          <sprite>sprites\spr_flow_chest1</sprite>
+          <sprite>sprites\spr_flow_chest2</sprite>
+          <sprite>sprites\spr_flow_hair1</sprite>
+          <sprite>sprites\spr_flow_hair2</sprite>
+          <sprite>sprites\spr_flow_hair3</sprite>
+          <sprite>sprites\spr_flow_hair4</sprite>
+          <sprite>sprites\spr_flow_hair5</sprite>
+          <sprite>sprites\spr_flow_hair6</sprite>
+          <sprite>sprites\spr_flow_head4</sprite>
+          <sprite>sprites\spr_flow_head3</sprite>
+          <sprite>sprites\spr_flow_head2</sprite>
+          <sprite>sprites\spr_flow_head1</sprite>
+        </sprites>
       </sprites>
       <sprite>sprites\spr_androne</sprite>
       <sprite>sprites\spr_sam3</sprite>
@@ -119,6 +134,7 @@
       <sprite>sprites\spr_drone1</sprite>
       <sprite>sprites\spr_fion</sprite>
       <sprite>sprites\spr_flowridian</sprite>
+      <sprite>sprites\spr_flowridian_OLD</sprite>
       <sprite>sprites\spr_flowridian_fml</sprite>
       <sprite>sprites\spr_gorgan</sprite>
       <sprite>sprites\spr_hairbeast</sprite>
