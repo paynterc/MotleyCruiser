@@ -415,7 +415,7 @@ if(direction &gt;=180){
             <kind>1</kind>
             <string>/// Weapon position
 
-if(weapon != noone){
+if(instance_exists(weapon)){
     weapon.x = x;
     weapon.y = y;
     weapon.depth=depth -1;
@@ -545,9 +545,16 @@ if(weapon==noone &amp;&amp; npc_data!=noone){
     }
       
     weapon.type = faction;// The weapon will pass this along to the bullet.
+}else{
+    if(instance_exists(weapon)){
+        with(weapon){
+            instance_destroy();// Remove the old weapon
+        }
+        weapon = noone;
+    }
 }
 
-if(weapon != noone){
+if(instance_exists(weapon)){
     weapon.x = x;
     weapon.y = y;
     weapon.depth=depth -1;

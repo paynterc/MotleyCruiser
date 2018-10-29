@@ -631,6 +631,8 @@
       <script>scripts\scr_ev_docked.gml</script>
       <script>scripts\scr_player_died_in_room.gml</script>
       <script>scripts\scr_ev_game_loaded.gml</script>
+      <script>scripts\scr_ev_player_draws_weapon.gml</script>
+      <script>scripts\scr_ev_player_stows_weapon.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>

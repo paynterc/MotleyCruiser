@@ -20,10 +20,10 @@ for(var i=0; i<array_length_1d(global.crew); i++){
         scr_npc_map_to_object();
         if(sprite_exists(npc_data[NPC_SPRITE_TEMP])){
             sprite_index = npc_data[NPC_SPRITE_TEMP];
-        }
-        
+        }  
+        faction = FACTION_PLAYER;      
     }
-    thiscrew.faction = FACTION_PLAYER;
+
     thiscrew.crew_index = i;//Keep track of which crewmember this is, in case he dies.
     thiscrew.mode="follow";
     thiscrew.targetMtype=obj_player;// Object to move to.

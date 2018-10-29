@@ -59,6 +59,7 @@ if(skincolor != noone){
 
 
 type = 1//player team
+faction = FACTION_PLAYER;
 facing = 0;
 hp = 10;
 hp_current = hp;
@@ -77,20 +78,6 @@ weapon_index=noone;
 </string>
           </argument>
         </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>604</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>1</exetype>
-        <functionname>action_inherited</functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
       </action>
     </event>
     <event eventtype="3" enumb="0">
@@ -111,7 +98,7 @@ weapon_index=noone;
           <argument>
             <kind>1</kind>
             <string>/// Fire weapon and move
-if(weapon != noone){
+if(instance_exists(weapon)){
     weapon.shooting = scr_user_input("fire");
     
     // Adjust run speed
@@ -176,7 +163,12 @@ if(hspd==0 &amp;&amp; vspd==0){
           <argument>
             <kind>1</kind>
             <string>/// User input. Update weapon
-if(weapon != noone){
+if(scr_user_input("draw_weapon")){
+    event_user(0);
+}
+
+
+if(instance_exists(weapon)){
     weapon.x = x;
     weapon.y = y;
     weapon.depth=depth -1;
@@ -338,20 +330,28 @@ if(global.equipped!=noone){
         with(weapon){
             instance_destroy();// Remove the old weapon
         }
+        weapon = noone;
+        scr_ev_player_stows_weapon();
+    }else{
+        var item_id = global.equipped[0];
+        if(item_id!=noone){
+        
+            weapon_index = scr_inv_item_read(item_id,6);// Slot 6 holds the object name
+            if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
+            
+                weapon = instance_create(x,y,weapon_index);
+                weapon.type = faction;
+                weapon.parent_obj = id;
+                weapon.inventory_id = item_id;
+                
+                var type = weapon.type;
+                var test = 1;
+            
+                scr_ev_player_draws_weapon();
+            }  
+        }
     }
-    var item_id = global.equipped[0];
-    if(item_id!=noone){
     
-        weapon_index = scr_inv_item_read(item_id,6);// Slot 6 holds the object name
-        if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
-        
-            weapon = instance_create(x,y,weapon_index);
-            weapon.type = type;// enemy or ally
-            weapon.parent_obj = id;
-            weapon.inventory_id = item_id;
-        
-        }  
-    }
 }
 </string>
           </argument>

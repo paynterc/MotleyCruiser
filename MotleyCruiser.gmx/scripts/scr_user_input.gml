@@ -26,11 +26,8 @@ if(room==rm_ship_edit){
 
 //Any context
 
-
-
-
-
 switch(argument0){
+
     case "inventory":
         return keyboard_check_pressed(ord("I"));
         break;
@@ -71,8 +68,7 @@ if( scr_gui_has_context() ){
             break;  
         case "menu_op_down":
             return gamepad_button_check_released(global.pad,gp_padd);
-            break; 
-            
+            break;           
         case "menu_op_left":
             return gamepad_button_check_released(global.pad,gp_padl);
             break;  
@@ -123,10 +119,6 @@ if( scr_gui_has_context() ){
         case "dock":
             return keyboard_check_pressed(ord("D"))
             && instance_exists(obj_space_level);
-            break;
-        case "depart":
-            return keyboard_check_pressed(ord("D"))
-            && instance_exists(obj_room_level);
             break;
         case "hotslot1":
             return (keyboard_check_pressed(ord("1")) || gamepad_button_check_pressed(global.pad, gp_face3));
@@ -184,7 +176,6 @@ if( scr_gui_has_context() ){
         case "pause":
             return keyboard_check_pressed(vk_escape);
             break;
-
         case "fullscreen":
             return keyboard_check_pressed(ord("F"))
             && keyboard_check(vk_shift);
@@ -219,8 +210,11 @@ if( scr_gui_has_context() ){
             keyboard_check_pressed(ord("R"))
             && keyboard_check(vk_shift)
             && debug_mode;
-            break;  
-    
+            break;
+        case "draw_weapon":
+            return  
+            keyboard_check_pressed(ord("Q"))
+            break;           
         case "point_dir":
             var pdir = noone;
             if( gamepad_is_connected(global.pad) ){
