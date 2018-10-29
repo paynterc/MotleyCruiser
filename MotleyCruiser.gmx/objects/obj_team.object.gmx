@@ -88,7 +88,7 @@ if(llight!=noone){
           <argument>
             <kind>1</kind>
             <string>/// Set health
-if(other.type==2){
+if(other.type != type){
     var impact = instance_create(other.x,other.y,obj_impact);
     impact.image_blend = c_red;
     hp_current -= other.damage;

@@ -37,8 +37,8 @@ tops = accessories[0];
 hairs = accessories[1];
 hats = accessories[2];
 eyes = accessories[3];
-haircolors = global.haircolors;
-colors_skin = global.skincolors;
+haircolors = global.haircolors[0];// 0 is the index for human race selections.
+colors_skin = global.skincolors[0];
 
 
 selections=noone;//Hold selections here

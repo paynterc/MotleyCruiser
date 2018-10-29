@@ -10,9 +10,9 @@ var heal_player = obj_player.hp_current<obj_player.hp;
 var heal_crewmem = false;
 
 // Check for injured crew
-for(var i=0;i<instance_number(obj_crew);i++){
-    var crewmem = instance_find(obj_crew,i);
-    if(crewmem.hp_current<crewmem.hp){
+for(var i=0;i<instance_number(obj_npc);i++){
+    var crewmem = instance_find(obj_npc,i);
+    if(crewmem.crew_index != noone && crewmem.hp_current<crewmem.hp){
         heal_crewmem=true;
         break;
     }

@@ -30,6 +30,7 @@ hp=10;
 hp_current=hp;
 health_y = sprite_get_height(sprite_index) - 5;
 shake=false;
+faction=FACTION_NEUTRAL;// Bullet collisions ccmpare bullet.type to faction of impacted object. Be sure to set the bullet.type to the shooter's faction.
 </string>
           </argument>
         </arguments>
@@ -53,12 +54,14 @@ shake=false;
           <argument>
             <kind>1</kind>
             <string>//Apply damage
-if(other.type!=type){
-    shake=true;
+if(other.type!=faction){
+
     instance_create(other.x,other.y,obj_impact);
     hp_current -= other.damage;
-    with(other){
-        instance_destroy();
+    if(!other.pierce_living){
+        with(other){
+            instance_destroy();
+        }
     }
 }
 

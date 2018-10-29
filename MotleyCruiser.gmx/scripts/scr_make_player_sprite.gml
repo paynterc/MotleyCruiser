@@ -23,10 +23,11 @@ var hats = a[2];
 var eyes = a[3];
 
 var pm = scr_get_player_model();
-
-skincolor = global.skincolors[pm[0]];
+var skincolorsHuman = global.skincolors[0];
+var haircolorsHuman = global.haircolors[0];
+skincolor = skincolorsHuman[pm[0]];
 hair = hairs[pm[1]];
-haircolor = global.haircolors[pm[2]];
+haircolor = haircolorsHuman[pm[2]];
 top = tops[pm[3]];
 hat = hats[pm[4]];
 eye = eyes[pm[5]];

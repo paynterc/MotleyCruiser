@@ -910,6 +910,7 @@
     </scripts>
     <scripts name="_helper">
       <script>scripts\scr_get_closest.gml</script>
+      <script>scripts\scr_get_closest_notfaction.gml</script>
       <script>scripts\scr_gradually_rotate.gml</script>
       <script>scripts\scr_gradually_rotate_2.gml</script>
       <script>scripts\scr_gradually_rotate_3.gml</script>
@@ -1313,6 +1314,7 @@
     </objects>
     <objects name="_people_and_places">
       <object>objects\obj_player</object>
+      <object>objects\obj_npc</object>
       <object>objects\obj_mortal</object>
       <object>objects\obj_team</object>
       <object>objects\obj_crew</object>
@@ -1392,6 +1394,7 @@
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
       <object>objects\obj_lvl_cantina</object>
+      <object>objects\obj_lvl_cantina_OLD</object>
       <object>objects\obj_lvl_arena</object>
       <object>objects\obj_room_level</object>
       <objects name="_furniture">

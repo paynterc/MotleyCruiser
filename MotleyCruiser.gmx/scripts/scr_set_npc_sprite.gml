@@ -17,3 +17,4 @@ for(var i=0;i<array_length_1d(accessories); i++){
 
 custom_sprite = scr_surface_to_sprite(spriteArray);
 sprite_index = custom_sprite;
+npc_data[NPC_SPRITE_TEMP] = custom_sprite;

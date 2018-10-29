@@ -31,7 +31,7 @@ damage = 1;
 weaponSpeed = .15;
 shooting = false;
 destroy = false; //Destroy myself
-type=0 //1=player, 2=enemy
+type=0 //SET THIS TO THE OWNERS FACTION
 bullet_speed = 10;
 range=400;
 gun_sound=snd_laser3;
