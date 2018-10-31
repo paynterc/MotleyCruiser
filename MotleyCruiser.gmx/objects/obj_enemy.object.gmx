@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize enemy
-type = 2;//enemy
+
 depth = -y;
 
 path = path_add();
@@ -42,33 +42,21 @@ pspeed_init = pspeed;
 image_speed = .25;
 
 sprite_default = spr_default;
-sprite_index = sprite_default;
-accessories = noone;
-acc_colors = noone;
-
-skincolor = noone;
-hair = noone;
-haircolor = noone;
-top = noone;
-eye = noone;
-hat = noone;
-if(skincolor != noone){
-    image_blend = skincolor;
-}
 
 
 health_y = sprite_get_height(sprite_index) + 5;
 hyset = false;
 
-
-
-weapon_index = noone;
-weapon=noone;
-race_index = noone;
-sex = noone;
 bullet_width=1; // Use this to add to range. Useful for melee weapons with short range but big bullets.
 
+faction=FACTION_NEUTRAL;
+disposition=DISPOSITION_NEUTRAL;
+type = faction;// type is still used in some logic. Usually set to faction.
+weapon = noone;
+
 alarm[0] = room_speed * .5;// Move and shoot
+
+
 </string>
           </argument>
         </arguments>
@@ -92,7 +80,7 @@ alarm[0] = room_speed * .5;// Move and shoot
           <argument>
             <kind>1</kind>
             <string>/// Cleanup
-if(weapon != noone){
+if(instance_exists(weapon)){
     weapon.shooting = false;
     weapon.destroy = true;
 }
@@ -121,104 +109,11 @@ if(path_exists(path)) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Move &amp; Shoot
-
-// "defend" continues all the way to core unless encounters player
-// "hold" holds position then falls back to core when target gets near
-// "hunt" finds closest player team member and moves to it
+            <string>/// Move &amp; Shoot - OVERWRITE ME
 if(!global.paused){
-
-    if(mode!="hunt" &amp;&amp; hp_current&lt;hp){
-        mode = "hunt";
-    }
-    
-    var inview = scr_instance_in_view(self);
-    
-    
-    /***
-    Find closest member of the player's boarding team. This includes the player.
-    ***/
-    if(instance_exists(obj_team)){
-        
-        target = instance_nearest(x,y,obj_team);
-        var px = (target.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
-        var py = (target.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
-        var pd = distance_to_object(target);
-    
-    }else{
-        target = noone;
-    }
-    
-    if( target!=noone &amp;&amp; instance_exists(target) ){
-    
-        
-        
-        if(instance_exists(obj_core) &amp;&amp; (mode=="defend" || mode=="hold")){
-        
-            var cx = (obj_core.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
-            var cy = (obj_core.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
-            // Get path to core
-            scr_get_path_to_point(cx,cy,pspeed);
-            
-            if(point_distance(x,y,cx,cy) &lt; 120){
-                path_end();  
-            }
-            
-            //point_distance(x,y,px,py)
-            if(mode=="defend" &amp;&amp; pd &lt; 200){
-                mode="hunt";
-                //path_end();
-            }else if(mode=="hold" &amp;&amp; pd &gt; 120){
-                path_end();
-            }
-    
-            if(weapon!=noone){
-                if( inview &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; pd&lt;=weapon.range + bullet_width ){
-                    /// Start shooting
-        
-                    weapon.image_angle =  point_direction(x, y, px, py);
-                    weapon.shooting = true;
-        
-                }else{
-                        
-                    weapon.image_angle =  direction;
-                    weapon.shooting = false;
-                
-                }
-            }
-            
-        }else if(mode == "hunt"){
-            // Get path to player
-            scr_get_path_to_point(px,py,pspeed);
-            //path_get_number(path)&lt;5
-            if(weapon!=noone){
-                if( !scr_gridcol_line(weapon.x,weapon.y,target.x,target.y) &amp;&amp; inview &amp;&amp; pd&lt;=weapon.range + bullet_width){
-                    path_end();
-                    if(weapon!=noone){
-                        weapon.image_angle =  point_direction(x, y, px, py);
-                        weapon.shooting = true;
-                    }      
-                }else{
-                    if(weapon!=noone){
-                        weapon.image_angle =  direction;
-                        weapon.shooting = false;
-                    }
-        
-                }
-            }
-        
-        }
-        
-        var verse = direction div 180;
-        if( (verse == 0 &amp;&amp; image_xscale&lt;0) || (verse == 1 &amp;&amp; image_xscale&gt;0) ){
-            image_xscale *= -1;
-        }
-    
-        
-        
-    
-        
-    }
+    // Some kind of generic hunt and kill logic here.
+    // Probably look for obj_mortal and check for faction.
+   
 
 }
 

@@ -30,12 +30,15 @@ bullet_sprite = spr_bullet_3;
 damage = 1;
 weaponSpeed = .15;
 shooting = false;
+cooling_down = false;
 destroy = false; //Destroy myself
 type=0 //SET THIS TO THE OWNERS FACTION
 bullet_speed = 10;
 range=400;
 gun_sound=snd_laser3;
 inventory_id=noone;// Refers to inventory item library
+parent_obj = noone;// Who is holding the weapon
+
 
 image_speed = .05;
 
@@ -43,33 +46,8 @@ llight = glr_light_create(spr_glr_light_mask_9, 0, x, y, c_red, 5);
 glr_light_set_static(llight, true);
 glr_light_set_active(llight,false);
 
-alarm[0] = room_speed * weaponSpeed;
-alarm[1]=room_speed * .10;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Light
-glr_lightsimple_set_active(llight,false);
-alarm[1]=room_speed * .10;
+
+
 </string>
           </argument>
         </arguments>
@@ -92,26 +70,8 @@ alarm[1]=room_speed * .10;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Shoot a bullet
-
-if(shooting &amp;&amp; !global.paused){
-    glr_lightsimple_set_active(llight,true);
-    bullet = instance_create(x,y,myBullet);
-    bullet.type = type;
-    bullet.depth = -200;
-    bullet.direction = image_angle;
-    bullet.image_angle = image_angle;
-    bullet.speed = bullet_speed;    
-    bullet.damage = damage;
-    if(bullet_sprite!=noone){
-        bullet.sprite_index=bullet_sprite;
-    }
-    audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2); 
-}
-
-
-
-alarm[0] = room_speed * weaponSpeed;
+            <string>/// Cooldown complete
+cooling_down=false;
 </string>
           </argument>
         </arguments>
@@ -140,6 +100,44 @@ glr_light_set_rotation(llight,image_angle);
 if(destroy){
     glr_light_destroy(llight);
     instance_destroy();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Shoot
+if(shooting &amp;&amp; !cooling_down &amp;&amp; !global.paused){
+    cooling_down=true;
+    alarm[0] = room_speed * weaponSpeed;// unset cooldown
+    //glr_lightsimple_set_active(llight,true);
+    bullet = instance_create(x,y,myBullet);
+    bullet.type = type;
+    bullet.depth = -200;
+    bullet.direction = image_angle;
+    bullet.image_angle = image_angle;
+    bullet.speed = bullet_speed;    
+    bullet.damage = damage;
+    bullet.firedby = parent_obj; 
+    if(bullet_sprite!=noone){
+        bullet.sprite_index=bullet_sprite;
+    }
+    audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2); 
 }
 </string>
           </argument>

@@ -7,7 +7,7 @@ if(instance_exists(obj_lvl_cantina)){
     for(var i = 0; i < instance_number(tgtObjType); i++) {
         this_obj = instance_find(tgtObjType,i);
         with(this_obj){
-            // This should cause teemmates to draw weapon as well.
+            // This should cause teammates to draw weapon as well.
             event_user(0);
         }
 

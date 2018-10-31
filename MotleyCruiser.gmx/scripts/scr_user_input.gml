@@ -205,6 +205,13 @@ if( scr_gui_has_context() ){
             && keyboard_check(vk_control)
             && debug_mode;
             break;
+        case "test_room":
+            return  
+            keyboard_check_pressed(ord("T"))
+            && keyboard_check(vk_shift)
+            && keyboard_check(vk_control)
+            && debug_mode;
+            break;
         case "goto_shiplevel":
             return  
             keyboard_check_pressed(ord("R"))

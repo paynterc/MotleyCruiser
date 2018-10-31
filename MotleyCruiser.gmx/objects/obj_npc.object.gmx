@@ -69,8 +69,8 @@ depth = -y;
 path = path_add();
 targetK = noone;// Target to shoot
 targetM = noone;// Target to move to
-targetKtype = obj_npc;// Look for this object to shoot
-targetMtype = noone;// Look for this object to move to
+targetKtype = obj_mortal;// Look for this object to shoot
+targetMtype = noone;// Look for this kind of object to move to. obj_player or obj_core
 pxK = noone;// Pathing x
 pyK = noone;// Pathing y
 pxM = noone;// Pathing x
@@ -78,10 +78,15 @@ pyM = noone;// Pathing y
 bullet_width=1; // Use this to add to range. Useful for melee weapons with short range but big bullets.
 ispeed = 0.5;// Animation speed
 dDistance = 50;// Stop at this distance from the object I'm defending.
+dDistanceSave = dDistance;// We may change dDistance. Use this to hold the original value.
 targetKinView =false;// Can I see my target on screen
 custom_sprite=noone;// Set this so we can delete the sprite if needed
 showHealth = false;// Show healthbar
-
+waypoints=noone;//array of waypoints
+var wp1 = scr_array(x,y);
+waypoints[0]=wp1;
+wpIndex = 0;
+sprite_set=false;//wait a sec before creating the sprite. doing it at create causes problems.
 // GO!!!
 alarm[0] = room_speed * r_speed;
 </string>
@@ -114,6 +119,12 @@ if(weapon != noone){
 if(path_exists(path)) {
     path_delete(path);
 }
+/***
+// Doing this makes the sprite unavailable to the "corpse" object.
+if(custom_sprite!=noone &amp;&amp; crew_index==noone){
+    sprite_delete(custom_sprite);
+}
+***/
 </string>
           </argument>
         </arguments>
@@ -152,99 +163,23 @@ if(path_exists(path)) {
 targetKinView = false;
 
 if(!global.paused){
-    
-    // Select kill target
-    if(instance_exists(targetKtype)){
-    
-        if(targetK==noone || !instance_exists(targetK) || point_distance(x,y,targetK.x,targetK.y) &gt; 200){
-            targetK = scr_get_closest_notfaction(targetKtype,self);
-        }
         
-        if( targetK!=noone &amp;&amp; instance_exists(targetK) ){
-            pxK = (targetK.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
-            pyK = (targetK.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
-        }
-
-        
-
-    }else{
-        targetK = noone;
-        weapon.shooting = false;
-        weapon.image_angle = direction;
-    }
-    
-    // Select move to target
-    if(instance_exists(targetMtype)){
-    
-        if(targetM==noone || !instance_exists(targetM)){
-            targetM = instance_nearest(x,y,targetMtype);
-        }
-        
-        if( targetM!=noone &amp;&amp; instance_exists(targetM) ){
-            pxM = (targetM.x div CELL_WIDTH)* CELL_WIDTH + CELL_WIDTH/2;
-            pyM = (targetM.y div CELL_HEIGHT)* CELL_HEIGHT + CELL_HEIGHT/2;
-        }
-
-        
-    }
-
-    // Target in view?
-    if(instance_exists(targetK)){
-        if(faction==FACTION_PLAYER){
-            targetKinView =  scr_instance_in_view(targetK);   
-        }else{
-            targetKinView =  scr_instance_in_view(self);
-        }
-    }
-
-    
-    
     if(mode=="defend"){
     
         showHealth=true;
-        // Get path to target. TODO: Set targetM through internal or external logic.
-        if(instance_exists(targetM)){
-            image_speed = ispeed;// Animate        
-            scr_get_path_to_point(pxM,pyM,pspeed);             
-            if(point_distance(x,y,pxM,pyM) &lt; dDistance){
-                path_end();
-                image_speed = 0;
-                image_index = 0;
-            }
-        }
-        if(instance_exists(targetK)){
-            path_end();
-            image_speed = 0;
-            image_index = 0;
-            
-            if(targetKinView &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,targetK.x,targetK.y)){
-                // Start shooting
-                weapon.image_angle =  point_direction(x, y, pxK, pyK);
-                weapon.shooting = true;
-
-            }else{
-                if(weapon != noone){
-                    weapon.shooting = false;
-                    weapon.image_angle = direction;
-                }
-            }                
-        }            
+        
+        scr_npc_find_kill_target();
+        scr_npc_find_move_target();
+        scr_npc_target_kill_in_view();
+             
+        scr_npc_move_to_target();
+        scr_npc_fire_at_target();         
     
     }else if(mode=="follow"){
     
         showHealth=false;
-        // Get path to target. TODO: Set targetM through internal or external logic.
-        var test = 1;
-        if(instance_exists(targetM)){
-            image_speed = ispeed;// Animate        
-            scr_get_path_to_point(pxM,pyM,pspeed);
-            var test = 1;             
-            if(point_distance(x,y,pxM,pyM) &lt; dDistance){
-                path_end();
-                image_speed = 0;
-                image_index = 0;
-            }
-        }
+        scr_npc_find_move_target();
+        scr_npc_move_to_target();
     
     }else if(mode=="hold"){
     
@@ -252,67 +187,85 @@ if(!global.paused){
         path_end();
         image_speed = 0;
         image_index = 0;
-        if(instance_exists(targetK)){
-
-            
-            if(targetKinView &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,targetK.x,targetK.y)){
-                // Start shooting
-                if(weapon != noone){
-                    weapon.image_angle =  point_direction(x, y, px, py);
-                    weapon.shooting = true;
-                }
-
-            }else{
-                if(weapon != noone){
-                    weapon.shooting = false;
-                    weapon.image_angle = direction;
-                }
-            }                
-        }
+        
+        scr_npc_find_kill_target();
+        scr_npc_target_kill_in_view();       
+        scr_npc_fire_at_target();
         
     }else if(mode=="hunt"){
     
         showHealth=true;
-        scr_get_path_to_point(pxK,pyK,pspeed);
- 
-        if(targetKinView &amp;&amp; weapon!=noone &amp;&amp; !scr_gridcol_line(weapon.x,weapon.y,targetK.x,targetK.y)){
-            path_end();
-
-            // Start shooting
-            if(weapon != noone){
-                weapon.image_angle =  point_direction(x, y, pxK, pyK);
-                weapon.shooting = true;
-            }
-
-        
+        scr_npc_find_kill_target();        
+        if(targetK!=noone){
+            targetM=targetK;
         }else{
-            if(weapon != noone){
-                weapon.shooting = false;
-                weapon.image_angle = direction;
-            }
+            targetM=noone;
         }
         
+        scr_npc_find_move_target();
+        scr_npc_target_kill_in_view();
+        scr_npc_move_to_target();
+        scr_npc_fire_at_target();
+                
     }else if(mode=="patrol"){
+        dDistance = -1;// Allows object to move all the way to the target
         showHealth=true;
-        // TODO: Patrol AI
+    
+        var wp;
+        
+        if( is_array(waypoints) &amp;&amp; is_array(waypoints[wpIndex])){
+            wp = waypoints[wpIndex];
+            pxM = wp[0];
+            pyM = wp[1];
+        }
+        
+        if( point_distance(x,y,pxM,pyM) &lt; 16 ){
+            wpIndex++;
+            if( wpIndex&gt;=array_length_1d(waypoints) ){
+                wpIndex = 0;
+            }
+            wp = waypoints[wpIndex];
+            pxM = wp[0];
+            pyM = wp[1];
+        }
+        
+        scr_npc_move_to_target();
+        
+
+        var seenEnemy = scr_npc_sees_enemy(self,targetKtype);
+        if(instance_exists(seenEnemy)){
+            targetK = seenEnemy;
+            dDistance = dDistanceSave;
+            mode="hunt";
+        }
+
+        
     }else if(mode=="idle"){
         
         showHealth=false;
         path_end();
         image_speed = 0;
-        image_index = 0;
+        //image_index = 0;
 
     }else if(mode=="retreat"){
+        
         showHealth=true;
-        if(instance_exists(targetM)){
-            image_speed = ispeed;// Animate     
-            scr_get_path_to_point(pxM,pyM,pspeed);
-        }
+        scr_npc_find_move_target();
+        scr_npc_move_to_target();
+        
     }else if(mode=="discourse"){
+    
         showHealth=false;
         path_end();
         image_speed = 0;
         image_index = 0;
+        
+    }else if(mode=="test_animation"){
+    
+        showHealth=false;
+        path_end();
+        image_speed = .25;
+        
     }else{
         mode="idle";
     }
@@ -473,6 +426,31 @@ if(global.paused){
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set sprite
+if(!sprite_set){
+    sprite_set = true;
+    scr_set_npc_sprite();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="4" ename="obj_mortal">
       <action>
@@ -500,6 +478,51 @@ var dir = point_direction(other.x, other.y, x, y);
 var hspd = lengthdir_x(.5,dir);
 var vspd = lengthdir_y(.5,dir);
 scr_move(hspd, vspd);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_damager">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//Apply damage
+if(other.type!=faction){
+
+    instance_create(other.x,other.y,obj_impact);
+    hp_current -= other.damage;
+    
+    if(crew_index==noone){
+        // NPCs become hostile to player faction
+        disposition = DISPOSITION_HOSTILE;
+        targetKtype = obj_mortal;
+        targetK = other.firedby;
+        mode="hunt";
+        scr_ev_npc_hit(targetK,targetKtype);
+    }
+    
+    if(!other.pierce_living){
+        with(other){
+            instance_destroy();
+        }
+    }
+    
+}
+
 </string>
           </argument>
         </arguments>
@@ -545,6 +568,21 @@ if(weapon==noone &amp;&amp; npc_data!=noone){
     }
       
     weapon.type = faction;// The weapon will pass this along to the bullet.
+    weapon.parent_obj = id;
+    
+    if(faction!=FACTION_PLAYER){
+        // Nerf the weapon for npc
+        weapon.weaponSpeed = max(.5, weapon.weaponSpeed * 1.5); // slow down fire rate for enemies. lower the number, the faster
+        weapon.bullet_speed = max(round(weapon.bullet_speed/2),3);// Slow down bullets from enemy. higher the faster.
+        bullet_width = sprite_get_width(weapon.bullet_sprite);
+    }else{
+        // Put my team on defense
+        targetKtype = obj_npc;
+        mode="defend";
+    }
+
+    
+    
 }else{
     if(instance_exists(weapon)){
         with(weapon){
@@ -622,8 +660,17 @@ if(mode=="discourse"){
         draw_sprite(spr_shipwright_icon,0,x, y - sprite_height - sprite_get_height(spr_shipwright_icon)/2);
     }
 }
-
-
+var modeClr=c_white;
+if(mode=="defend"){
+    modeClr=c_yellow;
+}else if(mode=="hunt"){
+    modeClr=c_red;
+}else if(mode=="hold"){
+    modeClr=c_blue;
+}else if(mode=="patrol"){
+    modeClr=c_lime;
+}
+draw_circle_colour(x, y-28, 3, modeClr, modeClr, false);
 </string>
           </argument>
         </arguments>

@@ -124,7 +124,7 @@ hairs = noone;
 hats = noone;
 
 chests[0]=spr_flow_chest1;
-chests[0]=spr_flow_chest2;
+chests[1]=spr_flow_chest2;
 hairs[0]=spr_flow_hair1;
 hairs[1]=spr_flow_hair2;
 hairs[2]=spr_flow_hair3;
@@ -134,7 +134,7 @@ hairs[5]=spr_flow_hair6;
 hats[0]=spr_flow_head1;
 hats[1]=spr_flow_head2;
 hats[2]=spr_flow_head3;
-hats[2]=spr_flow_head4;
+hats[3]=spr_flow_head4;
 
 a[0]=chests;
 a[1]=hairs;

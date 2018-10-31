@@ -1,7 +1,9 @@
 /*******************
-https://docs.yoyogames.com/source/dadiospice/002_reference/game%20assets/sprites/sprite_create_from_surface.html
+DO NOT DO THIS IN THE CREATE STEP. This seems to cause issues, leave artifacts. Try it in the STEP event or DRAW event, protecting it with a boolean 
+variable so it won't be repeated.
 
-see also sprite_add_from_surface
+https://docs.yoyogames.com/source/dadiospice/002_reference/game%20assets/sprites/sprite_create_from_surface.html
+See also sprite_add_from_surface
 
 Expects an array of arrays. Each subarray should contain a sprite index and a color.
 ******************/
@@ -31,15 +33,16 @@ if(_h==noone){
     _h=24;
 }
 
-var spr_custom;
-var surf;
+var spr_custom=noone;
+var surf=noone;
+var surf2=noone;
 
-surf = surface_create(_w, _h);
+
+surf  = surface_create(_w, _h);
 surface_set_target(surf);
 draw_clear_alpha(c_black, 0);
 
-
-var spr;
+var spr=noone;
 if(is_array(_spriteData)){
     for(var i = 0; i<array_length_1d(_spriteData); i++){
         var aData = _spriteData[i];
@@ -56,11 +59,13 @@ if(is_array(_spriteData)){
     }
 }
 spr_custom = sprite_create_from_surface(surf, 0, 0, _w, _h, false, false, 8, 16);
+if(surface_exists(surf)){
+    surface_free(surf);
+}
+surface_reset_target();
 
-
-surface_free(surf);
-surf = surface_create(_w, _h);
-surface_set_target(surf);
+surf2 = surface_create(_w, _h);
+surface_set_target(surf2);
 draw_clear_alpha(c_black, 0);
 
 //draw_sprite(s_body, 1, 8, 16);// Second frame
@@ -83,9 +88,11 @@ if(is_array(_spriteData)){
         }
     }
 }
-sprite_add_from_surface(spr_custom, surf, 0, 0, _w, _h, false, false);
-
+sprite_add_from_surface(spr_custom, surf2, 0, 0, _w, _h, false, false);
+if(surface_exists(surf2)){
+    surface_free(surf2);
+}
 surface_reset_target();
-surface_free(surf);
+
 
 return spr_custom;

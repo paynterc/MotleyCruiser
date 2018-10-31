@@ -190,7 +190,7 @@
       <sprite>sprites\spr_glr_tv_sml</sprite>
       <sprite>sprites\spr_tv</sprite>
     </sprites>
-    <sprites name="_personal_equipment">
+    <sprites name="_guns">
       <sprite>sprites\spr_rifle1</sprite>
       <sprite>sprites\spr_blaster1</sprite>
       <sprite>sprites\spr_blaster3</sprite>
@@ -562,14 +562,6 @@
       <script>scripts\scr_in_array.gml</script>
       <script>scripts\scr_array_size.gml</script>
     </scripts>
-    <scripts name="_crew">
-      <script>scripts\scr_instantiate_all_crew.gml</script>
-      <script>scripts\scr_remove_from_crew.gml</script>
-      <script>scripts\scr_add_npc_to_crew.gml</script>
-      <script>scripts\scr_get_active_crew_count.gml</script>
-      <script>scripts\scr_npc_in_crew.gml</script>
-      <script>scripts\scr_daily_expenses.gml</script>
-    </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
       <script>scripts\scr_make_dialogue_branch.gml</script>
@@ -633,6 +625,7 @@
       <script>scripts\scr_ev_game_loaded.gml</script>
       <script>scripts\scr_ev_player_draws_weapon.gml</script>
       <script>scripts\scr_ev_player_stows_weapon.gml</script>
+      <script>scripts\scr_ev_npc_hit.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
@@ -843,6 +836,8 @@
       </scripts>
       <script>scripts\scr_reset_room_random.gml</script>
       <script>scripts\scr_instantiate_enemy.gml</script>
+      <script>scripts\scr_instantiate_enemy_onship.gml</script>
+      <script>scripts\scr_instantiate_enemy_OLD.gml</script>
       <script>scripts\scr_save_room.gml</script>
       <script>scripts\scr_check_ship_capture.gml</script>
       <script>scripts\scr_shoot.gml</script>
@@ -912,7 +907,9 @@
     </scripts>
     <scripts name="_helper">
       <script>scripts\scr_get_closest.gml</script>
+      <script>scripts\scr_get_furthest.gml</script>
       <script>scripts\scr_get_closest_notfaction.gml</script>
+      <script>scripts\scr_get_closest_hostile.gml</script>
       <script>scripts\scr_gradually_rotate.gml</script>
       <script>scripts\scr_gradually_rotate_2.gml</script>
       <script>scripts\scr_gradually_rotate_3.gml</script>
@@ -1208,6 +1205,23 @@
     <scripts name="_example_scripts">
       <script>scripts\scr_multi_arguments.gml</script>
     </scripts>
+    <scripts name="_npc">
+      <scripts name="_crew">
+        <script>scripts\scr_instantiate_all_crew.gml</script>
+        <script>scripts\scr_remove_from_crew.gml</script>
+        <script>scripts\scr_add_npc_to_crew.gml</script>
+        <script>scripts\scr_get_active_crew_count.gml</script>
+        <script>scripts\scr_npc_in_crew.gml</script>
+        <script>scripts\scr_daily_expenses.gml</script>
+        <script>scripts\scr_crew_follow_player.gml</script>
+      </scripts>
+      <script>scripts\scr_npc_find_kill_target.gml</script>
+      <script>scripts\scr_npc_fire_at_target.gml</script>
+      <script>scripts\scr_npc_find_move_target.gml</script>
+      <script>scripts\scr_npc_target_kill_in_view.gml</script>
+      <script>scripts\scr_npc_move_to_target.gml</script>
+      <script>scripts\scr_npc_sees_enemy.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1280,6 +1294,28 @@
     <font>fonts\font15</font>
   </fonts>
   <objects name="objects">
+    <objects name="_personal_weapons">
+      <object>objects\obj_gun</object>
+      <object>objects\obj_singularity</object>
+      <object>objects\obj_blaster1</object>
+      <object>objects\obj_singularity_gun</object>
+      <object>objects\obj_heavy_blaster1</object>
+      <object>objects\obj_turret</object>
+      <object>objects\obj_shotgun1</object>
+      <object>objects\obj_melee_animation</object>
+      <object>objects\obj_beam_gun</object>
+      <object>objects\obj_flamethrower1</object>
+      <object>objects\obj_spawner</object>
+      <object>objects\obj_aoe</object>
+      <object>objects\obj_master_panel</object>
+      <object>objects\obj_grenade</object>
+      <object>objects\obj_melee_attack</object>
+      <object>objects\obj_warp_sword</object>
+      <object>objects\obj_melee_weapon</object>
+      <objects name="_bullets_for_handguns">
+        <object>objects\obj_bullet</object>
+      </objects>
+    </objects>
     <object>objects\obj_game_control</object>
     <object>objects\obj_sound_control</object>
     <object>objects\obj_ship_data</object>
@@ -1334,6 +1370,8 @@
         <object>objects\obj_zombie_brute</object>
       </objects>
       <object>objects\obj_player_start</object>
+      <object>objects\obj_waypoint</object>
+      <object>objects\obj_test_npc</object>
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
@@ -1373,30 +1411,9 @@
       <object>objects\obj_inv_save_button</object>
     </objects>
     <objects name="_room">
-      <objects name="_personal_weapons">
-        <object>objects\obj_singularity</object>
-        <object>objects\obj_blaster1</object>
-        <object>objects\obj_gun</object>
-        <object>objects\obj_bullet</object>
-        <object>objects\obj_singularity_gun</object>
-        <object>objects\obj_heavy_blaster1</object>
-        <object>objects\obj_turret</object>
-        <object>objects\obj_shotgun1</object>
-        <object>objects\obj_melee_animation</object>
-        <object>objects\obj_beam_gun</object>
-        <object>objects\obj_flamethrower1</object>
-        <object>objects\obj_spawner</object>
-        <object>objects\obj_aoe</object>
-        <object>objects\obj_master_panel</object>
-        <object>objects\obj_grenade</object>
-        <object>objects\obj_melee_attack</object>
-        <object>objects\obj_warp_sword</object>
-        <object>objects\obj_melee_weapon</object>
-      </objects>
       <object>objects\obj_lvl_ship_deck_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
       <object>objects\obj_lvl_cantina</object>
-      <object>objects\obj_lvl_cantina_OLD</object>
       <object>objects\obj_lvl_arena</object>
       <object>objects\obj_room_level</object>
       <objects name="_furniture">

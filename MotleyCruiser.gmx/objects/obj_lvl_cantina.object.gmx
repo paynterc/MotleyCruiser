@@ -299,7 +299,6 @@ if(!populated)
         npcObject.npc_data = npc_data;
         with(npcObject){
             scr_npc_map_to_object();
-            scr_set_npc_sprite();
             mode = "discourse";
         }
 

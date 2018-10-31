@@ -89,7 +89,7 @@ global.racial_centers = noone;// set this at new game or game load.
 
 global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
 global.sector_map = noone;// An array of locations in this sector
-
+global.rTSize = 5;//Width in sectors of each racial territory
 /****************************************************************/
 /*                      DYNAMIC PLAYER DATA                     */
 /****************************************************************/
@@ -394,6 +394,12 @@ if(scr_user_input("inventory_room")){
     room_goto(rm_galley);
     exit;
 }
+if(scr_user_input("test_room")){
+    // shift, control, T
+    room_goto(rm_bullettest);
+    exit;
+}
+
 
 
 /****

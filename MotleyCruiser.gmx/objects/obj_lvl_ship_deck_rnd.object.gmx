@@ -201,9 +201,22 @@ py_start = py1 * CELL_HEIGHT + (CELL_HEIGHT/2);
 
 //Create the player
 instance_create(px_start, py_start, obj_player);
+with(obj_player){
+    event_user(0);// Weapon out;
+}
 
 //Create crew
 scr_instantiate_all_crew(px_start,py_start);
+for(var i = 0; i &lt; instance_number(obj_npc); i++) {
+    this_obj = instance_find(obj_npc,i);
+    if(this_obj.crew_index != noone){
+        with(this_obj){
+            event_user(0);
+            mode="defend";
+            targetMtype = obj_player;
+        }
+    }
+}
 
 // Place a core
 instance_create(px_start,py_start,obj_core);
@@ -227,7 +240,8 @@ for(var yy = 0; yy &lt; height; yy++){
   
                 var race_index = irandom(array_height_2d(global.races)-1);               
                 //scr_instantiate_enemy(ex,ey,race_index);
-                scr_instantiate_enemy(ex,ey,irandom(1));
+                var newEnemy = scr_instantiate_enemy_onship(ex,ey);
+
                 
             }
             
@@ -275,6 +289,16 @@ for(var yy = 0; yy &lt; height; yy++){
             glr_mesh_update(mesh_id);
         }
     }
+}
+
+with(obj_npc){
+    // Set waypoints for patrols
+    var wp = scr_get_furthest(obj_crate,self,1200);
+    if(instance_exists(wp)){
+        var wp1=scr_array(wp.x,wp.y);
+        var wp2=scr_array(x,y);
+        waypoints = scr_array(wp1,wp2);
+    }  
 }
 
 
@@ -374,7 +398,16 @@ alarm[3] = room_speed * drone_spawn_time;
             <kind>1</kind>
             <string>/// Check to see if all enemies were eliminated on this deck
 /// See if all enemies defeated on this deck
-if(instance_number(obj_enemy)&lt;1){
+var enemyCount = 0;
+for(var i = 0; i &lt; instance_number(obj_mortal); i++) {
+    var this_obj = instance_find(obj_mortal,i);
+    if(this_obj.faction!=FACTION_PLAYER){
+        enemyCount++;
+    }
+}
+
+
+if(enemyCount&lt;1){
    // if done, activate door to next deck.
    global.decks_remaining -=1;
    if(door != noone &amp;&amp; instance_exists(door)){

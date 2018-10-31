@@ -34,22 +34,22 @@ if(set_mode== noone){
         set_mode = "hunt";
     }else if(modRnm==1){
         set_mode = "defend";                
+    }else if(modRnm==3){
+        set_mode = "patrol";                
     }else{
         set_mode = "hold";           
     }
 }
-
+set_mode = "patrol";// testing
 newEnemy.mode = set_mode;
 newEnemy.disposition = DISPOSITION_HOSTILE;
 
-if(race_index < 0){
-    race_index = irandom(array_height_2d(global.races)-1);
-}
-newEnemy.race_index = race_index;
-
-if(weapon==noone){
-    weapon = obj_gun;
+if(newEnemy.mode=="defend"){
+    newEnemy.targetMtype = obj_core;
 }
 
+with(newEnemy){
+    event_user(0);
+}
 
 return newEnemy;

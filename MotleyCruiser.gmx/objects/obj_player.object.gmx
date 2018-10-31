@@ -273,40 +273,6 @@ if(obj_player.hp_current&lt;1){
         <isnot>0</isnot>
       </action>
     </event>
-    <event eventtype="4" ename="obj_damager">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Set health
-if(other.type==2){
-    obj_room_level.shake=true;
-    scr_screen_shake();
-    gamepad_set_vibration(0, 1, 1);//this will be cancelled in obj_room_level
-    var impact = instance_create(other.x,other.y,obj_impact);
-    impact.image_blend = c_red;
-    hp_current -= other.damage;
-    with(other){
-        instance_destroy();
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
@@ -343,9 +309,6 @@ if(global.equipped!=noone){
                 weapon.type = faction;
                 weapon.parent_obj = id;
                 weapon.inventory_id = item_id;
-                
-                var type = weapon.type;
-                var test = 1;
             
                 scr_ev_player_draws_weapon();
             }  

@@ -2,14 +2,13 @@
 Coordinates of sectors that are the center for each RACE
 ************************/
 var fc = noone;// family centers
-var rts = 5; //RACIAL TERRITORY SIZE. I.E. 5X5;
+var rts = global.rTSize; //RACIAL TERRITORY SIZE. I.E. 5X5;
 
-global.rTSize = rts;
 
 // 0,0 is always human
 fc[0,0]=0;// x coord
 fc[0,1]=0;// y coord
-fc[0,2]=scr_array(3);// Just Humans
+fc[0,2]=scr_array(0);// Just Humans
 
 
 // Add eight random races at regular intervals around the center
