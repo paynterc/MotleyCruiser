@@ -25,11 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(instance_exists(obj_room_level)){
+            <string>/***
+if(instance_exists(obj_room_level)){
     glr_light_set_position(obj_room_level.boom_light, x , y);
     glr_light_set_active(obj_room_level.boom_light,true);
 }
-
+***/
+image_xscale = 0.5;
+image_yscale = 0.5;
 depth=-10000;
 </string>
           </argument>
@@ -57,7 +60,7 @@ depth=-10000;
 image_xscale+=.15;
 image_yscale+=.15;
 //image_alpha -= .05;
-if(image_xscale&gt;2){
+if(image_xscale&gt;1){
     instance_destroy();
 }
 </string>

@@ -8,11 +8,6 @@ Assumes targetK, targetKinView, weapon, pxK, pyK
 if( instance_exists(targetK) && instance_exists(weapon) ){
     if(targetKinView && !scr_gridcol_line(weapon.x,weapon.y,targetK.x,targetK.y)){
         
-        if(distance_to_object(targetK)<weapon.range){
-            path_end();
-            image_speed = 0;
-            image_index = 0;
-        }
        
         // Start shooting
         weapon.image_angle =  point_direction(x, y, pxK, pyK);

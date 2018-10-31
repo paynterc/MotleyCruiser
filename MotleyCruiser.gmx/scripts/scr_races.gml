@@ -12,7 +12,7 @@ races[0,RACE_SEXES] = 2;
 
 races[1,RACE_NAME] = "Warchicken";
 races[1,RACE_BASE_HP] = 20;
-races[1,RACE_BASE_SPD] = 2;
+races[1,RACE_BASE_SPD] = 1.25;
 races[1,RACE_SPR] = "spr_chicken";
 races[1,RACE_SPR_FML] = "spr_chicken_fml";
 races[1,RACE_SEXES] = 2;
@@ -47,7 +47,7 @@ races[5,RACE_SEXES] = 1;
 
 races[6,RACE_NAME] = "Arcnid";
 races[6,RACE_BASE_HP] = 8;
-races[6,RACE_BASE_SPD] = 2;
+races[6,RACE_BASE_SPD] = 1.25;
 races[6,RACE_SPR] = "spr_arcnid";
 races[6,RACE_SPR_FML] = "spr_arcnid_fml";
 races[6,RACE_SEXES] = 2;
@@ -96,14 +96,14 @@ races[12,RACE_SEXES] = 1;
 
 races[13,RACE_NAME] = "Selwat";
 races[13,RACE_BASE_HP] = 8;
-races[13,RACE_BASE_SPD] = 2;
+races[13,RACE_BASE_SPD] = 1.25;
 races[13,RACE_SPR] = "spr_selwat";
 races[13,RACE_SPR_FML] = noone;
 races[13,RACE_SEXES] = 1;
 
 races[14,RACE_NAME] = "Fion";
 races[14,RACE_BASE_HP] = 8;
-races[14,RACE_BASE_SPD] = 2;
+races[14,RACE_BASE_SPD] = 1.25;
 races[14,RACE_SPR] = "spr_fion";
 races[14,RACE_SPR_FML] = noone;
 races[14,RACE_SEXES] = 1;
@@ -117,14 +117,14 @@ races[15,RACE_SEXES] = 1;
 
 races[16,RACE_NAME] = "Miota";
 races[16,RACE_BASE_HP] = 8;
-races[16,RACE_BASE_SPD] = 2;
+races[16,RACE_BASE_SPD] = 1.25;
 races[16,RACE_SPR] = "spr_miota,spr_miota2";
 races[16,RACE_SPR_FML] = noone;
 races[16,RACE_SEXES] = 1;
 
 races[17,RACE_NAME] = "Asteroz";
 races[17,RACE_BASE_HP] = 9;
-races[17,RACE_BASE_SPD] = 2;
+races[17,RACE_BASE_SPD] = 1.25;
 races[17,RACE_SPR] = "spr_asteroz";
 races[17,RACE_SPR_FML] = noone;
 races[17,RACE_SEXES] = 1;

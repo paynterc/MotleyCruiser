@@ -31,6 +31,8 @@ hp_current=hp;
 health_y = sprite_get_height(sprite_index) - 5;
 shake=false;
 faction=FACTION_NEUTRAL;// Bullet collisions ccmpare bullet.type to faction of impacted object. Be sure to set the bullet.type to the shooter's faction.
+name="mortal";
+disposition=DISPOSITION_NEUTRAL;
 </string>
           </argument>
         </arguments>

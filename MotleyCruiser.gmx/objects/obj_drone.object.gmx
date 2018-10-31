@@ -47,6 +47,7 @@ pspeed = 3;
 pspeed_init = pspeed;
 image_speed = .85;
 damage=3;
+name="drone";
 </string>
           </argument>
         </arguments>

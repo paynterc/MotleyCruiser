@@ -163,6 +163,7 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
 targetKinView = false;
 
 if(!global.paused){
+
         
     if(mode=="defend"){
     
@@ -171,7 +172,8 @@ if(!global.paused){
         scr_npc_find_kill_target();
         scr_npc_find_move_target();
         scr_npc_target_kill_in_view();
-             
+         
+        // This should be the target to defend.    
         scr_npc_move_to_target();
         scr_npc_fire_at_target();         
     
@@ -191,6 +193,7 @@ if(!global.paused){
         scr_npc_find_kill_target();
         scr_npc_target_kill_in_view();       
         scr_npc_fire_at_target();
+
         
     }else if(mode=="hunt"){
     
@@ -206,8 +209,14 @@ if(!global.paused){
         scr_npc_target_kill_in_view();
         scr_npc_move_to_target();
         scr_npc_fire_at_target();
+        if(weapon.shooting = true){
+            path_end();
+            image_speed = 0;
+            image_index = 0;
+        }
                 
     }else if(mode=="patrol"){
+    
         dDistance = -1;// Allows object to move all the way to the target
         showHealth=true;
     
@@ -500,7 +509,7 @@ scr_move(hspd, vspd);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//Apply damage
+            <string>/// Apply damage. Set mode.
 if(other.type!=faction){
 
     instance_create(other.x,other.y,obj_impact);
@@ -508,10 +517,13 @@ if(other.type!=faction){
     
     if(crew_index==noone){
         // NPCs become hostile to player faction
-        disposition = DISPOSITION_HOSTILE;
+        disposition = DISPOSITION_HOSTILE;       
         targetKtype = obj_mortal;
         targetK = other.firedby;
-        mode="hunt";
+        if(mode!="retreat"){
+            mode="hunt";
+        }
+
         scr_ev_npc_hit(targetK,targetKtype);
     }
     
@@ -577,7 +589,6 @@ if(weapon==noone &amp;&amp; npc_data!=noone){
         bullet_width = sprite_get_width(weapon.bullet_sprite);
     }else{
         // Put my team on defense
-        targetKtype = obj_npc;
         mode="defend";
     }
 
@@ -669,6 +680,8 @@ if(mode=="defend"){
     modeClr=c_blue;
 }else if(mode=="patrol"){
     modeClr=c_lime;
+}else if(mode=="retreat"){
+    modeClr=c_orange;
 }
 draw_circle_colour(x, y-28, 3, modeClr, modeClr, false);
 </string>

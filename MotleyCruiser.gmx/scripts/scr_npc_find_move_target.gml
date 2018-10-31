@@ -3,7 +3,7 @@ Select move to target
 Assumes targetMtype, targetM, weapon, pxK, pyK, faction
 ***/
 
-/// scr_npc_find_kill_target()
+/// scr_npc_find_move_target()
 
 if(targetM==noone || !instance_exists(targetM)){
     if(instance_exists(targetMtype)){

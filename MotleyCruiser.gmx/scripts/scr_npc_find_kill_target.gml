@@ -1,6 +1,7 @@
 /***
 Assumes targetKtype, targetK, targetKinView, weapon, pxK, pyK, faction
 
+CREW NPCS LOOK FOR DISPOSITION HOSTILE, NOT JUST FACTION.
 ***/
 
 /// scr_npc_find_kill_target()

@@ -374,6 +374,7 @@
     <sprites name="_bullets">
       <sprite>sprites\spr_laserbolt</sprite>
       <sprite>sprites\spr_impact_glow</sprite>
+      <sprite>sprites\spr_impact_glow_sm</sprite>
     </sprites>
     <sprites name="_gui">
       <sprites name="_buttons">
@@ -1235,6 +1236,7 @@
       <script>scripts\scr_npc_target_kill_in_view.gml</script>
       <script>scripts\scr_npc_move_to_target.gml</script>
       <script>scripts\scr_npc_sees_enemy.gml</script>
+      <script>scripts\scr_npc_retreat.gml</script>
     </scripts>
   </scripts>
   <shaders name="shaders">
@@ -1365,9 +1367,9 @@
       </objects>
     </objects>
     <objects name="_people_and_places">
+      <object>objects\obj_mortal</object>
       <object>objects\obj_player</object>
       <object>objects\obj_npc</object>
-      <object>objects\obj_mortal</object>
       <object>objects\obj_team</object>
       <object>objects\obj_crew</object>
       <object>objects\obj_enemy</object>

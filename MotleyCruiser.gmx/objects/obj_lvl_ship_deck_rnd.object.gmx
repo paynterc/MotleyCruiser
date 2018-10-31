@@ -364,7 +364,8 @@ if(instance_number(obj_drone) &lt; 20){
             if(global.grid[# xx, yy] == FLOOR){
                 if(instance_exists(obj_player)){
                     if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){                  
-                        instance_create(ex,ey,obj_drone);                      
+                        var drone = instance_create(ex,ey,obj_drone);
+                        drone.disposition = DISPOSITION_HOSTILE;                      
                     }
                 }
             } 
@@ -396,13 +397,19 @@ alarm[3] = room_speed * drone_spawn_time;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check to see if all enemies were eliminated on this deck
+            <string>/// Check to see if all enemies were eliminated. Check hp and set to retreat
 /// See if all enemies defeated on this deck
 var enemyCount = 0;
-for(var i = 0; i &lt; instance_number(obj_mortal); i++) {
-    var this_obj = instance_find(obj_mortal,i);
+for(var i = 0; i &lt; instance_number(obj_npc); i++) {
+    var this_obj = instance_find(obj_npc,i);
     if(this_obj.faction!=FACTION_PLAYER){
         enemyCount++;
+        if(this_obj.hp_current &lt; (this_obj.hp*0.75)){
+            this_obj.targetMtype = obj_core;
+            this_obj.targetM=noone;
+            this_obj.mode = "retreat";
+            this_obj.pspeed *=2;             
+        } 
     }
 }
 

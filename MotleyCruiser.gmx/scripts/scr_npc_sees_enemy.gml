@@ -1,6 +1,5 @@
 /***
 Target in view?
-Assumes targetKtype,
 ***/
 /// scr_npc_sees_enemy(seeker,seeking)
 var seeker = argument0;

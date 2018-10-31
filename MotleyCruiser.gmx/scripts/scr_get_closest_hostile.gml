@@ -18,13 +18,14 @@ if(range == noone){
     range = -1;//set this to -1 for infinite range
 }
 
-closest = noone;
+var closest = noone;
 var this_obj = noone;
 var closest_range = 0;
 var this_range = 0;
 for(var i = 0; i < instance_number(obj_target); i++) {
     this_obj = instance_find(obj_target,i);
     this_range = point_distance(obj_source.x,obj_source.y,this_obj.x,this_obj.y);
+
     if(this_obj!=obj_source && this_obj.disposition == DISPOSITION_HOSTILE){
         if(this_range<range || range<0){
             if(closest==noone){

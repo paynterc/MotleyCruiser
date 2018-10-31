@@ -30,7 +30,7 @@ if(random_faction!=noone){
 ***/
 
 
-var run_modifier = irandom(4)-2;
+var run_modifier = irandom(1)-.5;
 var hp_modifier = irandom(10)-5;
 var names = noone;
 switch(race_index){
