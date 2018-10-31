@@ -86,11 +86,22 @@
           <sprite>sprites\spr_human_helm2</sprite>
         </sprites>
         <sprites name="_chicken">
+          <sprite>sprites\sprite402</sprite>
           <sprite>sprites\spr_chicken_chest1</sprite>
+          <sprite>sprites\spr_chicken_chest2</sprite>
+          <sprite>sprites\spr_chicken_eyes0</sprite>
+          <sprite>sprites\spr_chicken_eyes1</sprite>
+          <sprite>sprites\spr_chicken_eyes2</sprite>
+          <sprite>sprites\spr_chicken_eyes3</sprite>
+          <sprite>sprites\spr_chicken_hair1</sprite>
+          <sprite>sprites\spr_chicken_hair2</sprite>
+          <sprite>sprites\spr_chicken_hair3</sprite>
+          <sprite>sprites\spr_chicken_hair4</sprite>
           <sprite>sprites\spr_chicken_helm1</sprite>
           <sprite>sprites\spr_chicken_helm2</sprite>
           <sprite>sprites\spr_chicken_helm3</sprite>
           <sprite>sprites\spr_chicken_helm4</sprite>
+          <sprite>sprites\spr_chicken_helm5</sprite>
         </sprites>
         <sprites name="_flowridian">
           <sprite>sprites\sprite391</sprite>
@@ -128,7 +139,10 @@
       <sprite>sprites\spr_bot4</sprite>
       <sprite>sprites\spr_c_bot1</sprite>
       <sprite>sprites\spr_chicken</sprite>
+      <sprite>sprites\sprite398</sprite>
+      <sprite>sprites\spr_chicken_OLD</sprite>
       <sprite>sprites\spr_chicken_fml</sprite>
+      <sprite>sprites\spr_chicken_fml_OLD</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
       <sprite>sprites\spr_cryptolid2</sprite>
       <sprite>sprites\spr_drone1</sprite>
@@ -657,7 +671,6 @@
         <script>scripts\scr_load_galaxy.gml</script>
         <script>scripts\scr_clear_galaxy.gml</script>
         <script>scripts\scr_location_translate.gml</script>
-        <script>scripts\scr_gx_make_npc.gml</script>
         <scripts name="gx_loc_DEPRECATED">
           <script>scripts\scr_gx_loc_exists.gml</script>
           <script>scripts\scr_gx_loc_find_value.gml</script>
@@ -1215,6 +1228,7 @@
         <script>scripts\scr_daily_expenses.gml</script>
         <script>scripts\scr_crew_follow_player.gml</script>
       </scripts>
+      <script>scripts\scr_gx_make_npc.gml</script>
       <script>scripts\scr_npc_find_kill_target.gml</script>
       <script>scripts\scr_npc_fire_at_target.gml</script>
       <script>scripts\scr_npc_find_move_target.gml</script>

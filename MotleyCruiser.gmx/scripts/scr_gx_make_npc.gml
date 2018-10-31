@@ -114,9 +114,7 @@ if(global.accessories[race_index] != noone){
     var top = acc_record;
     if(tops != noone){
         //choose chest
-        if( irandom(a_chance)!= a_chance ){
-            top[0] = scr_array_random(tops);
-        }       
+        top[0] = scr_array_random(tops);       
     }
     
     
@@ -126,15 +124,12 @@ if(global.accessories[race_index] != noone){
     var hair = acc_record;
     if(hairs != noone){
         //choose hair
-        if(irandom(a_chance)!=a_chance){
-            hair[0] = scr_array_random(hairs);
-            
-            if( scr_get_array_1d(global.haircolors, race_index)!=noone ){
-                if( is_array(global.haircolors[race_index]) ){
-                    hair[1] = scr_array_random(global.haircolors[race_index]);
-                }
+        hair[0] = scr_array_random(hairs);
+        
+        if( scr_get_array_1d(global.haircolors, race_index)!=noone ){
+            if( is_array(global.haircolors[race_index]) ){
+                hair[1] = scr_array_random(global.haircolors[race_index]);
             }
-            
         }
     }
     
@@ -144,9 +139,7 @@ if(global.accessories[race_index] != noone){
     var head = acc_record;
     if(heads != noone){
         //choose heads
-        if(irandom(a_chance)==a_chance){
-            head[0] = scr_array_random(heads);
-        }
+        head[0] = scr_array_random(heads);
     }
     
     //eyes
@@ -154,9 +147,7 @@ if(global.accessories[race_index] != noone){
     var eye = acc_record;
     if(eyes != noone){
         //choose eyes
-        if(irandom(a_chance)==a_chance){
-            eye[0] = scr_array_random(eyes);
-        }
+        eye[0] = scr_array_random(eyes);
     }
     
     map[NPC_ACCESSORIES] = scr_array(top,hair,head,eye);
