@@ -129,7 +129,7 @@ item_int();//Inventory Items
 // Commodities
 scr_commoditiy_lib_int();
 
-// Cargo
+// Cargo (cargo is commodities)
 scr_cargo_init();
 
 // Inventory

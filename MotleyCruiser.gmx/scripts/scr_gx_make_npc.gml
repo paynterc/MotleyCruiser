@@ -108,13 +108,13 @@ if(global.accessories[race_index] != noone){
     
     var accessories = global.accessories[race_index];
     var a_chance = 5;
-    var acc_record = scr_array(noone,c_white);// Acc index, color
+    var acc_record = scr_array(noone,c_white,noone);// Acc index, color, sprite (string. you should only need to set this at game save.)
     //chest   
-    var tops = accessories[0];
-    var top = acc_record;
+    var tops = accessories[0];// possible accessories
+    var top = acc_record;// the accessory I will get.
     if(tops != noone){
-        //choose chest
-        top[0] = scr_array_random(tops);       
+        //choose accessory
+        top[0] = scr_array_random(tops);      
     }
     
     
@@ -149,6 +149,8 @@ if(global.accessories[race_index] != noone){
         //choose eyes
         eye[0] = scr_array_random(eyes);
     }
+    
+    //Set sprite indexes to strings
     
     map[NPC_ACCESSORIES] = scr_array(top,hair,head,eye);
 }

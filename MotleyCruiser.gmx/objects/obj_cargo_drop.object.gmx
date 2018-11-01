@@ -30,6 +30,31 @@ alarm[0]=room_speed * 5;
 image_speed = .15;
 cargo=2;//Minerals
 qty=1;
+cooldown=false;// Use this to prevent spamming alerts and noise.
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Disable alert cooldown
+cooldown = false;
 </string>
           </argument>
         </arguments>
@@ -77,29 +102,57 @@ instance_destroy();
           <argument>
             <kind>1</kind>
             <string>/// Add some cargo
-scr_cargo_add(cargo,qty);
-scr_play_sound(snd_pickup);
-
-// Announce pickup
-var cargoName = scr_commodity_lib_read(cargo,0);
-var barkTxt = string(qty) + " units of " + string(cargoName) + " retrieved!";
-var randomSprite = spr_old_salt;
-if(global.crew!=noone){
-    var randomCrew = scr_array_random(global.crew);
-    if(is_array(randomCrew)){
-        var tmpSprite = scr_get_array_1d(randomCrew,NPC_SPRITE_TEMP);
-        if(sprite_exists(tmpSprite)){
-            randomSprite = tmpSprite;
+cargo=0;//testing food.
+qty=1;//testing
+var remainder = scr_cargo_add(cargo,qty);
+var pickedUp = qty-remainder;
+if(pickedUp&gt;0){
+    
+    scr_play_sound(snd_pickup);
+    
+    // Announce pickup
+    var cargoName = scr_commodity_lib_read(cargo,0);
+    var barkTxt = string(pickedUp) + " units of " + string(cargoName) + " picked up!";
+    var randomSprite = spr_old_salt;
+    if(global.crew!=noone){
+        var randomCrew = scr_array_random(global.crew);
+        if(is_array(randomCrew)){
+            var tmpSprite = scr_get_array_1d(randomCrew,NPC_SPRITE_TEMP);
+            if(sprite_exists(tmpSprite)){
+                randomSprite = tmpSprite;
+            }
         }
+    }    
+    scr_flybark(barkTxt,randomSprite,3,true);
+    
+    // Destroy self
+    instance_destroy();
+    
+
+}else{
+
+    // Announce full
+    if(!cooldown){
+        cooldown=true;
+        scr_play_sound(snd_pickup);
+        var barkTxt = "Our cargo hold is full! We can't cary any more.";
+        var randomSprite = spr_old_salt;
+        if(global.crew!=noone){
+            var randomCrew = scr_array_random(global.crew);
+            if(is_array(randomCrew)){
+                var tmpSprite = scr_get_array_1d(randomCrew,NPC_SPRITE_TEMP);
+                if(sprite_exists(tmpSprite)){
+                    randomSprite = tmpSprite;
+                }
+            }
+        }
+        
+        scr_flybark(barkTxt,randomSprite,3,true);
+        alarm[1]=room_speed*3;// Disable cooldown
     }
+    
+
 }
-
-
-
-scr_flybark(barkTxt,randomSprite,3,true);
-
-// Destroy self
-instance_destroy();
 </string>
           </argument>
         </arguments>

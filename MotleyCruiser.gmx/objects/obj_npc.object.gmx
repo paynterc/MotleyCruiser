@@ -59,7 +59,6 @@ hyset = false;
 weapon_index = noone;
 weapon=noone;
 
-
 // MODE: idle, hunt, defend, hold, follow
 mode = "idle";
 disposition = DISPOSITION_NEUTRAL;// hostile, neutral, helpful
@@ -89,6 +88,28 @@ wpIndex = 0;
 sprite_set=false;//wait a sec before creating the sprite. doing it at create causes problems.
 // GO!!!
 alarm[0] = room_speed * r_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start idle movement
+alarm[1]=room_speed * random_range(3,5);
 </string>
           </argument>
         </arguments>
@@ -130,6 +151,60 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Idle movement part 2
+if(mode=="idle" || mode=="discourse"){
+    image_xscale = 1;
+}
+alarm[1]=room_speed * random_range(3,5);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Idle movement part 1
+if(mode=="idle" || mode=="discourse"){
+    image_xscale = -1;
+}
+alarm[2]=room_speed * random(2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -147,7 +222,7 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Move, Target, Shoot
+            <string>/// AI: Move, Target, Shoot
 
 // For enemies
 // "defend" continues all the way to core unless encounters player
@@ -209,11 +284,15 @@ if(!global.paused){
         scr_npc_target_kill_in_view();
         scr_npc_move_to_target();
         scr_npc_fire_at_target();
-        if(weapon.shooting = true){
-            path_end();
-            image_speed = 0;
-            image_index = 0;
+        
+        if(instance_exists(weapon)){
+            if(weapon.shooting){
+                path_end();
+                image_speed = 0;
+                image_index = 0;
+            }
         }
+
                 
     }else if(mode=="patrol"){
     
@@ -261,6 +340,10 @@ if(!global.paused){
         showHealth=true;
         scr_npc_find_move_target();
         scr_npc_move_to_target();
+        
+        if(instance_exists(weapon)){
+            weapon.shooting=false;
+        }
         
     }else if(mode=="discourse"){
     
@@ -350,10 +433,12 @@ if(hp_current&lt;1){
             <kind>1</kind>
             <string>/// Depth and Facing
 depth = -y;
-if(direction &gt;=180){
-    image_xscale = -1;
-}else{
-    image_xscale = 1;
+if(mode!="idle" &amp;&amp; mode!="discourse"){
+    if(direction &gt;=180){
+        image_xscale = -1;
+    }else{
+        image_xscale = 1;
+    }
 }
 </string>
           </argument>

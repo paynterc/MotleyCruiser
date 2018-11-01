@@ -25,4 +25,6 @@ npc[NPC_EQUIPMENT]=equip;
 npc[NPC_ACCESSORIES]=noone;// ARRAY OF arrays. Each array has a sprite_index and a color
 npc[NPC_SKIN_COLOR]=c_white;// Tint the sprite with this color;
 npc[NPC_SPRITE_TEMP]=noone;// replace this with a temporary sprite drawn with all accessories
+npc[NPC_SPRITE_STRING]=noone;// Set this when saving the game
+
 return npc;

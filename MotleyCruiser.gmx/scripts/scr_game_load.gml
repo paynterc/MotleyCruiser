@@ -37,6 +37,7 @@ if(ini_section_exists(game)){
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
     
+        
     if(!is_array(global.crew))
     {
         global.crew = noone;
@@ -60,10 +61,33 @@ if(ini_section_exists(game)){
             }
             var npc_entity = scr_npc();
             var npc_data = scr_fill_array(npc_entity,global.crew[i]);
-            var _sprite_index=scr_get_array_1d(npc_data,NPC_SPRITE);
+            
+            // Convert strings to sprite index. We save strings because the index can change.
+            var _sprite_string=scr_get_array_1d(npc_data,NPC_SPRITE_STRING);
+            var _sprite_index=noone;
+            if( sprite_exists(_sprite_string) ){
+                _sprite_index=asset_get_index(_sprite_string);
+                npc_data[NPC_SPRITE]=_sprite_index;
+            }else{
+                _sprite_index=spr_default;
+            }
+            
+            
             var skincolor = scr_get_array_1d(npc_data,NPC_SKIN_COLOR);
             var accessories = scr_get_array_1d(npc_data,NPC_ACCESSORIES);
-            
+            if(is_array(accessories)){
+        
+                for(var n=0; n<array_length_1d(accessories); n++){
+                    var thisAcc = accessories[n];
+                    var accSpriteIndex = asset_get_index(scr_get_array_1d(thisAcc,ACC_SPR_STRING));
+                    if(sprite_exists(accSpriteIndex)){
+                        thisAcc[@ ACC_SPR_INDEX]=accSpriteIndex;
+                    }else{
+                        thisAcc[@ ACC_SPR_INDEX]=noone;
+                    }   
+                }
+                
+            }
             var bodyData = scr_array(_sprite_index,skincolor);
     
             // Submit all sprites to a script to merge them and draw them to a surface
@@ -76,6 +100,8 @@ if(ini_section_exists(game)){
             
             global.crew[i]=npc_data; 
         }
+        
+        
         
     }
     

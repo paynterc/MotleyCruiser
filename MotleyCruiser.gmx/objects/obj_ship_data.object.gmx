@@ -39,8 +39,6 @@ global.supply_oxygen
 ***/
 day = 60;//seconds per day
 
-
-
 time_food = 3;// ticks per day
 time_water = 25;// ticks per day
 time_fuel = 100;
@@ -56,11 +54,6 @@ cargo_oxygen = 0;
 cargo_water = 0;
 cargo_fuel = 0;
 
-
-alarm[0]=room_speed * (day / time_food);//food 3 times a day
-alarm[1]=room_speed *  (day / time_water);//
-alarm[2]=room_speed *  (day / time_fuel);//
-alarm[3]=room_speed *  (day / time_oxygen);//
 </string>
           </argument>
         </arguments>
@@ -86,18 +79,9 @@ alarm[3]=room_speed *  (day / time_oxygen);//
             <string>/// Increment oxygen
 if(room == rm_space){
     global.supply_oxygen -= inc_oxygen;
+    scr_cargo_update_oxygen();
+}
 
-}
-if(global.supply_oxygen&lt;1){
-    if(cargo_oxygen&gt;0){
-        scr_cargo_item_decrement(1,1);
-        cargo_oxygen=scr_cargo_item_count(1);
-        global.supply_oxygen = 100;
-    }else{
-        global.supply_oxygen=0;
-    }
-    
-}
 alarm[3]=room_speed *  (day / time_oxygen);//
 </string>
           </argument>
@@ -128,21 +112,12 @@ if(room == rm_space &amp;&amp; !global.paused){
         if(obj_player_ship.thrust_fwd){
                 global.supply_fuel -= inc_fuel;
         }
-    }
-
-
-}
-if(global.supply_fuel&lt;1){
-
-    if(cargo_fuel&gt;0){
-        scr_cargo_item_decrement(4,1);
-        cargo_fuel=scr_cargo_item_count(4);
-        global.supply_fuel = 100;
-    }else{
-        global.supply_fuel=0;
+        scr_cargo_update_fuel();
     }
     
+
 }
+
 alarm[2]=room_speed *  (day / time_fuel);//
 </string>
           </argument>
@@ -170,16 +145,9 @@ alarm[2]=room_speed *  (day / time_fuel);//
 if(!global.paused){
     if(room == rm_space){
         global.supply_water -= inc_water;
+        scr_cargo_update_water();
     }
-    if(global.supply_water&lt;1){
-        if(cargo_water&gt;0){
-            scr_cargo_item_decrement(3,1);
-            cargo_water=scr_cargo_item_count(3);
-            global.supply_water = 100;
-        }else{
-            global.supply_water=0;
-        }
-    }
+    
 }
 alarm[1]=room_speed *  (day / time_water);//
 </string>
@@ -208,20 +176,44 @@ alarm[1]=room_speed *  (day / time_water);//
 if(!global.paused){
     if(room == rm_space){
         global.supply_food -= inc_food;
+        scr_cargo_update_food();
     }
     
-    if(global.supply_food&lt;1){
-        if(cargo_food&gt;0){
-            scr_cargo_item_decrement(0,1);
-            cargo_food=scr_cargo_item_count(0);
-            global.supply_food = 100;
-        }else{
-            global.supply_food=0;
-        }
-    }
 }
 
 alarm[0]=room_speed * (day / time_food);//food 3 times a day
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update cargo counts
+cargo_food = scr_cargo_item_count(0);
+cargo_oxygen = scr_cargo_item_count(1);
+cargo_water = scr_cargo_item_count(3);
+cargo_fuel = scr_cargo_item_count(4);
+
+scr_cargo_update_food();
+scr_cargo_update_water();
+scr_cargo_update_fuel();
+scr_cargo_update_oxygen();
 </string>
           </argument>
         </arguments>
@@ -288,36 +280,18 @@ Reduce the supply of each on a timer. When a resource reaches zero, take a unit
 from cargo.
 Draw this out in obj_gui_control
 ***/
-day = 60;//seconds per day
 
-cargo_food = scr_cargo_item_count(0);
-cargo_oxygen = scr_cargo_item_count(1);
-cargo_water = scr_cargo_item_count(3);
-cargo_fuel = scr_cargo_item_count(4);
+event_user(0);// Set cargo counts
 
-/****
-These have moved to globals
-supply_food=100;// 1 cargo food = 1 day food = 3 meals;
-supply_water=100;// 1 cargo water = 2 days water
-supply_fuel=100;
-supply_oxygen=100;
-***/
+if(room==rm_space){
 
-time_food = 3;// ticks per day
-time_water = 25;// ticks per day
-time_fuel = 100;
-time_oxygen = 50;
+    alarm[0]=room_speed * (day / time_food);//food 3 times a day
+    alarm[1]=room_speed *  (day / time_water);//
+    alarm[2]=room_speed *  (day / time_fuel);//
+    alarm[3]=room_speed *  (day / time_oxygen);//
+    
+}
 
-inc_food = 35;
-inc_water = 1;
-inc_fuel = 1;
-inc_oxygen = 1;
-
-
-alarm[0]=room_speed * (day / time_food);//food 3 times a day
-alarm[1]=room_speed *  (day / time_water);//
-alarm[2]=room_speed *  (day / time_fuel);//
-alarm[3]=room_speed *  (day / time_oxygen);//
 
 
 

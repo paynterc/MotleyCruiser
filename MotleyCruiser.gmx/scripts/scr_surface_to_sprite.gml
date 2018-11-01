@@ -5,7 +5,8 @@ variable so it won't be repeated.
 https://docs.yoyogames.com/source/dadiospice/002_reference/game%20assets/sprites/sprite_create_from_surface.html
 See also sprite_add_from_surface
 
-Expects an array of arrays. Each subarray should contain a sprite index and a color.
+Expects an array of arrays. Each subarray should contain a sprite index and a color. ie accessories( array(spr1,color1), array(spr2,color2) ).
+If the first sprite has two frames, the script will make a 2 frame animation and impose all other sprites on top of both frames.
 ******************/
 /// scr_surface_to_sprite(array of arrays)
 

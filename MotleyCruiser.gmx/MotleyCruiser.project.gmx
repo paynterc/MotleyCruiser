@@ -145,10 +145,10 @@
       <sprite>sprites\spr_chicken_fml_OLD</sprite>
       <sprite>sprites\spr_cryptolid</sprite>
       <sprite>sprites\spr_cryptolid2</sprite>
+      <sprite>sprites\spr_cryptolid3</sprite>
       <sprite>sprites\spr_drone1</sprite>
       <sprite>sprites\spr_fion</sprite>
       <sprite>sprites\spr_flowridian</sprite>
-      <sprite>sprites\spr_flowridian_OLD</sprite>
       <sprite>sprites\spr_flowridian_fml</sprite>
       <sprite>sprites\spr_gorgan</sprite>
       <sprite>sprites\spr_hairbeast</sprite>
@@ -158,7 +158,6 @@
       <sprite>sprites\spr_old_salt</sprite>
       <sprite>sprites\spr_human_fml</sprite>
       <sprite>sprites\sprite375</sprite>
-      <sprite>sprites\spr_human_fml_BU2</sprite>
       <sprite>sprites\spr_human_helm</sprite>
       <sprite>sprites\spr_hurgan</sprite>
       <sprite>sprites\spr_kren</sprite>
@@ -192,6 +191,7 @@
       <sprite>sprites\spr_crate</sprite>
       <sprite>sprites\spr_turret_base_large</sprite>
       <sprite>sprites\spr_galley_table</sprite>
+      <sprite>sprites\spr_torpedo_pod</sprite>
     </sprites>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
@@ -560,6 +560,19 @@
     <path>paths\path_glr_0</path>
   </paths>
   <scripts name="scripts">
+    <scripts name="_cargo">
+      <script>scripts\scr_cargo_init.gml</script>
+      <script>scripts\scr_cargo_add.gml</script>
+      <script>scripts\scr_cargo_item_count.gml</script>
+      <script>scripts\scr_cargo_item_decrement.gml</script>
+      <script>scripts\scr_cargo_save.gml</script>
+      <script>scripts\scr_cargo_load.gml</script>
+      <script>scripts\scr_cargo_calc_ttl.gml</script>
+      <script>scripts\scr_cargo_update_food.gml</script>
+      <script>scripts\scr_cargo_update_water.gml</script>
+      <script>scripts\scr_cargo_update_fuel.gml</script>
+      <script>scripts\scr_cargo_update_oxygen.gml</script>
+    </scripts>
     <scripts name="_arrays">
       <script>scripts\scr_str_split.gml</script>
       <script>scripts\scr_array_random.gml</script>
@@ -1182,15 +1195,6 @@
         <script>scripts\scr_commodity_lib_read.gml</script>
         <script>scripts\scr_commoditiy_lib_int.gml</script>
       </scripts>
-      <scripts name="_cargo">
-        <script>scripts\scr_cargo_init.gml</script>
-        <script>scripts\scr_cargo_add.gml</script>
-        <script>scripts\scr_cargo_item_count.gml</script>
-        <script>scripts\scr_cargo_item_decrement.gml</script>
-        <script>scripts\scr_cargo_save.gml</script>
-        <script>scripts\scr_cargo_load.gml</script>
-        <script>scripts\scr_cargo_calc_ttl.gml</script>
-      </scripts>
     </scripts>
     <scripts name="_player_editor">
       <script>scripts\scr_make_selector.gml</script>
@@ -1538,7 +1542,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="348">
+  <constants number="352">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1750,6 +1754,7 @@
     <constant name="NPC_ACCESSORIES">18</constant>
     <constant name="NPC_SKIN_COLOR">19</constant>
     <constant name="NPC_SPRITE_TEMP">20</constant>
+    <constant name="NPC_SPRITE_STRING">21</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ID">12</constant>
@@ -1887,6 +1892,9 @@
     <constant name="TURRET_TURN_SPEED">0</constant>
     <constant name="VOID">-7</constant>
     <constant name="WALL">-6</constant>
+    <constant name="ACC_SPR_INDEX">0</constant>
+    <constant name="ACC_SPR_COLOR">1</constant>
+    <constant name="ACC_SPR_STRING">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
