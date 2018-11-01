@@ -56,14 +56,6 @@ if( sprite_exists(global.player_sprite) ){
           <argument>
             <kind>1</kind>
             <string>draw_self();
-/***
-if(spr_custom==noone){
-    spr_custom = scr_make_player_sprite();
-    sprite_index = spr_custom;
-}else{
-    draw_self();
-}
-***/
 </string>
           </argument>
         </arguments>

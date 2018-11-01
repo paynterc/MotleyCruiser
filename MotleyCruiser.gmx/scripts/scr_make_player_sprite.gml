@@ -16,21 +16,27 @@ var spr_custom;
 var surf;
 var s_body;
 
+/***
 var a = global.accessories[0];
 var tops = a[0];
 var hairs = a[1];
 var hats = a[2];
 var eyes = a[3];
+***/
 
 var pm = scr_get_player_model();
-var skincolorsHuman = global.skincolors[0];
-var haircolorsHuman = global.haircolors[0];
-skincolor = skincolorsHuman[pm[0]];
+//var skincolorsHuman = global.skincolors[0];
+//var haircolorsHuman = global.haircolors[0];
+
+// Assumes colors_skin, tops, hats, etc  were set in the creation step of the obj_player_edit
+skincolor = colors_skin[pm[0]];
 hair = hairs[pm[1]];
-haircolor = haircolorsHuman[pm[2]];
+haircolor = haircolors[pm[2]];
 top = tops[pm[3]];
 hat = hats[pm[4]];
 eye = eyes[pm[5]];
+
+
 if(pm[6]==1){
     s_body=spr_human_fml;
 }else{

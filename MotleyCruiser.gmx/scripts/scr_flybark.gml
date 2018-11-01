@@ -24,14 +24,16 @@ if(instance_exists(obj_flyoption)){
 var portrait = args[1];
 var time = args[2];
 var drawgui = args[3];
+if(drawgui==noone){
+    drawgui = true;
+}
 
-drawgui = true;
 
 var boxw, boxh, boxx1, boxy1, frame_bottom, boxw;
 if(drawgui){
 
-    boxw = display_get_gui_width() / 2;
-    boxh = display_get_gui_height()/3;
+    boxw = display_get_gui_width() / 3;
+    boxh = display_get_gui_height() / 4;
     boxx1 = 0;
     frame_bottom=display_get_gui_height();   
     boxy1 = frame_bottom - boxh;

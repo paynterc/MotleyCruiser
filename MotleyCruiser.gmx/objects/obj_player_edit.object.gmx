@@ -33,10 +33,10 @@ genders = noone;
 genders[0]=spr_human;
 genders[1]=spr_human_fml;
 accessories = global.accessories[0];
-tops = accessories[0];
-hairs = accessories[1];
-hats = accessories[2];
-eyes = accessories[3];
+tops = scr_array_onenull( accessories[0] );
+hairs = scr_array_onenull( accessories[1] );
+hats = scr_array_onenull( accessories[2] );
+eyes = scr_array_onenull( accessories[3] );
 haircolors = global.haircolors[0];// 0 is the index for human race selections.
 colors_skin = global.skincolors[0];
 

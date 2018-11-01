@@ -477,8 +477,6 @@ var E;// economy modifier
 var SP;// Sell Price
 var BP; // Buy price
 
-
-var test = 1;
 for(n=0; n&lt; global.commodity_lib_count;n++){
 
     if(scr_commodity_lib_read(n,5)=="default"){

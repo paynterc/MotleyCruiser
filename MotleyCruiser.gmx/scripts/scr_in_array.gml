@@ -2,6 +2,9 @@
 var array = argument0;
 var value = argument1;
 var result = false;
+if(!is_array(array)){
+    return false;
+}
 for(var i=0; i<array_length_1d(array); i++){
     if(array[i]==value){
         result = true;

@@ -52,7 +52,7 @@ while (stack > 0){
                   break;
                }
             }
-            var test=0;
+            
        }
     }else{
        break;

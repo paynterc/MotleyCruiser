@@ -31,5 +31,5 @@ for(var i = 0; i < array_height_2d(global.racial_centers); i++){
 if(races==noone){
     races = scr_array(17);
 }
-var test = 1;
+
 return races;

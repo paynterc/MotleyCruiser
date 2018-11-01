@@ -127,6 +127,7 @@
       <sprite>sprites\spr_androne_eyes</sprite>
       <sprite>sprites\spr_androne_fml</sprite>
       <sprite>sprites\spr_antinoid</sprite>
+      <sprite>sprites\spr_ship_ai</sprite>
       <sprite>sprites\spr_arcnid</sprite>
       <sprite>sprites\spr_arcnid_fml</sprite>
       <sprite>sprites\spr_asteroz</sprite>
@@ -589,6 +590,8 @@
       <script>scripts\scr_array.gml</script>
       <script>scripts\scr_in_array.gml</script>
       <script>scripts\scr_array_size.gml</script>
+      <script>scripts\scr_array_nodupes.gml</script>
+      <script>scripts\scr_array_onenull.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -620,6 +623,7 @@
         <script>scripts\scr_flybark.gml</script>
         <script>scripts\scr_typewriter.gml</script>
         <script>scripts\scr_stringtowords.gml</script>
+        <script>scripts\scr_crew_bark.gml</script>
       </scripts>
     </scripts>
     <scripts name="_entities">

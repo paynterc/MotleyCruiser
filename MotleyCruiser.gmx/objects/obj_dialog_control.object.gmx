@@ -139,7 +139,6 @@ for(var i = 0; i &lt; instance_number(obj_npc); i++) {
     this_range = point_distance(obj_player.x,obj_player.y,this_sentient.x,this_sentient.y);
     var thisMode = this_sentient.mode;
     var thisNpc = this_sentient.npc_data;
-    var test = 1;
     if(this_range&lt;50 &amp;&amp; this_sentient.mode == "discourse"){
         if(sent==noone){
             sent = this_sentient;

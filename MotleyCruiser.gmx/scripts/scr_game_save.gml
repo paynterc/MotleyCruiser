@@ -49,7 +49,7 @@ for(var i=0; i<array_length_1d(global.crew); i++){
     }
     
 }
-var test=1;
+
 
 scr_write_array(global.crew,game,"crew",SAVE_GAME_FILE);
 scr_write_array(global.team,game,"team",SAVE_GAME_FILE);

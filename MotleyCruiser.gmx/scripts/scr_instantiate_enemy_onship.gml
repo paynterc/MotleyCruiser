@@ -30,17 +30,13 @@ if(set_mode== noone){
 
     var oddsMode = 5;
     var modRnm = irandom(oddsMode);
-    if(modRnm==0){
-        set_mode = "hunt";
-    }else if(modRnm==1){
-        set_mode = "defend";                
-    }else if(modRnm==3){
-        set_mode = "patrol";                
+    if(modRnm==1){
+        set_mode = "hold";                
     }else{
-        set_mode = "hold";           
+        set_mode = "patrol";           
     }
 }
-set_mode = "patrol";// testing
+
 newEnemy.mode = set_mode;
 newEnemy.disposition = DISPOSITION_HOSTILE;
 
