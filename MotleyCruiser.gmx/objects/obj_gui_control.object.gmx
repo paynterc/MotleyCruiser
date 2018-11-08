@@ -30,6 +30,61 @@ scr_set_gui_vars();
 
 has_ball=noone;// Who has the ball?
 ui_stack = ds_stack_create();// Stack previously open menus here so we can get back to them
+
+blinkSpeed = 1;
+blinky = false;
+alarm[0]=room_speed * blinkSpeed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Blinky2
+blinky = false;
+alarm[0]=room_speed * blinkSpeed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Blinky 1
+blinky=true;
+alarm[1]=room_speed * blinkSpeed;
+
 </string>
           </argument>
         </arguments>
@@ -193,31 +248,41 @@ if(room == rm_space){
     var rw = 1;
     
     if(instance_exists(obj_ship_data)){
+        
+        draw_set_font(fnt_menus);
         draw_set_halign(fa_left);
         draw_set_valign(fa_bottom);
         var spacing = 40;
         
-        draw_rectangle_color(x1, y1, x1+global.supply_food, y1+16, c_red, c_red, c_red, c_red, true);
-        draw_set_color(c_red);
-        draw_text(x1,y1,"FOOD: " + string(obj_ship_data.cargo_food));
+        if( obj_ship_data.cargo_food&gt;0 || blinky ){
+            draw_rectangle_color(x1, y1, x1+global.supply_food, y1+16, c_red, c_red, c_red, c_red, true);
+            draw_set_color(c_red);
+            draw_text(x1,y1,"FOOD: " + string(obj_ship_data.cargo_food));
+        }
         
         rw += 1;
         y1 = (spacing*rw);
-        draw_rectangle_color(x1, y1, x1+global.supply_water, y1+16, c_aqua, c_aqua, c_aqua, c_aqua, true);
-        draw_set_color(c_aqua);
-        draw_text(x1,y1,"WATER: " + string(obj_ship_data.cargo_water));
+        if( obj_ship_data.cargo_water&gt;0 || blinky ){
+            draw_rectangle_color(x1, y1, x1+global.supply_water, y1+16, c_aqua, c_aqua, c_aqua, c_aqua, true);
+            draw_set_color(c_aqua);
+            draw_text(x1,y1,"WATER: " + string(obj_ship_data.cargo_water));
+        }
         
         rw += 1;
         y1 = (spacing*rw);
-        draw_rectangle_color(x1, y1, x1+global.supply_fuel, y1+16, c_orange, c_orange, c_orange, c_orange, true);
-        draw_set_color(c_orange);
-        draw_text(x1,y1,"FUEL: " + string(obj_ship_data.cargo_fuel));
+        if( obj_ship_data.cargo_fuel&gt;0 || blinky ){
+            draw_rectangle_color(x1, y1, x1+global.supply_fuel, y1+16, c_orange, c_orange, c_orange, c_orange, true);
+            draw_set_color(c_orange);
+            draw_text(x1,y1,"FUEL: " + string(obj_ship_data.cargo_fuel));
+        }
         
         rw += 1;
         y1 = (spacing*rw);
-        draw_rectangle_color(x1, y1, x1+global.supply_oxygen, y1+16, c_silver, c_silver, c_silver, c_silver, true);
-        draw_set_color(c_silver);
-        draw_text(x1,y1,"OXYGEN: " + string(obj_ship_data.cargo_oxygen));
+        if( obj_ship_data.cargo_oxygen&gt;0 || blinky ){
+            draw_rectangle_color(x1, y1, x1+global.supply_oxygen, y1+16, c_silver, c_silver, c_silver, c_silver, true);
+            draw_set_color(c_silver);
+            draw_text(x1,y1,"OXYGEN: " + string(obj_ship_data.cargo_oxygen));
+        }
     
     }
     
@@ -268,7 +333,13 @@ if(room == rm_space){
             <string>/// Debug text
     draw_set_halign(fa_right);
     draw_set_valign(fa_bottom);
-    draw_text(gui_width-32, gui_height-16, "FPS Real: " + string(fps_real));
+    if(fps_real&lt;60){
+        draw_set_colour(c_red);
+    }else{
+        draw_set_colour(c_lime);
+    }
+    draw_text(gui_width-32, gui_height-16, string(fps_real) + " :FPS Real");
+    draw_set_colour(c_lime);
 </string>
           </argument>
         </arguments>

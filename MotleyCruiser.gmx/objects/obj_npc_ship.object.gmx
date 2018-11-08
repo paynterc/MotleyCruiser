@@ -232,10 +232,7 @@ if(disposition == DISPOSITION_HOSTILE){
         // If i'm hostile and I'm close enough to see, go on attack.    
 
     if( scr_instance_in_view(id) ){
-          
-
-
-        
+      
         var s_count = instance_number(obj_ship);
         var cdist = noone;
         var closest = noone;
@@ -262,14 +259,9 @@ if(disposition == DISPOSITION_HOSTILE){
             disposition = dispostion_save;
             mode = mode_save;
             hitby = noone;
-            
+            mode = MODE_TRAVELING;
 
-            if(target_save!=noone){
-                // Reset to original target. Planet, moon or whatever.
-                target = target_save;
-            }else{
-                target = scr_find_landable_target();
-            }
+            target = scr_find_landable_target();
             
             bark = scr_random_sentence(1);// Random farewell.
             event_user(0);
@@ -412,23 +404,71 @@ if(can_move){
             break;
         case MODE_FOLLOWING:
         
-            if(target != noone &amp;&amp; tgt_dist&lt;200){
-                dd = angle_difference(target.image_angle, image_angle);
-                image_angle += sin(degtorad(dd)) * turn_spd;             
-                speed = target.speed;
-                thrust_fwd=true;  
+            if(instance_exists(target)){
+                
+                if(tgt_dist&lt;200){
+                    dd = angle_difference(target.image_angle, image_angle);
+                    image_angle += sin(degtorad(dd)) * turn_spd;             
+                    speed = target.speed;
+                    thrust_fwd=false;  
+                }else{
+                    angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+                    motion_add(image_angle,acc_spd_fwd);
+                    thrust_fwd=true;
+                }
+            
             }
+
+        
+            break;
+            
+        case MODE_REFUELING:
+        
+            if(instance_exists(target)){
+                
+                if(tgt_dist&lt;128){
+                    dd = angle_difference(target.image_angle, image_angle);
+                    image_angle += sin(degtorad(dd)) * turn_spd;             
+                    speed = target.speed;
+                    thrust_fwd=false;
+                    scr_ev_refuel_start(target,id);
+                    mode = MODE_FOLLOWING;
+                }else{
+                    angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+                    motion_add(image_angle,acc_spd_fwd);
+                    thrust_fwd=true;
+                }
+            
+            }
+
         
             break;
             
         case MODE_DEFENDING:
         
-            if(target == obj_player_ship &amp;&amp; tgt_dist&lt;200){
-                dd = angle_difference(target.image_angle, image_angle);
-                image_angle += sin(degtorad(dd)) * turn_spd;             
-                speed = target.speed;
-                thrust_fwd=true;  
-            }    
+            if(target == obj_player_ship){
+                if(tgt_dist&lt;200){
+                    dd = angle_difference(target.image_angle, image_angle);
+                    image_angle += sin(degtorad(dd)) * turn_spd;             
+                    speed = target.speed;
+                    thrust_fwd=true;  
+                }else{
+                    angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+                    motion_add(image_angle,acc_spd_fwd);
+                    thrust_fwd=true;
+                }   
+            }else{
+                if(target != noone){
+                    angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+                    if(tgt_dist &gt; 300){
+                        //Stop accelerating when we get close      
+                        motion_add(image_angle,acc_spd_fwd);
+                        thrust_fwd=true;
+                    } 
+                }
+       
+            }
+    
             break;
         
         case MODE_TRAVELING:
@@ -572,9 +612,9 @@ if(hull_current &lt; 1){
             <string>/// Set shooting status
 shooting = can_fire
 &amp;&amp; instance_exists(target)
-&amp;&amp; target != noone 
 &amp;&amp; abs(angleDiff) &lt; 5 
 &amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING)
+&amp;&amp; target.disabled != undefined
 &amp;&amp; !target.disabled
 &amp;&amp; target.faction != faction
 &amp;&amp; energy_current &gt; 0 
@@ -633,10 +673,7 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
           <argument>
             <kind>1</kind>
             <string>/// Drop loot when dead
-// Either minerals or ice
-var drop = instance_create(x,y,obj_cargo_drop);
-drop.cargo = irandom(7);//any basic commodity
-drop.qty = irandom(2)+1;
+scr_cargo_drop(x,y);// should produce random loot
 </string>
           </argument>
         </arguments>
@@ -685,7 +722,7 @@ alarm[6]=room_speed * 3;// Clear bark
             <kind>1</kind>
             <string>/// Draw Bark
 if(bark!=noone){
-    scr_draw_messagebox_plus(bark, 300, 10, id, c_black, false, noone, noone, 1);
+    scr_draw_messagebox_plus(bark,  id, 300, 10, c_black, false, noone, noone, 1);
 }
 </string>
           </argument>
@@ -709,8 +746,7 @@ if(bark!=noone){
             <kind>1</kind>
             <string>/// Draw target status indicators
 // THIS IS OLD STUFF FOR TESTING
-exit;
-
+/*****
 if(target==noone || !instance_exists(target)) exit;
 if(!can_fire){
     //draw red
@@ -743,6 +779,7 @@ if(tgt_dist &gt; weapon_range){
     draw_set_color(c_fuchsia);
     draw_rectangle(x-16,y-55,x-14,y-53,0);
 }
+****/
 </string>
           </argument>
         </arguments>

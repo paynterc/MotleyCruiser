@@ -26,5 +26,5 @@ npc[NPC_ACCESSORIES]=noone;// ARRAY OF arrays. Each array has a sprite_index and
 npc[NPC_SKIN_COLOR]=c_white;// Tint the sprite with this color;
 npc[NPC_SPRITE_TEMP]=noone;// replace this with a temporary sprite drawn with all accessories
 npc[NPC_SPRITE_STRING]=noone;// Set this when saving the game
-
+npc[NPC_CREW_INDEX]=noone;// Set this when an NPC becomes a member of crew. Reset it when loading the game.
 return npc;

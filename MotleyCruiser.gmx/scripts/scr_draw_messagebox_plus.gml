@@ -1,4 +1,4 @@
-//scr_draw_messagebox(string text, real text_length, real padding, real talking_object, color background_color, bool force_text_below_object, array buttons);
+/// scr_draw_messagebox(string text, real text_length, real padding, real talking_object, color background_color, bool force_text_below_object, array buttons);
 
 var args = noone;
 for (var i=0; i<16; i++)
@@ -10,21 +10,37 @@ for (var i=0; i<16; i++)
 }
 
 var text = args[0];       // Text for the box
-var len = args[1];        // Text wrap width
-var padding = args[2];    // Space between text and border
-var obj = args[3];        // The object speaking. (message box points to them)
+var obj = args[1];        // The object speaking. (message box points to them)
+var len = args[2];        // Text wrap width
+var padding = args[3];    // Space between text and border
 var bak_color = args[4];  // Color of the background
 var force = args[5];      // Force box to draw below object
 var buttons = args[6];    // BUTTONS. Lets us set space at the bottom of the message box.
 var font = args[7];
 var text_scale = args[8];
 
+if(len==noone){
+    len = 128;
+}
+
+if(padding==noone){
+    padding = 8;
+}
+
+if(bak_color==noone){
+    bak_color = c_black;
+}
+
+if(force==noone){
+    force = false;
+}
+
 if(font==noone){
-    font = fnt_menus;
+    font = fnt_menus_med;
 }
 
 if(text_scale==noone){
-    text_scale = .30;
+    text_scale = 1;
 }
 
 var font_color = c_lime;

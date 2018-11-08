@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -27,8 +27,110 @@
             <kind>1</kind>
             <string>/// Init
 show = false;
+sent = noone;// An obj_npc
+shipId = noone;// Id of ship being communicated with
+
 fly_conditionals=scr_array_size(10);
-sent = noone;
+question=noone;// An index of fly_conditionals
+answer=noone;// The value of fly_conditionals[question]
+
+// Dialogue states. Possible contexts for dialogue.
+enum dStates {
+    cantina,
+    spaceNoFuel,
+    spaceRefuel
+}
+state=noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Board ship
+obj_game_control.pauseForce = false;
+global.paused=false;
+obj_ship_data.flag_outOfFuel=false;
+if(instance_exists(obj_player_ship) &amp;&amp; instance_exists(shipId)){
+    obj_player_ship.closest_boardable = shipId;
+    state=noone;
+    shipId=noone;
+    with(obj_player_ship){
+        scr_board_ship();
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create "out of fuel" dialogue box
+obj_game_control.pauseForce = true;// Locks pause status. Can not be undone through "Continue" menu option.
+global.paused=true;
+txt = "You're out of fuel and adrift in space. Now what? You can send out a distress signal asking for help, try to manufacture some fuel out of resources or abandon ship.";
+scr_flywriter(txt,spr_ship_ai,true,"0,Distress call,Make fuel,Abandon ship");
+state = dStates.spaceNoFuel;
+        
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Unpause
+obj_game_control.pauseForce = false;
+global.paused=false;
 </string>
           </argument>
         </arguments>
@@ -59,52 +161,85 @@ if(scr_user_input("interact")){
     event_user(0);
 }
 
-if(scr_user_input("menu_close")){
-    sent=noone;
-    if(instance_exists(obj_flybox)){
-        with(obj_flybox){
-            destroy = true;
-        }
+question=noone;
+answer=noone;
+
+for(var i=0; i&lt;array_length_1d(fly_conditionals); i++){
+    if( fly_conditionals[i] != noone ){
+          question = i;
+          answer = fly_conditionals[i];
+          break;
     }
 }
 
-if(fly_conditionals!=noone){
-
-    if(fly_conditionals[0]==1){
-        fly_conditionals[0]=0;
-        var bunks = obj_ship_data.bunks;
-        
-        if( obj_ship_data.bunks &lt;= scr_get_active_crew_count()+1 ){     
-            scr_flywriter("You don't have enough bunks on your ship to hire more crew.",noone,0,"10,OK");
-        }else{
-            scr_add_npc_to_crew(sent);
-        }
-        sent=noone;
+if(question != noone){
+    if(state==dStates.spaceNoFuel){        
+        scr_dlg_space_no_fuel();    
+    }else if(state==dStates.cantina){
+        scr_dlg_cantina();
+    }else if(state==dStates.spaceRefuel){
+        scr_dlg_buy_fuel();
     }
-    if(fly_conditionals[2]==1){
-        
-        fly_conditionals[2]=0;
-        var repairCost = scr_repair_all_ship_cost();
-        if(repairCost&lt;=global.credits || repairCost == 0 ){
-            scr_repair_all_ships(repairCost);
-            scr_flywriter("Thank you for your business. Your ships will be reapaired by the time you depart.",sent.sprite_index,true,"1,OK");
-        }else{
-            scr_flywriter("You can't afford it. Come back when you've earned enough credits.",sent.sprite_index,true,"1,OK");
-        }
-        
-
-        sent=noone;
-    }
-    if(fly_conditionals[1]==1){
-        fly_conditionals[1]=0;
-        sent=noone;
-    }
-    if(fly_conditionals[9]==1){
-        //Reserved for generic messages and error messages.
-        fly_conditionals[9]=0;
-        sent=noone;
-    }      
 }
+scr_clear_conditionals();
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start refueling conversation
+var npcSprite = noone;
+if(sent != noone){
+    npcSprite = sent.sprite_index;
+}else{
+    npcSprite = spr_ship_ai;
+}
+// Decide if npc helps or attacks
+// If help, calculate price
+priceRefuel = 200;
+var txt ="";
+var choices="";
+var odds = irandom(3);
+
+if(odds == 0){
+    txt = "I can spare 2 units of fuel. If you want it you'll need to pay. I'll give you a choice:
+    give me "+ string(priceRefuel) +" gold OR any crewmember I want. I know how to pick a good slave.";
+    choices = "0,Pay gold,Sell crew,Attack!,Go away";
+}else if(odds==1){
+    txt = "I can spare 2 units of fuel. If you want it you'll need to pay me "+ string(priceRefuel) +" gold.";
+    choices = "1,Pay gold,Attack!,Go away";
+}else if(odds==2){
+    txt = "I can spare 2 units of fuel. If you want it you'll need to give me a member of your crew...so I can sell them to the slaveers.";
+    choices = "2,Sell crew,Attack!,No way";
+}else{
+    txt = "It's your lucky day. Im feeling generous. Here are two units of fuel.";
+    choices = "3,Thanks!,Attack!";
+}
+
+
+
+scr_flywriter(txt,npcSprite,true,choices);
+state = dStates.spaceRefuel;
+obj_game_control.pauseForce = true;
+global.paused=true;
 </string>
           </argument>
         </arguments>
@@ -127,7 +262,8 @@ if(fly_conditionals!=noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Open dialogue
+            <string>/// Open NPC dialogue. 
+// For use in areas with obj_npc objects.
 
 var this_sentient = noone;
 var closest_range = 0;

@@ -77,3 +77,16 @@ intros_racist_friend = scr_push_array(intros_racist_friend,sentence);
 
 global.dialogue_sentences[1] = intros_racist_friend;
 *****/
+
+var panics = noone;
+
+sentence = scr_define_sentence("We're going to die out here!", "panic", noone, noone);
+panics = scr_push_array(farewells,sentence);
+
+sentence = scr_define_sentence("Get us back to base!", "panic", noone, noone);
+panics = scr_push_array(farewells,sentence);
+
+sentence = scr_define_sentence("Everything is getting dark!", "panic", noone, noone);
+panics = scr_push_array(farewells,sentence);
+
+global.dialogue_sentences[2] = panics;

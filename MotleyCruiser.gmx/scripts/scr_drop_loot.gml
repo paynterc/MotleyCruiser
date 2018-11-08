@@ -40,7 +40,7 @@ if(irandom(drop_odds)==drop_odds){
         }    
       
     }else{
-        var credit_amount = irandom_range(100,500);
+        var credit_amount = irandom_range(1,5);
         loot.credits = credit_amount;    
     }
 

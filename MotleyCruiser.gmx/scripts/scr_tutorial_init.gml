@@ -3,7 +3,8 @@
 0. tutorial complete?
 1. inventory
 2. launch button
-3. radar
+3. cargo
+4. trade
 
 ***/
 global.tutorial = scr_array_size(20);

@@ -3,6 +3,8 @@
 var game = argument0;
 var rm = noone;//next room
 
+obj_game_control.pauseForce = false;
+global.paused = false;
 
 scr_new_game_defaults();
 global.game_loaded = game;
@@ -97,7 +99,7 @@ if(ini_section_exists(game)){
             }
             
             npc_data[NPC_SPRITE_TEMP] = scr_surface_to_sprite(spriteArray);
-            
+            npc_data[NPC_CREW_INDEX]=i;
             global.crew[i]=npc_data; 
         }
         

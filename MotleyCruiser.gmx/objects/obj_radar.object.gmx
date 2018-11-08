@@ -186,32 +186,37 @@ if(!instance_exists(obj_player_ship)) exit
 if(show_radar){
     draw_set_colour(c_green);
     draw_circle(px,py,100,true);
-}
-if(rotator != noone) draw_line(rotator[0], rotator[1], rotator[2], rotator[3]);
 
-draw_set_valign(fa_center);
-draw_set_halign(fa_center);
-draw_set_font(fnt_menus);
-
-if(blips==noone || blips[0]==-1) exit;
-var text=noone;
-for(var i=0; i&lt;array_length_1d(blips); i++){
-    var c = blips[i];
-    if(c==noone || c&lt;1) continue;
-    draw_set_alpha(c[4]);
-    draw_set_colour(c[5]);
-    draw_arrow(c[0], c[1], c[2], c[3],10);
-    if(c[6]!=noone){
-        text = c[6];
-    }else{
-        text = "";
+    if(rotator != noone)
+    {
+        draw_line(rotator[0], rotator[1], rotator[2], rotator[3]);
     }
+
+    draw_set_valign(fa_center);
+    draw_set_halign(fa_center);
+    draw_set_font(fnt_menus);
     
-    draw_text(c[2],c[3],text);
-    
+    if(blips==noone || blips[0]==-1) exit;
+    var text=noone;
+    for(var i=0; i&lt;array_length_1d(blips); i++){
+        var c = blips[i];
+        if(c==noone || c&lt;1) continue;
+        draw_set_alpha(c[4]);
+        draw_set_colour(c[5]);
+        draw_arrow(c[0], c[1], c[2], c[3],10);
+        if(c[6]!=noone){
+            text = c[6];
+        }else{
+            text = "";
+        }
+        
+        draw_text(c[2],c[3],text);
+        
+    }
+    draw_set_alpha(1);
+    draw_set_colour(c_white);
+
 }
-draw_set_alpha(1);
-draw_set_colour(c_white);
 </string>
           </argument>
         </arguments>

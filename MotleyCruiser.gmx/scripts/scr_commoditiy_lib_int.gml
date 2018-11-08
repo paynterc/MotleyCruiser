@@ -40,7 +40,7 @@ scr_commodity_lib_add(idx,4,100) //Base price
 scr_commodity_lib_add(idx,5,"default") //Type: default, special
 
 var idx=3;// record index
-scr_commodity_lib_add(idx,0,"Ice") //Title
+scr_commodity_lib_add(idx,0,"Water") //Title
 scr_commodity_lib_add(idx,1,CC_MINING) //Comodity Class (Economy Type)
 scr_commodity_lib_add(idx,2,spr_ItemIcon_Water) //Sprite
 scr_commodity_lib_add(idx,3,"Ice, mined from asteroids and commets. Everybody needs it. Can be converted to water for your ship.") //Description

@@ -75,7 +75,7 @@ if(hat != noone){
     draw_sprite(hat, 0, 12, 16);
 }
 
-spr_custom = sprite_create_from_surface(surf, 0, 0, 24, 24, false, false, 8, 16);
+spr_custom = sprite_create_from_surface(surf, 0, 0, 24, 24, false, false, 12, 16);
 
 
 draw_clear_alpha(c_black, 0);

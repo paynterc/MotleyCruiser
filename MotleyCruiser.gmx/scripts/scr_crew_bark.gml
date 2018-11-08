@@ -19,7 +19,7 @@ var crewMate=noone;
 if(crewIndex!=noone){
     crewMate = scr_get_array_1d(global.crew,crewIndex); 
 }else{
-    crewMate = scr_array_random(global.crew);  
+    crewMate = scr_crew_get_random();  
 }
 var cName=noone;
 var portrait = noone;
@@ -35,5 +35,6 @@ if(cName == noone){
 if(!sprite_exists(portrait)){
     portrait = spr_ship_ai;
 }
-scr_flybark(txt,portrait,3,true);
+//scr_flybark(txt,portrait,3,true);
+scr_queue_bark(txt,portrait);
 

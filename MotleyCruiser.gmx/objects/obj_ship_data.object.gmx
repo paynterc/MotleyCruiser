@@ -41,18 +41,122 @@ day = 60;//seconds per day
 
 time_food = 3;// ticks per day
 time_water = 25;// ticks per day
-time_fuel = 100;
-time_oxygen = 50;
+time_fuel = 100;// 100
+time_oxygen = 30;//30
 
-inc_food = 35;
+inc_food = 35;// lost per tick
 inc_water = 1;
-inc_fuel = 1;
+inc_fuel = 1000;// 1
 inc_oxygen = 1;
 
 cargo_food = 0;
 cargo_oxygen = 0;
 cargo_water = 0;
 cargo_fuel = 0;
+
+flag_outOfWater=false;
+flag_outOfFood=false;
+flag_outOfOxygen=false;
+flag_outOfFuel=false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="6">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// No air damage
+if(global.supply_oxygen&lt;1){
+    if(room==rm_space &amp;&amp; !global.paused){
+        scr_crew_bark("I can't breath!");
+        scr_ai_bark("The crew is taking damage. Without oxygen they could die.");
+        // MORE DAMAGE STUFF
+        scr_crew_data_update_hp(-2);        
+    }
+    alarm[6]=room_speed*day;
+}
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// No water damage
+if(global.supply_water&lt;1){
+    if(room==rm_space &amp;&amp; !global.paused){
+        scr_crew_bark("I'm so thirsty and the engines need water! Go back to base and get us some water!");
+        scr_ai_bark("The crew is taking damage.");
+        scr_crew_data_update_hp(-2);
+        
+    }
+    alarm[5]=room_speed* (day*2);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// No food damage
+// crew takes damage, decline in morale, consequences
+if(global.supply_food&lt;1){
+    if(room==rm_space &amp;&amp; !global.paused ){
+        scr_crew_bark("We're going to starve! Go back to base and get us some food!");
+        scr_ai_bark("The crew is taking damage. Without food they could die.");
+        scr_crew_data_update_hp(-2);
+        // More consequences
+    }
+    alarm[4]=room_speed* (day*3);
+}
 
 </string>
           </argument>
@@ -77,7 +181,7 @@ cargo_fuel = 0;
           <argument>
             <kind>1</kind>
             <string>/// Increment oxygen
-if(room == rm_space){
+if(room == rm_space &amp;&amp; !global.paused){
     global.supply_oxygen -= inc_oxygen;
     scr_cargo_update_oxygen();
 }
@@ -187,6 +291,151 @@ alarm[0]=room_speed * (day / time_food);//food 3 times a day
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="16">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Out of fuel
+scr_crew_bark("We're out of fuel.");
+if(instance_exists(obj_player_ship)){
+    with(obj_player_ship){
+        disabled=true;
+        scr_ev_outoffuel();
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="15">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Out of oxygen
+scr_crew_bark("We're out of oxygen.");
+alarm[6]=room_speed*day;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="14">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Out of water
+scr_crew_bark("We're out of water.");
+alarm[5]=room_speed*day;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Out of food
+scr_crew_bark("We're out of food.");
+alarm[4]=room_speed*day;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Calc ship stats
+/****
+Calculate ship stats
+
+Some ship stats (like mass or total bunks) need to be calculated because they do not exist in the ship
+data array. For instance, ship data contains an array of all modules, but not the combined
+mass of all modules. This object makes it easier to access these stats without actually
+instantiating the ship.
+
+****/
+
+if(global.player_ship == noone) exit;
+scr_ship_defaults();
+
+ship_data =  global.player_ship;
+scr_module_modify_stats();
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
@@ -237,22 +486,9 @@ scr_cargo_update_oxygen();
           <argument>
             <kind>1</kind>
             <string>/// Calc ship stats
-/****
-Calculate ship stats
-
-Some ship stats (like mass or total bunks) need to be calculated because they do not exist in the ship
-data array. For instance, ship data contains an array of all modules, but not the combined
-mass of all modules. This object makes it easier to access these stats without actually
-instantiating the ship.
-
-****/
-
-if(global.player_ship == noone) exit;
-scr_ship_defaults();
-
-ship_data =  global.player_ship;
-scr_module_modify_stats();
-
+if(room==rm_space){
+    event_user(1);
+}
 
 </string>
           </argument>
@@ -280,16 +516,12 @@ Reduce the supply of each on a timer. When a resource reaches zero, take a unit
 from cargo.
 Draw this out in obj_gui_control
 ***/
-
-event_user(0);// Set cargo counts
-
 if(room==rm_space){
-
+    event_user(0);// Set cargo counts
     alarm[0]=room_speed * (day / time_food);//food 3 times a day
     alarm[1]=room_speed *  (day / time_water);//
     alarm[2]=room_speed *  (day / time_fuel);//
-    alarm[3]=room_speed *  (day / time_oxygen);//
-    
+    alarm[3]=room_speed *  (day / time_oxygen);// 
 }
 
 

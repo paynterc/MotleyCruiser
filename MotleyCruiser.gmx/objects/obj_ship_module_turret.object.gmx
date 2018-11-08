@@ -301,7 +301,8 @@ if(parent_obj == noone){
     &amp;&amp; (parent_obj.mode == MODE_ATTACKING || parent_obj.mode == MODE_DEFENDING)
     &amp;&amp; gundata != noone
     &amp;&amp; target != noone 
-    &amp;&amp; abs(angleDiff) &lt; 10 
+    &amp;&amp; abs(angleDiff) &lt; 10
+    &amp;&amp; target.disabled != undefined 
     &amp;&amp; !target.disabled
     &amp;&amp; target.faction != faction
     &amp;&amp; parent_obj.energy_current &gt; 0 

@@ -198,7 +198,9 @@ for(var i=0;i<irandom(5);i++){
     scr_mining_area(noone,noone);
 }
 
-// END RANDOM STUFF
+/*********************
+END SEEDED RANDOMIZATION. ADDING ANYTHING RANDOM ABOVE THIS POINT COULD CHANGE THE SAVED MAP.
+***************/
 
 // Position the player ship.
 var player_x;
@@ -326,9 +328,7 @@ global.player_x = player_x;
 global.player_y = player_y;
 scr_game_save();
 
-/*********************
-END SEEDED RANDOMIZATION. ADDING ANYTHING RANDOM ABOVE THIS POINT COULD CHANGE THE SAVED MAP.
-***************/
+
 randomize();
 // NPC Ships
 scr_spawn_npc_ships();

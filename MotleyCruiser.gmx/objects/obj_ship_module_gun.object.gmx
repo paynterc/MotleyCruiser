@@ -176,6 +176,7 @@ if(shooting &amp;&amp; !cooling_down){
             <string>/// Check for beam hits
 hitpoint = noone;
 spark.active = 0;
+
 if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
 
     var x1, y1, x2, y2;
@@ -201,6 +202,7 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
     spark.active = 0;
     hitpoint = noone;
 }
+
 </string>
           </argument>
         </arguments>

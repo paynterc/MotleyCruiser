@@ -592,7 +592,7 @@ if(show){
     draw_set_color(font_color);
     var font_size = font_get_size(font);
     
-    var bub = scr_draw_messagebox_plus(closest_sentient.name + ": " + staged_branch[D_BRANCH_TEXT], popup_width, popup_padding, closest_sentient, bak_color, draw_below, staged_branch[D_BRANCH_BUTTONS]);
+    var bub = scr_draw_messagebox_plus(closest_sentient.name + ": " + staged_branch[D_BRANCH_TEXT], closest_sentient, popup_width, popup_padding, bak_color, draw_below, staged_branch[D_BRANCH_BUTTONS]);
     if(bub != noone){
         var thebuttons = staged_branch[D_BRANCH_BUTTONS];
         var thisbutton = noone;

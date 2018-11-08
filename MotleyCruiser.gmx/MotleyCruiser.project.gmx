@@ -157,6 +157,7 @@
       <sprite>sprites\sprite376</sprite>
       <sprite>sprites\spr_human_BU</sprite>
       <sprite>sprites\spr_old_salt</sprite>
+      <sprite>sprites\spr_old_salt_ghost</sprite>
       <sprite>sprites\spr_human_fml</sprite>
       <sprite>sprites\sprite375</sprite>
       <sprite>sprites\spr_human_helm</sprite>
@@ -561,6 +562,10 @@
     <path>paths\path_glr_0</path>
   </paths>
   <scripts name="scripts">
+    <scripts name="_example_scripts">
+      <script>scripts\scr_multi_arguments.gml</script>
+      <script>scripts\scr_array_loop.gml</script>
+    </scripts>
     <scripts name="_cargo">
       <script>scripts\scr_cargo_init.gml</script>
       <script>scripts\scr_cargo_add.gml</script>
@@ -573,6 +578,7 @@
       <script>scripts\scr_cargo_update_water.gml</script>
       <script>scripts\scr_cargo_update_fuel.gml</script>
       <script>scripts\scr_cargo_update_oxygen.gml</script>
+      <script>scripts\scr_cargo_drop.gml</script>
     </scripts>
     <scripts name="_arrays">
       <script>scripts\scr_str_split.gml</script>
@@ -598,7 +604,6 @@
       <script>scripts\scr_make_dialogue_branch.gml</script>
       <script>scripts\scr_add_dialogue_button.gml</script>
       <script>scripts\scr_push_dialogue_button.gml</script>
-      <script>scripts\scr_draw_messagebox_plus.gml</script>
       <script>scripts\scr_draw_button.gml</script>
       <script>scripts\scr_draw_messagebox_OLD.gml</script>
       <script>scripts\scr_reset_dialog.gml</script>
@@ -620,10 +625,22 @@
       </scripts>
       <scripts name="_flywriter">
         <script>scripts\scr_flywriter.gml</script>
-        <script>scripts\scr_flybark.gml</script>
         <script>scripts\scr_typewriter.gml</script>
         <script>scripts\scr_stringtowords.gml</script>
+        <script>scripts\scr_flybark.gml</script>
         <script>scripts\scr_crew_bark.gml</script>
+        <script>scripts\scr_queue_bark.gml</script>
+        <script>scripts\scr_ai_bark.gml</script>
+        <script>scripts\scr_clear_conditionals.gml</script>
+        <script>scripts\scr_dlg_end_dialogue.gml</script>
+        <scripts name="_states">
+          <script>scripts\scr_dlg_space_no_fuel.gml</script>
+          <script>scripts\scr_dlg_cantina.gml</script>
+          <script>scripts\scr_dlg_buy_fuel.gml</script>
+        </scripts>
+      </scripts>
+      <scripts name="_speachballoon">
+        <script>scripts\scr_draw_messagebox_plus.gml</script>
       </scripts>
     </scripts>
     <scripts name="_entities">
@@ -658,6 +675,10 @@
       <script>scripts\scr_ev_player_draws_weapon.gml</script>
       <script>scripts\scr_ev_player_stows_weapon.gml</script>
       <script>scripts\scr_ev_npc_hit.gml</script>
+      <script>scripts\scr_ev_cargo_change.gml</script>
+      <script>scripts\scr_ev_crew_died.gml</script>
+      <script>scripts\scr_ev_outoffuel.gml</script>
+      <script>scripts\scr_ev_refuel_start.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
@@ -734,6 +755,7 @@
       <script>scripts\scr_main_menu.gml</script>
       <script>scripts\scr_dsmap_save.gml</script>
       <script>scripts\scr_dsmap_load.gml</script>
+      <script>scripts\scr_instantiate_control_objs.gml</script>
     </scripts>
     <scripts name="_gui">
       <scripts name="_gui_package">
@@ -1218,14 +1240,16 @@
       <script>scripts\scr_draw_plant.gml</script>
       <script>scripts\scr_make_plant.gml</script>
     </scripts>
+    <scripts name="_user_config">
+      <script>scripts\scr_config_controls.gml</script>
+      <script>scripts\scr_load_player_config.gml</script>
+      <script>scripts\scr_get_config_string.gml</script>
+    </scripts>
     <scripts name="_tutorial">
       <script>scripts\scr_save_tutorial.gml</script>
       <script>scripts\scr_tutorial_init.gml</script>
       <script>scripts\scr_tutorial_dostep.gml</script>
       <script>scripts\scr_tutorial_completestep.gml</script>
-    </scripts>
-    <scripts name="_example_scripts">
-      <script>scripts\scr_multi_arguments.gml</script>
     </scripts>
     <scripts name="_npc">
       <scripts name="_crew">
@@ -1236,6 +1260,9 @@
         <script>scripts\scr_npc_in_crew.gml</script>
         <script>scripts\scr_daily_expenses.gml</script>
         <script>scripts\scr_crew_follow_player.gml</script>
+        <script>scripts\scr_crew_data_update_hp.gml</script>
+        <script>scripts\scr_crew_get_random.gml</script>
+        <script>scripts\scr_crew_get_active.gml</script>
       </scripts>
       <script>scripts\scr_gx_make_npc.gml</script>
       <script>scripts\scr_npc_find_kill_target.gml</script>
@@ -1296,6 +1323,7 @@
       </shaders>
     </shaders>
     <shader type="GLSLES">shaders\shader35.shader</shader>
+    <shader type="GLSLES">shaders\shader36.shader</shader>
   </shaders>
   <fonts name="fonts">
     <font>fonts\fnt</font>
@@ -1316,8 +1344,16 @@
     <font>fonts\font12</font>
     <font>fonts\font14</font>
     <font>fonts\font15</font>
+    <font>fonts\font16</font>
   </fonts>
   <objects name="objects">
+    <object>objects\obj_game_control</object>
+    <object>objects\obj_sound_control</object>
+    <object>objects\obj_ship_data</object>
+    <object>objects\obj_damager</object>
+    <object>objects\obj_object_pool</object>
+    <object>objects\obj_tutorial</object>
+    <object>objects\obj_module</object>
     <objects name="_personal_weapons">
       <object>objects\obj_gun</object>
       <object>objects\obj_singularity</object>
@@ -1340,12 +1376,6 @@
         <object>objects\obj_bullet</object>
       </objects>
     </objects>
-    <object>objects\obj_game_control</object>
-    <object>objects\obj_sound_control</object>
-    <object>objects\obj_ship_data</object>
-    <object>objects\obj_damager</object>
-    <object>objects\obj_object_pool</object>
-    <object>objects\obj_module</object>
     <objects name="_dialogue">
       <object>objects\obj_dialog_control</object>
       <object>objects\obj_dialog_control_OLD</object>
@@ -1356,6 +1386,7 @@
       </objects>
       <object>objects\obj_message_simple</object>
       <object>objects\obj_flash_message</object>
+      <object>objects\obj_bark_queue</object>
     </objects>
     <objects name="_gui">
       <object>objects\obj_gui_control</object>
@@ -1399,6 +1430,7 @@
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
+      <object>objects\obj_radar</object>
       <object>objects\obj_ship_module</object>
       <object>objects\obj_ship_module_turret</object>
       <object>objects\obj_ship_module_gun</object>
@@ -1416,7 +1448,6 @@
       <object>objects\obj_station</object>
       <object>objects\obj_landable</object>
       <object>objects\obj_sun</object>
-      <object>objects\obj_radar</object>
       <object>objects\obj_spark</object>
       <object>objects\obj_gate</object>
       <object>objects\obj_asteroid</object>
@@ -1546,7 +1577,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="352">
+  <constants number="354">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1700,6 +1731,7 @@
     <constant name="MODE_PATROLING">1</constant>
     <constant name="MODE_TRAVELING">7</constant>
     <constant name="MODE_WAITING">3</constant>
+    <constant name="MODE_REFUELING">11</constant>
     <constant name="MODULE_ACCBWD_MOD">17</constant>
     <constant name="MODULE_ACCFWD_MOD">16</constant>
     <constant name="MODULE_BUNKS_MOD">26</constant>
@@ -1759,6 +1791,7 @@
     <constant name="NPC_SKIN_COLOR">19</constant>
     <constant name="NPC_SPRITE_TEMP">20</constant>
     <constant name="NPC_SPRITE_STRING">21</constant>
+    <constant name="NPC_CREW_INDEX">22</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ID">12</constant>

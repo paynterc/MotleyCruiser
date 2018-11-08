@@ -135,7 +135,7 @@ if(sent != noone &amp;&amp; sent.name != noone){
     }
 
 
-    if(sent.npc_data[NPC_NAME]=="Old Salt"){
+    if(sent.npc_data[NPC_NAME]=="Salty Dawg"){
         if(scr_tutorial_dostep(1)){
         
             scr_tutorial_completestep(1);

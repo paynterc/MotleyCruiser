@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Fill object pool
+// I'm not doing this right now and the obj_object_pool instance has been removed
 //scr_add_to_pool(obj_projectile,"projectile",500);
 </string>
           </argument>
@@ -173,6 +174,28 @@ faction = FACTION_NEUTRAL;
 alarm[0] = room_speed * ship_spawn_rate;
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Fly conditionals
+fly_conditionals=scr_array_size(10);
 </string>
           </argument>
         </arguments>
@@ -371,130 +394,6 @@ scr_daily_expenses()
             <kind>1</kind>
             <string>/// Close Windows
 scr_gui_close_all();
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Start asteroids
-alarm[1] = room_speed * asteroid_rate;
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Tutorial
-if(!global.tutorial[3]){
-
-    global.tutorial[3]=true;
-    txt = "Press R to activate radar. But be careful, the longer you have radar active, the easier it is for enemies to find you.";
-    scr_flywriter(txt,spr_old_salt,true,"0,OK");
-
-    scr_save_tutorial();
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Draw HUD
-return false;
-if(view_current != 0 || zoom){
-    return false;
-}
-draw_set_colour(c_white);
-if(instance_exists(obj_player_ship)){
-
-    draw_sprite(spr_ship,1,view_xview[0]+guiXoffset + imgOSx,view_yview[0]+imgOSy);  
-    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset,obj_player_ship.shields_current/obj_player_ship.shields,1,0,c_aqua,1);    
-    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset+ sprite_get_height(spr_bar),obj_player_ship.hull_current/obj_player_ship.hull,1,0,c_olive,1);
-    draw_sprite_ext(spr_bar,1,view_xview[0]+guiXoffset + imgW + 1,view_yview[0] + guiYoffset+ sprite_get_height(spr_bar) * 2,obj_player_ship.energy_current/obj_player_ship.energy,1,0,c_orange,1);
-    //draw_text(view_xview[0]+10, view_yview[0]+10, "Shields: "+string(obj_player_ship.shields));
-    //draw_text(view_xview[0]+10, view_yview[0]+30, "Hull: "+string(obj_player_ship.hull));
-}
-
-
-//top_speed = 10;
-//accelleration = .2;
-//turn_speed = 15;
-//accuracy = .5;
-
-
-
-
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="10" enumb="89">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>txt = "Press R to activate radar. But be careful, the longer you have radar active, the easier it is for enemies to find you.";
-scr_flybark(txt,spr_old_salt,5);
-
 </string>
           </argument>
         </arguments>

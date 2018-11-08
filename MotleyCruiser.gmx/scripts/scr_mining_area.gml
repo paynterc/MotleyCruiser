@@ -21,7 +21,6 @@ for(var i=0;i<11;i++){
     a = instance_create(x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir), obj_asteroid); 
     a.does_self_destruct = false;
 
-    
     dir+=30;
 }
 

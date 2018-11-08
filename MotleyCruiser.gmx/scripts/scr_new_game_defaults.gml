@@ -20,7 +20,7 @@ global.missions = noone;
 global.objective_inc = 100
 
 // Money
-global.credits = 1000;
+global.credits = 100;
 
 /****************************************************************/
 /*                      GALAXY VARS                             */
@@ -31,13 +31,13 @@ global.galaxy_seed = noone;
 /****************************************************************/
 /*                      LOCATION                                */
 /****************************************************************/
-global.landed_on = noone;
+global.landed_on = noone;// planet or moon
 global.landed_type = noone;
 global.current_sector_row = global.galaxy_width/2;// old galaxy navigation values
 global.current_sector_col = global.galaxy_width/2;
-global.sector_x=0;
+global.sector_x=0;// new galaxy navigation values
 global.sector_y=0;
-global.player_x = noone;// default to room_width/2
+global.player_x = noone;// in-room coordinates. default to room_width/2
 global.player_y = noone;
 
 /****************************************************************/

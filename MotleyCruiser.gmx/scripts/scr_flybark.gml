@@ -1,4 +1,5 @@
 /// scr_flybark(text,portrait,time,drawgui);
+// scr_flybark("WHAT UP DOG?",spr_old_salt,3,true);
 
 var args = noone;
 for (var i=0; i<16; i++)

@@ -185,7 +185,7 @@ if(state="begin"){
 
     if( fly_conditionals[0]==1 )
     {       
-        fly_conditionals[0]=0;
+        fly_conditionals[0]=noone;
 
         if(instance_exists(obj_flybox)){
             with(obj_flybox){
@@ -272,7 +272,7 @@ if(state="begin"){
             }
         }
         
-        fly_conditionals[1]=0;
+        fly_conditionals[1]=noone;
         state="march_family";
     }
 
@@ -401,7 +401,7 @@ if(state="begin"){
 
     if( fly_conditionals[2]==1 )
     { 
-        fly_conditionals[2]=0;
+        fly_conditionals[2]=noone;
         if(instance_exists(obj_flybox)){
             with(obj_flybox){
                 destroy=true;
@@ -479,7 +479,7 @@ if(state="begin"){
     
     if( fly_conditionals[3]==1 )
     { 
-        fly_conditionals[3]=0;
+        fly_conditionals[3]=noone;
         
         str1 = "Blown off course and without maps of the local system, he has no way to find his way back, but doesn't much seem to care. He's tired of the spacefaring life and ready to live out his remaining years with firm soil beneath his feet. Problem is, he has no land or property. You're a farmer, right? He offers a trade. Your farm for his ship."
         scr_flywriter(str1,noone,false,"4,Hell yeah!,No thanks",self,224);
@@ -492,14 +492,14 @@ if(state="begin"){
     
     if( fly_conditionals[4]==2 )
     {
-        fly_conditionals[4]=0;
+        fly_conditionals[4]=noone;
         str1 = "How disappointing. I hope someone more interesting comes along soon."
         scr_flywriter(str1,noone,true,"4,No! wait!",self,224);
     }
     
     if( fly_conditionals[4]==1 )
     {
-        fly_conditionals[4]=0;
+        fly_conditionals[4]=noone;
         str1 = "Allright then. Let me show you around the old girl."
         scr_flywriter(str1,noone,true,"5,Continue",self,224);
         
@@ -548,7 +548,7 @@ if(state="begin"){
 
     if( fly_conditionals[5]==1 )
     {
-        fly_conditionals[5]=0;
+        fly_conditionals[5]=noone;
         room_goto(rm_space);
     }
     
@@ -556,7 +556,7 @@ if(state="begin"){
 }else if(state == "oldgirl_landed"){
     if( fly_conditionals[5]==1 )
     {
-        fly_conditionals[5]=0;
+        fly_conditionals[5]=noone;
         room_goto(rm_space);
     }
 }

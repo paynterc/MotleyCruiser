@@ -26,11 +26,14 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-
+scr_load_player_config();
 
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;
 global.game_loaded = noone;
+pauseForce=false;// Use this to force the global.paused status. For cases where you do not want the user to unpause through the "Continue" menu option.
+
+
 
 // Baseline npc settings.
 global.min_spd = 1; //minimum run speed for npc
@@ -336,6 +339,28 @@ part_type_blend(global.ptcl_jet,1);
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Create support objects
+scr_instantiate_control_objs();
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="2" enumb="0">
       <action>
@@ -379,15 +404,17 @@ scr_display_message("You have died.","scr_game_load,"+string(global.game_loaded)
           <argument>
             <kind>1</kind>
             <string>/// Pause game,  Debug commands
-if(scr_user_input("pause")){   
+if(scr_user_input("pause") ){   
     if(room!=room_init &amp;&amp; room!=rm_main_menu){
-        global.paused = !global.paused;
-        if(global.paused){
-            scr_gui_set_context(obj_pause_menu);
-        }else{
-            scr_gui_return_context();
-        }
+        global.paused = true;
+        scr_gui_set_context(obj_pause_menu);
     }   
+}
+
+if(pauseForce){
+    if(room!=room_init &amp;&amp; room!=rm_main_menu){
+        global.paused = true;
+    }
 }
 
 if(scr_user_input("inventory_room")){
@@ -642,8 +669,8 @@ if(!instance_exists(obj_sound_control)){
     draw_set_color(c_lime);
     
     if(global.paused){
-        draw_set_valign(fa_center);
-        draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
+        //draw_set_valign(fa_center);
+        //draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
     }
 
     

@@ -1,4 +1,5 @@
-/// scr_cargo_add(Cargo Name, Cargo Qty)
+/// scr_cargo_add(commodity index, qty)
+// See scr_commoditiy_lib_int for commodity indexes
 var key = string(argument0);
 var amt = argument1;
 if(!instance_exists(obj_ship_data)){

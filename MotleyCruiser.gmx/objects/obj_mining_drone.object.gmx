@@ -350,12 +350,12 @@ alarm[3] = room_speed * 1;
             <kind>1</kind>
             <string>/// Set shooting status
 shooting = can_fire
-&amp;&amp; instance_exists(target)
-&amp;&amp; target != noone 
-&amp;&amp; abs(angleDiff) &lt; 5 
 &amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING ||  mode==MODE_MINING)
-&amp;&amp; !target.disabled
 &amp;&amp; energy_current &gt; 0 
+&amp;&amp; target != noone
+&amp;&amp; instance_exists(target)
+&amp;&amp; abs(angleDiff) &lt; 5 
+&amp;&amp; !target.disabled
 &amp;&amp; tgt_dist &lt;= weapon_range;
 </string>
           </argument>
@@ -379,7 +379,7 @@ shooting = can_fire
             <kind>1</kind>
             <string>/// Orbit target
 
-if(target != noone &amp;&amp; instance_exists(target)){
+if(target != noone ){
   
     if(can_move &amp;&amp; mode!=MODE_WAITING){
                
@@ -390,8 +390,7 @@ if(target != noone &amp;&amp; instance_exists(target)){
                 speed = max(speed - 1,1);
             }
         }else{
-        
-            //Stop accelerating when we get close      
+             
             motion_add(image_angle,acc_spd_fwd);
         
         }     
