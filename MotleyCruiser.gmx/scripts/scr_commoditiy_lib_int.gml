@@ -26,7 +26,7 @@ scr_commodity_lib_add(idx,5,"default") //Type: default, special
 var idx=1;// record index
 scr_commodity_lib_add(idx,0,"Oxygen") //Title
 scr_commodity_lib_add(idx,1,CC_AGRICULTURE) //Comodity Class (Economy Type)
-scr_commodity_lib_add(idx,2,spr_ItemIcon_GasBlue) //Sprite
+scr_commodity_lib_add(idx,2,spr_ItemIcon_Oxygen) //Sprite
 scr_commodity_lib_add(idx,3,"Air for breathin.") //Description
 scr_commodity_lib_add(idx,4,100) //Base price
 scr_commodity_lib_add(idx,5,"default") //Type: default, special

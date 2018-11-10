@@ -54,6 +54,7 @@ cargo_oxygen = 0;
 cargo_water = 0;
 cargo_fuel = 0;
 
+distressBeacon=false;// Are we sending out a distress beacon?
 
 </string>
           </argument>
@@ -549,6 +550,7 @@ flag_outOfWater=false;
 flag_outOfFood=false;
 flag_outOfOxygen=false;
 flag_outOfFuel=false;
+distressBeacon=false;
 </string>
           </argument>
         </arguments>

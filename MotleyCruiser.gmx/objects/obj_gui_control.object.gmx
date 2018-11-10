@@ -194,19 +194,16 @@ for(var i=0; i&lt;array_length_1d(eButtons); i++){
 }
 if(bIdx==0){
     // Do fuel dialogue
-    if(instance_exists(obj_dialog_control)){
-        with(obj_dialog_control){
-            alarm[1]=room_speed*0.25;
-        }
-    }
+    scr_dlg_space_start_no_fuel()
 }else if(bIdx==1){
     // Do oxygen dialogue
     scr_dlg_space_start_no_oxy();
 }else if(bIdx==2){
     // Do water dialogue
+    scr_dlg_space_start_no_water();
 }else if(bIdx==3){
     // Do food dialogue
-
+    scr_dlg_space_start_no_food();
 }
 
 </string>

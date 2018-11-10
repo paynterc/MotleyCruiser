@@ -635,11 +635,16 @@
         <script>scripts\scr_clear_conditionals.gml</script>
         <script>scripts\scr_dlg_end_dialogue.gml</script>
         <scripts name="_states">
+          <script>scripts\scr_dlg_space_start_no_fuel.gml</script>
           <script>scripts\scr_dlg_space_no_fuel.gml</script>
+          <script>scripts\scr_dlg_space_start_no_oxy.gml</script>
           <script>scripts\scr_dlg_space_no_oxy.gml</script>
+          <script>scripts\scr_dlg_space_start_no_water.gml</script>
+          <script>scripts\scr_dlg_space_start_no_food.gml</script>
+          <script>scripts\scr_dlg_space_no_water.gml</script>
+          <script>scripts\scr_dlg_space_no_food.gml</script>
           <script>scripts\scr_dlg_cantina.gml</script>
           <script>scripts\scr_dlg_buy_fuel.gml</script>
-          <script>scripts\scr_dlg_space_start_no_oxy.gml</script>
         </scripts>
       </scripts>
       <scripts name="_speachballoon">

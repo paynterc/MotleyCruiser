@@ -3,19 +3,19 @@ if(question==0){
     if(answer==1){
         
         //Do manufacture
-        var waterCount = scr_cargo_item_count(3);
+        var oxyCount = scr_cargo_item_count(2);
         var fuelCount = scr_cargo_item_count(4);
-        if(waterCount>=2 && fuelCount>=1 ){
+        if(oxyCount>=2 && fuelCount>=1 ){
             scr_cargo_item_decrement(3,2);
             scr_cargo_item_decrement(4,1);
             if(instance_exists(obj_player_ship)){
                 obj_player_ship.disabled=false;
-                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,1,1,true);// Drop some oxygen loot
+                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,3,1,true);// Drop some water loot
             }
             scr_dlg_end_dialogue();
         }else{
         
-            scr_flywriter("You don't have enough materials to make oxygen.",spr_ship_ai,true,"10,Oh.");// Goes to Default Response below
+            scr_flywriter("You don't have enough materials to make water.",spr_ship_ai,true,"10,Uh oh.");// Goes to Default Response below
              
         }
         

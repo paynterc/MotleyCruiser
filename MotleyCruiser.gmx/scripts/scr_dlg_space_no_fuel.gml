@@ -16,14 +16,20 @@ if(question==0){
     // Question 1. Distress Beacon?
     if(answer==1){
         //Do distress beacon
-        obj_game_control.pauseForce = false;
-        global.paused=false;
-        if(instance_exists(obj_player_ship)){
-            var rship = scr_spawn_npc_ship_single(FACTION_NEUTRAL,noone,obj_player_ship.x + 500,obj_player_ship.y+500);
-            rship.target = obj_player_ship;
-            rship.mode = MODE_REFUELING;
+        if(!obj_ship_data.distressBeacon){
+            obj_ship_data.distressBeacon=true;
+            obj_game_control.pauseForce = false;
+            global.paused=false;
+            if(instance_exists(obj_player_ship)){
+                var rship = scr_spawn_npc_ship_single(FACTION_NEUTRAL,noone,obj_player_ship.x + 500,obj_player_ship.y+500);
+                rship.target = obj_player_ship;
+                rship.mode = MODE_REFUELING;
+            }
+            state=noone;
+        }else{
+            scr_flywriter("You're already sending out a distress signal.",spr_ship_ai,true,"10,Right");
         }
-        state=noone;
+        
         
     }else{
         // No
@@ -65,5 +71,5 @@ if(question==0){
         alarm[1]=room_speed*2;// Back to question 0.                
     }
 }else{
-    alarm[1]=room_speed*2;// Back to question 0.
+    scr_dlg_end_dialogue();
 }

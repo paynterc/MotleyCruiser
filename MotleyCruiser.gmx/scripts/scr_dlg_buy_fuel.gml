@@ -47,7 +47,7 @@ if(question==0){
     }else if(answer==3){
         // Board ship
         alarm[2]=room_speed;
-        
+        obj_ship_data.distressBeacon=false;
     }else{
         scr_flywriter("Have it your way.",npcSprite,true,"10,Later.");        
     }
@@ -71,7 +71,7 @@ if(question==0){
     }else if(answer==2){
         // Board ship
         alarm[2]=room_speed;
-        
+        obj_ship_data.distressBeacon=false;
     }else{   
         scr_flywriter("Have it your way.",npcSprite,true,"10,Later.");
     }
@@ -90,7 +90,6 @@ if(question==0){
             
             scr_queue_bark( string(unCrew[NPC_NAME_FIRST]) + ": You'll regret this!",unCrew[NPC_SPRITE_TEMP]);
             scr_global_update(global.crew,unCrew[NPC_CREW_INDEX],NPC_ACTIVE,false);
-
             
         }else{
             scr_flywriter("Wait, you don't have any crew.",npcSprite,true,"10,Oops.");// Goes to Default Response below                     
@@ -105,7 +104,7 @@ if(question==0){
     }
 }else if(question==3){
 
-    
+
     if(answer==1){
         if(instance_exists(obj_player_ship)){
             obj_player_ship.disabled=false;
@@ -116,10 +115,12 @@ if(question==0){
         alarm[2]=room_speed;
         
     }
+    obj_ship_data.distressBeacon=false;
     scr_dlg_end_dialogue();
 }else{
     // Default Respose
     // User responed to some other question like "10,Oops". Back to first question.
     scr_dlg_end_dialogue();
+    obj_ship_data.distressBeacon=false;
              
 }

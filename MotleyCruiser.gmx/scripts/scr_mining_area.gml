@@ -32,7 +32,7 @@ for(var i=0;i<11;i++){
     
     dist = irandom_range(200,1200);
     a = instance_create(x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir), obj_mining_drone); 
-
+    instance_deactivate_object(a);
     dir+=30;
 }
 
