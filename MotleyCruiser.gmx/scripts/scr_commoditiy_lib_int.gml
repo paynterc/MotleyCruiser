@@ -15,7 +15,7 @@ food,
 global.commodity_library = ds_map_create();
 
 var idx=0;// record index
-scr_commodity_lib_add(idx,0,"Bulk Food") //Title
+scr_commodity_lib_add(idx,0,"Food") //Title
 scr_commodity_lib_add(idx,1,CC_AGRICULTURE) //Comodity Class (Economy Type)
 scr_commodity_lib_add(idx,2,spr_ItemIcon_Fruit) //Sprite
 scr_commodity_lib_add(idx,3,"Food for eatin. Can be converted to food for your crew.") //Description

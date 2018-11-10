@@ -417,6 +417,7 @@
           <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
           <sprite>sprites\spr_ItemIcon_medkit</sprite>
           <sprite>sprites\spr_ItemIcon_GasBlue</sprite>
+          <sprite>sprites\spr_ItemIcon_Oxygen</sprite>
           <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
           <sprite>sprites\spr_ItemIcon_ShieldBelt</sprite>
           <sprite>sprites\spr_ItemIcon_BigDefPotion</sprite>
@@ -635,8 +636,10 @@
         <script>scripts\scr_dlg_end_dialogue.gml</script>
         <scripts name="_states">
           <script>scripts\scr_dlg_space_no_fuel.gml</script>
+          <script>scripts\scr_dlg_space_no_oxy.gml</script>
           <script>scripts\scr_dlg_cantina.gml</script>
           <script>scripts\scr_dlg_buy_fuel.gml</script>
+          <script>scripts\scr_dlg_space_start_no_oxy.gml</script>
         </scripts>
       </scripts>
       <scripts name="_speachballoon">
@@ -781,6 +784,7 @@
         <script>scripts\scr_gui_return_context.gml</script>
         <script>scripts\scr_gui_set_context.gml</script>
         <script>scripts\scr_gui_has_context.gml</script>
+        <script>scripts\scr_gui_resource_bar.gml</script>
       </scripts>
     </scripts>
     <scripts name="_inventory">

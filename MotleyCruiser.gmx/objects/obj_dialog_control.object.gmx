@@ -38,7 +38,8 @@ answer=noone;// The value of fly_conditionals[question]
 enum dStates {
     cantina,
     spaceNoFuel,
-    spaceRefuel
+    spaceRefuel,
+    spaceNoOxygen
 }
 state=noone;
 </string>
@@ -101,7 +102,7 @@ if(instance_exists(obj_player_ship) &amp;&amp; instance_exists(shipId)){
 obj_game_control.pauseForce = true;// Locks pause status. Can not be undone through "Continue" menu option.
 global.paused=true;
 txt = "You're out of fuel and adrift in space. Now what? You can send out a distress signal asking for help, try to manufacture some fuel out of resources or abandon ship.";
-scr_flywriter(txt,spr_ship_ai,true,"0,Distress call,Make fuel,Abandon ship");
+scr_flywriter(txt,spr_ship_ai,true,"0,Distress call,Make fuel,Abandon ship,Cancel");
 state = dStates.spaceNoFuel;
         
 
@@ -179,6 +180,8 @@ if(question != noone){
         scr_dlg_cantina();
     }else if(state==dStates.spaceRefuel){
         scr_dlg_buy_fuel();
+    }else if(state==dStates.spaceNoOxygen){
+        scr_dlg_space_no_oxy();
     }
 }
 scr_clear_conditionals();

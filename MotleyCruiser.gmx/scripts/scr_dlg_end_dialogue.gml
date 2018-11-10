@@ -5,4 +5,4 @@ if(shipId!=noone){
     shipId.mode = MODE_TRAVELING;
     shipId=noone;
 }            
-alarm[0]=room_speed * 1;// Unpause
+alarm[0]=room_speed * 0.5;// Unpause

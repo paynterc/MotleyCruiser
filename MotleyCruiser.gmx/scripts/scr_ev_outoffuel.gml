@@ -5,9 +5,12 @@ Present options
 3. abandon ship
 ***********/
 /// scr_ev_outoffuel()
+
+/*** Start this from a button now.
 if(instance_exists(obj_dialog_control)){
     with(obj_dialog_control){
         alarm[1]=room_speed;
     }
 }
+***/
 

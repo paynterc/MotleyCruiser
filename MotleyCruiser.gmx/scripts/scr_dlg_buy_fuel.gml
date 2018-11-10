@@ -121,8 +121,5 @@ if(question==0){
     // Default Respose
     // User responed to some other question like "10,Oops". Back to first question.
     scr_dlg_end_dialogue();
-    if(global.supply_fuel<1){
-        alarm[1]=room_speed*4;// Give fuel options again 
-    }
              
 }

@@ -46,7 +46,7 @@ time_oxygen = 30;//30
 
 inc_food = 35;// lost per tick
 inc_water = 1;
-inc_fuel = 1000;// 1
+inc_fuel = 1;// 1
 inc_oxygen = 1;
 
 cargo_food = 0;
@@ -54,10 +54,7 @@ cargo_oxygen = 0;
 cargo_water = 0;
 cargo_fuel = 0;
 
-flag_outOfWater=false;
-flag_outOfFood=false;
-flag_outOfOxygen=false;
-flag_outOfFuel=false;
+
 </string>
           </argument>
         </arguments>
@@ -313,7 +310,7 @@ scr_crew_bark("We're out of fuel.");
 if(instance_exists(obj_player_ship)){
     with(obj_player_ship){
         disabled=true;
-        scr_ev_outoffuel();
+        //scr_ev_outoffuel();
     }
 }
 </string>
@@ -527,6 +524,31 @@ if(room==rm_space){
 
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Flags
+flag_outOfWater=false;
+flag_outOfFood=false;
+flag_outOfOxygen=false;
+flag_outOfFuel=false;
 </string>
           </argument>
         </arguments>

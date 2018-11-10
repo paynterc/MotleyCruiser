@@ -1,4 +1,4 @@
-// scr_cargo_item_decrement(key,amount)
+/// scr_cargo_item_decrement(key,amount)
 var key = string(argument0);
 var amt = argument1;
 if !ds_map_exists(global.cargo_list,key){

@@ -31,9 +31,19 @@ scr_set_gui_vars();
 has_ball=noone;// Who has the ball?
 ui_stack = ds_stack_create();// Stack previously open menus here so we can get back to them
 
+// Resource indicators
+rFont = fnt_menus;
 blinkSpeed = 1;
 blinky = false;
 alarm[0]=room_speed * blinkSpeed;
+eButtons = noone;
+for(var i=0; i&lt;4; i++){
+    var btn = scr_gui_entity_button();
+    btn[BTN_TXT]="CLICK FOR HELP";
+    btn[BTN_W]=256;
+    btn[BTN_H]=32;
+    eButtons[i]=btn;
+}
 </string>
           </argument>
         </arguments>
@@ -118,6 +128,87 @@ if(scr_user_input("toggle_minimap") &amp;&amp; room==rm_space){
         }         
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check hover status on buttons
+if(eButtons != noone){
+    var guix = device_mouse_x_to_gui(0);
+    var guiy = device_mouse_y_to_gui(0);
+    for(var i = 0; i&lt;array_length_1d(eButtons); i++){
+        thebutton = eButtons[i];
+        if(thebutton[BTN_SHOW]){  
+            xhover = ( guix == median(thebutton[BTN_X], guix, thebutton[BTN_X] + thebutton[BTN_W]) );
+            yhover = ( guiy == median(thebutton[BTN_Y], guiy, thebutton[BTN_Y] + thebutton[BTN_H]) );
+            thebutton[@ 4] = xhover &amp;&amp; yhover;
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="6" enumb="53">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// See if gui button was pressed.
+var bIdx=noone;
+for(var i=0; i&lt;array_length_1d(eButtons); i++){
+    var btn=eButtons[i];
+    if(btn[BTN_HOVER] &amp;&amp; btn[BTN_SHOW]){
+        bIdx = i;// Return  index of clicked button.
+        break;
+    }
+}
+if(bIdx==0){
+    // Do fuel dialogue
+    if(instance_exists(obj_dialog_control)){
+        with(obj_dialog_control){
+            alarm[1]=room_speed*0.25;
+        }
+    }
+}else if(bIdx==1){
+    // Do oxygen dialogue
+    scr_dlg_space_start_no_oxy();
+}else if(bIdx==2){
+    // Do water dialogue
+}else if(bIdx==3){
+    // Do food dialogue
+
+}
+
 </string>
           </argument>
         </arguments>
@@ -242,56 +333,34 @@ if(ds_exists(ui_stack,ds_type_stack)){
 // supplies, credits, locatin
 if(room == rm_space){
     var _xStart = 32;
-    var _yStart = 40;
+    var _yStart = 16;
     var x1=_xStart;
     var y1=_yStart;
     var rw = 1;
+    var y2=0;
+    var lspacing = 4;
     
     if(instance_exists(obj_ship_data)){
         
-        draw_set_font(fnt_menus);
-        draw_set_halign(fa_left);
-        draw_set_valign(fa_bottom);
-        var spacing = 40;
         
-        if( obj_ship_data.cargo_food&gt;0 || blinky ){
-            draw_rectangle_color(x1, y1, x1+global.supply_food, y1+16, c_red, c_red, c_red, c_red, true);
-            draw_set_color(c_red);
-            draw_text(x1,y1,"FOOD: " + string(obj_ship_data.cargo_food));
-        }
         
-        rw += 1;
-        y1 = (spacing*rw);
-        if( obj_ship_data.cargo_water&gt;0 || blinky ){
-            draw_rectangle_color(x1, y1, x1+global.supply_water, y1+16, c_aqua, c_aqua, c_aqua, c_aqua, true);
-            draw_set_color(c_aqua);
-            draw_text(x1,y1,"WATER: " + string(obj_ship_data.cargo_water));
-        }
+        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_fuel,global.supply_fuel,blinky,c_orange,"FUEL",eButtons[rw-1]);
+        rw += 1;y1 = y2+lspacing;
+        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_oxygen,global.supply_oxygen,blinky,c_silver,"OXYGEN",eButtons[rw-1]);
+        rw += 1;y1 = y2+lspacing;
+        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_water,global.supply_water,blinky,c_aqua,"WATER",eButtons[rw-1]);
+        rw += 1;y1 = y2+lspacing;
+        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_food,global.supply_food,blinky,c_red,"FOOD",eButtons[rw-1]);
         
-        rw += 1;
-        y1 = (spacing*rw);
-        if( obj_ship_data.cargo_fuel&gt;0 || blinky ){
-            draw_rectangle_color(x1, y1, x1+global.supply_fuel, y1+16, c_orange, c_orange, c_orange, c_orange, true);
-            draw_set_color(c_orange);
-            draw_text(x1,y1,"FUEL: " + string(obj_ship_data.cargo_fuel));
-        }
-        
-        rw += 1;
-        y1 = (spacing*rw);
-        if( obj_ship_data.cargo_oxygen&gt;0 || blinky ){
-            draw_rectangle_color(x1, y1, x1+global.supply_oxygen, y1+16, c_silver, c_silver, c_silver, c_silver, true);
-            draw_set_color(c_silver);
-            draw_text(x1,y1,"OXYGEN: " + string(obj_ship_data.cargo_oxygen));
-        }
-    
+
     }
     
     draw_set_halign(fa_center);
-    draw_set_valign(fa_bottom);
+    draw_set_valign(fa_top);
     x1= gui_width / 2;
     y1=_yStart;
     draw_set_color(c_lime);
-    draw_text(x1,y1,"CREDITS: " + string(global.credits));
+    draw_text(x1,y1,"GOLD: " + string(global.credits));
     
     draw_set_halign(fa_left);
     draw_set_valign(fa_bottom);
