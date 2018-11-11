@@ -87,30 +87,10 @@ sector_economy[1]=0;//mining
 sector_economy[2]=0;//industrial
 sector_economy[3]=0;//tech
 
-sector_economy_mod = .2;// This an arbitrary number used to adjust prices globally. Should probably be called galaxy_economy_mod
+
 buyPriceModifier = 1.25;// A global modifier making it more expensive to buy than sell. Should probably come up with a better way to calc this.
 
-e_matrix=noone;// Economy matrix. Provides the value of products based on the current economy and the economy of origin
-e_matrix[CC_AGRICULTURE,CC_AGRICULTURE]=1.00;
-e_matrix[CC_AGRICULTURE,CC_MINING]=1.15;
-e_matrix[CC_AGRICULTURE,CC_INDUSTRIAL]=1.25;
-e_matrix[CC_AGRICULTURE,CC_TECH]=1.50;
-
-e_matrix[CC_MINING,CC_AGRICULTURE]=1.50;
-e_matrix[CC_MINING,CC_MINING]=1.00;
-e_matrix[CC_MINING,CC_INDUSTRIAL]=1.15;
-e_matrix[CC_MINING,CC_TECH]=1.25;
-
-e_matrix[CC_INDUSTRIAL,CC_AGRICULTURE]=1.25;
-e_matrix[CC_INDUSTRIAL,CC_MINING]=1.50;
-e_matrix[CC_INDUSTRIAL,CC_INDUSTRIAL]=1.00;
-e_matrix[CC_INDUSTRIAL,CC_TECH]=1.15;
-
-e_matrix[CC_TECH,CC_AGRICULTURE]=1.15;
-e_matrix[CC_TECH,CC_MINING]=1.25;
-e_matrix[CC_TECH,CC_INDUSTRIAL]=1.50;
-e_matrix[CC_TECH,CC_TECH]=1.00;
-
+// See global.e_matrix in obj_game_control
 
 // exit button
 bexitw=96;// button width
@@ -486,7 +466,7 @@ for(n=0; n&lt; global.commodity_lib_count;n++){
         ds_grid_set(tradegrid,3,n,scr_commodity_lib_read(n,1));// class
         ds_grid_set(tradegrid,4,n,0);// count in hold. this gets updated in Draw GUI
 
-        SP = scr_trade_calc_price(n,O,L);
+        SP = scr_trade_calc_price(n,O,L,econ_id);
         BP = max(1,round( SP * buyPriceModifier ));
         //P = 1000;
     

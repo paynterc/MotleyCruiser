@@ -16,7 +16,7 @@ if(question==0){
             global.credits -= priceRefuel;
             if(instance_exists(obj_player_ship)){
                 obj_player_ship.disabled=false;
-                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,2,true);
+                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,1,true);
             }                   
             scr_flywriter("Pleasure doing business with you.",npcSprite,true,"10,Thanks!");
 
@@ -32,7 +32,7 @@ if(question==0){
             var unCrew = scr_crew_get_random();
             if(instance_exists(obj_player_ship)){
                 obj_player_ship.disabled=false;
-                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,2,true);
+                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,1,true);
             }
             scr_flywriter("Fine. Slaves fetch a decent price around here.",npcSprite,true,"10,Bye " +unCrew[NPC_NAME_FIRST]);
             
@@ -59,7 +59,7 @@ if(question==0){
             global.credits -= priceRefuel;
             if(instance_exists(obj_player_ship)){
                 obj_player_ship.disabled=false;
-                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,2,true);
+                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,1,true);
             }                   
             scr_flywriter("Pleasure doing business with you.",npcSprite,true,"10,Thanks!");
 
@@ -84,7 +84,7 @@ if(question==0){
             var unCrew = scr_crew_get_random();
             if(instance_exists(obj_player_ship)){
                 obj_player_ship.disabled=false;
-                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,2,true);
+                scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,1,true);
             }
             scr_flywriter("Fine. Slaves fetch a decent price around here.",npcSprite,true,"10,Bye " +unCrew[NPC_NAME_FIRST]);
             
@@ -108,7 +108,7 @@ if(question==0){
     if(answer==1){
         if(instance_exists(obj_player_ship)){
             obj_player_ship.disabled=false;
-            scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,2,true);
+            scr_cargo_drop(obj_player_ship.x, obj_player_ship.y,4,1,true);
         }
     }else if(answer==2){
         // Board ship

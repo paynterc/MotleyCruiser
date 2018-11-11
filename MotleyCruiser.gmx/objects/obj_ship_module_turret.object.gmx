@@ -167,12 +167,12 @@ alarm[3] = room_speed * 1;
             <string>/// Shoot a bullet
 if(shooting){
 
-    if(gundata[GUN_BULLET_TYPE]=="beam"){
+    if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
         if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
             hitobject.register_damage += gundata[GUN_DAMAGE];
             hitobject.hitby = id;
         }   
-    }else if(gundata[GUN_BULLET_TYPE]=="bullet"){
+    }else if(gundata[GUN_BULLET_TYPE]==bulletTypes.bullet){
         var d = sprite_get_width(sprite_index)/2;
         bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),gundata[GUN_BULLET_OBJECT]);
         bullet.type=faction;
@@ -331,7 +331,7 @@ if(parent_obj == noone){
           <argument>
             <kind>1</kind>
             <string>/// Check for beam hits
-if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam"){
+if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
 
     var x1, y1, x2, y2;
 
@@ -379,7 +379,7 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam"){
           <argument>
             <kind>1</kind>
             <string>/// Draw beam
-if(shooting &amp;&amp;  gundata[GUN_BULLET_TYPE]=="beam"){
+if(shooting &amp;&amp;  gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
     if(hitpoint!=noone){
         x2 = hitpoint[0];
         y2 = hitpoint[1];

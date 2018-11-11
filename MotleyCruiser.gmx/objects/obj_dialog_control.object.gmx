@@ -192,13 +192,13 @@ if(sent != noone){
 }
 // Decide if npc helps or attacks
 // If help, calculate price
-priceRefuel = 200;
+priceRefuel = scr_trade_calc_price(4,1,.05,CC_AGRICULTURE) * 1.75 ;// Sector price of fuel * 1.35
 var txt ="";
 var choices="";
 var odds = irandom(3);
 
 if(odds == 0){
-    txt = "I can spare 2 units of fuel. If you want it you'll need to pay. I'll give you a choice:
+    txt = "I can spare 1 units of fuel. If you want it you'll need to pay. I'll give you a choice:
     give me "+ string(priceRefuel) +" gold OR any crewmember I want. I know how to pick a good slave.";
     choices = "0,Pay gold,Sell crew,Attack!,Go away";
 }else if(odds==1){

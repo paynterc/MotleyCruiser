@@ -40,6 +40,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
+inView = false;
 
 // Overwrite defaults
 //turn_spd = 7;
@@ -208,6 +209,7 @@ hull_current = 0;
             <kind>1</kind>
             <string>/// Update target and Disposition
 // consider three attributes: FACTION, DISPOSITION and MODE.
+inView = scr_instance_in_view(id);
 if(hitby!=noone &amp;&amp; disposition != DISPOSITION_HOSTILE){
     if(hitby.faction == FACTION_PLAYER &amp;&amp; faction != FACTION_PLAYER){
         dispostion_save = disposition;
@@ -231,7 +233,7 @@ if(disposition == DISPOSITION_HOSTILE){
 
         // If i'm hostile and I'm close enough to see, go on attack.    
 
-    if( scr_instance_in_view(id) ){
+    if( inView ){
       
         var s_count = instance_number(obj_ship);
         var cdist = noone;
@@ -355,7 +357,7 @@ alarm[3] = room_speed * 1;
             <string>/// Update distance to target
 if( mode = MODE_PATROLING &amp;&amp; waypoint_current != noone){
     tgt_dist = point_distance(x,y,waypoint_current[0],waypoint_current[1]);
-}else if(target != noone &amp;&amp; instance_exists(target)){
+}else if(target != noone ){
     tgt_dist = distance_to_object(target);
 }
 </string>
@@ -404,7 +406,7 @@ if(can_move){
             break;
         case MODE_FOLLOWING:
         
-            if(instance_exists(target)){
+            if(target!=noone){
                 
                 if(tgt_dist&lt;200){
                     dd = angle_difference(target.image_angle, image_angle);
@@ -424,7 +426,7 @@ if(can_move){
             
         case MODE_REFUELING:
         
-            if(instance_exists(target)){
+            if(target!=noone){
                 
                 if(tgt_dist&lt;128){
                     dd = angle_difference(target.image_angle, image_angle);
@@ -517,41 +519,9 @@ if(can_move){
 }
 
 
-/*** Old logic. Replaced with the switch statement above
-if(target != noone &amp;&amp; instance_exists(target)){
-  
-    if(can_move &amp;&amp; mode!=MODE_WAITING){
-        
-        if( ( mode==MODE_FOLLOWING || (mode==MODE_DEFENDING &amp;&amp; target==obj_player_ship) ) &amp;&amp; tgt_dist&lt;200){           
-
-            var dd = angle_difference(target.image_angle, image_angle);
-            image_angle += sin(degtorad(dd)) * turn_spd;             
-            speed = target.speed;
-            thrust_fwd=true;     
-        }else{
-
-           angleDiff = scr_gradually_rotate_5(id,target,turn_spd);
-           
-        }
-        
-        if(tgt_dist&gt;300 || mode==MODE_TRAVELING){
-            //Stop accelerating when we get close      
-            motion_add(image_angle,acc_spd_fwd);
-            thrust_fwd=true;
-        }       
-    
-    }
-    
-}
-***/
-
 if(speed &gt; max_spd_fwd){
     speed = max_spd_fwd;
 }
-
-// Auto decelerate
-//speed = max(speed - (0.01 + amod), 0);
-
 
 </string>
           </argument>
@@ -611,7 +581,7 @@ if(hull_current &lt; 1){
             <kind>1</kind>
             <string>/// Set shooting status
 shooting = can_fire
-&amp;&amp; instance_exists(target)
+&amp;&amp; target != noone
 &amp;&amp; abs(angleDiff) &lt; 5 
 &amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING)
 &amp;&amp; target.disabled != undefined

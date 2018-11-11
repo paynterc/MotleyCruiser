@@ -42,6 +42,7 @@
             <string>/// Initialize
 faction = FACTION_PLAYER;
 mode = MODE_TRAVELING;// Default mode. Treat this like state.
+disposition=DISPOSITION_HELPFUL;//need this to display status bars
 
 interact_range = 200;
 

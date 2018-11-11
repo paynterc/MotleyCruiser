@@ -339,8 +339,7 @@ if(room == rm_space){
     
     if(instance_exists(obj_ship_data)){
         
-        
-        
+                
         y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_fuel,global.supply_fuel,blinky,c_orange,"FUEL",eButtons[rw-1]);
         rw += 1;y1 = y2+lspacing;
         y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_oxygen,global.supply_oxygen,blinky,c_silver,"OXYGEN",eButtons[rw-1]);

@@ -228,13 +228,14 @@ var by1 = noone;
 var bx2 = noone;
 var by2 = noone;
 
-if(ship_data!=noone){
-    if(hitrad==noone){
+if(hitrad==noone){
+    if(ship_data!=noone){
         hitrad = (ship_data[SHIP_SCAFFOLD_SIZE] * 16) / 2;
-    }
-}else{
-    hitrad = sprite_width / 2;
-}      
+    }else{
+        hitrad = sprite_width / 2;
+    } 
+}
+     
 inst = collision_circle(x, y, hitrad, obj_damager, false, true);
 
 if inst != noone
@@ -394,20 +395,11 @@ y+=vspd;
           <argument>
             <kind>1</kind>
             <string>/// Draw status bars
-//draw_self()
-//draw_sprite_ext( spr_shield, 0, x, y, shieldSizeMod, shieldSizeMod, image_angle, c_aqua, shields_current/shields );
-
-draw_healthbar(x-32,y-50,x+32,y-48, (shields_current/shields) * 100,c_black,color_s,color_s,0,false,false);
-draw_healthbar(x-32,y-47,x+32,y-45, (hull_current/hull) * 100,c_black,color_h,color_h,0,false,false);
-draw_healthbar(x-32,y-44,x+32,y-42, (energy_current/energy) * 100,c_black,color_e,color_e,0,false,false);
-
-/***
-if(disposition == DISPOSITION_HOSTILE){
-    draw_circle_color(x,y,hitrad,c_red,c_red,true);
-}else if(disposition == DISPOSITION_HELPFUL){
-    draw_circle_color(x,y,hitrad,c_green,c_green,true);
+if(disposition=DISPOSITION_HELPFUL || disposition==DISPOSITION_HOSTILE){
+    draw_healthbar(x-32,y-50,x+32,y-48, (shields_current/shields) * 100,c_black,color_s,color_s,0,false,false);
+    draw_healthbar(x-32,y-47,x+32,y-45, (hull_current/hull) * 100,c_black,color_h,color_h,0,false,false);
+    draw_healthbar(x-32,y-44,x+32,y-42, (energy_current/energy) * 100,c_black,color_e,color_e,0,false,false);
 }
-***/
 </string>
           </argument>
         </arguments>

@@ -237,6 +237,37 @@ enum ship_class {
     freighter=11
 }
 
+enum bulletTypes {
+    bullet,
+    beam,
+    missileDumb,
+    missileGuided
+}
+
+// Economy Matrix
+global.e_matrix=noone;// Economy matrix. Provides the value of products based on the current economy and the economy of origin
+global.e_matrix[CC_AGRICULTURE,CC_AGRICULTURE]=1.00;
+global.e_matrix[CC_AGRICULTURE,CC_MINING]=1.15;
+global.e_matrix[CC_AGRICULTURE,CC_INDUSTRIAL]=1.25;
+global.e_matrix[CC_AGRICULTURE,CC_TECH]=1.50;
+
+global.e_matrix[CC_MINING,CC_AGRICULTURE]=1.50;
+global.e_matrix[CC_MINING,CC_MINING]=1.00;
+global.e_matrix[CC_MINING,CC_INDUSTRIAL]=1.15;
+global.e_matrix[CC_MINING,CC_TECH]=1.25;
+
+global.e_matrix[CC_INDUSTRIAL,CC_AGRICULTURE]=1.25;
+global.e_matrix[CC_INDUSTRIAL,CC_MINING]=1.50;
+global.e_matrix[CC_INDUSTRIAL,CC_INDUSTRIAL]=1.00;
+global.e_matrix[CC_INDUSTRIAL,CC_TECH]=1.15;
+
+global.e_matrix[CC_TECH,CC_AGRICULTURE]=1.15;
+global.e_matrix[CC_TECH,CC_MINING]=1.25;
+global.e_matrix[CC_TECH,CC_INDUSTRIAL]=1.50;
+global.e_matrix[CC_TECH,CC_TECH]=1.00;
+
+global.galaxy_economy_mod = .2;// This an arbitrary number used to adjust prices globally.
+
 // Supplies
 global.supply_food = 0;
 global.supply_water = 0;

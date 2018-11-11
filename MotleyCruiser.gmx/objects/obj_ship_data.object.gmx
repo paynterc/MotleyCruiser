@@ -46,7 +46,7 @@ time_oxygen = 30;//30
 
 inc_food = 35;// lost per tick
 inc_water = 1;
-inc_fuel = 1;// 1
+inc_fuel = 1000;// 1
 inc_oxygen = 1;
 
 cargo_food = 0;

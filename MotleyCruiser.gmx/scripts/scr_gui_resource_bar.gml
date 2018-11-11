@@ -28,7 +28,7 @@ if(cc<1 && supply<1){
 }else{
     btn[@ BTN_SHOW]=false;
 }
-btn[@ BTN_SHOW]=true;// TODO: TESTING ONLY
+
 if(btn[BTN_SHOW] && blinky){
     draw_text( x1+padl,y1+strH+lspc,string(btn[BTN_TXT]) );
 }
@@ -36,6 +36,6 @@ var bclr = c_white;
 if(btn[BTN_HOVER]){
     bclr=c_fuchsia;
 }
-draw_rectangle_color(btn[BTN_X],btn[BTN_Y], btn[BTN_X]+btn[BTN_W], btn[BTN_Y]+btn[BTN_H], bclr, bclr, bclr, bclr, bclr);
+//draw_rectangle_color(btn[BTN_X],btn[BTN_Y], btn[BTN_X]+btn[BTN_W], btn[BTN_Y]+btn[BTN_H], bclr, bclr, bclr, bclr, bclr);
 
 return y1+lspc+( strH * 2);

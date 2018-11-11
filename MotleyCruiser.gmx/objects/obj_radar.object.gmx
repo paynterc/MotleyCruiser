@@ -59,8 +59,12 @@ rotator = noone;
 blips = noone;
 blips[0] = -1;
 
-if(!instance_exists(obj_player_ship)) exit
-if(!show_radar) exit;
+if(!instance_exists(obj_player_ship)){
+    show_radar=false;
+}
+if(!show_radar){
+    exit;
+}
 
 px = obj_player_ship.x;
 py = obj_player_ship.y;
@@ -119,7 +123,7 @@ for ( var i = 0; i &lt; instance_number(obj_npc_ship); i += 1 ){
  
     blip = instance_find( obj_npc_ship, i );
     coords=noone;
-    if(!scr_instance_in_view(blip)){
+    if(!blip.inView){
     
         var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
         var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);  
@@ -181,7 +185,7 @@ rotator[3]= py + lengthdir_y(110,rot_angle);
           <argument>
             <kind>1</kind>
             <string>///Draw pointers
-if(!instance_exists(obj_player_ship)) exit
+//if(!instance_exists(obj_player_ship)) exit
 
 if(show_radar){
     draw_set_colour(c_green);

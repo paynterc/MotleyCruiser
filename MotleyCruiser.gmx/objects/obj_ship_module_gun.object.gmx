@@ -177,7 +177,7 @@ if(shooting &amp;&amp; !cooling_down){
 hitpoint = noone;
 spark.active = 0;
 
-if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
+if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]==bulletTypes.beam ){
 
     var x1, y1, x2, y2;
 
@@ -226,12 +226,12 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]=="beam" ){
           <argument>
             <kind>1</kind>
             <string>/// Shoot a bullet
-if(gundata[GUN_BULLET_TYPE]=="beam"){
+if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
     if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
         hitobject.register_damage += gundata[GUN_DAMAGE];
         hitobject.hitby = id;
     }   
-}else if(gundata[GUN_BULLET_TYPE]=="bullet"){
+}else if(gundata[GUN_BULLET_TYPE]==bulletTypes.bullet){
     var d = sprite_get_width(sprite_index)/2;
     
     var bullet_obj = scr_get_array_1d(gundata,GUN_BULLET_OBJECT);
@@ -286,28 +286,27 @@ parent_obj.energy_current -= 2;
           <argument>
             <kind>1</kind>
             <string>/// Draw beam
-if(shooting &amp;&amp;  gundata[GUN_BULLET_TYPE]=="beam"){
-    var xscl=1;
-    var spr = spr_laser;
-    var tipx = x + lengthdir_x(guntip, image_angle);
-    var tipy = y + lengthdir_y(guntip, image_angle);
+if(shooting){
+
+    if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
+        var xscl=1;
+        var spr = spr_laser;
+        var tipx = x + lengthdir_x(guntip, image_angle);
+        var tipy = y + lengthdir_y(guntip, image_angle);
+        
+        if(hitpoint!=noone){
+            x2 = hitpoint[0];
+            y2 = hitpoint[1];
+            xscl = point_distance(tipx,tipy,x2,y2) / sprite_get_width(spr);
+        }else{
+            x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
+            y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
+            xscl = gundata[GUN_RANGE]/sprite_get_width(spr);    
+        }
     
-    if(hitpoint!=noone){
-        x2 = hitpoint[0];
-        y2 = hitpoint[1];
-        xscl = point_distance(tipx,tipy,x2,y2) / sprite_get_width(spr);
-    }else{
-        x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
-        y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
-        xscl = gundata[GUN_RANGE]/sprite_get_width(spr);    
+        draw_set_colour(gundata[GUN_BULLET_COLOR]);
+        draw_sprite_ext(spr,0,tipx,tipy,xscl,1,image_angle,c_white,1);
     }
-
-    draw_set_colour(gundata[GUN_BULLET_COLOR]);
-    draw_sprite_ext(spr,0,tipx,tipy,xscl,1,image_angle,c_white,1);
-    //draw_set_colour(c_white);
-    //draw_line(x + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle), x2, y2);
-
-    //draw_line(x + 1 + lengthdir_x(guntip, image_angle),y + lengthdir_y(guntip, image_angle), x2+1, y2);
 
 }
 </string>
