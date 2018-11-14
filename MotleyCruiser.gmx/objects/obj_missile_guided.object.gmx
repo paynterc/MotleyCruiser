@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>obj_damager</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,20 +25,24 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init
-parent_obj = noone;
-module_data = noone; // Installed module data
-m_proto = noone; // Module prototype
-guntip = sprite_get_width(sprite_index)/2;
-drawsprite=true;
-image_speed = .25;
-
+            <string>/// Initialize
+// BULLETS HAVE type, not faction, but they are the same thing.
+saved_speed = noone;
+can_move = true;
+target = noone;
+tgt_dist = 0;
+image_speed=0;
+facingMinusTarget = 100;
+angleDiff = 100;
+turn_spd = 7;
+acc_spd_fwd = 3;//acceleration speed forward
+alarm[0]=room_speed * .25;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -55,29 +59,36 @@ image_speed = .25;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Add flames for thrusters
-if(m_proto!=noone){
-    if(m_proto[MODULE_TYPE]=="thrust"){
-
-        if(parent_obj.thrusting_fwd){
-            var d = sprite_get_width(sprite_index)/2;
-            var _x = x - lengthdir_x(d, image_angle);
-            var _y = y - lengthdir_y(d, image_angle);
-            part_type_direction(global.ptcl_jet, image_angle+175, image_angle+185, 0, 0);
-            part_particles_create(global.Particles, _x, _y, global.ptcl_jet, 1);
+            <string>/// Update target and Disposition
+// consider three attributes: FACTION, DISPOSITION and MODE.
+inView = scr_instance_in_view(id);
+if( inView ){    
+    var s_count = instance_number(obj_ship);
+    var cdist = noone;
+    var closest = noone;
+    for(var i = 0; i &lt; s_count; i++) {
+        var s_ship = instance_find(obj_ship,i);
+        if(scr_instance_in_view(s_ship) &amp;&amp; s_ship.faction != type){ // damagers use type instead of faction
+            var pdist = point_distance(s_ship.x,s_ship.y,x,y);
+            if(cdist==noone || pdist&lt;cdist){
+                closest = s_ship;
+                cdist = pdist;
+            }
         }
-              
     }
     
+    if(closest != noone){
+        target = closest;
+        tgt_dist = distance_to_object(target);
+    }
 }
-
-
+alarm[0]=room_speed * .25;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -94,12 +105,47 @@ if(m_proto!=noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(drawsprite){
-    draw_self();
+            <string>// Turn and move
+if(global.paused){
+    if(speed != 0){
+        saved_speed = speed;
+        speed = 0;
+    }
+    exit;
+}else{
+    if(saved_speed != noone){
+        speed = saved_speed;
+        saved_speed = noone;
+    } 
+}
+
+if(target != noone){
+    angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
+}
+
+motion_add(image_angle,acc_spd_fwd);
+if(speed &gt; max_spd_fwd){
+    speed = max_spd_fwd;
 }
 </string>
           </argument>
         </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="40">
+      <action>
+        <libid>1</libid>
+        <id>203</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_kill_object</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
       </action>
     </event>
   </events>

@@ -31,5 +31,5 @@ weapon_range = 600;//used for npcs
 bunks = 0;
 cargo =10;
 
-thrust_fwd = false;//Track when thrust is being applied
-thrust_rvs = false;
+thrusting_fwd = false;//Track when thrust is being applied
+thrusting_rvs = false;

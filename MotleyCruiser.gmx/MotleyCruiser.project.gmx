@@ -39,6 +39,7 @@
       <sound>sound\snd_pulse1</sound>
       <sound>sound\snd_singularity_charge</sound>
       <sound>sound\snd_singularity_launch</sound>
+      <sound>sound\snd_hellfury</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\snd_space_theme1</sound>
@@ -249,11 +250,15 @@
         <sprite>sprites\spr_command_16_5</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
         <sprite>sprites\spr_generator_16_16_1</sprite>
+        <sprite>sprites\spr_shield_gen_16_16_1</sprite>
         <sprite>sprites\sprite377</sprite>
         <sprite>sprites\spr_gun_16_16_1</sprite>
         <sprite>sprites\spr_gun_16_32_1</sprite>
         <sprite>sprites\spr_gun_16_32_2</sprite>
         <sprite>sprites\spr_gun_16_48_1</sprite>
+        <sprite>sprites\spr_missile_launcher_16_48_1</sprite>
+        <sprite>sprites\spr_railgun</sprite>
+        <sprite>sprites\spr_hellfury</sprite>
         <sprite>sprites\spr_thrust_16_1</sprite>
         <sprite>sprites\spr_thruster_flame</sprite>
         <sprite>sprites\spr_thrust_16_2</sprite>
@@ -294,6 +299,8 @@
       </sprites>
       <sprite>sprites\spr_spark</sprite>
       <sprite>sprites\spr_muzzleflash</sprite>
+      <sprite>sprites\spr_bullet_rail</sprite>
+      <sprite>sprites\spr_missile</sprite>
     </sprites>
     <sprites name="_space_objects">
       <sprite>sprites\spr_moon</sprite>
@@ -1464,6 +1471,9 @@
         <object>objects\obj_laser</object>
         <object>objects\obj_bullet_spread</object>
         <object>objects\obj_projectile</object>
+        <object>objects\obj_missile_guided</object>
+        <object>objects\obj_bullet_barage</object>
+        <object>objects\obj_bullet_rail</object>
       </objects>
       <object>objects\obj_thruster_flame</object>
       <object>objects\obj_cargo_drop</object>
@@ -1586,7 +1596,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="354">
+  <constants number="358">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1686,6 +1696,8 @@
     <constant name="GUN_BULLET_SPEED">5</constant>
     <constant name="GUN_BULLET_SPRITE">3</constant>
     <constant name="GUN_BULLET_TYPE">6</constant>
+    <constant name="GUN_ENERGY">9</constant>
+    <constant name="GUN_SOUND">10</constant>
     <constant name="GUN_DAMAGE">0</constant>
     <constant name="GUN_RANGE">4</constant>
     <constant name="GUN_SPEED">1</constant>
@@ -1900,6 +1912,8 @@
     <constant name="SHIP_X1">14</constant>
     <constant name="SHIP_TYPE">34</constant>
     <constant name="SHIP_Y1">15</constant>
+    <constant name="SHIP_THRUST_FWD">35</constant>
+    <constant name="SHIP_THRUST_RVS">36</constant>
     <constant name="STATION_COLOR">3</constant>
     <constant name="STATION_ECON_MOD">10</constant>
     <constant name="STATION_ECON_OFFSET">11</constant>

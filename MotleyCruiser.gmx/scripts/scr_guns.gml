@@ -63,3 +63,39 @@ gun[GUN_BULLET_OBJECT]=obj_bullet_spread;
 gun[GUN_RANGE]=1000;
 global.guns[6]=gun;
 
+gun=noone;
+gun = scr_gun();
+gun[GUN_SPEED]=.1;
+gun[GUN_DAMAGE]=1;
+gun[GUN_SPRITE]=spr_hellfury;
+gun[GUN_BULLET_SPRITE]=spr_laser;
+gun[GUN_BULLET_OBJECT]=obj_bullet_barage;
+gun[GUN_ENERGY]=4;
+gun[GUN_SOUND]=snd_hellfury;
+global.guns[7]=gun;
+
+
+gun = scr_gun();
+gun[GUN_SPEED]=.5;
+gun[GUN_DAMAGE]=5;
+gun[GUN_SPRITE]=spr_missile_launcher_16_48_1;
+gun[GUN_BULLET_SPRITE]=spr_missile;
+gun[GUN_BULLET_SPEED]=3;
+gun[GUN_BULLET_OBJECT]=obj_missile_guided;
+gun[GUN_RANGE]=1000;
+gun[GUN_SOUND]=snd_laser2;
+global.guns[8]=gun;
+
+gun = scr_gun();
+gun[GUN_SPEED]=2;
+gun[GUN_DAMAGE]=50;
+gun[GUN_SPRITE]=spr_railgun;
+gun[GUN_BULLET_SPRITE]=spr_bullet_rail;
+gun[GUN_BULLET_SPEED]=0;
+gun[GUN_BULLET_OBJECT]=obj_bullet_rail;
+gun[GUN_RANGE]=1000;
+gun[GUN_SOUND]=snd_hellfury;
+gun[GUN_BULLET_TYPE]=bulletTypes.rail;
+gun[GUN_ENERGY]=20;
+global.guns[9]=gun;
+

@@ -7,27 +7,29 @@ This is done before scr_module_modify_stats.
 //scr_modules_to_ship_data(ship_data)
 var ship_data = argument0;
 var module_data = ship_data[SHIP_MODULES];
+
 var mass=0;
+
 var thrust_fwd=0;
 var thrust_rvs=0;
 
-var shields=global.ship_default_shields;
-var shields_regen_speed=global.ship_default_shields_regen_speed;
-var shields_regen_points=global.ship_default_shields_regen_points;
+var shields=0;
+var shields_regen_speed=0;
+var shields_regen_points=0;
 
-var hull=global.ship_min_hull;
+var hull=0;
 
-var energy=global.ship_min_energy;
-var energy_regen_speed=global.ship_default_energy_regen_speed;
-var energy_regen_points=global.ship_default_energy_regen_points;
+var energy=0;
+var energy_regen_speed=0;
+var energy_regen_points=0;
 
 var bunks=0;
 var cargo=0;
 
-var turn_spd = global.ship_default_turn_spd;
+var turn_spd = 0;
 var turn_mod = 0;
-var max_spd_fwd = global.ship_max_spd_fwd;
-var max_spd_rvs = global.ship_max_spd_rvs;
+var max_spd_fwd = 0;
+var max_spd_rvs = 0;
 
 
 for(var m=0;m<array_length_1d(module_data);m++){
@@ -58,20 +60,39 @@ for(var m=0;m<array_length_1d(module_data);m++){
            
 }
 
+energy = global.ship_default_energy + energy;
+energy_regen_points = global.ship_default_energy_regen_points + energy_regen_points;
+energy_regen_speed = global.ship_default_energy_regen_speed;// No modifier. Keep it at base value for now
 
-energy_regen_speed = max(energy_regen_speed,0.1);
-shields_regen_speed = max(shields_regen_speed,0.1);
+energy = clamp(energy,global.ship_min_energy,global.ship_max_energy);
+energy_regen_points = clamp(energy_regen_points,0,energy*.20);// Set max at 20% of energy per tick.
 
-var acc_spd_fwd = thrust_fwd/mass;
-var acc_spd_rvs = thrust_rvs/mass;
-turn_spd += turn_mod/mass;
-max_spd_fwd -= mass/thrust_fwd;
-max_spd_rvs -= mass/thrust_rvs;
+shields=global.ship_default_shields + shields;
+// TODO: Find a mechanism to safely modify shield regen speed. I have this set universally now for simplicity
+shields_regen_speed = global.ship_default_shields_regen_speed;// Every 1 seconds.
+shields_regen_points=global.ship_default_shields_regen_points + shields_regen_points;
 
-max_spd_fwd = max(1,max_spd_fwd);
-max_spd_rvs = max(1,max_spd_rvs);
+shields = clamp(shields,global.ship_min_shields, global.ship_max_shields);
+shields_regen_points = clamp(shields_regen_points,0,shields*.20);// Set max at 20% of shields per tick.
+
+var acc_spd_fwd = thrust_fwd /  mass;
+var acc_spd_rvs =  thrust_rvs / mass ;
+acc_spd_fwd = clamp(acc_spd_fwd,global.ship_min_acc,global.ship_max_acc);
+acc_spd_rvs = clamp(acc_spd_rvs,global.ship_min_acc,global.ship_max_acc);
+
+turn_spd = global.ship_default_turn_spd + (turn_mod/mass);
+turn_spd = clamp(turn_spd,global.ship_min_turn_spd,global.ship_max_turn_spd);
+
+
+max_spd_fwd = global.ship_max_spd_fwd + acc_spd_fwd;
+max_spd_rvs = global.ship_max_spd_rvs + acc_spd_rvs;
+
+hull = global.ship_default_hull + hull;
+hull = clamp(hull,global.ship_min_hull,global.ship_max_hull);
 
 ship_data[SHIP_TURN_SPEED]=turn_spd;
+ship_data[SHIP_THRUST_FWD]=thrust_fwd;
+ship_data[SHIP_THRUST_RVS]=thrust_rvs;
 ship_data[SHIP_MAX_FWD]=max_spd_fwd;
 ship_data[SHIP_MAX_RVS]=max_spd_rvs;
 ship_data[SHIP_ACC_FWD]=acc_spd_fwd;

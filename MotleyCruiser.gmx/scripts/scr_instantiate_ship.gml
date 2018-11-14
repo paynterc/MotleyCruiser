@@ -30,6 +30,9 @@ var m_object;
 for(var m=0; m<array_length_1d(module_data); m++){
     
     m_object = scr_instantiate_module(module_data[m],mag);
+    if(m_object==noone){
+        continue;
+    }
     modules[m]=m_object.id; 
     m_object.parent_obj = id;
 }

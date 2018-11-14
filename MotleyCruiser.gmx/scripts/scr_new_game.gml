@@ -10,7 +10,7 @@ global.sector_y=0;
 global.sector_economy=noone;
 scr_racial_centers();// random racial map of galaxy
 
-global.player_ship = global.ship_library[10];
+global.player_ship = global.ship_library[34];
 global.player_ship = scr_modules_to_ship_data(global.player_ship);
 global.new_ship=true;
 with(obj_ship_data){

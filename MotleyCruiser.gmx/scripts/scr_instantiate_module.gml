@@ -34,7 +34,10 @@ module_record[I_MODULE_OFFSETS] = offsets;
 
 
 // Get module prototype
-var m_proto = global.module_library[module_record[I_MODULE_INDEX]];
+var m_proto = scr_get_array_1d(global.module_library,module_record[I_MODULE_INDEX]);
+if(m_proto==noone){
+    return noone;
+}
 if(m_proto[MODULE_TYPE]=="gun"){
     m_object = instance_create(x,y,obj_ship_module_gun);
 }else if(m_proto[MODULE_TYPE]=="turret"){

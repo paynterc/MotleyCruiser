@@ -33,5 +33,8 @@ map[SHIP_CLASS] = 3;// enum ship_class
 map[SHIP_TYPE] = 0;// enum ship_type
 map[SHIP_NAME_MODEL] = "ship";
 
+map[SHIP_THRUST_FWD] = 0;
+map[SHIP_THRUST_RVS] = 0;
+
 
 return map;

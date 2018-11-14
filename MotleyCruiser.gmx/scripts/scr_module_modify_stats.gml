@@ -30,6 +30,8 @@ if(is_array(ship_data)){
     bunks = ship_data[SHIP_BUNKS];
     cargo = ship_data[SHIP_CARGO];// Cargo capicity. A multiple of the number of cargo modules.
     mass = ship_data[SHIP_MASS];
+    thrust_fwd = ship_data[SHIP_THRUST_FWD];
+    thrust_rvs = ship_data[SHIP_THRUST_RVS];
 }
 
 

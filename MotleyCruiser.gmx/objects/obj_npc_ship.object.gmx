@@ -137,8 +137,8 @@ bark = noone;
             <string>/// Landing animation
 if(mode==MODE_LANDING){
     
-    thrust_fwd = false;// Hide thruster flames
-    thrust_rvs = false;
+    thrusting_fwd = false;// Hide thruster flames
+    thrusting_rvs = false;
     modAlpha -=.05;
     speed = 0;
     x = target.x;
@@ -394,7 +394,7 @@ if(global.paused){
     } 
 }
 
-thrust_fwd=false;
+thrusting_fwd=false;
 
 var dd;// Angle diference
 
@@ -412,11 +412,11 @@ if(can_move){
                     dd = angle_difference(target.image_angle, image_angle);
                     image_angle += sin(degtorad(dd)) * turn_spd;             
                     speed = target.speed;
-                    thrust_fwd=false;  
+                    thrusting_fwd=false;  
                 }else{
                     angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
                     motion_add(image_angle,acc_spd_fwd);
-                    thrust_fwd=true;
+                    thrusting_fwd=true;
                 }
             
             }
@@ -432,13 +432,13 @@ if(can_move){
                     dd = angle_difference(target.image_angle, image_angle);
                     image_angle += sin(degtorad(dd)) * turn_spd;             
                     speed = target.speed;
-                    thrust_fwd=false;
+                    thrusting_fwd=false;
                     scr_ev_refuel_start(target,id);
                     mode = MODE_FOLLOWING;
                 }else{
                     angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
                     motion_add(image_angle,acc_spd_fwd);
-                    thrust_fwd=true;
+                    thrusting_fwd=true;
                 }
             
             }
@@ -453,11 +453,11 @@ if(can_move){
                     dd = angle_difference(target.image_angle, image_angle);
                     image_angle += sin(degtorad(dd)) * turn_spd;             
                     speed = target.speed;
-                    thrust_fwd=true;  
+                    thrusting_fwd=true;  
                 }else{
                     angleDiff = scr_gradually_rotate_5(id,target.x,target.y,turn_spd);
                     motion_add(image_angle,acc_spd_fwd);
-                    thrust_fwd=true;
+                    thrusting_fwd=true;
                 }   
             }else{
                 if(target != noone){
@@ -465,7 +465,7 @@ if(can_move){
                     if(tgt_dist &gt; 300){
                         //Stop accelerating when we get close      
                         motion_add(image_angle,acc_spd_fwd);
-                        thrust_fwd=true;
+                        thrusting_fwd=true;
                     } 
                 }
        
@@ -479,7 +479,7 @@ if(can_move){
             }
 
             motion_add(image_angle,acc_spd_fwd);
-            thrust_fwd=true;
+            thrusting_fwd=true;
             
             break;
             
@@ -499,7 +499,7 @@ if(can_move){
             }
 
             motion_add(image_angle,acc_spd_fwd);
-            thrust_fwd=true;
+            thrusting_fwd=true;
             
             break;
             
@@ -512,7 +512,7 @@ if(can_move){
             if(target != noone &amp;&amp; tgt_dist &gt; 300){
                 //Stop accelerating when we get close      
                 motion_add(image_angle,acc_spd_fwd);
-                thrust_fwd=true;
+                thrusting_fwd=true;
             }  
             break;
     }               
