@@ -582,13 +582,13 @@ if(hull_current &lt; 1){
             <string>/// Set shooting status
 shooting = can_fire
 &amp;&amp; target != noone
-&amp;&amp; abs(angleDiff) &lt; 5 
+&amp;&amp; abs(angleDiff) &lt; 15 
 &amp;&amp; (mode == MODE_ATTACKING || mode==MODE_DEFENDING)
 &amp;&amp; target.disabled != undefined
 &amp;&amp; !target.disabled
 &amp;&amp; target.faction != faction
 &amp;&amp; energy_current &gt; 0 
-&amp;&amp; tgt_dist &lt;= weapon_range;
+&amp;&amp; inView;
 </string>
           </argument>
         </arguments>

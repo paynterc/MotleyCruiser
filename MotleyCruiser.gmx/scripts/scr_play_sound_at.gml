@@ -1,4 +1,4 @@
-//scr_play_sound_at(sound,x,y)
+/// scr_play_sound_at(sound,x,y)
 var snd = argument0;
 var _x = argument1;
 var _y = argument2;

@@ -335,14 +335,14 @@ scr_spawn_npc_ships();
 
 var trapcount = irandom(2)+1;
 for(var i=0; i<trapcount; i++){
-    scr_spawn_derelict_trap(irandom(room_width),irandom(room_height));
+    scr_spawn_derelict_trap(irandom(global.sector_width),irandom(global.sector_width));
 }
 
 
 // Pirate patrols
 var ppcount = irandom(3)+1;
 for(var i = 0; i<ppcount; i++){
-    scr_spawn_patrol(irandom(room_width),irandom(room_height),FACTION_PIRATE,irandom(3)+1);
+    scr_spawn_patrol(irandom(global.sector_width),irandom(global.sector_width),FACTION_PIRATE,irandom(3)+1);
 }
 
 var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,noone,player_x + 120,player_y+120);

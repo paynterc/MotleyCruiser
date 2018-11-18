@@ -11,4 +11,5 @@ global.player_x = obj_player_ship.x;
 global.player_y = obj_player_ship.y;
 scr_persist_game_state();
 view_object[0]=closest_boardable;
-obj_space_level.zoom=true;
+//obj_space_level.zoom=true;
+room_goto(rm_ship_deck_rnd);

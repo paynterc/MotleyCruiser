@@ -49,19 +49,78 @@ mode = MODE_WAITING;
 disposition = DISPOSITION_NEUTRAL;
 hitby = noone;// Who hit me?!
 ship_type = ship_types.ship;
-
+boosting=false;
 // Set defaults
 scr_ship_defaults();
 
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 modAlpha = 1; // Alpha tranparency for modules. Use for landing.
-
+max_spd_fwd_hold=0;
+acc_spd_fwd_hold=0;
 image_speed=0;
 
-alarm[1] = room_speed * energy_regen_speed;
+alarm[1] = room_speed * BASE_E_REGEN_SPD;
 alarm[2] = room_speed * shields_regen_speed;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="8">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Stop boost
+max_spd_fwd = max_spd_fwd_hold;
+acc_spd_fwd = acc_spd_fwd_hold;
+boosting=false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start boost
+max_spd_fwd_hold=max_spd_fwd;
+acc_spd_fwd_hold=acc_spd_fwd;
+max_spd_fwd *= 3;
+acc_spd_fwd *= 3;
+motion_add(image_angle,acc_spd_fwd);
+boosting=true;
+audio_stop_sound(snd_boost_charging);
+scr_play_sound_at(snd_boost_launch,x,y);
+alarm[8]=room_speed*3;
 </string>
           </argument>
         </arguments>
@@ -85,7 +144,16 @@ alarm[2] = room_speed * shields_regen_speed;
           <argument>
             <kind>1</kind>
             <string>/// Regen some shields
-shields_current += shields_regen_points;
+if(shields_current&lt;shields &amp;&amp; energy_current&gt;(shields_regen_points*BASE_SHLD_E_COST)){
+    var dif = shields-shields_current;
+    if(dif &lt; shields_regen_points){
+        shields_current = shields;
+        energy_current -= dif*BASE_SHLD_E_COST;
+    }else{
+        shields_current += shields_regen_points;
+        energy_current -= shields_regen_points*BASE_SHLD_E_COST;
+    }
+}
 if(shields_current&gt;shields){
     shields_current = shields;
 }
@@ -123,7 +191,7 @@ if(energy_current&gt;energy){
 if(energy_current&lt;0){
     energy_current = 0;
 }
-alarm[1] = room_speed * energy_regen_speed;
+alarm[1] = room_speed * BASE_E_REGEN_SPD;
 </string>
           </argument>
         </arguments>
@@ -199,7 +267,11 @@ if(modules != noone){
 if(global.paused){
     exit;
 }
+if(speed &gt; max_spd_fwd){
+    speed = max_spd_fwd;//clamp
+}
 speed = max(speed - 0.005, 0);
+
 </string>
           </argument>
         </arguments>
@@ -286,10 +358,23 @@ if(register_damage&gt;0){
     register_damage = 0;
     
     if(shields_current&gt;0){
-        shields_current -= apply_damage;
-    }else if(hull_current&gt;0){
-        hull_current -= apply_damage;
         
+        if(apply_damage&gt;shields_current){
+            apply_damage -= shields_current;
+            shields_current=0;        
+        }else{
+            shields_current-=apply_damage;
+            apply_damage=0;
+        }
+        
+    }
+    
+    if(hull_current&gt;0 &amp;&amp; apply_damage&gt;0){
+
+        hull_current -= apply_damage;
+        if(hull_current&lt;0){
+            hull_current=0;
+        }
         if(!disabled){
             var dchance = max(2, (round( (hull_current/hull) * 100 )) - apply_damage);
             if(irandom(dchance)==dchance){
@@ -333,6 +418,59 @@ if(disabled){
     color_s = c_aqua;
     color_h = c_red;
     color_e = c_yellow;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Thrust costs energy
+if(thrusting_fwd){
+    energy_current = max(0,energy_current- ( thrust_fwd/50/room_speed ) );
+}
+
+if(thrusting_rvs){
+    energy_current = max(0,energy_current- ( thrust_rvs/50/room_speed ) );
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Boosting
+if(boosting){
+    motion_add(image_angle,acc_spd_fwd);
+    energy_current--;
 }
 </string>
           </argument>

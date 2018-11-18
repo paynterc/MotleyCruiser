@@ -80,7 +80,7 @@ if(destroy_self){
           <argument>
             <kind>1</kind>
             <string>/// Draw if active
-if(active==1){
+if(active){
 
     if(image_xscale&lt;3){
         image_xscale+=.2;

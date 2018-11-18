@@ -36,6 +36,7 @@ facingMinusTarget = 100;
 angleDiff = 100;
 turn_spd = 7;
 acc_spd_fwd = 3;//acceleration speed forward
+max_spd_fwd=BULLET_BASE_SPEED;
 alarm[0]=room_speed * .25;
 </string>
           </argument>

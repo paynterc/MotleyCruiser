@@ -57,6 +57,8 @@ land_spd=.25;
 closest_landable=noone;
 closest_boardable=noone;
 closest_gate=noone;
+
+inView=true;
 </string>
           </argument>
         </arguments>
@@ -157,6 +159,51 @@ if(mode==MODE_BOARDING){
         mode = MODE_TRAVELING;
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Regen some energy - THIS OVERWRITES THE PARENT EVENT
+if(energy_current&lt;energy){
+    var dif = energy-energy_current;
+    if(dif &lt; energy_regen_points){
+        energy_current = energy;
+        global.supply_fuel -= (dif/100);
+    }else{
+        energy_current += energy_regen_points;
+        global.supply_fuel -= (energy_regen_points/100);
+    }
+    if(global.supply_fuel&lt;0){
+        global.supply_fuel=0;
+    }
+}
+
+
+if(energy_current&gt;energy){
+    energy_current = energy;
+}
+if(energy_current&lt;0){
+    energy_current = 0;
+}
+alarm[1] = room_speed * BASE_E_REGEN_SPD;
 </string>
           </argument>
         </arguments>
@@ -288,6 +335,14 @@ if(global.paused){
         shooting = false;
     }
     
+    
+    if(boostable){
+        if(scr_user_input("boost_ship")){
+            scr_play_sound(snd_boost_charging);
+            alarm[7]=room_speed;//boost
+        }
+    }
+ 
     if(scr_user_input("thrust") &amp;&amp; can_move){
         motion_add(image_angle,acc_spd_fwd);
         thrusting_fwd=true;

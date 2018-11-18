@@ -138,6 +138,9 @@ if( scr_gui_has_context() ){
         case "board_ship":
             return instance_exists(obj_space_level) && keyboard_check_pressed(ord("B"));
             break;
+        case "boost_ship":
+            return instance_exists(obj_space_level) && keyboard_check_pressed(ord("P"));
+            break;
         case "bugout":
             return instance_exists(obj_room_level) && keyboard_check_pressed(ord("M"));
             break;
@@ -221,7 +224,15 @@ if( scr_gui_has_context() ){
         case "draw_weapon":
             return  
             keyboard_check_pressed(ord("Q"))
-            break;           
+            break;
+        case "zoom_out":
+            return  
+            keyboard_check_pressed(vk_subtract)
+            break;
+        case "zoom_in":
+            return  
+            keyboard_check_pressed(vk_add)
+            break;        
         case "point_dir":
             var pdir = noone;
             if( gamepad_is_connected(global.pad) ){

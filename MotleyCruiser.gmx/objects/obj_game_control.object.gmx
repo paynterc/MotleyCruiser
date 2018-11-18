@@ -33,7 +33,7 @@ global.paused = false;
 global.game_loaded = noone;
 pauseForce=false;// Use this to force the global.paused status. For cases where you do not want the user to unpause through the "Continue" menu option.
 
-
+global.zoomLvl=0;
 
 // Baseline npc settings.
 global.min_spd = 1; //minimum run speed for npc

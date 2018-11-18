@@ -54,6 +54,8 @@
       <sound>sound\snd_pickup</sound>
       <sound>sound\snd_hit1</sound>
       <sound>sound\snd_explosion_ship</sound>
+      <sound>sound\snd_boost_charging</sound>
+      <sound>sound\snd_boost_launch</sound>
     </sounds>
     <sounds name="_stringbean">
       <sound>sound\snd_beep</sound>
@@ -233,44 +235,46 @@
         <sprite>sprites\spr_armor_16_16_1</sprite>
         <sprite>sprites\spr_armor_16_16_2</sprite>
         <sprite>sprites\spr_armor_16_16_3</sprite>
-        <sprite>sprites\spr_armor_16_32_1</sprite>
         <sprite>sprites\spr_armor_16_16_6</sprite>
+        <sprite>sprites\spr_armor_16_16_7</sprite>
         <sprite>sprites\spr_armor_16_16_8</sprite>
         <sprite>sprites\spr_armor_16_16_9</sprite>
-        <sprite>sprites\spr_armor_16_16_7</sprite>
+        <sprite>sprites\spr_armor_16_32_1</sprite>
+        <sprite>sprites\spr_beam_1</sprite>
+        <sprite>sprites\spr_beam_2</sprite>
+        <sprite>sprites\spr_booster_16_1</sprite>
         <sprite>sprites\spr_cargo_16_1</sprite>
         <sprite>sprites\spr_cargo_16_2</sprite>
         <sprite>sprites\spr_cargo_16_3</sprite>
         <sprite>sprites\spr_cargo_16_4</sprite>
         <sprite>sprites\spr_command_16_1</sprite>
+        <sprite>sprites\spr_command_16_6</sprite>
         <sprite>sprites\spr_command_16_2</sprite>
         <sprite>sprites\spr_command_16_3</sprite>
-        <sprite>sprites\spr_command_256</sprite>
         <sprite>sprites\spr_command_16_4</sprite>
-        <sprite>sprites\spr_command_16_5</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
+        <sprite>sprites\spr_command_16_5</sprite>
+        <sprite>sprites\spr_command_256</sprite>
         <sprite>sprites\spr_generator_16_16_1</sprite>
-        <sprite>sprites\spr_shield_gen_16_16_1</sprite>
-        <sprite>sprites\sprite377</sprite>
         <sprite>sprites\spr_gun_16_16_1</sprite>
         <sprite>sprites\spr_gun_16_32_1</sprite>
         <sprite>sprites\spr_gun_16_32_2</sprite>
         <sprite>sprites\spr_gun_16_48_1</sprite>
+        <sprite>sprites\spr_hellfury</sprite>
         <sprite>sprites\spr_missile_launcher_16_48_1</sprite>
         <sprite>sprites\spr_railgun</sprite>
-        <sprite>sprites\spr_hellfury</sprite>
+        <sprite>sprites\spr_shield_gen_16_16_1</sprite>
         <sprite>sprites\spr_thrust_16_1</sprite>
-        <sprite>sprites\spr_thruster_flame</sprite>
         <sprite>sprites\spr_thrust_16_2</sprite>
         <sprite>sprites\spr_thrust_16_3</sprite>
+        <sprite>sprites\spr_thrust_16_4</sprite>
         <sprite>sprites\spr_thrust_lat_16_16_1</sprite>
         <sprite>sprites\spr_thrust_lat_32_32_1</sprite>
-        <sprite>sprites\spr_thrust_16_4</sprite>
-        <sprite>sprites\spr_beam_1</sprite>
-        <sprite>sprites\spr_turret_barrel_1</sprite>
+        <sprite>sprites\spr_thruster_flame</sprite>
         <sprite>sprites\spr_turret_1</sprite>
         <sprite>sprites\spr_turret_2</sprite>
-        <sprite>sprites\spr_beam_2</sprite>
+        <sprite>sprites\spr_turret_barrel_1</sprite>
+        <sprite>sprites\sprite377</sprite>
       </sprites>
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
@@ -1596,7 +1600,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="358">
+  <constants number="362">
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1615,6 +1619,10 @@
     <constant name="BUG_WING_COUNT">7</constant>
     <constant name="BUG_WING_SHAPE">4</constant>
     <constant name="BULLET_BASE_SPEED">25</constant>
+    <constant name="BASE_E_REGEN_SPD">.25</constant>
+    <constant name="BASE_SHLD_E_COST">1</constant>
+    <constant name="BASE_ARMOR_MOD">5</constant>
+    <constant name="BASE_ARMOR_MASS">25</constant>
     <constant name="CC_AGRICULTURE">0</constant>
     <constant name="CC_INDUSTRIAL">2</constant>
     <constant name="CC_MINING">1</constant>

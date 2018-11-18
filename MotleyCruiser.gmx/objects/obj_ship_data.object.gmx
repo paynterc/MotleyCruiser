@@ -211,9 +211,11 @@ alarm[3]=room_speed *  (day / time_oxygen);//
 if(room == rm_space &amp;&amp; !global.paused){
     
     if(instance_exists(obj_player_ship)){
+        /***
         if(obj_player_ship.thrusting_fwd){
                 global.supply_fuel -= inc_fuel;
         }
+        ***/
         scr_cargo_update_fuel();
     }
     
@@ -508,7 +510,7 @@ if(room==rm_space){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set supplies status
+            <string>/// Start alarms
 /***
 Reduce the supply of each on a timer. When a resource reaches zero, take a unit 
 from cargo.

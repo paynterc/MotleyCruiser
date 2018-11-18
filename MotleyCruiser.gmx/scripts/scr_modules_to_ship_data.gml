@@ -57,6 +57,10 @@ for(var m=0;m<array_length_1d(module_data);m++){
     turn_mod += MP[MODULE_TURN_MOD];
     bunks += MP[MODULE_BUNKS_MOD];
     cargo += MP[MODULE_CARGO_MOD];
+    
+    if(MP[MODULE_TYPE]=="booster"){
+        boostable = true;
+    }
            
 }
 

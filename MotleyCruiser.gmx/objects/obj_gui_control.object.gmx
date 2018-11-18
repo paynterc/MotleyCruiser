@@ -30,7 +30,7 @@ scr_set_gui_vars();
 
 has_ball=noone;// Who has the ball?
 ui_stack = ds_stack_create();// Stack previously open menus here so we can get back to them
-
+pe=instance_exists(obj_player_ship);// player exists
 // Resource indicators
 rFont = fnt_menus;
 blinkSpeed = 1;
@@ -95,6 +95,29 @@ alarm[0]=room_speed * blinkSpeed;
 blinky=true;
 alarm[1]=room_speed * blinkSpeed;
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>pe=instance_exists(obj_player_ship);
 </string>
           </argument>
         </arguments>
@@ -337,19 +360,28 @@ if(room == rm_space){
     var y2=0;
     var lspacing = 4;
     
-    if(instance_exists(obj_ship_data)){
-        
+   
                 
-        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_fuel,global.supply_fuel,blinky,c_orange,"FUEL",eButtons[rw-1]);
-        rw += 1;y1 = y2+lspacing;
-        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_oxygen,global.supply_oxygen,blinky,c_silver,"OXYGEN",eButtons[rw-1]);
-        rw += 1;y1 = y2+lspacing;
-        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_water,global.supply_water,blinky,c_aqua,"WATER",eButtons[rw-1]);
-        rw += 1;y1 = y2+lspacing;
-        y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_food,global.supply_food,blinky,c_red,"FOOD",eButtons[rw-1]);
-        
-
+    y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_fuel,global.supply_fuel,blinky,c_orange,"FUEL",eButtons[rw-1]);
+    rw += 1;y1 = y2+lspacing;
+    y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_oxygen,global.supply_oxygen,blinky,c_silver,"OXYGEN",eButtons[rw-1]);
+    rw += 1;y1 = y2+lspacing;
+    y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_water,global.supply_water,blinky,c_aqua,"WATER",eButtons[rw-1]);
+    rw += 1;y1 = y2+lspacing;
+    y2 = scr_gui_resource_bar(x1,y1,obj_ship_data.cargo_food,global.supply_food,blinky,c_red,"FOOD",eButtons[rw-1]);
+    
+    if(pe)
+    {
+        // if player ship exists
+        var rX=gui_width-_xStart;
+        y1 = _yStart;
+        y2 = scr_gui_resource_bar(rX,y1,obj_player_ship.shields_current,obj_player_ship.shields_current,blinky,c_aqua,"SHIELDS",noone,obj_player_ship.shields,-1);
+        y1 = y2+lspacing;
+        y2 = scr_gui_resource_bar(rX,y1,obj_player_ship.hull_current,obj_player_ship.hull_current,blinky,c_red,"HULL",noone,obj_player_ship.hull,-1);
+        y1 = y2+lspacing;
+        y2 = scr_gui_resource_bar(rX,y1,obj_player_ship.energy_current,obj_player_ship.energy_current,blinky,c_yellow,"ENERGY",noone,obj_player_ship.energy,-1);
     }
+
     
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
@@ -365,7 +397,7 @@ if(room == rm_space){
     draw_set_color(c_lime);
     draw_text(x1,y1,"SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_y) );
     
-    if(instance_exists(obj_player_ship)){
+    if(pe){ // player exists
         draw_set_halign(fa_center);
         draw_set_valign(fa_bottom);
         x1= gui_width / 2;

@@ -9,7 +9,7 @@ var pship, wp1, wp2, wp3, tgt1;
 // Choose one planet and two random locations
 tgt1 = scr_find_landable_target();
 wp1 = scr_array(tgt1.x,tgt1.y);
-wp2 = scr_array(irandom(room_width),irandom(room_height));
+wp2 = scr_array(irandom(global.sector_width),irandom(global.sector_width));
 wp3 = scr_array(_x,_y);
 
 for(var i = 0; i < _qty; i++){

@@ -25,11 +25,13 @@ energy_current = energy;
 energy_regen_speed = global.ship_default_energy_regen_speed;//frequency of energy regen ticks.
 energy_regen_points = global.ship_default_energy_regen_points;//energy regenerated on each tick.
 
-weapon_speed = 0.1;//DEPRECATD: multiplied by 1 second or room_speed
-weapon_range = 600;//used for npcs
+weapon_speed = 0.1;//DEPRECATED: multiplied by 1 second or room_speed
+weapon_range = 600;//DEPRECATED: used for npcs
 
 bunks = 0;
 cargo =10;
+
+boostable=false;//If a booster is installed, switch this to true;
 
 thrusting_fwd = false;//Track when thrust is being applied
 thrusting_rvs = false;

@@ -292,6 +292,12 @@ alarm[0] = room_speed * ship_spawn_rate;
 if(scr_user_input("spawn_player_ship")){
     instance_create(view_hport[0]/2,view_wport[0]/2,obj_player_ship);
 }
+if(scr_user_input("zoom_out")){
+    scr_view_zoom(1,0);
+}
+if(scr_user_input("zoom_in")){
+    scr_view_zoom(-1,0);
+}
 </string>
           </argument>
         </arguments>
@@ -315,7 +321,7 @@ if(scr_user_input("spawn_player_ship")){
             <string>/// Zoom in to board
 if(zoom){
     global.paused = true;
-    scr_view_zoom(-.10,0);
+    //scr_view_zoom(-.10,0);
     if(view_wview[0]&lt;100){
         room_goto(rm_ship_deck_rnd);
     }

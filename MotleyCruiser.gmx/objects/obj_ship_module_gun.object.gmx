@@ -139,8 +139,7 @@ if(gundata==noone){
 
 if(parent_obj!=noone 
 &amp;&amp; gundata != noone 
-&amp;&amp; parent_obj.energy_current&gt;0
-&amp;&amp; parent_obj.tgt_dist &lt;= weapon_range
+&amp;&amp; parent_obj.energy_current&gt;=gundata[GUN_ENERGY]
 &amp;&amp; !global.paused
 ){
     shooting = parent_obj.shooting;
@@ -229,7 +228,7 @@ if(shooting &amp;&amp; gundata[GUN_BULLET_TYPE]==bulletTypes.beam ){
 if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
     if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
         hitobject.register_damage += gundata[GUN_DAMAGE];
-        hitobject.hitby = id;
+        hitobject.hitby = parent_obj;
     }   
 }else if(gundata[GUN_BULLET_TYPE]==bulletTypes.bullet){
     var d = sprite_get_width(sprite_index)/2;
@@ -252,8 +251,11 @@ if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
     bullet.speed = gundata[GUN_BULLET_SPEED];
-
+    bullet.range = gundata[GUN_RANGE];
     bullet.damage = gundata[GUN_DAMAGE];
+    with(bullet){
+        alarm[1]=range/speed;
+    }
     audio_sound_pitch(snd_laser4, random_range(.95,1.2));
     var b_sound = audio_play_sound_at(gundata[GUN_SOUND],x,y,0,100,100,1,false,2);
 
@@ -265,28 +267,36 @@ if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
 
     var d = sprite_get_width(sprite_index)/2;
     
-    x1 = x + lengthdir_x(guntip, image_angle);
-    y1 = y + lengthdir_y(guntip, image_angle);
-    x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
-    y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
+    var x1 = x + lengthdir_x(guntip, image_angle);
+    var y1 = y + lengthdir_y(guntip, image_angle);
+    var x2 = x + lengthdir_x(guntip+gundata[GUN_RANGE], image_angle);
+    var y2 = y + lengthdir_y(guntip+gundata[GUN_RANGE], image_angle);
     
     var bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),scr_get_array_1d(gundata,GUN_BULLET_OBJECT));
     bullet.image_xscale=gundata[GUN_RANGE]/sprite_get_width(gundata[GUN_SPRITE]);
     bullet.image_angle = image_angle;
     
-    audio_sound_pitch(snd_laser4, random_range(.95,1.2));
+    audio_sound_pitch(gundata[GUN_SOUND], random_range(.95,1.2));
     var b_sound = audio_play_sound_at(gundata[GUN_SOUND],x,y,0,100,100,1,false,2);
     
-    hitobject = collision_line(x1,y1,x2,y2,obj_space_solid,false,false); 
-    if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
-        var impact = instance_create(hitobject.x,hitobject.y,obj_spark);
-        impact.image_blend = c_orange;
-        audio_play_sound_at(snd_hit1,x,y,0,100,100,1,false,2);
-        hitobject.register_damage += gundata[GUN_DAMAGE];
-        hitobject.hitby = parent_obj;
-    }else{
-        hitpoint = noone;
+    var i;
+    var ob;
+    for (i = 0; i &lt; instance_number(obj_ship); i ++)
+    {
+       ob = instance_find(obj_ship,i);
+       if(ob!=self &amp;&amp; ob!=parent_obj &amp;&amp; ob.faction!=faction){
+            if(collision_line(x1,y1,x2,y2,ob,true,true)){
+                var impact = instance_create(ob.x,ob.y,obj_spark);
+                impact.image_blend = c_orange;
+                impact.active=true;
+                audio_play_sound_at(snd_hit1,x,y,0,100,100,1,false,2);
+                ob.register_damage += gundata[GUN_DAMAGE];
+                ob.hitby = parent_obj;
+            }
+       }
+       
     }
+    
 }
 
 parent_obj.energy_current -= gundata[GUN_ENERGY];

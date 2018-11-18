@@ -77,11 +77,13 @@ for(var i=0;i&lt;2;i++){
     bullet.sprite_index = sprite_index;
     bullet.depth = depth;
     bullet.speed = speed;
-    
+    bullet.range = range;
     new_dir = image_angle + spread;
     bullet.direction = new_dir;
     bullet.image_angle = new_dir;
-    
+    with(bullet){
+        alarm[1]=range/speed;
+    }
     spread -= (spread*2);
 }
 

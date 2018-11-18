@@ -81,9 +81,12 @@ for(var i=0;i&lt;3;i++){
     bullet.sprite_index = sprite_index;
     bullet.depth = depth;
     bullet.speed = speed;
-
+    bullet.range = range;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
+    with(bullet){
+        alarm[1]=range/speed;
+    }
 
 }
 </string>
