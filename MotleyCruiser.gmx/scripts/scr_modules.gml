@@ -202,23 +202,24 @@ module[MODULE_THRUSTRVS_MOD]=500;
 module[MODULE_MASS_MOD]=6;
 scr_push_array_1d(global.module_library, module);
 
+// Turret
 module = scr_ship_module();
 module[MODULE_NAME]="Turret Pulse Repeater 1";
 module[MODULE_DESCRIPTION]="Fast, turret-mounted energy weapon.";
-module[MODULE_TYPE]="turret";// command, cargo, thrust, turret, gun
+module[MODULE_TYPE]="gun";// command, cargo, thrust, gun
 module[MODULE_SPRITE_INDEX] = spr_turret_1;
 module[MODULE_COLOR]=c_white;
-module[MODULE_TYPE_INDEX]=0;
+module[MODULE_TYPE_INDEX]=10;
 module[MODULE_MASS_MOD]=220;
 scr_push_array_1d(global.module_library, module);
 
 module = scr_ship_module();
 module[MODULE_NAME]="Turret Proton Beam";
 module[MODULE_DESCRIPTION]="Fast, turret-mounted energy weapon.";
-module[MODULE_TYPE]="turret";// command, cargo, thrust, turret, gun
+module[MODULE_TYPE]="gun";// command, cargo, thrust, turret, gun
 module[MODULE_SPRITE_INDEX] = spr_turret_1;
 module[MODULE_COLOR]=c_white;
-module[MODULE_TYPE_INDEX]=2;
+module[MODULE_TYPE_INDEX]=11;
 module[MODULE_MASS_MOD]=220;
 scr_push_array_1d(global.module_library, module);
 
@@ -271,11 +272,11 @@ scr_push_array_1d(global.module_library, module);
 
 module = scr_ship_module();
 module[MODULE_NAME]="Terran Platform Cannon 1";
-module[MODULE_DESCRIPTION]="Fast, turret-mounted energy weapon.";
-module[MODULE_TYPE]="turret";// command, cargo, thrust, turret, gun
+module[MODULE_DESCRIPTION]="Slow turret-mounted weapon with a 3-bullet spread.";
+module[MODULE_TYPE]="gun";// command, cargo, thrust, turret, gun
 module[MODULE_SPRITE_INDEX] = spr_turret_2;
 module[MODULE_COLOR]=c_white;
-module[MODULE_TYPE_INDEX]=3;// Index from gun library, turret library, etc.
+module[MODULE_TYPE_INDEX]=12;// Index from gun library, turret library, etc.
 module[MODULE_MASS_MOD]=220;
 scr_push_array_1d(global.module_library, module);
 

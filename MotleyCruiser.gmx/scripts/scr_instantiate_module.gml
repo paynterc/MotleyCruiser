@@ -40,8 +40,6 @@ if(m_proto==noone){
 }
 if(m_proto[MODULE_TYPE]=="gun"){
     m_object = instance_create(x,y,obj_ship_module_gun);
-}else if(m_proto[MODULE_TYPE]=="turret"){
-    m_object = instance_create(x,y,obj_ship_module_turret);
 }else{
     m_object = instance_create(x,y,obj_ship_module);
 }

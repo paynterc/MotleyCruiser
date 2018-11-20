@@ -50,6 +50,8 @@ disposition = DISPOSITION_NEUTRAL;
 hitby = noone;// Who hit me?!
 ship_type = ship_types.ship;
 boosting=false;
+c=false;
+is_player=false;
 // Set defaults
 scr_ship_defaults();
 
@@ -226,14 +228,16 @@ if(modules != noone){
                 
                 module.x = x + lengthdir_x(d, image_angle + a);
                 module.y = y + lengthdir_y(d, image_angle + a);
-                if(module.module_type!="turret" || target==noone){
+                if(module.turn_spd &lt; 1 || target==noone){ // Not turrets
                     module.image_angle = image_angle;
                 }
             
             }else{
                 module.x=x;
                 module.y=y;
-                module.image_angle = image_angle;
+                if(module.turn_spd &lt; 1 || target==noone){ // Not turrets
+                    module.image_angle = image_angle;
+                }
             }
         }
         

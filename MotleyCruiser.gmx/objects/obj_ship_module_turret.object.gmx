@@ -288,7 +288,7 @@ if(gundata==noone &amp;&amp; turretdata!=noone){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Turn and Move (in step)
+            <string>/// Turn
 if(global.paused){
     exit;
 }

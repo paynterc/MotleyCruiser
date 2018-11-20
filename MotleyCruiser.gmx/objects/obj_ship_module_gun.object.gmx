@@ -40,17 +40,26 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+gundata=noone;
 shooting = false;
 cooling_down = false;
-gundata = noone;
-weapon_speed = 1;
-weapon_range = 0;
+flash=false;//draw muzzle flash
+
+// For beams
 hitpoint = noone;
 hitobject = noone;
-
-//Instantiate a spark
 spark = instance_create(x,y,obj_spark);
-flash=false;//draw muzzle flash
+
+// For turrets
+turn_spd = 0;
+weapon_range = 0;
+target = noone;
+tgt_dist = 0;
+accuracy = .9;
+facingMinusTarget = 100;
+angleDiff = 100;
+
+
 </string>
           </argument>
         </arguments>
@@ -78,6 +87,33 @@ with(spark){
     active = 0;
     destroy_self=true;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update target
+if(parent_obj!=noone ){
+    target=parent_obj.target;
+}
+alarm[3] = room_speed;
 </string>
           </argument>
         </arguments>
@@ -124,7 +160,7 @@ cooling_down=false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set shooting status
+            <string>/// Load Gun Data
 //First populate the gun data using the module prototype
 if(gundata==noone){
 
@@ -134,15 +170,94 @@ if(gundata==noone){
         gundata = global.guns[0];
     }    
     weapon_speed = gundata[GUN_SPEED];
-    weapon_range = gundata[GUN_RANGE]
+    weapon_range = gundata[GUN_RANGE];
+    turn_spd = gundata[GUN_TURN_SPEED];// For turrets
+    if(turn_spd&gt;0){
+        alarm[3]=room_speed;// Kick off the target update
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Turn
+if(global.paused){
+    exit;
 }
 
+// Update target distance and rotate to target
+if(turn_spd&gt;0){
+    if(target != noone){
+        tgt_dist = distance_to_object(target);        
+        angleDiff = scr_gradually_rotate_2(self,target,turn_spd,accuracy);
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set shooting status
 if(parent_obj!=noone 
 &amp;&amp; gundata != noone 
 &amp;&amp; parent_obj.energy_current&gt;=gundata[GUN_ENERGY]
 &amp;&amp; !global.paused
+&amp;&amp; !parent_obj.disabled
 ){
-    shooting = parent_obj.shooting;
+    if(turn_spd&gt;0){
+        if(parent_obj.is_player){
+            shooting = parent_obj.shooting;
+        }else{
+            if(
+            (
+            parent_obj.mode == MODE_ATTACKING || parent_obj.mode == MODE_DEFENDING)
+            &amp;&amp; target!=noone
+            &amp;&amp; target.faction != faction
+            &amp;&amp; abs(angleDiff) &lt; 10
+            &amp;&amp; target.disabled != undefined 
+            &amp;&amp; !target.disabled
+            &amp;&amp; parent_obj.tgt_dist&lt;=gundata[GUN_RANGE]
+            ){
+                shooting = true;
+            }
+        }
+
+    }else{
+        shooting = parent_obj.shooting;
+    }
+    
 }else{
     shooting = false;
 }
@@ -341,8 +456,10 @@ if(shooting){
             xscl = gundata[GUN_RANGE]/sprite_get_width(spr);    
         }
     
-        draw_set_colour(gundata[GUN_BULLET_COLOR]);
-        draw_sprite_ext(spr,0,tipx,tipy,xscl,1,image_angle,c_white,1);
+        
+        draw_sprite_ext(spr,0,tipx,tipy,xscl,1,image_angle,gundata[GUN_BULLET_COLOR],1);
+        draw_set_colour(c_white);
+        draw_line(tipx,tipy,x2,y2);
     }
 
 }

@@ -45,11 +45,11 @@ global.max_station_npc = 10; //max npcs per station
 // Basesline ship settings
 global.ship_min_turn_spd=1;
 global.ship_max_turn_spd=10;
-global.ship_min_spd=1;
+global.ship_min_spd=0;
 global.ship_max_spd=10;
 global.ship_max_spd_fwd=9;
 global.ship_max_spd_rvs=8;
-global.ship_min_acc=0.1;
+global.ship_min_acc=0;
 global.ship_max_acc=1;
 global.ship_min_shields=0;
 global.ship_max_shields=1000;

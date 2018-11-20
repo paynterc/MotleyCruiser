@@ -8,11 +8,11 @@ if(zoom!=1 && zoom!=-1){
 
 var scaleMap = noone;
 scaleMap[0,0]=1120; // Width
-scaleMap[0,1]=630; // Height
+scaleMap[0,1]=640; // Height
 scaleMap[1,0]=2240; 
-scaleMap[1,1]=1260;
+scaleMap[1,1]=1280;
 scaleMap[2,0]=3360; 
-scaleMap[2,1]=1890;
+scaleMap[2,1]=1920;
 
 global.zoomLvl = clamp(global.zoomLvl+zoom,0,array_height_2d(scaleMap)-1)
 

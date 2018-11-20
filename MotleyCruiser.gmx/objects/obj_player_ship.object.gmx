@@ -40,6 +40,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Initialize
+is_player=true;
 faction = FACTION_PLAYER;
 mode = MODE_TRAVELING;// Default mode. Treat this like state.
 disposition=DISPOSITION_HELPFUL;//need this to display status bars
@@ -59,6 +60,50 @@ closest_boardable=noone;
 closest_gate=noone;
 
 inView=true;
+alarm[5]=room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update target
+var tst=1;
+var s_count = instance_number(obj_npc_ship);
+var cdist = noone;
+var closest = noone;
+for(var i = 0; i &lt; s_count; i++) {
+    var s_ship = instance_find(obj_npc_ship,i);
+    if(s_ship.disposition == DISPOSITION_HOSTILE &amp;&amp; scr_instance_in_view(s_ship)){
+        var pdist = point_distance(s_ship.x,s_ship.y,x,y);
+        if(cdist==noone || pdist&lt;cdist){
+            closest = s_ship;
+            cdist=pdist;
+        }
+    }
+}
+if(closest != noone){
+    target = closest;
+     var tst=1;
+}
+
+alarm[5]=room_speed;
 </string>
           </argument>
         </arguments>
@@ -353,11 +398,16 @@ if(global.paused){
         thrusting_fwd=false;
     }
     
+    /***
     var pdir = scr_user_input("point_dir");
     if(pdir!=noone &amp;&amp; can_move){
         var dif = angle_difference(pdir, image_angle);
         var trn = turn_a * delta_time;
         image_angle += median(-1 * trn, dif, trn);
+    }
+    ***/
+    if(can_move){
+        scr_gradually_rotate_5(id,mouse_x,mouse_y,turn_spd);
     }
     
     if(scr_user_input("thrust_reverse") &amp;&amp; can_move){

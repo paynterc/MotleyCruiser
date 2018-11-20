@@ -291,6 +291,7 @@
       <sprite>sprites\spr_drone</sprite>
       <sprite>sprites\spr_stars</sprite>
       <sprite>sprites\spr_laser</sprite>
+      <sprite>sprites\sprite417</sprite>
       <sprite>sprites\spr_laser_2</sprite>
       <sprite>sprites\spr_bolt</sprite>
       <sprite>sprites\spr_rail</sprite>
@@ -1525,6 +1526,7 @@
       <object>objects\obj_paintbrush</object>
       <object>objects\obj_paint_drag</object>
       <object>objects\obj_btn_save</object>
+      <object>objects\obj_btn_exit</object>
       <object>objects\obj_btn_updateall</object>
       <object>objects\obj_button_load</object>
       <object>objects\obj_button_delete</object>
@@ -1600,7 +1602,15 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="362">
+  <constants number="365">
+    <constant name="ACC_SPR_COLOR">1</constant>
+    <constant name="ACC_SPR_INDEX">0</constant>
+    <constant name="ACC_SPR_STRING">2</constant>
+    <constant name="BASE_ARMOR_MASS">25</constant>
+    <constant name="BASE_ARMOR_MOD">5</constant>
+    <constant name="BASE_E_REGEN_SPD">.25</constant>
+    <constant name="BASE_SHLD_E_COST">1</constant>
+    <constant name="BASE_TURN_SPD">5</constant>
     <constant name="BTN_H">3</constant>
     <constant name="BTN_HOVER">4</constant>
     <constant name="BTN_SHOW">6</constant>
@@ -1619,10 +1629,6 @@
     <constant name="BUG_WING_COUNT">7</constant>
     <constant name="BUG_WING_SHAPE">4</constant>
     <constant name="BULLET_BASE_SPEED">25</constant>
-    <constant name="BASE_E_REGEN_SPD">.25</constant>
-    <constant name="BASE_SHLD_E_COST">1</constant>
-    <constant name="BASE_ARMOR_MOD">5</constant>
-    <constant name="BASE_ARMOR_MASS">25</constant>
     <constant name="CC_AGRICULTURE">0</constant>
     <constant name="CC_INDUSTRIAL">2</constant>
     <constant name="CC_MINING">1</constant>
@@ -1662,6 +1668,7 @@
     <constant name="D_BUTTON_SCRIPT">3</constant>
     <constant name="D_BUTTON_TEXT">0</constant>
     <constant name="DATA_FILE">"motleydata.ini"</constant>
+    <constant name="DEFAULT_START_SHIP">41</constant>
     <constant name="DISPOSITION_HELPFUL">2</constant>
     <constant name="DISPOSITION_HOSTILE">1</constant>
     <constant name="DISPOSITION_NEUTRAL">0</constant>
@@ -1704,12 +1711,13 @@
     <constant name="GUN_BULLET_SPEED">5</constant>
     <constant name="GUN_BULLET_SPRITE">3</constant>
     <constant name="GUN_BULLET_TYPE">6</constant>
-    <constant name="GUN_ENERGY">9</constant>
-    <constant name="GUN_SOUND">10</constant>
     <constant name="GUN_DAMAGE">0</constant>
+    <constant name="GUN_ENERGY">9</constant>
     <constant name="GUN_RANGE">4</constant>
+    <constant name="GUN_SOUND">10</constant>
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>
+    <constant name="GUN_TURN_SPEED">11</constant>
     <constant name="GX_MOON">1</constant>
     <constant name="GX_PLANET">0</constant>
     <constant name="GX_STATION">2</constant>
@@ -1758,9 +1766,9 @@
     <constant name="MODE_LANDING">4</constant>
     <constant name="MODE_MINING">10</constant>
     <constant name="MODE_PATROLING">1</constant>
+    <constant name="MODE_REFUELING">11</constant>
     <constant name="MODE_TRAVELING">7</constant>
     <constant name="MODE_WAITING">3</constant>
-    <constant name="MODE_REFUELING">11</constant>
     <constant name="MODULE_ACCBWD_MOD">17</constant>
     <constant name="MODULE_ACCFWD_MOD">16</constant>
     <constant name="MODULE_BUNKS_MOD">26</constant>
@@ -1799,7 +1807,9 @@
     <constant name="MOON_W1">2</constant>
     <constant name="MOON_X1">0</constant>
     <constant name="MOON_Y1">1</constant>
+    <constant name="NPC_ACCESSORIES">18</constant>
     <constant name="NPC_ACTIVE">9</constant>
+    <constant name="NPC_CREW_INDEX">22</constant>
     <constant name="NPC_EQUIPMENT">16</constant>
     <constant name="NPC_GLOBAL_INDEX">10</constant>
     <constant name="NPC_HIRE_PRICE">14</constant>
@@ -1814,13 +1824,11 @@
     <constant name="NPC_RACE_INDEX">0</constant>
     <constant name="NPC_RUN_SPD">2</constant>
     <constant name="NPC_SEX">13</constant>
+    <constant name="NPC_SKIN_COLOR">19</constant>
+    <constant name="NPC_SPRITE_STRING">21</constant>
+    <constant name="NPC_SPRITE_TEMP">20</constant>
     <constant name="NPC_SPRITE">15</constant>
     <constant name="NPC_TRAIT">11</constant>
-    <constant name="NPC_ACCESSORIES">18</constant>
-    <constant name="NPC_SKIN_COLOR">19</constant>
-    <constant name="NPC_SPRITE_TEMP">20</constant>
-    <constant name="NPC_SPRITE_STRING">21</constant>
-    <constant name="NPC_CREW_INDEX">22</constant>
     <constant name="OBJECTIVE_ACHIEVED">1</constant>
     <constant name="OBJECTIVE_DESCRIPTION">0</constant>
     <constant name="OBJECTIVE_ID">12</constant>
@@ -1915,13 +1923,13 @@
     <constant name="SHIP_SHIELDS_REGEN_SPD">7</constant>
     <constant name="SHIP_SHIELDS">6</constant>
     <constant name="SHIP_SPRITE_INDEX">19</constant>
-    <constant name="SHIP_TURN_SPEED">0</constant>
-    <constant name="SHIP_WEAPON_SPD">13</constant>
-    <constant name="SHIP_X1">14</constant>
-    <constant name="SHIP_TYPE">34</constant>
-    <constant name="SHIP_Y1">15</constant>
     <constant name="SHIP_THRUST_FWD">35</constant>
     <constant name="SHIP_THRUST_RVS">36</constant>
+    <constant name="SHIP_TURN_SPEED">0</constant>
+    <constant name="SHIP_TYPE">34</constant>
+    <constant name="SHIP_WEAPON_SPD">13</constant>
+    <constant name="SHIP_X1">14</constant>
+    <constant name="SHIP_Y1">15</constant>
     <constant name="STATION_COLOR">3</constant>
     <constant name="STATION_ECON_MOD">10</constant>
     <constant name="STATION_ECON_OFFSET">11</constant>
@@ -1960,9 +1968,6 @@
     <constant name="TURRET_TURN_SPEED">0</constant>
     <constant name="VOID">-7</constant>
     <constant name="WALL">-6</constant>
-    <constant name="ACC_SPR_INDEX">0</constant>
-    <constant name="ACC_SPR_COLOR">1</constant>
-    <constant name="ACC_SPR_STRING">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

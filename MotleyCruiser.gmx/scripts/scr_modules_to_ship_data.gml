@@ -27,7 +27,7 @@ var bunks=0;
 var cargo=0;
 
 var turn_spd = 0;
-var turn_mod = 0;
+turn_mod = 0;
 var max_spd_fwd = 0;
 var max_spd_rvs = 0;
 
@@ -84,7 +84,8 @@ var acc_spd_rvs =  thrust_rvs / mass ;
 acc_spd_fwd = clamp(acc_spd_fwd,global.ship_min_acc,global.ship_max_acc);
 acc_spd_rvs = clamp(acc_spd_rvs,global.ship_min_acc,global.ship_max_acc);
 
-turn_spd = global.ship_default_turn_spd + (turn_mod/mass);
+//turn_spd = global.ship_default_turn_spd + (turn_mod/mass);
+turn_spd = max( 0, BASE_TURN_SPD - (mass/1000) ) + (turn_mod/mass);
 turn_spd = clamp(turn_spd,global.ship_min_turn_spd,global.ship_max_turn_spd);
 
 

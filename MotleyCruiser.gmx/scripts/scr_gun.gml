@@ -12,4 +12,5 @@ gun[GUN_BULLET_TYPE]=bulletTypes.bullet;//enum set in obj_game_control. bullet, 
 gun[GUN_BULLET_OBJECT]=obj_laser;
 gun[GUN_ENERGY]=1;
 gun[GUN_SOUND]=snd_laser1;
+gun[GUN_TURN_SPEED]=0; // For turrets
 return gun;

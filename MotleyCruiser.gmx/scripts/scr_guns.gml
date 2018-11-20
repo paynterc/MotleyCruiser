@@ -25,11 +25,11 @@ global.guns[1]=gun;
 
 gun=noone;
 gun = scr_gun();
-gun[GUN_SPEED]=1;
-gun[GUN_DAMAGE]=50;
+gun[GUN_SPEED]=3;
+gun[GUN_DAMAGE]=30;
 gun[GUN_SPRITE]=spr_gun_16_32_2;
 gun[GUN_BULLET_SPRITE]=spr_rail;
-gun[GUN_ENERGY]=50;// per shot. 1 is default.
+gun[GUN_ENERGY]=30;// per shot. 1 is default.
 global.guns[2]=gun;
 
 gun=noone;
@@ -43,7 +43,7 @@ global.guns[3]=gun;
 gun=noone;
 gun = scr_gun();
 gun[GUN_SPEED]=.2;
-gun[GUN_DAMAGE]=5;
+gun[GUN_DAMAGE]=2;
 gun[GUN_SPRITE]=spr_gun_16_16_1;
 gun[GUN_BULLET_TYPE]=bulletTypes.beam;
 gun[GUN_BULLET_COLOR]=c_yellow;
@@ -53,13 +53,13 @@ global.guns[4]=gun;
 
 gun=noone;
 gun = scr_gun();
-gun[GUN_SPEED]=.2;
-gun[GUN_DAMAGE]=5;
+gun[GUN_SPEED]=.1;
+gun[GUN_DAMAGE]=1;
 gun[GUN_SPRITE]=spr_gun_16_16_1;
 gun[GUN_BULLET_TYPE]=bulletTypes.beam;
 gun[GUN_BULLET_COLOR]=c_aqua;
-gun[GUN_RANGE]=200;
-gun[GUN_ENERGY]=3;// per shot. 1 is default.
+gun[GUN_RANGE]=300;
+gun[GUN_ENERGY]=2;// per shot. 1 is default.
 global.guns[5]=gun;
 
 gun = scr_gun();
@@ -100,7 +100,7 @@ global.guns[8]=gun;
 
 gun = scr_gun();
 gun[GUN_SPEED]=2;
-gun[GUN_DAMAGE]=100;
+gun[GUN_DAMAGE]=30;
 gun[GUN_SPRITE]=spr_railgun;
 gun[GUN_BULLET_SPRITE]=spr_bullet_rail;
 gun[GUN_BULLET_SPEED]=0;
@@ -108,6 +108,39 @@ gun[GUN_BULLET_OBJECT]=obj_bullet_rail;
 gun[GUN_RANGE]=1000;
 gun[GUN_SOUND]=snd_hellfury;
 gun[GUN_BULLET_TYPE]=bulletTypes.rail;
-gun[GUN_ENERGY]=100;
+gun[GUN_ENERGY]=60;
 global.guns[9]=gun;
+
+gun=noone;
+gun = scr_gun();
+gun[GUN_SPEED]=.1;
+gun[GUN_DAMAGE]=1;
+gun[GUN_SPRITE]=spr_gun_16_16_1;
+gun[GUN_BULLET_SPRITE]=spr_laser_2;
+gun[GUN_TURN_SPEED]=25;// turret
+global.guns[10]=gun;
+
+gun=noone;
+gun = scr_gun();
+gun[GUN_SPEED]=.2;
+gun[GUN_DAMAGE]=2;
+gun[GUN_SPRITE]=spr_gun_16_16_1;
+gun[GUN_BULLET_TYPE]=bulletTypes.beam;
+gun[GUN_BULLET_COLOR]=c_blue;
+gun[GUN_RANGE]=300;
+gun[GUN_ENERGY]=4;// per shot. 1 is default.
+gun[GUN_TURN_SPEED]=30;// turret
+global.guns[11]=gun;
+
+gun = scr_gun();
+gun[GUN_SPEED]=1;
+gun[GUN_DAMAGE]=5;
+gun[GUN_SPRITE]=spr_gun_16_48_1;
+gun[GUN_BULLET_SPRITE]=spr_bolt;
+gun[GUN_BULLET_SPEED]=6;
+gun[GUN_BULLET_OBJECT]=obj_bullet_spread;
+gun[GUN_RANGE]=1000;
+gun[GUN_ENERGY]=10;// 3 bullets at 5 damage each.
+gun[GUN_TURN_SPEED]=30;// turret
+global.guns[12]=gun;
 
