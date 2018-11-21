@@ -17,7 +17,6 @@ var drawsprite = args[2];
 if(drawsprite==noone) drawsprite = true;
 
 var m_object;
-
 var coords = module_record[I_MODULE_COORDS];//These are the row/column coords on the scaffold
 if(coords==noone) return noone;
 //ROTATE COORDS 90 degrees

@@ -1,5 +1,5 @@
 /// Data specific to a module installed on a ship.
-// Includes reference to orignal module plus color and scaffold coordinates.
+// Includes reference to master module plus color and scaffold coordinates.
 // This is what gets saved with the ship data
 
 var module = noone;

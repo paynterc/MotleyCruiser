@@ -51,9 +51,9 @@ faction = FACTION_NEUTRAL;
 ship_type = ship_types.drone;
 
 
-shields = 15;
+shields = global.ship_default_shields / 2;
 shields_current = shields;
-shields_regen_speed = 1;//frequency of shield regen ticks.
+shields_regen_speed = global.ship_default_shields_regen_speed;//frequency of shield regen ticks.
 shields_regen_points = 2;//shield regenerated on each tick.
 
 hull = global.ship_min_hull;
@@ -88,7 +88,7 @@ Here I'm tring to add a module without ship_data.
 var module = scr_ship_module_installed();
 var module_index = scr_modules_findbyname("Blue Proton Beam");
 module[I_MODULE_INDEX]=module_index;
-module[I_MODULE_COORDS] = scr_array(1,1);
+module[I_MODULE_COORDS] = scr_array(0,0);
 module[I_MODULE_OFFSETS] = noone;//SETTING TO noone should place the module at shipe x,y
 module[I_MODULE_XSCALE]=1;
 module[I_MODULE_YSCALE]=1;
@@ -98,14 +98,51 @@ module[I_MODULE_DEPTH]=0;
 var module_data=noone;
 module_data[0]=module;
 
-// This mimics the module instantiation in scr_instantiate_ship. We'll say the ship has a magnitude of 3, which
-// would be the smallest grid, even though there is no grid at all for this ship.
+// This mimics the module instantiation in scr_instantiate_ship
 for(var m=0; m&lt;array_length_1d(module_data); m++){
     
     var module_record = module_data[m];
-    var m_object = scr_instantiate_module(module_record,3,false);
+    var coords = module_record[I_MODULE_COORDS];// Just set this to 0,0
+
+    
+    var r = coords[0];
+    var c = coords[1];
+    
+    var offsets = noone;
+    var gunoffsets = noone;
+    
+    offsets = noone;// THIS IS DIFFERENT FROM INSTATIATE SHIP   
+    module_record[I_MODULE_OFFSETS] = offsets;
+
+
+    // Get module prototype
+    var m_proto = global.module_library[module_record[I_MODULE_INDEX]];
+    if(m_proto[MODULE_TYPE]=="gun"){
+        m_object = instance_create(x,y,obj_ship_module_gun);
+    }else if(m_proto[MODULE_TYPE]=="turret"){
+        m_object = instance_create(x,y,obj_ship_module_turret);
+    }else{
+        m_object = instance_create(x,y,obj_ship_module);
+    }
+    m_object.offsets = offsets;
+    m_object.sprite_index = m_proto[MODULE_SPRITE_INDEX];
+    m_object.image_blend = module_record[I_MODULE_COLOR];
+    m_object.image_xscale = module_record[I_MODULE_XSCALE];
+    m_object.image_yscale = module_record[I_MODULE_YSCALE];
+    m_object.depth = depth - module_record[I_MODULE_DEPTH];
+    m_object.faction = faction;
+    m_object.module_data = module_record;
+    m_object.module_type = m_proto[MODULE_TYPE];
+    with(m_object){
+        guntip = sprite_get_width(sprite_index)/2;
+    }
+    m_object.m_proto = m_proto;
+    
+    m_object.drawsprite = false;
+    m_object.guntip = sprite_get_width(sprite_index)/2;// IMPORTANT: WE'RE MAKING THE GUN INVISIBLE AND SETTING THE EMINATION POINT TO THE SHIP SPRITE
     
     modules[m]=m_object.id;
+    
     // Fp this after adding object to array in parent
     m_object.parent_obj = id;  
     module_data[m]=module_record;

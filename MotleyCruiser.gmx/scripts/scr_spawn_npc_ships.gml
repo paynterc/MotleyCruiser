@@ -61,7 +61,7 @@ for(var i=1; i<=num_ships; i++){
             ship_data=global.ship_library[0];
         }
         scr_instantiate_ship();
-        scr_update_ship_data();    
+        //scr_update_ship_data();    
     }
      
 }

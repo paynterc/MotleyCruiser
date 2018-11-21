@@ -28,6 +28,7 @@
             <string>/// Fill object pool
 // I'm not doing this right now and the obj_object_pool instance has been removed
 //scr_add_to_pool(obj_projectile,"projectile",500);
+//surface_resize(application_surface,view_wview[0],view_hview[0]);
 </string>
           </argument>
         </arguments>

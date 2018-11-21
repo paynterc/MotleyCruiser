@@ -40,6 +40,7 @@
       <sound>sound\snd_singularity_charge</sound>
       <sound>sound\snd_singularity_launch</sound>
       <sound>sound\snd_hellfury</sound>
+      <sound>sound\snd_blaster1</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\snd_space_theme1</sound>
@@ -704,7 +705,6 @@
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
-      <script>scripts\scr_populate_sector_OLD.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_galaxy_WEIGHTED.gml</script>
       <script>scripts\scr_make_sun.gml</script>
@@ -1463,6 +1463,7 @@
         <object>objects\obj_npc_ship</object>
         <object>objects\obj_landing_ship</object>
         <object>objects\obj_mining_drone</object>
+        <object>objects\obj_mining_drone_BACKUP</object>
       </objects>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>

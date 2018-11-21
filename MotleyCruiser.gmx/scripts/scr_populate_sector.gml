@@ -195,7 +195,7 @@ if(sx == 0 && sy == 0){
     }
 }
 for(var i=0;i<irandom(5);i++){
-    scr_mining_area(noone,noone);
+    //scr_mining_area(noone,noone);
 }
 
 /*********************
@@ -273,13 +273,14 @@ if(instance_exists(obj_player_ship)){
         image_angle = player_angle;
         ship_data = global.player_ship;       
         faction = FACTION_PLAYER;
-        scr_instantiate_ship();
+        
         if(global.new_ship){
+            scr_instantiate_ship();
             global.new_ship = false;
             scr_update_ship_data();
             global.player_ship = ship_data;// Put ship data back into the global array so we have full hitpoints
         }else{
-            scr_restore_ship_state();
+            scr_instantiate_ship(true);
         }     
     }
     
@@ -317,10 +318,9 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
         disposition = DISPOSITION_HELPFUL;
         mode = MODE_DEFENDING;
         target = obj_player_ship;
-        scr_instantiate_ship();
-        scr_restore_ship_state();  
-    }
-    
+        scr_instantiate_ship(true);
+        //scr_restore_ship_state();  
+    } 
 }
 
 // Save the game
@@ -345,8 +345,13 @@ for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(global.sector_width),irandom(global.sector_width),FACTION_PIRATE,irandom(3)+1);
 }
 
+/*** TEST ITEMS ***/
+//scr_mining_area(player_x + 500,player_y+500);
+/***
 var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
-//ship_obj.disabled = true;
+ship_obj.disabled = true;
 ship_obj.disposition = DISPOSITION_HOSTILE;
 
 //scr_flybark("WHAT UP DOG?",spr_old_salt,3,true);
+
+***/

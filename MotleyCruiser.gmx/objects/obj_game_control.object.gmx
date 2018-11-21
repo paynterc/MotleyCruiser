@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 scr_load_player_config();
+application_surface_enable(false);// Better performance this way
 
 // This object is placed in rm_init. It is persistant and enables things like game settings
 global.paused = false;

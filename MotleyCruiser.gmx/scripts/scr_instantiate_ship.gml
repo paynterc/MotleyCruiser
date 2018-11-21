@@ -4,12 +4,11 @@ The progression should be
 SET FACTION
 scr_instatiate_ship()->
     scr_module_modify_stats()->
-        ship_data = scr_modules_to_ship_data(ship_data)
-        
+        ship_data = scr_modules_to_ship_data(ship_data)      
         THEN
-scr_update_ship_data() (for new ship)
-OR
-scr_restore_ship_state() (when loading player ship and fleet in new room)
+            scr_update_ship_data() (for new ship)
+        OR
+            scr_restore_ship_state() (when loading player ship and fleet in new room)
 
 After instantiating modules and updating ship stats for the first time, I put the stats back into the ship_data  
 using scr_update_ship_data so we get a starting shield and hull amount.
@@ -20,8 +19,19 @@ Use scr_update_ship_data whenever you leave a sector, so we can record losses to
 
 Once the new sector is loaded, use scr_restore_ship_state to move shield and hull data back into ship stats.
 *****/
-
-// scr_instantiate_ship(ship_data)
+/// scr_instantiate_ship(restore)
+var args = noone;
+for (var i=0; i<8; i++)
+{
+    if (i < argument_count)
+        args[i] = argument[i];
+    else
+        args[i] = noone;
+}
+var restore = args[0];
+if(restore==noone){
+    restore = false;
+}
 
 module_data = ship_data[SHIP_MODULES];
 modules = noone;
@@ -41,3 +51,9 @@ for(var m=0; m<array_length_1d(module_data); m++){
 
 // Now modify the ship stats based on installed modules
 scr_module_modify_stats();
+
+if(restore){
+    scr_restore_ship_state();
+}else{
+    scr_update_ship_data();
+}

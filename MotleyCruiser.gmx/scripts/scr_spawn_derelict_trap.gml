@@ -13,7 +13,7 @@ with(ship_obj){
     ship_index = irandom(array_length_1d(global.ship_library)-1);
     ship_data = global.ship_library[ship_index];
     scr_instantiate_ship();
-    scr_update_ship_data();
+    //scr_update_ship_data();
     
     shields_current = 0;
     hull_current= irandom_range(1,hull-1);   
