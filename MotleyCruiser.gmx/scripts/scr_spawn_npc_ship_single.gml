@@ -42,7 +42,7 @@ with(ship_obj){
     }
     
     scr_instantiate_ship();
-        
+    scr_update_ship_data();    
 }
 
 return ship_obj;

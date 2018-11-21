@@ -59,109 +59,112 @@ rotator = noone;
 blips = noone;
 blips[0] = -1;
 
-if(!instance_exists(obj_player_ship)){
-    show_radar=false;
-}
-if(!show_radar){
-    exit;
-}
 
-px = obj_player_ship.x;
-py = obj_player_ship.y;
-
-var blip=noone;
-var coords=noone;
-
-for ( var i = 0; i &lt; instance_number(obj_landable); i += 1 ){
- 
-    blip = instance_find( obj_landable, i );
-    coords=noone;
-    if( !scr_instance_in_view(blip) ){
-        
-        var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
-        var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y); 
-        var mdist1 = min(dist,100);var mdist2 = min(dist,400);
-        
-        coords[0]=px + lengthdir_x(mdist1,dir);
-        coords[1]=py + lengthdir_y(mdist1,dir);
-        coords[2]=px + lengthdir_x(mdist2,dir);
-        coords[3]=py + lengthdir_y(mdist2,dir);
-        coords[4]=clamp(global.radar_range/dist,0,1);
-        coords[5]=c_white;
-        coords[6]=blip.name
-        
-        blips[i]=coords;  
+if(show_radar){
+    if(!instance_exists(obj_player_ship)){
+        show_radar=false;
+        exit;
     }
- 
-}
 
-
-for ( var i = 0; i &lt; instance_number(obj_gate); i += 1 ){
- 
-    blip = instance_find( obj_gate, i );
-    coords=noone;
-    if( !scr_instance_in_view(blip) ){
-        
-        var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
-        var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y); 
-        var mdist1 = min(dist,100);var mdist2 = min(dist,400);
-        
-        coords[0]=px + lengthdir_x(mdist1,dir);
-        coords[1]=py + lengthdir_y(mdist1,dir);
-        coords[2]=px + lengthdir_x(mdist2,dir);
-        coords[3]=py + lengthdir_y(mdist2,dir);
-        coords[4]=clamp(global.radar_range/dist,0,1);
-        coords[5]=c_blue;
-        coords[6]="GATE";
-        
-        scr_push_array_1d(blips,coords);  
-    }
- 
-}
-
-for ( var i = 0; i &lt; instance_number(obj_npc_ship); i += 1 ){
- 
-    blip = instance_find( obj_npc_ship, i );
-    coords=noone;
-    if(!blip.inView){
+    px = obj_player_ship.x;
+    py = obj_player_ship.y;
     
-        var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
-        var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);  
-        var mdist1 = min(dist,100);var mdist2 = min(dist,400);
-        
-        coords[0]=px + lengthdir_x(mdist1,dir);
-        coords[1]=py + lengthdir_y(mdist1,dir);
-        coords[2]=px + lengthdir_x(mdist2,dir);
-        coords[3]=py + lengthdir_y(mdist2,dir);
-        coords[4]=clamp(global.radar_range/dist,0,1);
-        switch (blip.disposition)
-        {
-        case DISPOSITION_NEUTRAL:
-            coords[5]=c_aqua;
-            break;
-        case DISPOSITION_HELPFUL:
-            coords[5]=c_lime;
-            break;
-        case DISPOSITION_HOSTILE:
-            coords[5]=c_red
-            break;
-        default:
-            coords[5]=c_gray;
+    var blip=noone;
+    var coords=noone;
+    
+    for ( var i = 0; i &lt; instance_number(obj_landable); i += 1 ){
+     
+        blip = instance_find( obj_landable, i );
+        coords=noone;
+        if( !scr_instance_in_view(blip) ){
+            
+            var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
+            var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y); 
+            var mdist1 = min(dist,100);var mdist2 = min(dist,400);
+            
+            coords[0]=px + lengthdir_x(mdist1,dir);
+            coords[1]=py + lengthdir_y(mdist1,dir);
+            coords[2]=px + lengthdir_x(mdist2,dir);
+            coords[3]=py + lengthdir_y(mdist2,dir);
+            coords[4]=clamp(global.radar_range/dist,0,1);
+            coords[5]=c_white;
+            coords[6]=blip.name
+            
+            blips[i]=coords;  
         }
- 
-        coords[6]=noone;
-        scr_push_array_1d(blips,coords);
+     
+    }
     
-    }    
+    
+    for ( var i = 0; i &lt; instance_number(obj_gate); i += 1 ){
+     
+        blip = instance_find( obj_gate, i );
+        coords=noone;
+        if( !scr_instance_in_view(blip) ){
+            
+            var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
+            var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y); 
+            var mdist1 = min(dist,100);var mdist2 = min(dist,400);
+            
+            coords[0]=px + lengthdir_x(mdist1,dir);
+            coords[1]=py + lengthdir_y(mdist1,dir);
+            coords[2]=px + lengthdir_x(mdist2,dir);
+            coords[3]=py + lengthdir_y(mdist2,dir);
+            coords[4]=clamp(global.radar_range/dist,0,1);
+            coords[5]=c_blue;
+            coords[6]="GATE";
+            
+            scr_push_array_1d(blips,coords);  
+        }
+     
+    }
+    
+    for ( var i = 0; i &lt; instance_number(obj_npc_ship); i += 1 ){
+     
+        blip = instance_find( obj_npc_ship, i );
+        coords=noone;
+        if(!blip.inView){
+        
+            var dir=point_direction(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);
+            var dist=point_distance(obj_player_ship.x, obj_player_ship.y, blip.x, blip.y);  
+            var mdist1 = min(dist,100);var mdist2 = min(dist,400);
+            
+            coords[0]=px + lengthdir_x(mdist1,dir);
+            coords[1]=py + lengthdir_y(mdist1,dir);
+            coords[2]=px + lengthdir_x(mdist2,dir);
+            coords[3]=py + lengthdir_y(mdist2,dir);
+            coords[4]=clamp(global.radar_range/dist,0,1);
+            switch (blip.disposition)
+            {
+            case DISPOSITION_NEUTRAL:
+                coords[5]=c_aqua;
+                break;
+            case DISPOSITION_HELPFUL:
+                coords[5]=c_lime;
+                break;
+            case DISPOSITION_HOSTILE:
+                coords[5]=c_red
+                break;
+            default:
+                coords[5]=c_gray;
+            }
+     
+            coords[6]=noone;
+            scr_push_array_1d(blips,coords);
+        
+        }    
+    }
+    
+    
+    rotator = noone;
+    rot_angle +=2;
+    rotator[0]= px + lengthdir_x(90,rot_angle);
+    rotator[1]= py + lengthdir_y(90,rot_angle);
+    rotator[2]= px + lengthdir_x(110,rot_angle);
+    rotator[3]= py + lengthdir_y(110,rot_angle);
 }
 
 
-rotator = noone;
-rot_angle +=2;
-rotator[0]= px + lengthdir_x(90,rot_angle);
-rotator[1]= py + lengthdir_y(90,rot_angle);
-rotator[2]= px + lengthdir_x(110,rot_angle);
-rotator[3]= py + lengthdir_y(110,rot_angle);
 </string>
           </argument>
         </arguments>

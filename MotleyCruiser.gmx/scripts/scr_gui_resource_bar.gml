@@ -19,11 +19,12 @@ var btn=args[7];//array. button data
 var init = args[8]// An initial resource quantity. Defaults to 100;
 var drawDir = args[9];//draw box to left or right. Default 1 = right. -1 is left;
 
-if(init<1){
-    return false;// don't draw anything if the unit does not have this resource.
-}
+
 if(init==noone){
     init=100;
+}
+if(init<1){
+    return false;// don't draw anything if the unit does not have this resource.
 }
 if(supply > init){
     supply=init;

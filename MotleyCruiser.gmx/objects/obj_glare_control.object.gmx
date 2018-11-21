@@ -108,11 +108,9 @@ if(instance_exists(obj_room_level)){
           <argument>
             <kind>1</kind>
             <string>/// Glare  render
-if(instance_exists(obj_room_level)){
     if(enabled==1){
         glr_render();
     }
-}
 </string>
           </argument>
         </arguments>

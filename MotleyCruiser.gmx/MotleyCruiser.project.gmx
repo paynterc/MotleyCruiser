@@ -56,6 +56,7 @@
       <sound>sound\snd_explosion_ship</sound>
       <sound>sound\snd_boost_charging</sound>
       <sound>sound\snd_boost_launch</sound>
+      <sound>sound\snd_missile1</sound>
     </sounds>
     <sounds name="_stringbean">
       <sound>sound\snd_beep</sound>
@@ -290,8 +291,8 @@
       <sprite>sprites\spr_ship_en</sprite>
       <sprite>sprites\spr_drone</sprite>
       <sprite>sprites\spr_stars</sprite>
+      <sprite>sprites\spr_laser_red</sprite>
       <sprite>sprites\spr_laser</sprite>
-      <sprite>sprites\sprite417</sprite>
       <sprite>sprites\spr_laser_2</sprite>
       <sprite>sprites\spr_bolt</sprite>
       <sprite>sprites\spr_rail</sprite>
@@ -1461,7 +1462,6 @@
         <object>objects\obj_player_ship</object>
         <object>objects\obj_npc_ship</object>
         <object>objects\obj_landing_ship</object>
-        <object>objects\obj_enemy_ship</object>
         <object>objects\obj_mining_drone</object>
       </objects>
       <object>objects\obj_planet</object>
@@ -1480,7 +1480,6 @@
         <object>objects\obj_bullet_barage</object>
         <object>objects\obj_bullet_rail</object>
       </objects>
-      <object>objects\obj_thruster_flame</object>
       <object>objects\obj_cargo_drop</object>
     </objects>
     <objects name="_inventory">

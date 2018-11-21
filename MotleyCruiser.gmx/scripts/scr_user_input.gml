@@ -139,7 +139,7 @@ if( scr_gui_has_context() ){
             return instance_exists(obj_space_level) && keyboard_check_pressed(ord("B"));
             break;
         case "boost_ship":
-            return instance_exists(obj_space_level) && keyboard_check_pressed(ord("P"));
+            return instance_exists(obj_space_level) && keyboard_check_pressed(vk_space);
             break;
         case "bugout":
             return instance_exists(obj_room_level) && keyboard_check_pressed(ord("M"));

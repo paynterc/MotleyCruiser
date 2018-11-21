@@ -11,6 +11,20 @@
     <event eventtype="0" enumb="0">
       <action>
         <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -37,6 +51,7 @@ angleDiff = 100;
 turn_spd = 7;
 acc_spd_fwd = 3;//acceleration speed forward
 max_spd_fwd=BULLET_BASE_SPEED;
+
 alarm[0]=room_speed * .25;
 </string>
           </argument>
@@ -89,6 +104,34 @@ alarm[0]=room_speed * .25;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Trail
+var d = sprite_get_width(sprite_index)/2;
+var _x = x - lengthdir_x(d, image_angle);
+var _y = y - lengthdir_y(d, image_angle);
+part_type_direction(global.ptcl_trail, image_angle+175, image_angle+185, 0, 0);
+part_particles_create(global.Particles, _x, _y, global.ptcl_trail, 1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -127,6 +170,32 @@ if(target != noone){
 motion_add(image_angle,acc_spd_fwd);
 if(speed &gt; max_spd_fwd){
     speed = max_spd_fwd;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_damager">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(type != other.type){
+    instance_destroy(other);
+    instance_destroy(self);
 }
 </string>
           </argument>

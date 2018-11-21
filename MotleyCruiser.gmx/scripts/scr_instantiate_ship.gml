@@ -5,9 +5,11 @@ SET FACTION
 scr_instatiate_ship()->
     scr_module_modify_stats()->
         ship_data = scr_modules_to_ship_data(ship_data)
+        
+        THEN
 scr_update_ship_data() (for new ship)
 OR
-scr_restore_ship_state() (when loading player ship in new room)
+scr_restore_ship_state() (when loading player ship and fleet in new room)
 
 After instantiating modules and updating ship stats for the first time, I put the stats back into the ship_data  
 using scr_update_ship_data so we get a starting shield and hull amount.
