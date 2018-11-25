@@ -302,19 +302,20 @@ if( gamepad_is_connected(global.pad) ){
           <argument>
             <kind>1</kind>
             <string>/// Scroll
-
-if (keyboard_check_pressed(vk_anykey) == true)
-{
-    switch (keyboard_key)
+if(show){
+    if (keyboard_check_pressed(vk_anykey) == true)
     {
-        case vk_down:
-        scroll = min( scroll + ipp, (alength - min(alength, ipp) ) );
-        break;
-        case vk_up:
-        scroll = max(scroll - ipp, 0);
-        break;
-
-
+        switch (keyboard_key)
+        {
+            case vk_down:
+            scroll = min( scroll + ipp, (alength - min(alength, ipp) ) );
+            break;
+            case vk_up:
+            scroll = max(scroll - ipp, 0);
+            break;
+    
+    
+        }
     }
 }
 </string>

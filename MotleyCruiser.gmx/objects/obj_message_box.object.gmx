@@ -97,6 +97,9 @@ clickable = true;
           <argument>
             <kind>1</kind>
             <string>/// Scroll
+if(!show){
+    exit;
+}
 var alength = array_length_1d(alltext);
 if (keyboard_check_pressed(vk_anykey) == true)
 {

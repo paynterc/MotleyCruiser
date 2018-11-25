@@ -21,9 +21,21 @@ ship[SHIP_TYPE] = real(obj_ship_editor.field_ship_type.txt);
 ship[SHIP_SCAFFOLD_SIZE]=obj_ship_editor.scaffold_size;
 var s_count = instance_number(obj_place_module);
 var module_records = noone;
+var commandCount = 0;
+var moduleData = noone;
+var MP;
 for(var i = 0; i < s_count; i++) {
     var module_obj = instance_find(obj_place_module,i);
+    moduleData = module_obj.module_data;
+    MP = global.module_library[moduleData[I_MODULE_INDEX]];
+    if(MP[MODULE_TYPE]=="command"){
+        commandCount++;
+    }
     module_records = scr_push_array(module_records,module_obj.module_data);        
+}
+if(commandCount>1){
+        show_message("You can not have more than one command module.");
+        exit;
 }
 
 ship[SHIP_MODULES]=module_records;

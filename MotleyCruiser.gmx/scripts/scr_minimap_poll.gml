@@ -6,7 +6,7 @@ Poll the sector to see if any locations should be added to the minimap
 
 with(obj_sun){
     if(!discovered && scr_instance_in_view(id)){
-        discovered = true;
+       discovered = true;
        scr_sector_map_add(x,y,"sun");
     }
 }

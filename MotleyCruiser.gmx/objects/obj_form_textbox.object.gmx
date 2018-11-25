@@ -33,6 +33,7 @@ txt = "";
 can_click = true;
 field_label = "Name";
 font = fnt_menus_med;
+
 alarm[0] = room_speed;
 show=true;
 labelposition="center";//left, right, center
@@ -179,7 +180,8 @@ if(show){
             draw_text(xx,yy, txt);
         }
     }
-    if(labelposition=="right"){
+    if(labelposition=="left"){
+        draw_set_halign(fa_right);
         draw_text(xx - sprite_get_width(sprite_index)/2,yy, field_label);
     }
 }

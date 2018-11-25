@@ -235,13 +235,18 @@
       <sprite>sprites\spr_gun</sprite>
       <sprites name="16">
         <sprite>sprites\spr_armor_16_16_1</sprite>
+        <sprite>sprites\spr_armor_16_16_13</sprite>
+        <sprite>sprites\spr_armor_16_16_14</sprite>
+        <sprite>sprites\spr_armor_16_16_11</sprite>
         <sprite>sprites\spr_armor_16_16_2</sprite>
         <sprite>sprites\spr_armor_16_16_3</sprite>
         <sprite>sprites\spr_armor_16_16_6</sprite>
         <sprite>sprites\spr_armor_16_16_7</sprite>
         <sprite>sprites\spr_armor_16_16_8</sprite>
         <sprite>sprites\spr_armor_16_16_9</sprite>
+        <sprite>sprites\spr_armor_16_16_12</sprite>
         <sprite>sprites\spr_armor_16_32_1</sprite>
+        <sprite>sprites\spr_armor_16_32_2</sprite>
         <sprite>sprites\spr_beam_1</sprite>
         <sprite>sprites\spr_beam_2</sprite>
         <sprite>sprites\spr_booster_16_1</sprite>
@@ -264,6 +269,7 @@
         <sprite>sprites\spr_gun_16_48_1</sprite>
         <sprite>sprites\spr_hellfury</sprite>
         <sprite>sprites\spr_missile_launcher_16_48_1</sprite>
+        <sprite>sprites\spr_platform</sprite>
         <sprite>sprites\spr_railgun</sprite>
         <sprite>sprites\spr_shield_gen_16_16_1</sprite>
         <sprite>sprites\spr_thrust_16_1</sprite>
@@ -271,6 +277,7 @@
         <sprite>sprites\spr_thrust_16_3</sprite>
         <sprite>sprites\spr_thrust_16_4</sprite>
         <sprite>sprites\spr_thrust_lat_16_16_1</sprite>
+        <sprite>sprites\spr_thrust_lat_16_16_2</sprite>
         <sprite>sprites\spr_thrust_lat_32_32_1</sprite>
         <sprite>sprites\spr_thruster_flame</sprite>
         <sprite>sprites\spr_turret_1</sprite>
@@ -281,7 +288,6 @@
       <sprites name="24">
         <sprite>sprites\spr_gun_24_64_2</sprite>
       </sprites>
-      <sprite>sprites\spr_platform</sprite>
       <sprites name="64">
         <sprite>sprites\spr_command_64</sprite>
         <sprite>sprites\spr_passenger_64</sprite>
@@ -292,10 +298,6 @@
       <sprite>sprites\spr_ship_en</sprite>
       <sprite>sprites\spr_drone</sprite>
       <sprite>sprites\spr_stars</sprite>
-      <sprite>sprites\spr_laser_red</sprite>
-      <sprite>sprites\spr_laser</sprite>
-      <sprite>sprites\spr_laser_2</sprite>
-      <sprite>sprites\spr_bolt</sprite>
       <sprite>sprites\spr_rail</sprite>
       <sprite>sprites\spr_explosion</sprite>
       <sprite>sprites\spr_bar</sprite>
@@ -305,9 +307,17 @@
         <sprite>sprites\spr_indicator</sprite>
       </sprites>
       <sprite>sprites\spr_spark</sprite>
-      <sprite>sprites\spr_muzzleflash</sprite>
-      <sprite>sprites\spr_bullet_rail</sprite>
-      <sprite>sprites\spr_missile</sprite>
+      <sprites name="_bullets">
+        <sprite>sprites\spr_muzzleflash</sprite>
+        <sprite>sprites\spr_laser_2</sprite>
+        <sprite>sprites\spr_laser</sprite>
+        <sprite>sprites\spr_bolt</sprite>
+        <sprite>sprites\spr_bullet_rail</sprite>
+        <sprite>sprites\spr_laser_red</sprite>
+        <sprite>sprites\spr_missile</sprite>
+        <sprite>sprites\spr_flak</sprite>
+        <sprite>sprites\spr_bolt_sm</sprite>
+      </sprites>
     </sprites>
     <sprites name="_space_objects">
       <sprite>sprites\spr_moon</sprite>
@@ -521,8 +531,6 @@
     <sprite>sprites\spr_flame_area</sprite>
     <sprite>sprites\spr_exit</sprite>
     <sprite>sprites\spr_exit_inactive</sprite>
-    <sprite>sprites\sprite245</sprite>
-    <sprite>sprites\sprite301</sprite>
     <sprites name="_intro">
       <sprite>sprites\spr_oldgirl</sprite>
       <sprite>sprites\spr_pirateship1</sprite>
@@ -1463,7 +1471,6 @@
         <object>objects\obj_npc_ship</object>
         <object>objects\obj_landing_ship</object>
         <object>objects\obj_mining_drone</object>
-        <object>objects\obj_mining_drone_BACKUP</object>
       </objects>
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
@@ -1476,6 +1483,7 @@
       <objects name="_bullets">
         <object>objects\obj_laser</object>
         <object>objects\obj_bullet_spread</object>
+        <object>objects\obj_bullet_flak</object>
         <object>objects\obj_projectile</object>
         <object>objects\obj_missile_guided</object>
         <object>objects\obj_bullet_barage</object>
@@ -1521,6 +1529,7 @@
     </objects>
     <objects name="_ship_edit">
       <object>objects\obj_ship_editor</object>
+      <object>objects\obj_ship_editor_BACKUP</object>
       <object>objects\obj_menu_module</object>
       <object>objects\obj_place_module</object>
       <object>objects\obj_paintbrush</object>
@@ -1602,7 +1611,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="365">
+  <constants number="366">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -1794,6 +1803,7 @@
     <constant name="MODULE_TYPE">0</constant>
     <constant name="MODULE_XSCALE">4</constant>
     <constant name="MODULE_YSCALE">5</constant>
+    <constant name="MODULE_COMMAND_MOD">1</constant>
     <constant name="MOON_COLOR">3</constant>
     <constant name="MOON_ECON_MOD">11</constant>
     <constant name="MOON_ECON_OFFSET">12</constant>

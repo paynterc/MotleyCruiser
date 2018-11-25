@@ -27,10 +27,16 @@ var bunks=0;
 var cargo=0;
 
 var turn_spd = 0;
-turn_mod = 0;
+
 var max_spd_fwd = 0;
 var max_spd_rvs = 0;
-
+var command_mod = 0;
+// These go directly into the ship object
+// TODO: This isn't good. this script shouldn't be "leaking" variables. 
+// This script is sometimes used without the scr_module_modify_stats step. 
+// I should put these into the data array and then back into the ship object.
+turn_mod = 0;
+boostable=false;
 
 for(var m=0;m<array_length_1d(module_data);m++){
 
@@ -61,6 +67,8 @@ for(var m=0;m<array_length_1d(module_data);m++){
     if(MP[MODULE_TYPE]=="booster"){
         boostable = true;
     }
+    
+    command_mod+=MP[MODULE_COMMAND_MOD]
            
 }
 
@@ -85,8 +93,8 @@ acc_spd_fwd = clamp(acc_spd_fwd,global.ship_min_acc,global.ship_max_acc);
 acc_spd_rvs = clamp(acc_spd_rvs,global.ship_min_acc,global.ship_max_acc);
 
 //turn_spd = global.ship_default_turn_spd + (turn_mod/mass);
-turn_spd = max( 0, BASE_TURN_SPD - (mass/1000) ) + (turn_mod/mass);
-turn_spd = clamp(turn_spd,global.ship_min_turn_spd,global.ship_max_turn_spd);
+turn_spd = max( 1, BASE_TURN_SPD - (mass/1000) ) + (turn_mod/mass);
+//turn_spd = clamp(turn_spd,global.ship_min_turn_spd,global.ship_max_turn_spd);
 
 
 max_spd_fwd = global.ship_max_spd_fwd + acc_spd_fwd;

@@ -47,5 +47,6 @@ module[MODULE_CARGO_MOD]=0;
 module[MODULE_BUNKS_MOD]=0;
 module[MODULE_MORALE_MOD]=0;
 module[MODULE_MASS_MOD]=100;
+module[MODULE_COMMAND_MOD]=0;
 
 return module;

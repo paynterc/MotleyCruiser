@@ -7,6 +7,7 @@ if(is_array(ship_data)){
     Hypothetically you could access everything via ship_data
     but some code had already been written using these variables, so I thought it best to keep
     them. These variables would be accessible in the ship object.
+
     ****/
     hull = ship_data[SHIP_HULL];
     hull_current = hull;

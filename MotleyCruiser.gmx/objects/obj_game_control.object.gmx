@@ -212,7 +212,7 @@ global.planet_room_index_x = noone;
 global.planet_room_index_y = noone;
 global.planet_nextdoor = noone;
 
-// Ship types
+// Ship categorizaion
 enum ship_function {
     trader,
     military,
@@ -221,12 +221,14 @@ enum ship_function {
     courier
 }
 
+// Use for when you only want a ship 
 enum ship_types {
     ship=0,
     drone=1,
     platform=2
 }
 
+// subtypes of ships
 enum ship_class {
     drone=0,
     platform=1,

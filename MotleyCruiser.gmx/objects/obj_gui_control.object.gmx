@@ -171,19 +171,22 @@ if(scr_user_input("toggle_minimap") &amp;&amp; room==rm_space){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check hover status on buttons
-if(eButtons != noone){
-    var guix = device_mouse_x_to_gui(0);
-    var guiy = device_mouse_y_to_gui(0);
-    for(var i = 0; i&lt;array_length_1d(eButtons); i++){
-        thebutton = eButtons[i];
-        if(thebutton[BTN_SHOW]){  
-            xhover = ( guix == median(thebutton[BTN_X], guix, thebutton[BTN_X] + thebutton[BTN_W]) );
-            yhover = ( guiy == median(thebutton[BTN_Y], guiy, thebutton[BTN_Y] + thebutton[BTN_H]) );
-            thebutton[@ 4] = xhover &amp;&amp; yhover;
+            <string>/// Check hover status on resource buttons. These are the food, oxygen, fuel buttons in the space gui.
+if(room==rm_space){
+    if(eButtons != noone){
+        var guix = device_mouse_x_to_gui(0);
+        var guiy = device_mouse_y_to_gui(0);
+        for(var i = 0; i&lt;array_length_1d(eButtons); i++){
+            thebutton = eButtons[i];
+            if(thebutton[BTN_SHOW]){  
+                xhover = ( guix == median(thebutton[BTN_X], guix, thebutton[BTN_X] + thebutton[BTN_W]) );
+                yhover = ( guiy == median(thebutton[BTN_Y], guiy, thebutton[BTN_Y] + thebutton[BTN_H]) );
+                thebutton[@ 4] = xhover &amp;&amp; yhover;
+            }
         }
     }
 }
+
 </string>
           </argument>
         </arguments>

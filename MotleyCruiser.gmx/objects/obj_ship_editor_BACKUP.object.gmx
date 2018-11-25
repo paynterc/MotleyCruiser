@@ -456,79 +456,39 @@ draw_text(16, 16 + (font_size + font_vspc), "guiy: " + string(device_mouse_y_to_
 draw_set_color(c_lime); 
 draw_set_color(c_lime);
 
-var coords, x1, y1, x2, y2, i, x1b, y1b, x2b, y2b;
 
-coords = grid_centers2[0,0];
-x1 = coords[0] - (SCAFF_CELL_SIZE/2);
-y1 = coords[1] - (SCAFF_CELL_SIZE/2);
-x2 = x1 + (SCAFF_CELL_SIZE * scaffold_size);
-y2 = y1 + (SCAFF_CELL_SIZE * scaffold_size);
-draw_rectangle(x1, y1, x2, y2, true);
 
-for(i=0;i&lt;scaffold_size-1;i++){
-    // Draw the verticals
-    x1 = coords[0] + (SCAFF_CELL_SIZE/2) + (SCAFF_CELL_SIZE*i);
-    y1 = coords[1] - (SCAFF_CELL_SIZE/2);
-    x2 = x1;
-    y2 = y1 + (SCAFF_CELL_SIZE * scaffold_size);    
-    draw_line(x1,y1,x2,y2);
-    
-    // Draw the horizontals
-    x1b = coords[0] - (SCAFF_CELL_SIZE/2);
-    y1b = coords[1] + (SCAFF_CELL_SIZE/2) + (SCAFF_CELL_SIZE*i);
-    x2b = x1b + (SCAFF_CELL_SIZE * scaffold_size);
-    y2b = y1b;
-    draw_line(x1b,y1b,x2b,y2b);
+/***
+
+for(var r=0;r&lt;scaffold_size;r++){
+    for(var c=0;c&lt;scaffold_size;c++){
+        
+        var coords = grid_centers2[r,c]
+        var x1 = coords[0] - (SCAFF_CELL_SIZE/2);
+        var y1 = coords[1] - (SCAFF_CELL_SIZE/2);
+        var x2 = x1+SCAFF_CELL_SIZE;
+        var y2 = y1+SCAFF_CELL_SIZE;
+        draw_rectangle(x1, y1, x2, y2, true);
+        //draw_point(coords[0],coords[1]);
+        
+        coords = grid_centers1[r,c]
+        x1 = coords[0] - (SCAFF_CELL_SIZE/2);
+        y1 = coords[1] - (SCAFF_CELL_SIZE/2);
+        x2 = x1+SCAFF_CELL_SIZE;
+        y2 = y1+SCAFF_CELL_SIZE;
+        draw_rectangle(x1, y1, x2, y2, true);
+        //draw_point(coords[0],coords[1]);
+        
+        coords = grid_centers0[r,c]
+        x1 = coords[0] - (SCAFF_CELL_SIZE/2);
+        y1 = coords[1] - (SCAFF_CELL_SIZE/2);
+        x2 = x1+SCAFF_CELL_SIZE;
+        y2 = y1+SCAFF_CELL_SIZE;
+        draw_rectangle(x1, y1, x2, y2, true);     
+        //draw_point(coords[0],coords[1]);
+    }
 }
-
-coords = grid_centers1[0,0];
-x1 = coords[0] - (SCAFF_CELL_SIZE/2);
-y1 = coords[1] - (SCAFF_CELL_SIZE/2);
-x2 = x1 + (SCAFF_CELL_SIZE * scaffold_size);
-y2 = y1 + (SCAFF_CELL_SIZE * scaffold_size);
-draw_rectangle(x1, y1, x2, y2, true);
-
-for(i=0;i&lt;scaffold_size-1;i++){
-    // Draw the verticals
-    x1 = coords[0] + (SCAFF_CELL_SIZE/2) + (SCAFF_CELL_SIZE*i);
-    y1 = coords[1] - (SCAFF_CELL_SIZE/2);
-    x2 = x1;
-    y2 = y1 + (SCAFF_CELL_SIZE * scaffold_size);    
-    draw_line(x1,y1,x2,y2);
-    
-    // Draw the horizontals
-    x1b = coords[0] - (SCAFF_CELL_SIZE/2);
-    y1b = coords[1] + (SCAFF_CELL_SIZE/2) + (SCAFF_CELL_SIZE*i);
-    x2b = x1b + (SCAFF_CELL_SIZE * scaffold_size);
-    y2b = y1b;
-    draw_line(x1b,y1b,x2b,y2b);
-}
-
-
-coords = grid_centers0[0,0];
-x1 = coords[0] - (SCAFF_CELL_SIZE/2);
-y1 = coords[1] - (SCAFF_CELL_SIZE/2);
-x2 = x1 + (SCAFF_CELL_SIZE * scaffold_size);
-y2 = y1 + (SCAFF_CELL_SIZE * scaffold_size);
-draw_rectangle(x1, y1, x2, y2, true);
-
-for(i=0;i&lt;scaffold_size-1;i++){
-    // Draw the verticals
-    x1 = coords[0] + (SCAFF_CELL_SIZE/2) + (SCAFF_CELL_SIZE*i);
-    y1 = coords[1] - (SCAFF_CELL_SIZE/2);
-    x2 = x1;
-    y2 = y1 + (SCAFF_CELL_SIZE * scaffold_size);    
-    draw_line(x1,y1,x2,y2);
-    
-    // Draw the horizontals
-    x1b = coords[0] - (SCAFF_CELL_SIZE/2);
-    y1b = coords[1] + (SCAFF_CELL_SIZE/2) + (SCAFF_CELL_SIZE*i);
-    x2b = x1b + (SCAFF_CELL_SIZE * scaffold_size);
-    y2b = y1b;
-    draw_line(x1b,y1b,x2b,y2b);
-}
-
-
+***/
 // Draw color picker
 for(var r = 0; r&lt;array_height_2d(colors); r++){
     for(c = 0; c &lt; array_length_2d(colors,0); c++){
