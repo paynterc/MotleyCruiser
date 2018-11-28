@@ -81,19 +81,19 @@ if(dragging)
             <string>/// Change orientation
 if(dragging){
 
-    if(scr_user_input("flip-right")){
+    if(scr_user_input(pin.flip_right)){
         image_yscale=1;
     } 
     
-    if(scr_user_input("flip-left")){
+    if(scr_user_input(pin.flip_left)){
         image_yscale=-1;
     }
     
-    if(scr_user_input("flip-up")){
+    if(scr_user_input(pin.flip_up)){
         image_xscale=1;
     }
     
-    if(scr_user_input("flip-down")){
+    if(scr_user_input(pin.flip_down)){
         image_xscale=-1;
     }
 }

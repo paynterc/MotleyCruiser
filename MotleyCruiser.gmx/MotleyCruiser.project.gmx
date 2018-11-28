@@ -935,6 +935,7 @@
     <scripts name="_service">
       <script>scripts\scr_global_update.gml</script>
       <script>scripts\scr_user_input.gml</script>
+      <script>scripts\scr_user_input_BACKUP.gml</script>
       <script>scripts\scr_view_zoom.gml</script>
       <script>scripts\scr_gamepad_detect.gml</script>
       <script>scripts\scr_surface_to_sprite.gml</script>
@@ -1483,6 +1484,7 @@
       <objects name="_bullets">
         <object>objects\obj_laser</object>
         <object>objects\obj_bullet_spread</object>
+        <object>objects\obj_bullet_spread2</object>
         <object>objects\obj_bullet_flak</object>
         <object>objects\obj_projectile</object>
         <object>objects\obj_missile_guided</object>

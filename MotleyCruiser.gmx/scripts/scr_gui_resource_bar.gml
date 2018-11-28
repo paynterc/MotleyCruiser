@@ -57,7 +57,7 @@ if(btn!=noone){
     btn[@ BTN_X]=x1;
     btn[@ BTN_Y]=y1;
     btn[@ BTN_H]=lspc+( strH * 2);
-    if(cc<1 && supply<1){
+    if(cc<1){
         btn[@ BTN_SHOW]=true;
     }else{
         btn[@ BTN_SHOW]=false;

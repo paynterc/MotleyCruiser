@@ -180,6 +180,7 @@ if(mode==MODE_LANDING){
             m_object = modules[m];
             instance_deactivate_object(m_object);
         }
+        var test=1;
         instance_deactivate_object(self);
     }else{   
         alarm[5] = room_speed * .10;

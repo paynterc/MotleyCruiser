@@ -2,25 +2,21 @@
 // scr_user_input(input_name)
 // "fire", "moveleft", "moveup", "interact"
 // Gamepad setup (thresholds, etc.) is done in obj_game_control
-/***
-if(!keyboard_check_pressed(vk_anykey)){
-    return false;
-}
-***/
+
 
 if(room==rm_ship_edit){
 
     switch(argument0){
-        case pin.flip_right:
+        case "flip-right":
             return keyboard_check_pressed(vk_right)
             break;           
-        case pin.flip_left:
+        case "flip-left":
             return keyboard_check_pressed(vk_left);
             break;            
-        case pin.flip_up:
+        case "flip-up":
             return keyboard_check_pressed(vk_up);
             break;
-        case pin.flip_down:
+        case "flip-down":
             return keyboard_check_pressed(vk_down);  
             break;          
     }
@@ -32,13 +28,13 @@ if(room==rm_ship_edit){
 
 switch(argument0){
 
-    case pin.inventory:
+    case "inventory":
         return keyboard_check_pressed(ord("I"));
         break;
-    case pin.mission_log:
+    case "mission_log":
         return keyboard_check_pressed(ord("L"));
         break;
-    case pin.toggle_minimap:
+    case "toggle_minimap":
         return keyboard_check_pressed(ord("M"))
         break; 
 }
@@ -48,32 +44,50 @@ switch(argument0){
 if( scr_gui_has_context() ){
 
     switch(argument0){
-
-        case pin.menu_op_up:
+        case "inventory-drop":
+            return keyboard_check_pressed(ord("D"))
+            && keyboard_check(vk_shift);
+            break;           
+        case "inventory-use":
+            return (keyboard_check_pressed(ord("E")) || gamepad_button_check_released(global.pad, gp_face1));
+            break;            
+        case "inventory_select_next":
+            return gamepad_button_check_released(global.pad,gp_padr);
+            break;
+        case "inventory_select_prev":
+            return gamepad_button_check_released(global.pad,gp_padl);
+            break; 
+        case "inventory_select_down":
+            return gamepad_button_check_released(global.pad,gp_padd);
+            break;       
+        case "inventory_select_up":
+            return gamepad_button_check_released(global.pad,gp_padu);
+            break;
+        case "menu_op_up":
             return gamepad_button_check_released(global.pad,gp_padu);
             break;  
-        case pin.menu_op_down:
+        case "menu_op_down":
             return gamepad_button_check_released(global.pad,gp_padd);
             break;           
-        case pin.menu_op_left:
+        case "menu_op_left":
             return gamepad_button_check_released(global.pad,gp_padl);
             break;  
-        case pin.menu_op_right:
+        case "menu_op_right":
             return gamepad_button_check_released(global.pad,gp_padr);
             break;
                            
-        case pin.menu_op_select:
+        case "menu_op_select":
             return gamepad_button_check_pressed(global.pad, gp_face1) ||  keyboard_check_pressed(vk_enter)
             break;
-        case pin.menu_close:
+        case "menu_close":
             return gamepad_button_check_pressed(global.pad, gp_face2) || keyboard_check_pressed(vk_escape)
             break;          
-        case pin.inventory_page_left:
+        case "inventory_page_left":
             if( gamepad_is_connected(global.pad) ){
                 return gamepad_button_check_released(global.pad,gp_shoulderl);
             }
             break;            
-        case pin.inventory_page_right:
+        case "inventory_page_right":
             if( gamepad_is_connected(global.pad) ){
                 return gamepad_button_check_released(global.pad,gp_shoulderr);
             }
@@ -84,96 +98,155 @@ if( scr_gui_has_context() ){
 
 }else{
     switch(argument0){
-        case pin.fire:
+        case "fire":
             return keyboard_check(vk_space) || mouse_check_button(mb_left) || gamepad_button_value(global.pad, gp_shoulderrb);
             break;
-        case pin.fire_alt:
+        case "fire_alt":
             return mouse_check_button_released(mb_right) || gamepad_button_check_released(global.pad, gp_shoulderr);
             break;
-        case pin.thrust:
+        case "thrust":
             return keyboard_check(ord("W")) || gamepad_axis_value(global.pad, gp_axislv) < 0;
             break;
-        case pin.turn_left:
+        case "turn_left":
             return keyboard_check(ord("A")) || gamepad_axis_value(global.pad, gp_axislh)< 0;
             break;
-        case pin.turn_right:
+        case "turn_right":
             return keyboard_check(ord("D"))|| gamepad_axis_value(global.pad, gp_axislh)> 0;
             break;
-        case pin.thrust_reverse:
+        case "thrust_reverse":
             return keyboard_check(ord("S")) || gamepad_axis_value(global.pad, gp_axislv) > 0;
             break;                          
-        case pin.dock:
+        case "dock":
             return keyboard_check_pressed(ord("D"))
             && instance_exists(obj_space_level);
             break;
-        case pin.hotslot1:
+        case "hotslot1":
             return (keyboard_check_pressed(ord("1")) || gamepad_button_check_pressed(global.pad, gp_face3));
             break;
-        case pin.hotslot2:
+        case "hotslot2":
             return (keyboard_check_pressed(ord("2")) || gamepad_button_check_pressed(global.pad, gp_face4));
             break;
-        case pin.hotslot3:
+        case "hotslot3":
             return (keyboard_check_pressed(ord("3")) || gamepad_button_check_pressed(global.pad, gp_face2));
             break;   
-        case pin.interact:
+        case "interact":
             return ( keyboard_check_pressed(ord("E")) || gamepad_button_check_pressed(global.pad, gp_face1) );
             break;
-        case pin.interact_hold:
+        case "interact_hold":
             return ( keyboard_check(ord("E")) || gamepad_button_check(global.pad, gp_face1) );
             break;
-        case pin.board_ship:
+        case "board_ship":
             return instance_exists(obj_space_level) && keyboard_check_pressed(ord("B"));
             break;
-        case pin.boost_ship:
+        case "boost_ship":
             return instance_exists(obj_space_level) && keyboard_check_pressed(vk_space);
             break;
-        case pin.bugout:
+        case "bugout":
             return instance_exists(obj_room_level) && keyboard_check_pressed(ord("M"));
             break;
-
-        case pin.goto_ship_edit:
+        case "spawn_player_ship":
+            return  
+            keyboard_check_pressed(ord("S")) 
+            && keyboard_check(vk_shift)
+            && instance_exists(obj_space_level)
+            && !instance_exists(obj_player_ship)
+            && debug_mode;
+            break;
+        case "goto_ship_edit":
             return  
             keyboard_check_pressed(ord("E")) 
             && keyboard_check(vk_shift)
             && debug_mode;
             break;
-        case pin.goto_player_edit:
+        case "goto_player_edit":
             return  
             keyboard_check_pressed(ord("P")) 
             && keyboard_check(vk_shift)
             && debug_mode;
+            break;
+        case "goto_space":
+            return  
+            keyboard_check_pressed(ord("W")) 
+            && keyboard_check(vk_shift)
+            && debug_mode;
+            break;
+        case "open_trade_window":
+            return  
+            keyboard_check_released(ord("T")) 
+            && keyboard_check(vk_shift)
+            && debug_mode;
             break;               
-        case pin.pause:
+        case "pause":
             return keyboard_check_pressed(vk_escape);
             break;
-        case pin.fullscreen:
+        case "fullscreen":
             return keyboard_check_pressed(ord("F"))
             && keyboard_check(vk_shift);
             break;
-        case pin.inventory_room:
+        case "invul_mode":
+            return  
+            keyboard_check_pressed(ord("I"))
+            && keyboard_check(vk_shift)
+            && debug_mode;
+            break;
+        case "inventory_room":
             return  
             keyboard_check_pressed(ord("N"))
             && keyboard_check(vk_shift)
+
+            break;         
+        case "auto_capture":
+            return  
+            keyboard_check_pressed(ord("C"))
+            && keyboard_check(vk_shift)
+            && debug_mode;
             break;
-        case pin.test_room:
+        case "grant_credits":
+            return  
+            keyboard_check_pressed(ord("C"))
+            && keyboard_check(vk_shift)
+            && keyboard_check(vk_control)
+            && debug_mode;
+            break;
+        case "test_room":
             return  
             keyboard_check_pressed(ord("T"))
             && keyboard_check(vk_shift)
             && keyboard_check(vk_control)
             && debug_mode;
             break;
-        case pin.draw_weapon:
+        case "goto_shiplevel":
+            return  
+            keyboard_check_pressed(ord("R"))
+            && keyboard_check(vk_shift)
+            && debug_mode;
+            break;
+        case "draw_weapon":
             return  
             keyboard_check_pressed(ord("Q"))
             break;
-        case pin.zoom_out:
+        case "zoom_out":
             return  
             keyboard_check_pressed(vk_subtract)
             break;
-        case pin.zoom_in:
+        case "zoom_in":
             return  
             keyboard_check_pressed(vk_add)
-            break;       
+            break;        
+        case "point_dir":
+            var pdir = noone;
+            if( gamepad_is_connected(global.pad) ){
+                var h_point = gamepad_axis_value(global.pad, gp_axisrh);
+                var v_point = gamepad_axis_value(global.pad, gp_axisrv);
+                if ((h_point != 0) || (v_point != 0))
+                {
+                    pdir = point_direction(0, 0, h_point, v_point);
+                }
+            }else{
+                pdir = point_direction(x,y,mouse_x,mouse_y);
+            }
+            return pdir;
+            break;        
         default:
             return false;
     }

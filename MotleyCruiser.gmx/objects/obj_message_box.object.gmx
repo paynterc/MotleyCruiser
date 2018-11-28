@@ -144,11 +144,11 @@ var can_click = clickable &amp;&amp; show;
 if(can_click){
 
 
-        if( scr_user_input('menu_op_select') ){
+        if( scr_user_input(pin.menu_op_select) ){
             event_user(3);
         }
         
-        if(  scr_user_input('menu_close') ){
+        if(  scr_user_input(pin.menu_close) ){
             event_user(3);
         }
         

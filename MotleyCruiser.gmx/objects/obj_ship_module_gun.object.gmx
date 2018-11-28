@@ -230,6 +230,7 @@ if(turn_spd&gt;0){
           <argument>
             <kind>1</kind>
             <string>/// Set shooting status
+shooting = false;
 if(parent_obj!=noone 
 &amp;&amp; gundata != noone 
 &amp;&amp; parent_obj.energy_current&gt;=gundata[GUN_ENERGY]
@@ -238,14 +239,16 @@ if(parent_obj!=noone
 ){
     if(turn_spd&gt;0){
         if(parent_obj.is_player){
-            shooting = parent_obj.shooting;
+            shooting = parent_obj.shooting
+            &amp;&amp; abs(angleDiff) &lt; 2
+            &amp;&amp; parent_obj.tgt_dist&lt;=gundata[GUN_RANGE];
         }else{
             if(
             (
             parent_obj.mode == MODE_ATTACKING || parent_obj.mode == MODE_DEFENDING)
             &amp;&amp; target!=noone
             &amp;&amp; target.faction != faction
-            &amp;&amp; abs(angleDiff) &lt; 10
+            &amp;&amp; abs(angleDiff) &lt; 2
             &amp;&amp; target.disabled != undefined 
             &amp;&amp; !target.disabled
             &amp;&amp; parent_obj.tgt_dist&lt;=gundata[GUN_RANGE]

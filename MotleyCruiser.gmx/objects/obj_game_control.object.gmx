@@ -453,7 +453,7 @@ scr_display_message("You have died.","scr_game_load,"+string(global.game_loaded)
           <argument>
             <kind>1</kind>
             <string>/// Pause game,  Debug commands
-if(scr_user_input("pause") ){   
+if(scr_user_input(pin.pause) ){   
     if(room!=room_init &amp;&amp; room!=rm_main_menu){
         global.paused = true;
         scr_gui_set_context(obj_pause_menu);
@@ -466,11 +466,11 @@ if(pauseForce){
     }
 }
 
-if(scr_user_input("inventory_room")){
+if(scr_user_input(pin.inventory_room)){
     room_goto(rm_galley);
     exit;
 }
-if(scr_user_input("test_room")){
+if(scr_user_input(pin.test_room)){
     // shift, control, T
     room_goto(rm_bullettest);
     exit;
@@ -481,34 +481,21 @@ if(scr_user_input("test_room")){
 /****
 Debug navigation commands
 ****/
-if(scr_user_input("goto_ship_edit")){
+if(scr_user_input(pin.goto_ship_edit)){
     room_goto(rm_ship_edit);
 }
 
-if(scr_user_input("goto_player_edit")){
+if(scr_user_input(pin.goto_player_edit)){
     room_goto(rm_player_edit);
 }
 
-if(scr_user_input("goto_space")){
-    room_goto("rm_space");
-}
 
-if(scr_user_input("goto_shiplevel")){
-    room_goto(rm_ship_deck_rnd);
-}
-
-if(scr_user_input("fullscreen")){
+if(scr_user_input(pin.fullscreen)){
     if (!window_get_fullscreen()){        
         window_set_fullscreen(true);
     }else{
-        window_set_fullscreen(false);
-     
+        window_set_fullscreen(false);    
     }
-}
-
-if(scr_user_input("grant_credits")){
-    // shift, control, C in debug mode
-    global.credits+=1000;
 }
 
 

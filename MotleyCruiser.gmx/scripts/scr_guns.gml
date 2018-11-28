@@ -154,16 +154,17 @@ gun[GUN_BULLET_OBJECT]=obj_bullet_flak;
 gun[GUN_BULLET_SPEED]=BULLET_BASE_SPEED * .75;
 gun[GUN_RANGE]=600;
 gun[GUN_ENERGY]=10;// 3 bullets at 5 damage each.
-gun[GUN_TURN_SPEED]=5;// turret
+gun[GUN_TURN_SPEED]=25;// turret
 global.guns[13]=gun;
 
 gun = scr_gun();
-gun[GUN_SPEED]=.35;
+gun[GUN_SPEED]=.25;
 gun[GUN_DAMAGE]=1;
 gun[GUN_SPRITE]=spr_gun_16_48_1;
 gun[GUN_BULLET_SPRITE]=spr_bolt_sm;
 gun[GUN_SOUND]=snd_blaster1;
 gun[GUN_ENERGY]=2;// per shot. 1 is default.
-gun[GUN_TURN_SPEED]=5;// turret
+
+gun[GUN_BULLET_OBJECT]=obj_bullet_spread2;
 global.guns[14]=gun;
 

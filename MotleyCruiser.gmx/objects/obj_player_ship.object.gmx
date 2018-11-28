@@ -150,7 +150,7 @@ if(mode==MODE_LANDING){
         exit;
         
     }else if( 
-        scr_user_input("interact_hold") &amp;&amp;
+        scr_user_input(pin.interact_hold) &amp;&amp;
         instance_exists(closest_landable) &amp;&amp; 
         distance_to_object(closest_landable)&lt;interact_range)
     {
@@ -195,7 +195,7 @@ if(mode==MODE_BOARDING){
         exit;
         
     }else if( 
-        scr_user_input("interact_hold") &amp;&amp;
+        scr_user_input(pin.interact_hold) &amp;&amp;
         instance_exists(closest_boardable) &amp;&amp; 
         distance_to_object(closest_boardable)&lt;interact_range){
         alarm[3]=room_speed * board_spd;
@@ -374,7 +374,7 @@ if(global.paused){
         saved_speed = noone;
     }
     
-    if(scr_user_input("fire") &amp;&amp; can_fire){
+    if(scr_user_input(pin.fire) &amp;&amp; can_fire){
         shooting = true;
     }else{
         shooting = false;
@@ -382,13 +382,18 @@ if(global.paused){
     
     
     if(boostable){
-        if(scr_user_input("boost_ship")){
-            scr_play_sound(snd_boost_charging);
-            alarm[7]=room_speed;//boost
+        if(scr_user_input(pin.boost_ship)){
+            if(!boosting){
+                scr_play_sound(snd_boost_charging);
+                alarm[7]=room_speed;//boost
+            }else{
+                scr_play_sound(snd_fail);
+            }
+
         }
     }
  
-    if(scr_user_input("thrust") &amp;&amp; can_move){
+    if(scr_user_input(pin.thrust) &amp;&amp; can_move){
         motion_add(image_angle,acc_spd_fwd);
         thrusting_fwd=true;
         if(speed &gt; max_spd_fwd){
@@ -398,19 +403,11 @@ if(global.paused){
         thrusting_fwd=false;
     }
     
-    /***
-    var pdir = scr_user_input("point_dir");
-    if(pdir!=noone &amp;&amp; can_move){
-        var dif = angle_difference(pdir, image_angle);
-        var trn = turn_a * delta_time;
-        image_angle += median(-1 * trn, dif, trn);
-    }
-    ***/
     if(can_move){
         scr_gradually_rotate_5(id,mouse_x,mouse_y,turn_spd);
     }
     
-    if(scr_user_input("thrust_reverse") &amp;&amp; can_move){
+    if(scr_user_input(pin.thrust_reverse) &amp;&amp; can_move){
         motion_add(image_angle,acc_spd_rvs *-1);
         if(speed &gt; max_spd_rvs){
             speed = max_spd_rvs;//clamp
@@ -420,7 +417,7 @@ if(global.paused){
     
     if(mode==MODE_TRAVELING){
     
-        if( scr_user_input("interact_hold") ){
+        if( scr_user_input(pin.interact_hold) ){
         
             
                 // What is closest
@@ -469,32 +466,6 @@ if(global.paused){
     }// End MODE_TRAVELLING check
     
     
-    /***
-    if(scr_user_input("turn_left")){
-        image_angle += turn_a * delta_time;
-    }
-    
-    if(scr_user_input("turn_right")){
-        image_angle -= turn_a * delta_time;
-    }
-    ***/
-    
-    
-    
-    /***
-    if(scr_user_input("dock")){
-        closest_landable = scr_get_closest(obj_landable,self,1000);
-        if(closest_landable != noone){
-            global.landed_on = closest_landable.global_index;
-            global.landed_type = closest_landable.global_type;
-            global.landed_name = closest_landable.name;
-            global.player_x = x;
-            global.player_y = y;
-            scr_persist_game_state();
-            room_goto(rm_cantina2);
-        }
-    }
-    ***/
     
     // Check for key combo sector jump
     if(debug_mode){
@@ -518,11 +489,6 @@ if(global.paused){
     
 }
 
-
-
-if(scr_user_input("invul_mode")){
-    disabled=true;
-}
 </string>
           </argument>
         </arguments>

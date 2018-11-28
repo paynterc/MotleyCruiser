@@ -15,15 +15,10 @@ var y1 = obj_player_ship.y + lengthdir_y(spawn_dist, spawn_dir);
 var dir=0;
 var dist=200;
 for(var i = 0; i<qty; i++){
-    drone = scr_spawn_npc_ship_single(FACTION_PIRATE, 21, x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir));
+    drone = scr_spawn_npc_ship_single(FACTION_PIRATE, 30, x1+lengthdir_x(dist, dir), y1+lengthdir_y(dist, dir));
     if(drone != noone){
-        drone.shields = global.ship_default_shields / 3;
-        drone.shields_current = drone.shields;
-        drone.hull = global.ship_min_hull;
-        drone.hull_current = drone.hull;
         drone.disposition = DISPOSITION_HOSTILE;
         drone.boardable = false; 
     }
-
     dir += 360/qty;
 }

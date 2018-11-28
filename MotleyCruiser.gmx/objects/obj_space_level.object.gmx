@@ -290,13 +290,11 @@ alarm[0] = room_speed * ship_spawn_rate;
           <argument>
             <kind>1</kind>
             <string>/// Check keyboard input
-if(scr_user_input("spawn_player_ship")){
-    instance_create(view_hport[0]/2,view_wport[0]/2,obj_player_ship);
-}
-if(scr_user_input("zoom_out")){
+
+if(scr_user_input(pin.zoom_out)){
     scr_view_zoom(1,0);
 }
-if(scr_user_input("zoom_in")){
+if(scr_user_input(pin.zoom_in)){
     scr_view_zoom(-1,0);
 }
 </string>

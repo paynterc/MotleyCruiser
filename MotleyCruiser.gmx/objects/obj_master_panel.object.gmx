@@ -104,7 +104,7 @@ if(hacking == 1){
             <kind>1</kind>
             <string>/// Click me
 // No hp check for this guy
-if(scr_user_input("interact") &amp;&amp; hacking==0){
+if(scr_user_input(pin.interact) &amp;&amp; hacking==0){
     if( instance_exists(obj_player) &amp;&amp; distance_to_object(obj_player)&lt;10){
         hacking = 1;
         hacker = obj_player;

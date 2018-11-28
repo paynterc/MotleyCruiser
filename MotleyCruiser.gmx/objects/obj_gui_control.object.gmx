@@ -141,16 +141,18 @@ alarm[1]=room_speed * blinkSpeed;
           <argument>
             <kind>1</kind>
             <string>/// User GUI Commands
-
-if(scr_user_input("toggle_minimap") &amp;&amp; room==rm_space){
-    if(instance_exists(obj_minimap)){
-        if(!obj_minimap.show){
-            scr_gui_set_context(obj_minimap);
-        }else{
-            scr_gui_return_context();
-        }         
+if(room==rm_space){
+    if(scr_user_input(pin.toggle_minimap)){
+        if(instance_exists(obj_minimap)){
+            if(!obj_minimap.show){
+                scr_gui_set_context(obj_minimap);
+            }else{
+                scr_gui_return_context();
+            }         
+        }
     }
 }
+
 </string>
           </argument>
         </arguments>
@@ -214,6 +216,7 @@ var bIdx=noone;
 for(var i=0; i&lt;array_length_1d(eButtons); i++){
     var btn=eButtons[i];
     if(btn[BTN_HOVER] &amp;&amp; btn[BTN_SHOW]){
+        // BTN_SHOW will only be true if the resource is at zero
         bIdx = i;// Return  index of clicked button.
         break;
     }
@@ -353,7 +356,8 @@ if(ds_exists(ui_stack,ds_type_stack)){
           <argument>
             <kind>1</kind>
             <string>/// Draw Space Gui
-// supplies, credits, locatin
+// supplies, credits, location
+
 if(room == rm_space){
     var _xStart = 32;
     var _yStart = 16;
@@ -410,6 +414,7 @@ if(room == rm_space){
 
     
 }
+
 </string>
           </argument>
         </arguments>

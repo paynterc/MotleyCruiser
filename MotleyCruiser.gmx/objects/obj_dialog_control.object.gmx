@@ -129,7 +129,7 @@ global.paused=false;
 /***
 "sent" refers to the npc sending the message.
 ***/
-if(scr_user_input("interact")){
+if(scr_user_input(pin.interact)){
     event_user(0);
 }
 

@@ -99,7 +99,7 @@ if ( mouse_check_button_pressed(mb_left) )
 }
 
 
-if(scr_user_input("menu_close")){
+if(scr_user_input(pin.menu_close)){
     selected = false;
 }
 </string>

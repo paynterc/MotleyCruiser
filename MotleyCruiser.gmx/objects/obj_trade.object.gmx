@@ -154,7 +154,7 @@ if(show){
     
 if( gamepad_is_connected(global.pad) ){
 
-    if(scr_user_input("menu_op_down")){ 
+    if(scr_user_input(pin.menu_op_down)){ 
            
         //r_selected = min(r_selected+1,scroll + ipp - 1);         
         r_selected++;
@@ -166,7 +166,7 @@ if( gamepad_is_connected(global.pad) ){
   
     }
     
-    if(scr_user_input("menu_op_up")){
+    if(scr_user_input(pin.menu_op_up)){
         //r_selected = max(r_selected-1,scroll); 
         r_selected--;
         
@@ -181,7 +181,7 @@ if( gamepad_is_connected(global.pad) ){
     }
     
 
-    if(scr_user_input("menu_op_right")){               
+    if(scr_user_input(pin.menu_op_right)){               
         if(b_selected &lt; 0){
             b_selected = 0;
         }else{
@@ -189,7 +189,7 @@ if( gamepad_is_connected(global.pad) ){
         }       
     }
     
-    if(scr_user_input("menu_op_left")){               
+    if(scr_user_input(pin.menu_op_left)){               
         b_selected = max(b_selected-1,-1);    
     }
     
@@ -205,7 +205,7 @@ if( gamepad_is_connected(global.pad) ){
     
         buttons[r_selected,b_selected] = true;
         
-        if( scr_user_input('menu_op_select') &amp;&amp; !obj_message_box.show ){
+        if( scr_user_input(pin.menu_op_select) &amp;&amp; !obj_message_box.show ){
             
             sold_here = ds_grid_get(tradegrid,6,r_selected);
             in_hold = scr_inv_item_count(ds_grid_get(tradegrid,0,r_selected));

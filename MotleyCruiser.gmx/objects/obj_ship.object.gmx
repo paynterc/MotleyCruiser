@@ -114,15 +114,18 @@ boosting=false;
           <argument>
             <kind>1</kind>
             <string>/// Start boost
-max_spd_fwd_hold=max_spd_fwd;
-acc_spd_fwd_hold=acc_spd_fwd;
-max_spd_fwd *= 3;
-acc_spd_fwd *= 3;
-motion_add(image_angle,acc_spd_fwd);
-boosting=true;
-audio_stop_sound(snd_boost_charging);
-scr_play_sound_at(snd_boost_launch,x,y);
-alarm[8]=room_speed*3;
+if(!boosting){
+    max_spd_fwd_hold=max_spd_fwd;
+    acc_spd_fwd_hold=acc_spd_fwd;
+    max_spd_fwd *= 3;
+    acc_spd_fwd *= 3;
+    motion_add(image_angle,acc_spd_fwd);
+    boosting=true;
+    audio_stop_sound(snd_boost_charging);
+    scr_play_sound_at(snd_boost_launch,x,y);
+    alarm[8]=room_speed*3;
+}
+
 </string>
           </argument>
         </arguments>

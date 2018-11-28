@@ -26,6 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+/****
+Example usage:
+var flash = instance_create(display_get_gui_width()/2,display_get_gui_height()/2,obj_flash_message);
+flash.text = "IT'S A TRAP!";
+flash._color = c_red;
+
+****/
 depth=-10000000;
 text = "TEST";
 _x = display_get_gui_width()/2;

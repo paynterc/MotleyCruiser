@@ -52,11 +52,11 @@ sent = noone;
           <argument>
             <kind>1</kind>
             <string>/// User interact
-if(scr_user_input("interact")){
+if(scr_user_input(pin.interact)){
     event_user(0);
 }
 
-if(scr_user_input("menu_close")){
+if(scr_user_input(pin.menu_close)){
     sent=noone;
     if(instance_exists(obj_flybox)){
         with(obj_flybox){

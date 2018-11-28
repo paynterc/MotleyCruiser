@@ -455,3 +455,13 @@ module[MODULE_COLOR]=c_white;
 module[MODULE_TYPE_INDEX]=14;// Index from gun library, turret library, etc.
 module[MODULE_MASS_MOD]=220;
 scr_push_array_1d(global.module_library, module);
+
+module = scr_ship_module();
+module[MODULE_NAME]="Armor 1K";
+module[MODULE_DESCRIPTION]="Basic armor.";
+module[MODULE_TYPE]="armor";
+module[MODULE_SPRITE_INDEX] = spr_armor_16_32_2;
+module[MODULE_COLOR]=c_white;
+module[MODULE_MASS_MOD]=BASE_ARMOR_MASS;
+module[MODULE_HULL_MOD]=BASE_ARMOR_MOD;
+scr_push_array_1d(global.module_library, module);

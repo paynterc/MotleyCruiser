@@ -114,7 +114,7 @@ name="player";
             <kind>1</kind>
             <string>/// Fire weapon and move
 if(instance_exists(weapon)){
-    weapon.shooting = scr_user_input("fire");
+    weapon.shooting = scr_user_input(pin.fire);
     
     // Adjust run speed
     if(weapon.shooting){
@@ -132,8 +132,8 @@ if( gamepad_is_connected(0) ){
     hspd = gamepad_axis_value(0, gp_axislh) * spd;
     vspd = gamepad_axis_value(0, gp_axislv) * spd;
 }else{
-    hspd = (scr_user_input("turn_right") - scr_user_input("turn_left")) * spd;
-    vspd = (scr_user_input("thrust_reverse") - scr_user_input("thrust")) * spd;
+    hspd = (scr_user_input(pin.turn_right) - scr_user_input(pin.turn_left)) * spd;
+    vspd = (scr_user_input(pin.thrust_reverse) - scr_user_input(pin.thrust)) * spd;
 }
 
 
@@ -178,7 +178,7 @@ if(hspd==0 &amp;&amp; vspd==0){
           <argument>
             <kind>1</kind>
             <string>/// User input. Update weapon
-if(scr_user_input("draw_weapon")){
+if(scr_user_input(pin.draw_weapon)){
     event_user(0);
 }
 
@@ -188,7 +188,17 @@ if(instance_exists(weapon)){
     weapon.y = y;
     weapon.depth=depth -1;
     
-    var pdir = scr_user_input("point_dir");
+    var pdir = noone;
+    if( gamepad_is_connected(global.pad) ){
+        var h_point = gamepad_axis_value(global.pad, gp_axisrh);
+        var v_point = gamepad_axis_value(global.pad, gp_axisrv);
+        if ((h_point != 0) || (v_point != 0))
+        {
+            pdir = point_direction(0, 0, h_point, v_point);
+        }
+    }else{
+        pdir = point_direction(x,y,mouse_x,mouse_y);
+    }
     weapon.image_angle = pdir;
     
     // Slower rotate
@@ -196,7 +206,7 @@ if(instance_exists(weapon)){
     //weapon.image_angle += median(-20, dif, 20);
         
     // Grenade
-    if(scr_user_input("fire_alt")){
+    if(scr_user_input(pin.fire_alt)){
         if(scr_hotbar_count("grenade")&gt;0){
             scr_hotbar_update("grenade",-1);
             var grenade = instance_create(x,y,obj_grenade);
@@ -209,13 +219,13 @@ if(instance_exists(weapon)){
 }
 
 // Heal
-if(scr_user_input("hotslot1")){
+if(scr_user_input(pin.hotslot1)){
     scr_smart_heal();
 }
 
 // Flash
 /****
-if(scr_user_input("hotslot2")){
+if(scr_user_input(pin.hotslot2)){
 
     if(scr_inv_item_count(2)&gt;0){
         scr_inv_item_decrement(2);

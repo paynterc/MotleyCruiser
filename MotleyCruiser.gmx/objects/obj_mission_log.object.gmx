@@ -46,12 +46,10 @@ maxlength= boxwidth - (padding*2);
 maxheight= boxheight - (padding*2);
 maxlines = 20; 
 
-
-
 alltext = noone;
 
-
 event_user(0);
+instance_deactivate_object(id);
 </string>
           </argument>
         </arguments>
@@ -86,7 +84,7 @@ if(global.game_loaded = noone
 }
 
 /***
-if(scr_user_input("mission_log")){
+if(scr_user_input(pin.mission_log)){
     show = !show;
     if(show){
 
@@ -120,9 +118,9 @@ if(show){
         }
     }
     
-    if( scr_user_input("menu_op_up") ){
+    if( scr_user_input(pin.menu_op_up) ){
         scroll = max(scroll - 1, 0);
-    }else if( scr_user_input("menu_op_down") ){    
+    }else if( scr_user_input(pin.menu_op_down) ){    
         scroll = min( scroll + 1, (alength - min(alength, maxlines) ) );
     }
     

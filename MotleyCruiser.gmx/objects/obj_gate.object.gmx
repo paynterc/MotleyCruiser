@@ -100,7 +100,7 @@ if(state=="charging"){
         scr_move_to_sector(global.current_sector_row+spy, global.current_sector_col+spx);
         exit;
     }else if( 
-    scr_user_input("interact_hold") &amp;&amp;
+    scr_user_input(pin.interact_hold) &amp;&amp;
     instance_exists(obj_player_ship) &amp;&amp; 
     distance_to_object(obj_player_ship)&lt;charge_range){
         alarm[1]=room_speed * charge_spd;
@@ -185,7 +185,7 @@ instance_exists(obj_player_ship) &amp;&amp;
 distance_to_object(obj_player_ship)&lt;charge_range
 ){
 
-    if( scr_user_input("interact_hold") ){
+    if( scr_user_input(pin.interact_hold) ){
         state="charging";
         alarm[1]=room_speed * charge_spd;
     }
