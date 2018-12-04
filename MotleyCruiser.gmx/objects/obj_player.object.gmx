@@ -112,7 +112,10 @@ name="player";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Fire weapon and move
+            <string>if(_state!=1){
+    exit;
+}
+/// Fire weapon and move
 if(instance_exists(weapon)){
     weapon.shooting = scr_user_input(pin.fire);
     
@@ -364,12 +367,14 @@ if(global.equipped!=noone){
           <argument>
             <kind>1</kind>
             <string>/// Healthbar
+if(_state==1){
 draw_self();
 /***
 draw_sprite_ext(spr_human_hair1,0,x,y,image_xscale,image_yscale,0,c_white,1);
 draw_sprite_ext(spr_goggles1,0,x,y,image_xscale,image_yscale,0,c_white,1);
 ***/
 draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
+}
 </string>
           </argument>
         </arguments>

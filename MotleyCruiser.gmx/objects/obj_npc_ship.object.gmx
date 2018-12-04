@@ -143,56 +143,6 @@ bark = noone;
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="5">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Landing animation
-if(mode==MODE_LANDING){
-    
-    thrusting_fwd = false;// Hide thruster flames
-    thrusting_rvs = false;
-    modAlpha -=.05;
-    speed = 0;
-    x = target.x;
-    y = target.y;
-    var m_object;
-    for(var m=0; m&lt;array_length_1d(modules); m++){
-        m_object = modules[m];
-        m_object.image_alpha = modAlpha;
-    }
-    
-    if(modAlpha&lt;.10){
-        for(var m=0; m&lt;array_length_1d(modules); m++){
-            m_object = modules[m];
-            instance_deactivate_object(m_object);
-        }
-        var test=1;
-        instance_deactivate_object(self);
-    }else{   
-        alarm[5] = room_speed * .10;
-    }
-
-
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="2" enumb="4">
       <action>
         <libid>1</libid>

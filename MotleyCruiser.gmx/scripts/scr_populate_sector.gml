@@ -11,6 +11,10 @@ if(is_undefined(sector_seed)){
     // We haven't been here yet. Create a new sector and add it to the map.
     randomize();
     ds_map_add(global.galaxy, sector_key, random_get_seed());
+    var ofsetx=irandom(GX_GRIDSIZE)-(GX_GRIDSIZE/2);
+    var ofsety=irandom(GX_GRIDSIZE)-(GX_GRIDSIZE/2);
+    gxMapKey = "x"+string(sx)+"y"+string(sy)+"mapoffsets";
+    ds_map_add(global.galaxy, gxMapKey, string(ofsetx)+","+string(ofsety));
 }else{
     random_set_seed(sector_seed);
 }
@@ -344,6 +348,9 @@ var ppcount = irandom(3)+1;
 for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(global.sector_width),irandom(global.sector_width),FACTION_PIRATE,irandom(3)+1);
 }
+
+var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
+ship_obj.disabled = true;
 
 /*** TEST ITEMS ***/
 //scr_mining_area(player_x + 500,player_y+500);

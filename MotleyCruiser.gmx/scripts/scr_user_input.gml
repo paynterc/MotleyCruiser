@@ -85,7 +85,7 @@ if( scr_gui_has_context() ){
 }else{
     switch(argument0){
         case pin.fire:
-            return keyboard_check(vk_space) || mouse_check_button(mb_left) || gamepad_button_value(global.pad, gp_shoulderrb);
+            return mouse_check_button(mb_left) || gamepad_button_value(global.pad, gp_shoulderrb);
             break;
         case pin.fire_alt:
             return mouse_check_button_released(mb_right) || gamepad_button_check_released(global.pad, gp_shoulderr);
@@ -121,16 +121,12 @@ if( scr_gui_has_context() ){
         case pin.interact_hold:
             return ( keyboard_check(ord("E")) || gamepad_button_check(global.pad, gp_face1) );
             break;
-        case pin.board_ship:
-            return instance_exists(obj_space_level) && keyboard_check_pressed(ord("B"));
-            break;
         case pin.boost_ship:
             return instance_exists(obj_space_level) && keyboard_check_pressed(vk_space);
             break;
         case pin.bugout:
-            return instance_exists(obj_room_level) && keyboard_check_pressed(ord("M"));
+            return instance_exists(obj_room_level) && keyboard_check_pressed(ord("B"));
             break;
-
         case pin.goto_ship_edit:
             return  
             keyboard_check_pressed(ord("E")) 

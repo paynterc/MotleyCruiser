@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>/// Defaults
+_state=1;// 1 active, 0 static (not playable)
+
 is_trader = false;
 is_shipwright = false;
 is_sentient = true;
@@ -435,6 +437,9 @@ alarm[0] = room_speed * r_speed;
           <argument>
             <kind>1</kind>
             <string>/// Check HP
+if(_state!=1){
+    exit;
+}
 if(hp_current&lt;1){
 
     corpse = instance_create(x,y,obj_corpse);
@@ -849,6 +854,9 @@ if(irandom(odds)==odds){
           <argument>
             <kind>1</kind>
             <string>/// Draw self and healthbar
+if(_state!=1){
+    exit;
+}
 draw_self();
 if(showHealth){
     draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);

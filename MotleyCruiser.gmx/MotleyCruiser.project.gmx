@@ -58,6 +58,7 @@
       <sound>sound\snd_boost_charging</sound>
       <sound>sound\snd_boost_launch</sound>
       <sound>sound\snd_missile1</sound>
+      <sound>sound\snd_tpod</sound>
     </sounds>
     <sounds name="_stringbean">
       <sound>sound\snd_beep</sound>
@@ -199,6 +200,10 @@
       <sprite>sprites\spr_turret_base_large</sprite>
       <sprite>sprites\spr_galley_table</sprite>
       <sprite>sprites\spr_torpedo_pod</sprite>
+      <sprite>sprites\spr_torpedo_pod2</sprite>
+      <sprite>sprites\spr_torpedo_pod3</sprite>
+      <sprite>sprites\spr_torpedo_pod4</sprite>
+      <sprite>sprites\sprite427</sprite>
     </sprites>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
@@ -1294,6 +1299,7 @@
         <script>scripts\scr_crew_data_update_hp.gml</script>
         <script>scripts\scr_crew_get_random.gml</script>
         <script>scripts\scr_crew_get_active.gml</script>
+        <script>scripts\scr_crew_instantiate1.gml</script>
       </scripts>
       <script>scripts\scr_gx_make_npc.gml</script>
       <script>scripts\scr_npc_find_kill_target.gml</script>
@@ -1458,6 +1464,8 @@
       <object>objects\obj_player_start</object>
       <object>objects\obj_waypoint</object>
       <object>objects\obj_test_npc</object>
+      <object>objects\obj_torpedo_pod</object>
+      <object>objects\obj_torpedo_pod_BACKUP</object>
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
@@ -1613,7 +1621,7 @@
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
   </rooms>
-  <constants number="366">
+  <constants number="368">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -1980,6 +1988,8 @@
     <constant name="TURRET_TURN_SPEED">0</constant>
     <constant name="VOID">-7</constant>
     <constant name="WALL">-6</constant>
+    <constant name="GX_GRIDSIZE">15</constant>
+    <constant name="GX_MAGNITUDE">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

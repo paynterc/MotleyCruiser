@@ -10,7 +10,7 @@ for(var i=0; i<array_length_1d(global.crew); i++){
     if(!is_array(global.crew[i])){
         continue;
     }
-    npc_data = scr_npc();// Do this in case we've added any extra attributes since the last game save.
+    var npc_data = scr_npc();// Do this in case we've added any extra attributes since the last game save.
     npc_data = scr_fill_array(npc_data,global.crew[i]);
     if(!npc_data[NPC_ACTIVE]) continue;
     thiscrew = instance_create(xx, yy, obj_npc);

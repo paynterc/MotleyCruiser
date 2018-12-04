@@ -177,6 +177,9 @@ global.grid[# px1,py1-2]=FLOOR;
 global.grid[# px1,py1-3]=FLOOR;
 scr_stamp_rectangle(px1-1,py1-6,3,3);
 
+// Stamp a rectangle around the player
+scr_stamp_rectangle(px1-1,py1-1,3,3);
+
 //Make a  door
 door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
 
@@ -200,10 +203,13 @@ px_start = px1 * CELL_WIDTH + (CELL_WIDTH/2);
 py_start = py1 * CELL_HEIGHT + (CELL_HEIGHT/2);
 
 //Create the player
+
 instance_create(px_start, py_start, obj_player);
 with(obj_player){
-    event_user(0);// Weapon out;
+    //event_user(0);// Weapon out;
+    _state=0;
 }
+
 
 //Create crew
 scr_instantiate_all_crew(px_start,py_start);
@@ -211,9 +217,10 @@ for(var i = 0; i &lt; instance_number(obj_npc); i++) {
     this_obj = instance_find(obj_npc,i);
     if(this_obj.crew_index != noone){
         with(this_obj){
-            event_user(0);// draw weapon
+            //event_user(0);// draw weapon
             mode="defend";
             targetMtype = obj_player;// move to this object
+            _state=0;
         }
     }
 }
@@ -236,7 +243,7 @@ for(var yy = 0; yy &lt; height; yy++){
             // Maybe put an enemy here
             var odds = 30;
             
-            if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
+            if(point_distance(ex,ey,obj_core.x,obj_core.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
   
                 var race_index = irandom(array_height_2d(global.races)-1);               
                 //scr_instantiate_enemy(ex,ey,race_index);
@@ -247,7 +254,7 @@ for(var yy = 0; yy &lt; height; yy++){
             
             // Drone?
             odds = 100;          
-            if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
+            if(point_distance(ex,ey,obj_core.x,obj_core.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
             
                 //instance_create(ex,ey,obj_drone);
               
@@ -338,13 +345,13 @@ with(obj_gun){
 
 
 // Start room
-alarm[4] = room_speed * 4;
+alarm[4] = room_speed * 2;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="2" enumb="4">
+    <event eventtype="2" enumb="5">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -369,6 +376,38 @@ alarm[2]=room_speed;
 
 // Spawn drones
 alarm[3] = room_speed * drone_spawn_time;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Start Pod
+var ppod = instance_create(obj_player.x,obj_player.y,obj_torpedo_pod);
+ppod.myCrewIndex = obj_player;
+with(obj_npc){
+    var pod = instance_create(x,y,obj_torpedo_pod);
+    pod.myCrewIndex = id;
+}
+scr_play_sound(snd_explosion_ship);
+
+alarm[5]=room_speed*2;
 </string>
           </argument>
         </arguments>
@@ -509,6 +548,33 @@ if(enemyCount&lt;1){
     background_vspeed[0] = bg_speed * global.speed_mod;
 }else{
     background_vspeed[0] = bg_speed * global.speed_mod;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check for user input
+if(scr_user_input(pin.bugout)){
+    var test=1;
+    // Go back to space without clearing global.ship_boarded.
+    // global.ship_boarded should be set to self-destruct in scr_populate_sector
+    room_goto(rm_space);
 }
 </string>
           </argument>

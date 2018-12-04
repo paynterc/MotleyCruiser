@@ -35,7 +35,7 @@ destroy = false; //Destroy myself
 type=0 //SET THIS TO THE OWNERS FACTION
 bullet_speed = 10;
 range=400;
-gun_sound=snd_laser3;
+gun_sound=snd_hellfury;
 inventory_id=noone;// Refers to inventory item library
 parent_obj = noone;// Who is holding the weapon
 
