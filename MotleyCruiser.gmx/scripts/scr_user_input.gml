@@ -169,7 +169,13 @@ if( scr_gui_has_context() ){
         case pin.zoom_in:
             return  
             keyboard_check_pressed(vk_add)
-            break;       
+            break;
+        case pin.goto_galaxy_map:
+            return  
+            keyboard_check_pressed(ord("N"))
+        case pin.sector_jump:
+            return keyboard_check_pressed(ord("J"))
+            break;                  
         default:
             return false;
     }

@@ -40,17 +40,7 @@ if(p!=noone && p[4]){
         var btns = p[8];
         for(var i = 0; i<array_length_1d(btns); i++){
             var b = btns[i];
-            if(b[BTN_SHOW]){
-                
-                draw_panel(spr_background,0,b[0],b[1],b[2],b[3],16);
-                
-                
-                if(b[4]){
-                    draw_set_color(c_white);
-                }
-                draw_text(b[0]+(b[2]/2),b[1]+(b[3]/2),b[5]);
-                draw_set_color(c_lime);
-            }
+            scr_gui_draw_button(b);
         }
     }
 

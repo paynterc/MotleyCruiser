@@ -173,8 +173,9 @@ if(room==rm_space){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check hover status on resource buttons. These are the food, oxygen, fuel buttons in the space gui.
+            <string>/// Check hover status on buttons.
 if(room==rm_space){
+    // resource buttons. These are the food, oxygen, fuel buttons in the space gui.
     if(eButtons != noone){
         var guix = device_mouse_x_to_gui(0);
         var guiy = device_mouse_y_to_gui(0);
@@ -188,7 +189,6 @@ if(room==rm_space){
         }
     }
 }
-
 </string>
           </argument>
         </arguments>
@@ -213,28 +213,29 @@ if(room==rm_space){
             <kind>1</kind>
             <string>/// See if gui button was pressed.
 var bIdx=noone;
-for(var i=0; i&lt;array_length_1d(eButtons); i++){
-    var btn=eButtons[i];
-    if(btn[BTN_HOVER] &amp;&amp; btn[BTN_SHOW]){
-        // BTN_SHOW will only be true if the resource is at zero
-        bIdx = i;// Return  index of clicked button.
-        break;
+if(room==rm_space){
+    for(var i=0; i&lt;array_length_1d(eButtons); i++){
+        var btn=eButtons[i];
+        if(btn[BTN_HOVER] &amp;&amp; btn[BTN_SHOW]){
+            // BTN_SHOW will only be true if the resource is at zero
+            bIdx = i;// Return  index of clicked button.
+            break;
+        }
+    }
+    if(bIdx==0){
+        // Do fuel dialogue
+        scr_dlg_space_start_no_fuel()
+    }else if(bIdx==1){
+        // Do oxygen dialogue
+        scr_dlg_space_start_no_oxy();
+    }else if(bIdx==2){
+        // Do water dialogue
+        scr_dlg_space_start_no_water();
+    }else if(bIdx==3){
+        // Do food dialogue
+        scr_dlg_space_start_no_food();
     }
 }
-if(bIdx==0){
-    // Do fuel dialogue
-    scr_dlg_space_start_no_fuel()
-}else if(bIdx==1){
-    // Do oxygen dialogue
-    scr_dlg_space_start_no_oxy();
-}else if(bIdx==2){
-    // Do water dialogue
-    scr_dlg_space_start_no_water();
-}else if(bIdx==3){
-    // Do food dialogue
-    scr_dlg_space_start_no_food();
-}
-
 </string>
           </argument>
         </arguments>

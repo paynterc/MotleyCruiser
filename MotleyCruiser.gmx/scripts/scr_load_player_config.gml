@@ -67,5 +67,7 @@ enum pin
     flip_right,
     flip_left,
     flip_up,
-    flip_down
+    flip_down,
+    goto_galaxy_map,
+    sector_jump
 }

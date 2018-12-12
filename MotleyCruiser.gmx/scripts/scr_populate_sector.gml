@@ -5,19 +5,19 @@ var gxindex = 0; // Use this to generate a dsmap index for each location.
 var gxkey;
 
 
-var sector_key = "x"+string(sx)+"y"+string(sy)+"seed";
+var sector_key = "x"+string(sx)+"y"+string(sy)+"~seed";
 var sector_seed = ds_map_find_value(global.galaxy,sector_key);
 if(is_undefined(sector_seed)){
     // We haven't been here yet. Create a new sector and add it to the map.
     randomize();
     ds_map_add(global.galaxy, sector_key, random_get_seed());
-    var ofsetx=irandom(GX_GRIDSIZE)-(GX_GRIDSIZE/2);
-    var ofsety=irandom(GX_GRIDSIZE)-(GX_GRIDSIZE/2);
-    gxMapKey = "x"+string(sx)+"y"+string(sy)+"mapoffsets";
-    ds_map_add(global.galaxy, gxMapKey, string(ofsetx)+","+string(ofsety));
+                
 }else{
     random_set_seed(sector_seed);
 }
+
+
+
 
 // ECONOMY. Just a count of each type of economy in the sector:
 // agriculture, mining, industrial, tech
@@ -200,6 +200,13 @@ if(sx == 0 && sy == 0){
 }
 for(var i=0;i<irandom(5);i++){
     //scr_mining_area(noone,noone);
+}
+
+if(sx==0 && sy==0){
+    scr_gx_make_path(0,0,-1,-1);
+    scr_gx_make_path(0,0,1,0);
+    scr_gx_make_path(1,0,2,0);
+    scr_gx_make_path(-1,-1,-2,-1);
 }
 
 /*********************

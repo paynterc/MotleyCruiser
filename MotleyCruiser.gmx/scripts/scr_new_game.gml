@@ -7,6 +7,7 @@ randomize();
 global.galaxy_seed = random_get_seed();// Call randomize before this
 global.sector_x=0;
 global.sector_y=0;
+global.nav_queue=noone;
 global.sector_economy=noone;
 scr_racial_centers();// random racial map of galaxy
 

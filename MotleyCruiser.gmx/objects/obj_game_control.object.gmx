@@ -98,6 +98,10 @@ global.racial_centers = noone;// set this at new game or game load.
 global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
 global.sector_map = noone;// An array of locations in this sector
 global.rTSize = 5;//Width in sectors of each racial territory
+
+global.nav_queue = noone;//An array to keep track of the sectors we will travel to, as selected on the map
+
+
 /****************************************************************/
 /*                      DYNAMIC PLAYER DATA                     */
 /****************************************************************/
@@ -489,6 +493,11 @@ if(scr_user_input(pin.goto_player_edit)){
     room_goto(rm_player_edit);
 }
 
+if(scr_user_input(pin.goto_galaxy_map)){
+    // shift, control, G
+    room_goto(rm_galaxy_map);
+}
+
 
 if(scr_user_input(pin.fullscreen)){
     if (!window_get_fullscreen()){        
@@ -653,7 +662,6 @@ for(var i=0; i&lt;array_length_1d(global.crew); i++){
         sprite_delete(_sprite_index);
     }
 }
-
 
 </string>
           </argument>

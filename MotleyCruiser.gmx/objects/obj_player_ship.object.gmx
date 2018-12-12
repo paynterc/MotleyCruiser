@@ -145,7 +145,7 @@ if(mode==MODE_LANDING){
         
         // ship_data should now be updated and persisted in the next step.
         scr_persist_game_state();
-        room_goto(rm_cantina2);
+        room_goto(rm_galley);
     
         exit;
         
@@ -369,53 +369,71 @@ if(global.paused){
         speed = 0;
     }
 }else{
+    
+    
     if(saved_speed != noone){
         speed = saved_speed;
         saved_speed = noone;
     }
     
-    if(scr_user_input(pin.fire) &amp;&amp; can_fire){
-        shooting = true;
-    }else{
-        shooting = false;
-    }
-    
-    
-    if(boostable){
-        if(scr_user_input(pin.boost_ship)){
-            if(!boosting){
-                scr_play_sound(snd_boost_charging);
-                alarm[7]=room_speed;//boost
-            }else{
-                scr_play_sound(snd_fail);
-            }
-
-        }
-    }
- 
-    if(scr_user_input(pin.thrust) &amp;&amp; can_move){
-        motion_add(image_angle,acc_spd_fwd);
-        thrusting_fwd=true;
-        if(speed &gt; max_spd_fwd){
-            speed = max_spd_fwd;//clamp
-        }
-    }else{
-        thrusting_fwd=false;
-    }
-    
-    if(can_move){
-        scr_gradually_rotate_5(id,mouse_x,mouse_y,turn_spd);
-    }
-    
-    if(scr_user_input(pin.thrust_reverse) &amp;&amp; can_move){
-        motion_add(image_angle,acc_spd_rvs *-1);
-        if(speed &gt; max_spd_rvs){
-            speed = max_spd_rvs;//clamp
-        }
-    }
-
-    
     if(mode==MODE_TRAVELING){
+    
+        if(scr_user_input(pin.fire) &amp;&amp; can_fire){
+            shooting = true;
+        }else{
+            shooting = false;
+        }
+        
+        
+        if(boostable){
+            if(scr_user_input(pin.boost_ship)){
+                if(!boosting){
+                    scr_play_sound(snd_boost_charging);
+                    alarm[7]=room_speed;//boost
+                }else{
+                    scr_play_sound(snd_fail);
+                }
+    
+            }
+        }
+     
+        if(scr_user_input(pin.thrust) &amp;&amp; can_move){
+            motion_add(image_angle,acc_spd_fwd);
+            thrusting_fwd=true;
+            if(speed &gt; max_spd_fwd){
+                speed = max_spd_fwd;//clamp
+            }
+        }else{
+            thrusting_fwd=false;
+        }
+        
+        if(can_move){
+            scr_gradually_rotate_5(id,mouse_x,mouse_y,turn_spd);
+        }
+        
+        if(scr_user_input(pin.thrust_reverse) &amp;&amp; can_move){
+            motion_add(image_angle,acc_spd_rvs *-1);
+            if(speed &gt; max_spd_rvs){
+                speed = max_spd_rvs;//clamp
+            }
+        }
+        
+        if(scr_user_input(pin.sector_jump) &amp;&amp; !disabled){
+            if(is_array(global.nav_queue) &amp;&amp; array_length_1d(global.nav_queue)&gt;0 ){
+                jumpSector = scr_gx_popfirstnav();
+                scr_play_sound(snd_boost_charging);
+                max_spd_fwd_hold=max_spd_fwd;
+                acc_spd_fwd_hold=acc_spd_fwd;
+                max_spd_fwd *= 3;
+                acc_spd_fwd *= 3;
+                motion_add(image_angle,acc_spd_fwd);
+                mode=MODE_JUMPING;
+                alarm[9]=room_speed*3;                           
+            }
+            
+        }
+    
+    
     
         if( scr_user_input(pin.interact_hold) ){
         

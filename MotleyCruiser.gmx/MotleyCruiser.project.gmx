@@ -560,6 +560,9 @@
     <sprite>sprites\spr_cargo_drop</sprite>
     <sprite>sprites\spr_cargo_drop2</sprite>
     <sprite>sprites\spr_cargo_drop3</sprite>
+    <sprites name="_gxmap">
+      <sprite>sprites\spr_gxpoint</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
@@ -619,10 +622,15 @@
       <script>scripts\scr_update_array_1d.gml</script>
       <script>scripts\scr_fill_array.gml</script>
       <script>scripts\scr_array_remove.gml</script>
+      <script>scripts\scr_array_delete_index.gml</script>
+      <script>scripts\scr_array_delete_last.gml</script>
+      <script>scripts\scr_array_delete_first.gml</script>
       <script>scripts\scr_array_clear_value.gml</script>
       <script>scripts\scr_get_array_1d.gml</script>
+      <script>scripts\scr_array_get_last.gml</script>
       <script>scripts\scr_array.gml</script>
       <script>scripts\scr_in_array.gml</script>
+      <script>scripts\scr_array_match.gml</script>
       <script>scripts\scr_array_size.gml</script>
       <script>scripts\scr_array_nodupes.gml</script>
       <script>scripts\scr_array_onenull.gml</script>
@@ -751,11 +759,20 @@
           <script>scripts\scr_make_loc_index.gml</script>
           <script>scripts\scr_loc_add.gml</script>
         </scripts>
+        <script>scripts\scr_gx_get_by_key.gml</script>
       </scripts>
       <scripts name="_galaxy_map">
         <script>scripts\scr_galaxy_map_add.gml</script>
         <script>scripts\scr_galaxy_map_find_sector.gml</script>
         <script>scripts\scr_sector_map_add.gml</script>
+        <scripts name="nav_map">
+          <script>scripts\scr_gxmap_calcpoint.gml</script>
+          <script>scripts\scr_gx_add_nav_pt.gml</script>
+          <script>scripts\scr_gx_findsister_path.gml</script>
+          <script>scripts\scr_gx_validate_nav_pt.gml</script>
+          <script>scripts\scr_gx_make_path.gml</script>
+          <script>scripts\scr_gx_popfirstnav.gml</script>
+        </scripts>
       </scripts>
       <scripts name="_ships">
         <script>scripts\scr_spawn_npc_ships_ext.gml</script>
@@ -797,6 +814,7 @@
         <script>scripts\scr_gui_button_state.gml</script>
         <script>scripts\scr_gui_button_click.gml</script>
         <script>scripts\scr_gui_set_panel_data.gml</script>
+        <script>scripts\scr_gui_draw_button.gml</script>
         <script>scripts\scr_update_button.gml</script>
         <scripts name="_entity">
           <script>scripts\scr_gui_entity_button.gml</script>
@@ -1009,6 +1027,7 @@
       <script>scripts\scr_rotate_cycle.gml</script>
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
+      <script>scripts\scr_draw_dotted_line.gml</script>
     </scripts>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
@@ -1391,6 +1410,10 @@
     <object>objects\obj_object_pool</object>
     <object>objects\obj_tutorial</object>
     <object>objects\obj_module</object>
+    <objects name="_galaxy_map">
+      <object>objects\obj_galaxy_map</object>
+      <object>objects\obj_gxmap_point</object>
+    </objects>
     <objects name="_personal_weapons">
       <object>objects\obj_gun</object>
       <object>objects\obj_singularity</object>
@@ -1595,6 +1618,8 @@
       <object>objects\obj_dialog_galley</object>
       <object>objects\obj_gal_button_inv</object>
       <object>objects\obj_gal_button_launch</object>
+      <object>objects\obj_galley_button_map</object>
+      <object>objects\obj_galley_button_disembark</object>
     </objects>
     <object>objects\obj_laserbolt</object>
     <object>objects\obj_explosion_OLD</object>
@@ -1620,6 +1645,7 @@
     <room>rooms\rm_planetside</room>
     <room>rooms\rm_bullettest</room>
     <room>rooms\rm_intro</room>
+    <room>rooms\rm_galaxy_map</room>
   </rooms>
   <constants number="368">
     <constant name="ACC_SPR_COLOR">1</constant>
@@ -1988,8 +2014,8 @@
     <constant name="TURRET_TURN_SPEED">0</constant>
     <constant name="VOID">-7</constant>
     <constant name="WALL">-6</constant>
-    <constant name="GX_GRIDSIZE">15</constant>
-    <constant name="GX_MAGNITUDE">1</constant>
+    <constant name="GX_GRIDSIZE">128</constant>
+    <constant name="GX_MAGNITUDE">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

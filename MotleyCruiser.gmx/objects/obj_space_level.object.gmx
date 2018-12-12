@@ -297,6 +297,9 @@ if(scr_user_input(pin.zoom_out)){
 if(scr_user_input(pin.zoom_in)){
     scr_view_zoom(-1,0);
 }
+if(scr_user_input(pin.goto_galaxy_map)){
+    room_goto(rm_galaxy_map);
+}
 </string>
           </argument>
         </arguments>
@@ -358,6 +361,30 @@ if(background_exists(stars)){
       </action>
     </event>
     <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Clear variables
+show_debug_message("start space level");
+room_persistent = true;
+global.landed_on = noone;
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
