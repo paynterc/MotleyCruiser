@@ -24,12 +24,18 @@ if(is_undefined(sector_seed)){
 global.sector_economy = noone;
 global.sector_economy = scr_array(0,0,0,0);// Set all counts to zero.
 global.sector_map=scr_galaxy_map_find_sector(sx,sy);
+global.sector_landable_count=0;
+
 
 var curdepth = 1000;
 
 var c;// count of suns
 var sun, moon, planet, station;// data arrays
 var sun_obj, moon_obj, planet_obj, station_obj;// instantiated objects
+
+/*********************
+RANDOM STUFF HAPPENS HERE. CHANGE IT AT YOU'RE OWN RISK!!!!!!!!
+***************/
 
 if(sx == 0 && sy == 0){
     // Home sector
@@ -57,43 +63,66 @@ if(sx == 0 && sy == 0){
     }
     
     
-    planet = scr_make_planet(sx,sy,gxindex);
-    planet[LOC_TYPE]=GX_PLANET;
+
+    planet = scr_make_moon(sx,sy,gxindex);
+    planet[LOC_TYPE]=GX_MOON;
     planet[LOC_X1]=center_x;
     planet[LOC_Y1]=center_y;
     planet[LOC_W1]=sprite_get_width(spr_planet) * 2;
     planet[LOC_ECONOMY]=CC_AGRICULTURE;
-
+    planet[LOC_TERRAIN]=terrains.forest;
+    planet[LOC_IMAGE_DATA]=scr_planet_imagedata_generator(planet);
+    planet[LOC_DESCRIPTION]=scr_planet_description_generator(planet);
+    
     planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
     planet_obj.data = planet;
-    
-    /***
-    if(!scr_gx_loc_exists(sx,sy,gxindex)){
-        scr_gx_loc_array_to_map(planet);// Insert to global.gx_locations
-    }
-    ***/
     
     with(planet_obj){
         var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
         image_xscale = psize_mod;
         image_yscale = psize_mod;
-        image_blend = planet[LOC_COLOR];
-        image_index = planet[LOC_SPRITE];                  
+        //image_blend = [LOC_COLOR];
+        //image_index = [LOC_SPRITE];                
         depth = curdepth;
         global_index = planet[LOC_INDEX];                  
-        global_type = "planet";
+        global_type = "";
         faction = FACTION_NEUTRAL;
-        var tname = planet[LOC_NAME];
-        name = tname[0];
+        name = planet[LOC_NAME];
+        drawReady=true;
     }
-    global.sector_economy[planet[LOC_ECONOMY]] += 1;
+    
+    /***
+    station = scr_make_station(sx,sy,gxindex);
+    station[LOC_TYPE]=GX_STATION;
+    station[LOC_X1]=center_x;
+    station[LOC_Y1]=center_y;
+    station[LOC_W1]=sprite_get_width(spr_) * 2;
+    station[LOC_ECONOMY]=CC_AGRICULTURE;
+    station[LOC_DESCRIPTION]=scr_station_description_generator(station);
+    station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
+    station_obj.data = station;
+    with(station_obj){
+               
+        depth = curdepth;
+        global_index = station[LOC_INDEX];                  
+        global_type = "station";
+        faction = FACTION_NEUTRAL;
+        name = station[LOC_NAME];
+        event_user(0);// apply vars
+        event_user(1);
+    }
+    global.sector_economy[station[LOC_ECONOMY]] += 1;
+    ***/
+    
+    global.sector_economy[CC_AGRICULTURE] += 1;
+    
     gxindex++;
     
-    //scr_galaxy_map_add(1,1,1);
-    //global.sector_map = ds_map_find_value(global.galaxy_map, string(sx) + "," + string(sy));
+    global.sector_landable_count=1;
     
 }else{
 
+    var mainLandable = false;// We will have one landable place at the center of the map. Keep track of whether we have placed it yet using this variable.
     // Add suns
     c = irandom(3);
     for(var i=0; i<c; i++){
@@ -112,12 +141,18 @@ if(sx == 0 && sy == 0){
     }
     var LL = 3; //landable limit
     var system_landables = irandom(LL);
-    // There won't be planets or moons if there are no suns
+    // There won't be s or moons if there are no suns
     if(c>0){ 
         // Add planets
         c = irandom(system_landables);
         for(var i=0; i<c; i++){
             planet = scr_make_planet(sx,sy,gxindex);
+            if(!mainLandable){
+                mainLandable=true;
+                planet[LOC_X1] = global.sector_width/2;
+                planet[LOC_Y1] = global.sector_width/2;
+            }
+            
             planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
             planet_obj.data = planet;
             
@@ -130,18 +165,17 @@ if(sx == 0 && sy == 0){
             with(planet_obj){
                 var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
                 image_xscale = psize_mod;
-                image_yscale = psize_mod;
-                image_blend = planet[LOC_COLOR];
-                image_index = planet[LOC_SPRITE];                  
+                image_yscale = psize_mod;                  
                 depth = curdepth;
                 global_index = planet[LOC_INDEX];                  
                 global_type = "planet";
                 faction = FACTION_NEUTRAL;
-                var tname = planet[LOC_NAME];
-                name = tname[0];
+                name = planet[LOC_NAME];
+                drawReady=true;
             }
             global.sector_economy[planet[LOC_ECONOMY]] += 1;
             gxindex++;
+            
         }
         
         system_landables-=c;      
@@ -150,6 +184,11 @@ if(sx == 0 && sy == 0){
             c = irandom(system_landables);
             for(var i=0; i<c; i++){
                 moon = scr_make_moon(sx,sy,gxindex);
+                if(!mainLandable){
+                    mainLandable=true;
+                    moon[LOC_X1] = global.sector_width/2;
+                    moon[LOC_Y1] = global.sector_width/2;
+                }
                 moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_moon);
                 moon_obj.data = moon;
                 with(moon_obj){
@@ -162,11 +201,11 @@ if(sx == 0 && sy == 0){
                     global_index = moon[LOC_INDEX];
                     global_type = "moon";
                     faction = FACTION_NEUTRAL;
-                    var tname = moon[LOC_NAME];
-                    name = tname[0];
+                    name = moon[LOC_NAME];
                 }
                 global.sector_economy[moon[LOC_ECONOMY]] += 1;
                 gxindex++;
+                
             }
             system_landables-=c;
         }
@@ -178,10 +217,16 @@ if(sx == 0 && sy == 0){
         var c = irandom(system_landables);
         for(var i=0; i<c; i++){
             station = scr_make_station(sx,sy,gxindex);
+            if(!mainLandable){
+                mainLandable=true;
+                station[LOC_X1] = global.sector_width/2;
+                station[LOC_Y1] = global.sector_width/2;
+            }
             station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
             station_obj.data = station;
             with(station_obj){
-                var ssize_mod = station[LOC_W1] / sprite_get_width(spr_station); 
+                //var ssize_mod = sprite_get_width(spr_station)/station[LOC_W1]; 
+                var ssize_mod = 256/sprite_get_width(spr_station);
                 image_xscale = ssize_mod;
                 image_yscale = ssize_mod;
                 image_blend = station[LOC_COLOR];
@@ -190,14 +235,18 @@ if(sx == 0 && sy == 0){
                 global_index = station[LOC_INDEX];
                 global_type = "station";
                 faction = FACTION_NEUTRAL;
-                var tname = station[LOC_NAME];
-                name = tname[0];
+                name = station[LOC_NAME];
             }
             global.sector_economy[station[LOC_ECONOMY]] += 1;
+            
+                        
             gxindex++;
+            
         }
     }
 }
+global.sector_landable_count = instance_number(obj_landable);
+
 for(var i=0;i<irandom(5);i++){
     //scr_mining_area(noone,noone);
 }
@@ -228,8 +277,9 @@ if(global.player_x!=noone){
     player_y = global.sector_width/2;
 }
 
-
 var player_angle = 0;
+var player_speed = 0;
+var player_mode = MODE_TRAVELING;
 
 if(global.ship_boarded != noone){
     
@@ -250,6 +300,7 @@ if(global.ship_boarded != noone){
         x = ship_data[SHIP_X1];
         y = ship_data[SHIP_Y1];
         image_angle = ship_data[SHIP_ANGLE];
+        direction = image_angle;
         faction = FACTION_PIRATE;
         disposition = DISPOSITION_HOSTILE;
         boardable = false;
@@ -262,19 +313,20 @@ if(global.ship_boarded != noone){
         
     } 
     global.ship_boarded=noone;
-}
-
-
-
-if(global.landed_on != noone && global.landed_type!=noone){
-
+}else if(global.landed_on != noone && global.landed_type!=noone){
 
     global.landed_on = noone;
     global.landed_type = noone;
     
+}else if(global.sector_x != global.last_sector_x || global.sector_y != global.last_sector_y){
+    // We just came from a different sector. Do the entry animation.
+    player_angle = point_direction(global.last_sector_x,global.last_sector_y, global.sector_x,global.sector_y);
+    player_speed = 1000;
+    var entryAngle = point_direction(global.sector_x,global.sector_y, global.last_sector_x,global.last_sector_y);
+    player_x = (global.sector_width/2) + lengthdir_x(5000, entryAngle);
+    player_y = (global.sector_width/2) + lengthdir_y(5000, entryAngle);
+    player_mode = MODE_JUMP_REENTRY;
 }
-
-
 
 
 if(instance_exists(obj_player_ship)){
@@ -282,8 +334,11 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
+        direction = player_angle;
+        speed = player_speed;
         ship_data = global.player_ship;       
         faction = FACTION_PLAYER;
+        mode = player_mode;
         
         if(global.new_ship){
             scr_instantiate_ship();
@@ -293,9 +348,13 @@ if(instance_exists(obj_player_ship)){
         }else{
             scr_instantiate_ship(true);
         }     
+        
+        if(mode==MODE_JUMP_REENTRY){
+            alarm[10]=room_speed*2;
+        }
+        
     }
     
-
 }
 
 //scr_spawn_npc_ship_single(FACTION_PIRATE, 20, player_x+64, player_y+64);
@@ -356,12 +415,14 @@ for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(global.sector_width),irandom(global.sector_width),FACTION_PIRATE,irandom(3)+1);
 }
 
-var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
-ship_obj.disabled = true;
+
 
 /*** TEST ITEMS ***/
 //scr_mining_area(player_x + 500,player_y+500);
 /***
+var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
+ship_obj.disabled = true;
+
 var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
 ship_obj.disabled = true;
 ship_obj.disposition = DISPOSITION_HOSTILE;

@@ -140,7 +140,7 @@ if(name_field.txt != ''){
           <argument>
             <kind>1</kind>
             <string>/// Close GUI panels
-scr_gui_close_all();
+//scr_gui_close_all();
 </string>
           </argument>
         </arguments>

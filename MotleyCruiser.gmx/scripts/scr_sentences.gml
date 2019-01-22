@@ -81,12 +81,38 @@ global.dialogue_sentences[1] = intros_racist_friend;
 var panics = noone;
 
 sentence = scr_define_sentence("We're going to die out here!", "panic", noone, noone);
-panics = scr_push_array(farewells,sentence);
+panics = scr_push_array(panics,sentence);
 
 sentence = scr_define_sentence("Get us back to base!", "panic", noone, noone);
-panics = scr_push_array(farewells,sentence);
+panics = scr_push_array(panics,sentence);
 
 sentence = scr_define_sentence("Everything is getting dark!", "panic", noone, noone);
-panics = scr_push_array(farewells,sentence);
+panics = scr_push_array(panics,sentence);
 
 global.dialogue_sentences[2] = panics;
+
+var tips = noone;
+
+sentence = scr_define_sentence("There are other systems out there. Other worlds. The paths are mostly forgotten but the pirates still know the way.", "tip", noone, noone);
+tips = scr_push_array(tips,sentence);
+
+sentence = scr_define_sentence("Take out enough pirates and you are bound to turn up something valuable. Maybe a map. Maybe treasure.", "tip", noone, noone);
+tips = scr_push_array(tips,sentence);
+
+sentence = scr_define_sentence("Ships can break down out there or run out of fuel. Most will be grateful for help, but some are just traps.", "tip", noone, noone);
+tips = scr_push_array(tips,sentence);
+
+global.dialogue_sentences[3] = tips;
+
+var tips_land = noone;
+sentence = scr_define_sentence("There is another port out there somewhere in this sector, but it's not on any map I know.", "tip_land", noone, noone);
+tips_land = scr_push_array(tips_land,sentence);
+global.dialogue_sentences[4] = tips_land;
+
+var go_aways = noone;
+sentence = scr_define_sentence("I have nothing to say to you.", "go_away", noone, noone);
+sentence = scr_define_sentence("Buzz off.", "go_away", noone, noone);
+sentence = scr_define_sentence("I don't have time for you right now.", "go_away", noone, noone);
+sentence = scr_define_sentence("Don't bother me.", "go_away", noone, noone);
+go_aways = scr_push_array(go_aways,sentence);
+global.dialogue_sentences[5] = go_aways;

@@ -55,6 +55,7 @@ scr_gui_set_context(id);
           <argument>
             <kind>1</kind>
             <string>/// Check hover status on buttons
+//show = true;
 panel_main_menu[4]=show;
 scr_gui_button_state(panel_main_menu);  
 </string>

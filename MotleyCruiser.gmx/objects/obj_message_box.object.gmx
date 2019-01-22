@@ -146,9 +146,7 @@ if(can_click){
 
         if( scr_user_input(pin.menu_op_select) ){
             event_user(3);
-        }
-        
-        if(  scr_user_input(pin.menu_close) ){
+        }else if(  scr_user_input(pin.menu_close) ){
             event_user(3);
         }
         
@@ -188,7 +186,7 @@ if(can_click){
           <argument>
             <kind>1</kind>
             <string>/// Check if button clicked
-if(xhover &amp;&amp; yhover){
+if(show &amp;&amp; clickable &amp;&amp; xhover &amp;&amp; yhover){
     event_user(3); // run script
 }
 </string>

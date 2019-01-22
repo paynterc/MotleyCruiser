@@ -86,7 +86,8 @@ if(instance_exists(obj_player_start)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!populated){
+            <string>/// Populate with crew
+if(!populated){
     populated = true;
     var s_count = instance_number(obj_sentient);
         
@@ -97,23 +98,30 @@ if(instance_exists(obj_player_start)){
         if(sentient.name==noone){
     
             if( is_array(global.crew) &amp;&amp; i&lt;array_length_1d(global.crew)){
-                sentient.active = 1;//Set to active so the placeholder object won't delete itself. See obj_sentient.
+
                 //var npc = scr_make_npc(global.landed_type + "," + string(global.landed_on) + "," + string(global.current_sector_row) + "," + string(global.current_sector_col));
-                var npc = global.crew[i];
+                var npc_data = scr_npc();// Do this in case we've added any extra attributes since the last game save.
+                npc_data = scr_fill_array(npc_data,global.crew[i]);
+                if(!npc_data[NPC_ACTIVE]) continue;
                 
-                sentient.npc_data = npc;
-                with(sentient){
+                
+                thiscrew = instance_create(sentient.x, sentient.y, obj_npc);
+                thiscrew.npc_data = npc_data;
+                with(thiscrew){
                     scr_npc_map_to_object();
+                    if(sprite_exists(npc_data[NPC_SPRITE_TEMP])){
+                        sprite_index = npc_data[NPC_SPRITE_TEMP];
+                    }  
+                    faction = FACTION_PLAYER;      
                 }
 
-                if(npc[NPC_RACE_INDEX]!=5 &amp;&amp; npc[NPC_RACE_INDEX]!=7){
+                if(npc_data[NPC_RACE_INDEX]!=5 &amp;&amp; npc_data[NPC_RACE_INDEX]!=7){
                     // I like Pudnings to move
                     sentient.image_speed = 0;
                 }
                 
-            }else{
-                sentient.active=0
-            }          
+            }
+            sentient.active=0        
     
         }
             

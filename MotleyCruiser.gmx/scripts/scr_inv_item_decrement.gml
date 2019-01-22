@@ -1,4 +1,4 @@
-//scr_inv_item_decrement(id)
+/// scr_inv_item_decrement(id)
 var ID, count;
 ID = argument0;
 var slot = noone;

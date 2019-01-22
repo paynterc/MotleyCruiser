@@ -28,6 +28,7 @@
             <string>/// Defaults
 _state=1;// 1 active, 0 static (not playable)
 
+tip=noone;
 is_trader = false;
 is_shipwright = false;
 is_sentient = true;
@@ -88,6 +89,9 @@ var wp1 = scr_array(x,y);
 waypoints[0]=wp1;
 wpIndex = 0;
 sprite_set=false;//wait a sec before creating the sprite. doing it at create causes problems.
+
+
+
 // GO!!!
 alarm[0] = room_speed * r_speed;
 </string>
@@ -746,7 +750,7 @@ if(weapon==noone &amp;&amp; npc_data!=noone){
     if(faction!=FACTION_PLAYER){
         // Nerf the weapon for npc
         weapon.weaponSpeed = max(.5, weapon.weaponSpeed * 1.5); // slow down fire rate for enemies. lower the number, the faster
-        weapon.bullet_speed = max(round(weapon.bullet_speed/2),3);// Slow down bullets from enemy. higher the faster.
+        //weapon.bullet_speed = max(round(weapon.bullet_speed/2),3);// Slow down bullets from enemy. higher the faster.
         bullet_width = sprite_get_width(weapon.bullet_sprite);
     }else{
         // Put my team on defense

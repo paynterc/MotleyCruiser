@@ -1,5 +1,6 @@
 /// Show or hide a panel. Draw the panel and all of its text and buttons
 //scr_draw_panel(panel_data)
+// panel[4]=show/hide
 
 var args = noone;
 for (var i=0; i<16; i++)

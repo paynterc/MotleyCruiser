@@ -571,7 +571,7 @@ if(enemyCount&lt;1){
             <kind>1</kind>
             <string>/// Check for user input
 if(scr_user_input(pin.bugout)){
-    var test=1;
+
     // Go back to space without clearing global.ship_boarded.
     // global.ship_boarded should be set to self-destruct in scr_populate_sector
     room_goto(rm_space);

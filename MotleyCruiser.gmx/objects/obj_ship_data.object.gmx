@@ -56,6 +56,33 @@ cargo_fuel = 0;
 
 distressBeacon=false;// Are we sending out a distress beacon?
 
+do_increments = (room == rm_space &amp;&amp; !global.paused &amp;&amp; !global.player_dead);
+alarm[7]=room_speed * .5;// Update do_increments
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check if player is active
+do_increments = (room == rm_space &amp;&amp; !global.paused &amp;&amp; !global.player_dead);
+alarm[7]=room_speed * .5;
 </string>
           </argument>
         </arguments>
@@ -80,7 +107,7 @@ distressBeacon=false;// Are we sending out a distress beacon?
             <kind>1</kind>
             <string>/// No air damage
 if(global.supply_oxygen&lt;1){
-    if(room==rm_space &amp;&amp; !global.paused){
+    if(do_increments){
         scr_crew_bark("I can't breath!");
         scr_ai_bark("The crew is taking damage. Without oxygen they could die.");
         // MORE DAMAGE STUFF
@@ -114,7 +141,7 @@ if(global.supply_oxygen&lt;1){
             <kind>1</kind>
             <string>/// No water damage
 if(global.supply_water&lt;1){
-    if(room==rm_space &amp;&amp; !global.paused){
+    if(do_increments){
         scr_crew_bark("I'm so thirsty and the engines need water! Go back to base and get us some water!");
         scr_ai_bark("The crew is taking damage.");
         scr_crew_data_update_hp(-2);
@@ -147,7 +174,7 @@ if(global.supply_water&lt;1){
             <string>/// No food damage
 // crew takes damage, decline in morale, consequences
 if(global.supply_food&lt;1){
-    if(room==rm_space &amp;&amp; !global.paused ){
+    if(do_increments){
         scr_crew_bark("We're going to starve! Go back to base and get us some food!");
         scr_ai_bark("The crew is taking damage. Without food they could die.");
         scr_crew_data_update_hp(-2);
@@ -179,7 +206,7 @@ if(global.supply_food&lt;1){
           <argument>
             <kind>1</kind>
             <string>/// Increment oxygen
-if(room == rm_space &amp;&amp; !global.paused){
+if(do_increments){
     global.supply_oxygen -= inc_oxygen;
     scr_cargo_update_oxygen();
 }
@@ -208,7 +235,7 @@ alarm[3]=room_speed *  (day / time_oxygen);//
           <argument>
             <kind>1</kind>
             <string>/// Increment fuel
-if(room == rm_space &amp;&amp; !global.paused){
+if(do_increments){
     
     if(instance_exists(obj_player_ship)){
         /***
@@ -246,12 +273,11 @@ alarm[2]=room_speed *  (day / time_fuel);//
           <argument>
             <kind>1</kind>
             <string>/// Increment water
-if(!global.paused){
-    if(room == rm_space){
+if(do_increments){
+
         global.supply_water -= inc_water;
         scr_cargo_update_water();
-    }
-    
+
 }
 alarm[1]=room_speed *  (day / time_water);//
 </string>
@@ -277,12 +303,11 @@ alarm[1]=room_speed *  (day / time_water);//
           <argument>
             <kind>1</kind>
             <string>/// Increment food
-if(!global.paused){
-    if(room == rm_space){
-        global.supply_food -= inc_food;
-        scr_cargo_update_food();
-    }
-    
+if(do_increments){
+
+    global.supply_food -= inc_food;
+    scr_cargo_update_food();
+
 }
 
 alarm[0]=room_speed * (day / time_food);//food 3 times a day
@@ -309,11 +334,13 @@ alarm[0]=room_speed * (day / time_food);//food 3 times a day
           <argument>
             <kind>1</kind>
             <string>/// Out of fuel
-scr_crew_bark("We're out of fuel.");
-if(instance_exists(obj_player_ship)){
-    with(obj_player_ship){
-        disabled=true;
-        //scr_ev_outoffuel();
+if(do_increments){
+    scr_crew_bark("We're out of fuel.");
+    if(instance_exists(obj_player_ship)){
+        with(obj_player_ship){
+            disabled=true;
+            //scr_ev_outoffuel();
+        }
     }
 }
 </string>
@@ -339,8 +366,10 @@ if(instance_exists(obj_player_ship)){
           <argument>
             <kind>1</kind>
             <string>/// Out of oxygen
-scr_crew_bark("We're out of oxygen.");
-alarm[6]=room_speed*day;
+if(do_increments){
+    scr_crew_bark("We're out of oxygen.");
+    alarm[6]=room_speed*day;
+}
 </string>
           </argument>
         </arguments>
@@ -364,8 +393,10 @@ alarm[6]=room_speed*day;
           <argument>
             <kind>1</kind>
             <string>/// Out of water
+if(do_increments){
 scr_crew_bark("We're out of water.");
 alarm[5]=room_speed*day;
+}
 </string>
           </argument>
         </arguments>
@@ -389,8 +420,10 @@ alarm[5]=room_speed*day;
           <argument>
             <kind>1</kind>
             <string>/// Out of food
-scr_crew_bark("We're out of food.");
-alarm[4]=room_speed*day;
+if(do_increments){
+    scr_crew_bark("We're out of food.");
+    alarm[4]=room_speed*day;
+}
 </string>
           </argument>
         </arguments>

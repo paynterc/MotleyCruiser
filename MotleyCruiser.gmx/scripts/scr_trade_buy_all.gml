@@ -12,7 +12,7 @@ if(price<=global.credits){
 
     var result = scr_cargo_add(item_id,1);// result will be the amount that would not fit in cargo. probably zero.
     if(result!=0){
-        scr_display_message("You don't have any free cargo space.","");
+        scr_display_message("You don't have any free cargo space.",noone);
         return false;
     }else{
         global.credits-=price;
@@ -30,6 +30,6 @@ if(price<=global.credits){
 
 }else{
     //show_message("You do not have enough credits.");
-    scr_display_message("You do not have enough credits.","");
+    scr_display_message("You do not have enough credits.",noone);
 }
 

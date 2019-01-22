@@ -50,7 +50,6 @@ if(is_array(sectorPathsStart)){
 }
 
 
-var test = 1;
 
 /*** Maybe we won't make a return path automatically. I don't know, could be interesting. Be sure to add validation like above. ***/
 if(reverse){

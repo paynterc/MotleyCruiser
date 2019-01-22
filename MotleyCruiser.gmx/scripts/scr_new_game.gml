@@ -1,4 +1,6 @@
 ///Build new game data
+room_set_persistent(rm_space,false);
+
 scr_new_game_defaults(); // Clear game variables
 
 scr_clear_galaxy();//Empty the galaxy ds_map
@@ -11,7 +13,7 @@ global.nav_queue=noone;
 global.sector_economy=noone;
 scr_racial_centers();// random racial map of galaxy
 
-global.player_ship = global.ship_library[44];//15 DEFAULT_START_SHIP is little red ship
+global.player_ship = global.ship_library[15];//15 DEFAULT_START_SHIP is little red ship
 global.player_ship = scr_modules_to_ship_data(global.player_ship);
 global.new_ship=true;
 with(obj_ship_data){
@@ -21,7 +23,7 @@ with(obj_ship_data){
 inventory_clear();
 ds_map_clear(global.cargo_list);
 
-//scr_inv_item_add(55,1);//sword
+scr_inv_item_add(59,3);//star maps
 
 // Player Equipment
 global.equipped = noone;

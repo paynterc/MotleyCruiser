@@ -344,6 +344,17 @@ if(!populated)
             npcObject.is_shipwright = true;
             continue;
         }
+        var giveTip = 3;
+        if(irandom(giveTip)==giveTip){
+            
+            var landTip = 3;
+            if(global.sector_landable_count&gt;1 &amp;&amp; irandom(landTip)==landTip){
+               npcObject.tip = scr_random_sentence(4); 
+            }else{
+                npcObject.tip = scr_random_sentence(3);
+            }
+                     
+        }
 
 
             

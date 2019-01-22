@@ -8,6 +8,7 @@ if(global.game_loaded!=noone){
         event_user(0);
     }
 }else{
+    scr_rm_persistence();
     room_goto(rm_main_menu);
 }
 

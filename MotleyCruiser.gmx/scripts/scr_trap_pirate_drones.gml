@@ -14,6 +14,7 @@ with(closest_boardable){
     disabled = false;
     disposition = DISPOSITION_HOSTILE;
     faction = FACTION_PIRATE;
+    boarding_script = "scr_board_ship";// Now you can board it if you actually disable it.
 }
 
 scr_crew_bark("It's a trap!");

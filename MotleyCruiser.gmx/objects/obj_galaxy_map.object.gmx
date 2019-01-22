@@ -34,6 +34,13 @@ view_yview[0]=0;
 view_wview[0] = view_wview[0] * GX_MAGNITUDE;
 view_hview[0] = view_hview[0] * GX_MAGNITUDE;
 
+
+// Add the "add path" button
+btn_addpath = instance_create(32,gui_height-64-32,obj_btn_addpath);
+with(btn_addpath){
+    event_user(0);
+}
+
 // Limit the distance the view can move
 vLimitTop=0;
 vLimitBtm=0;
@@ -71,155 +78,7 @@ ty1=0;
 ty2=0;
 ty3=0;
 
-
-// Iterate over global.galaxy_map for system locations
-points=noone;
-paths=noone;// An array of points to draw lines. array(0=&gt;[x1,y1,x2,y2],1=&gt;[x1,y1,x2,y2])
-pathsSelected=noone;// An array of selected nav routes to draw lines of second color
-var gxX;
-var gxY;
-var gxPts;
-var oSets;
-var size = ds_map_size(global.galaxy);
-var key = ds_map_find_first(global.galaxy);
-var keyArray = noone;
-ctrX=0;
-ctrY=0;
-var pointObj;
-var ptX=0;
-var ptY=0;
-var pathDataStore=noone;
-
-for (var i = 0; i &lt; size; i++;)
-{
-    keyArray= scr_push_array(keyArray,key);
-    gxX=real(string_copy(key, 2, string_pos("y",key)-2 ));// Galaxy X
-    gxY=real(string_copy(key, string_pos("y",key)+1, string_pos("~",key)-string_pos("y",key)-1 ));// Galaxy Y
-    if( string_pos("mapoffsets",key) != 0)
-    {
-
-        oSets = scr_str_split(ds_map_find_value(global.galaxy,key),",");
-        gxPts = scr_array(real(gxX),real(gxY),real(oSets[0]),real(oSets[1]));
-        
-        ptX = scr_gxmap_calcpoint(gxPts[0],gxPts[2]);
-        ptY = scr_gxmap_calcpoint(gxPts[1],gxPts[3]);
-        points = scr_push_array(points,scr_array(ptX,ptY));
-        var pointObj = instance_create(ptX,ptY,obj_gxmap_point);
-        pointObj.gx=gxX;
-        pointObj.gy=gxY;
-        
-        
-        // Limit view
-        if(!vTSet){
-            vTSet=true;
-            vLimitTop = ptY;
-        }
-        if(!vBSet){
-            vBSet=true;
-            vLimitBtm = ptY;
-        }
-        if(!vLSet){
-            vLSet=true;
-            vLimitLft = ptX;
-        }        
-        if(!vRSet){
-            vRSet=true;
-            vLimitRgt = ptX;
-        }
-              
-        if(ptX&gt;vLimitRgt){
-            vLimitRgt = ptX;
-        }else if(ptX &lt; vLimitLft){
-            vLimitLft = ptX;           
-        }
-        
-        if(ptY&gt;vLimitBtm){
-            vLimitBtm = ptY;
-        }else if(ptY &lt; vLimitTop){
-            vLimitTop = ptY;           
-        }
-        
-        // points = [gx,gy,oSetx,oSety]
-        if(real(gxX)==global.sector_x &amp;&amp; real(gxY)== global.sector_y ){
-            
-            // This is the sector where we are currently. Center the view here
-            view_xview[0]=ptX-(view_wview[0]/2);
-            view_yview[0]=ptY-(view_hview[0]/2);
-            
-            // Update the point object with a flag
-            pointObj.is_current=true;
-            
-            // Draw a special circle at this location
-            ctrX=ptX;
-            ctrY=ptY;
-                     
-            // Set up the triangle marker
-            tx1=ptX;
-            tx2=ptX-4*GX_MAGNITUDE;
-            tx3=ptX+4*GX_MAGNITUDE;
-            ty1=ptY+(8*GX_MAGNITUDE);
-            ty2=ty1+(4*GX_MAGNITUDE);
-            ty3=ty2;          
-                 
-        }
-                       
-    }
-    
-    
-    if( string_pos("paths",key) != 0)
-    {
-
-
-        // Calculate the paths leading from this sector. [x1,y1,x2,y2,false]. The last index will be true if there is a return path
-        var pathData = ds_map_find_value(global.galaxy,key);// Should be an array of sector coordinates like ["0,1","0,-1","-1,-1"]
-        if(is_array(pathData)){
-        
-            var newPStore = scr_array(scr_array(gxX,gxY),pathData);
-            pathDataStore = scr_push_array(pathDataStore,newPStore);
-            
-            // Get the offsets for whatever sector these paths belong to. This would be contained in the key.
-            var oSetString = scr_gx_get_by_key(gxX,gxY,"mapoffsets");
-
-            if(!is_undefined(oSetString)){
-                oSets = scr_str_split(oSetString,","); 
-                
-                var x1= scr_gxmap_calcpoint(gxX,oSets[0]);
-                var y1 = scr_gxmap_calcpoint(gxY,oSets[1]);
-                
-                // Now go through and get the map offsets for each sector in the path array
-                var oSetString2,oSets2,pth,x2,y2;
-                for(var aa=0; aa&lt;array_length_1d(pathData); aa++){
-                    pth = scr_str_split(pathData[aa],",");
-                    oSetString2=scr_gx_get_by_key(pth[0],pth[1],"mapoffsets");
-                    if(!is_undefined(oSetString2)){
-                        oSets2 = scr_str_split(oSetString2,",");           
-                        x2 = scr_gxmap_calcpoint( real(pth[0]), real(oSets2[0]) );
-                        y2 = scr_gxmap_calcpoint( real(pth[1]), real(oSets2[1]) );
-                        
-                        paths = scr_push_array(paths,scr_array(x1,y1,x2,y2,false));
-                    }
-                    
-                }
-                
-            }
-    
-        }
-       
-    }
-    
-    key = ds_map_find_next(global.galaxy, key);
-
-}
-
-// Flag paths that have return paths
-var pLength = array_length_1d(paths);
-var pathsCopy = noone;
-pathsCopy[0]=noone;
-array_copy(pathsCopy,0,paths,0,pLength);
-for(var i=0; i&lt;array_length_1d(paths);i++){
-    var thisPath = paths[i];
-    scr_gx_findsister_path(thisPath,pathsCopy);
-}
+event_user(1);// Update map data
 
 
 // Gui Buttons
@@ -349,6 +208,191 @@ if(bIdx==0){
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update map data
+
+// Iterate over global.galaxy_map for system locations
+with(obj_gxmap_point){
+    instance_destroy();
+}
+points=noone;
+paths=noone;// An array pathsSelectedof points to draw lines. array(0=&gt;[x1,y1,x2,y2],1=&gt;[x1,y1,x2,y2])
+pathsSelected=noone;// An array of selected nav routes to draw lines of second color
+var gxX;
+var gxY;
+var gxPts;
+var oSets;
+var size = ds_map_size(global.galaxy);
+var key = ds_map_find_first(global.galaxy);
+var keyArray = noone;
+ctrX=0;
+ctrY=0;
+var pointObj;
+var ptX=0;
+var ptY=0;
+var pathDataStore=noone;
+show_debug_message("START READING MAP");
+for (var i = 0; i &lt; size; i++;)
+{
+    keyArray= scr_push_array(keyArray,key);
+    gxX=real(string_copy(key, 2, string_pos("y",key)-2 ));// Galaxy X
+    gxY=real(string_copy(key, string_pos("y",key)+1, string_pos("~",key)-string_pos("y",key)-1 ));// Galaxy Y
+    if( string_pos("mapoffsets",key) != 0)
+    {
+        show_debug_message("GX Map offsets: " + string(gxX) + ", " +string(gxY));
+        oSets = scr_str_split(ds_map_find_value(global.galaxy,key),",");
+        gxPts = scr_array(real(gxX),real(gxY),real(oSets[0]),real(oSets[1]));
+        
+        ptX = scr_gxmap_calcpoint(gxPts[0],gxPts[2]);
+        ptY = scr_gxmap_calcpoint(gxPts[1],gxPts[3]);
+                          
+        points = scr_push_array(points,scr_array(ptX,ptY));
+        
+        pointObj = instance_create(ptX,ptY,obj_gxmap_point);
+        pointObj.gx=gxX;
+        pointObj.gy=gxY;
+
+        
+        
+        // Limit view
+        if(!vTSet){
+            vTSet=true;
+            vLimitTop = ptY;
+        }
+        if(!vBSet){
+            vBSet=true;
+            vLimitBtm = ptY;
+        }
+        if(!vLSet){
+            vLSet=true;
+            vLimitLft = ptX;
+        }        
+        if(!vRSet){
+            vRSet=true;
+            vLimitRgt = ptX;
+        }
+              
+        if(ptX&gt;vLimitRgt){
+            vLimitRgt = ptX;
+        }else if(ptX &lt; vLimitLft){
+            vLimitLft = ptX;           
+        }
+        
+        if(ptY&gt;vLimitBtm){
+            vLimitBtm = ptY;
+        }else if(ptY &lt; vLimitTop){
+            vLimitTop = ptY;           
+        }
+        
+        // points = [gx,gy,oSetx,oSety]
+        if(real(gxX)==global.sector_x &amp;&amp; real(gxY)== global.sector_y ){
+            
+            // This is the sector where we are currently. Center the view here
+            view_xview[0]=ptX-(view_wview[0]/2);
+            view_yview[0]=ptY-(view_hview[0]/2);
+            
+            // Update the point object with a flag
+            if(pointObj!=noone){
+                pointObj.is_current=true;
+            }
+            
+            
+            // Draw a special circle at this location
+            ctrX=ptX;
+            ctrY=ptY;
+                     
+            // Set up the triangle marker
+            tx1=ptX;
+            tx2=ptX-4*GX_MAGNITUDE;
+            tx3=ptX+4*GX_MAGNITUDE;
+            ty1=ptY+(8*GX_MAGNITUDE);
+            ty2=ty1+(4*GX_MAGNITUDE);
+            ty3=ty2;          
+                 
+        }
+                       
+    }
+    
+    
+    if( string_pos("paths",key) != 0)
+    {
+
+
+        // Calculate the paths leading from this sector. [x1,y1,x2,y2,false]. The last index will be true if there is a return path
+        var pathData = ds_map_find_value(global.galaxy,key);// Should be an array of sector coordinates like ["0,1","0,-1","-1,-1"]
+        if(is_array(pathData)){
+        
+            var newPStore = scr_array(scr_array(gxX,gxY),pathData);
+            pathDataStore = scr_push_array(pathDataStore,newPStore);
+            
+            // Get the offsets for whatever sector these paths belong to. This would be contained in the key.
+            var oSetString = scr_gx_get_by_key(gxX,gxY,"mapoffsets");
+
+            if(!is_undefined(oSetString)){
+                oSets = scr_str_split(oSetString,","); 
+                
+                var x1= scr_gxmap_calcpoint(gxX,oSets[0]);
+                var y1 = scr_gxmap_calcpoint(gxY,oSets[1]);
+                
+                // Now go through and get the map offsets for each sector in the path array
+                var oSetString2,oSets2,pth,x2,y2;
+                for(var aa=0; aa&lt;array_length_1d(pathData); aa++){
+                    pth = scr_str_split(pathData[aa],",");
+                    oSetString2=scr_gx_get_by_key(pth[0],pth[1],"mapoffsets");
+                    if(!is_undefined(oSetString2)){
+                        oSets2 = scr_str_split(oSetString2,",");           
+                        x2 = scr_gxmap_calcpoint( real(pth[0]), real(oSets2[0]) );
+                        y2 = scr_gxmap_calcpoint( real(pth[1]), real(oSets2[1]) );
+                        
+                        paths = scr_push_array(paths,scr_array(x1,y1,x2,y2,false));
+                    }
+                    
+                }
+                
+            }
+    
+        }
+       
+    }
+    
+    key = ds_map_find_next(global.galaxy, key);
+
+}
+show_debug_message("COMPLETED READING MAP");
+
+// Flag paths that have return paths
+if(is_array(paths)){
+    var pLength = array_length_1d(paths);
+    var pathsCopy = noone;
+    pathsCopy[0]=noone;
+    array_copy(pathsCopy,0,paths,0,pLength);
+    for(var i=0; i&lt;array_length_1d(paths);i++){
+        var thisPath = paths[i];
+        scr_gx_findsister_path(thisPath,pathsCopy);
+    }
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
@@ -428,6 +472,10 @@ if(is_array(global.nav_queue))
         }
     }  
 }
+
+if(debug_mode){
+    draw_text(gui_width-128,gui_height-32,"paths:" + string(array_length_1d(paths)));
+}
 </string>
           </argument>
         </arguments>
@@ -456,6 +504,7 @@ if(is_array(mButtons)){
         scr_gui_draw_button(btn);
     }  
 }
+
 </string>
           </argument>
         </arguments>

@@ -1,7 +1,7 @@
 /// scr_board_ship()
 // Run this script by default when a user attempts to board a disabled ship
 // Requires a closest_boardable variable to be set in the obj_player_ship
-
+room_persistent = false;// unpersist the space room
 global.ship_boarded = closest_boardable.ship_data;
 global.ship_boarded[SHIP_X1] = closest_boardable.x;
 global.ship_boarded[SHIP_Y1] = closest_boardable.y;

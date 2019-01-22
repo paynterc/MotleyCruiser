@@ -27,11 +27,14 @@ map[LOC_SPRITE]=floor(random(sprite_get_number(spr_station)));
 map[LOC_SECTOR]=sector;
 map[LOC_NPCS] = noone;
 map[LOC_INDEX]=scr_make_loc_index(argument0,argument1,argument2);
-var name = totro_plus(1,4,1,1,0);
-map[LOC_NAME] = name;
-map[LOC_NAME_1] = name[0];
+var cmnName = scr_planet_name_generator();
+show_debug_message("stationName:"+cmnName);
+map[LOC_NAME] = cmnName;
+map[LOC_NAME_1] = cmnName;
 map[LOC_ECONOMY]=irandom(3);
 map[LOC_ECON_MOD] = random_range(.01,.05);
 map[LOC_ECON_OFFSET] = irandom(global.commodity_lib_count -1);
-
+map[LOC_CONDITION]=choose("good","bad");
+map[LOC_ATTITUDE]=choose("good","bad","mixed");
+map[LOC_DESCRIPTION]=scr_station_description_generator(map);
 return map;

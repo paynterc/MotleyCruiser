@@ -40,6 +40,7 @@ can_move = true;
 can_fire = true;
 target = noone;
 tgt_dist = 0;
+tgt_angle=noone;//Angle to turn to. Used in jump animation
 shooting = false;
 register_damage = 0;//Register hits from non-objects 
 color_s = c_aqua;
@@ -50,18 +51,20 @@ disposition = DISPOSITION_NEUTRAL;
 hitby = noone;// Who hit me?!
 ship_type = ship_types.ship;
 boosting=false;
+boost_cooldown=false;
 c=false;
 is_player=false;
 // Set defaults
 scr_ship_defaults();
 
-jumpSector=noone;// An array containing x,y sector coordinates
+
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 modAlpha = 1; // Alpha tranparency for modules. Use for landing.
 max_spd_fwd_hold=0;
 acc_spd_fwd_hold=0;
 image_speed=0;
+
 
 alarm[1] = room_speed * BASE_E_REGEN_SPD;
 alarm[2] = room_speed * shields_regen_speed;
@@ -88,10 +91,9 @@ alarm[2] = room_speed * shields_regen_speed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Jump to sector
-if(is_array(jumpSector)){
-    scr_move_to_sector(jumpSector[0],jumpSector[1]);
-}
+            <string>/// Stop avoiding
+avoiding=false;
+waypoint_current=noone;
 </string>
           </argument>
         </arguments>
@@ -118,6 +120,8 @@ if(is_array(jumpSector)){
 max_spd_fwd = max_spd_fwd_hold;
 acc_spd_fwd = acc_spd_fwd_hold;
 boosting=false;
+boost_cooldown = true;
+alarm[7]=room_speed*2;
 </string>
           </argument>
         </arguments>
@@ -140,19 +144,8 @@ boosting=false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Start boost
-if(!boosting){
-    max_spd_fwd_hold=max_spd_fwd;
-    acc_spd_fwd_hold=acc_spd_fwd;
-    max_spd_fwd *= 3;
-    acc_spd_fwd *= 3;
-    motion_add(image_angle,acc_spd_fwd);
-    boosting=true;
-    audio_stop_sound(snd_boost_charging);
-    scr_play_sound_at(snd_boost_launch,x,y);
-    alarm[8]=room_speed*3;
-}
-
+            <string>/// boost_cooldown
+boost_cooldown=false;
 </string>
           </argument>
         </arguments>
@@ -305,7 +298,6 @@ if(speed &gt; max_spd_fwd){
     speed = max_spd_fwd;//clamp
 }
 speed = max(speed - 0.005, 0);
-
 </string>
           </argument>
         </arguments>
@@ -390,6 +382,7 @@ if(register_damage&gt;0){
     shake=true;
     var apply_damage = register_damage;
     register_damage = 0;
+    var swerveOdds = 0;
     
     if(shields_current&gt;0){
         
@@ -416,6 +409,33 @@ if(register_damage&gt;0){
             }
         }
 
+    }
+    
+    
+    if(!is_player &amp;&amp; !avoiding){
+    
+        var oddsMod = (apply_damage/hull_current) * 100;
+        
+        if(shields&gt;0 &amp;&amp; shields_current &lt; (shields/10)){
+            swerveOdds= max(1,round(30 - oddsMod));
+        }else if(shields==0){
+            swerveOdds=5;
+        }else{
+            swerveOdds=-1;
+        }
+        if(swerveOdds&gt;0 &amp;&amp; swerveOdds == irandom(swerveOdds)){
+            avoiding = true;
+            var odds2=1;// Which direction
+            var mult=1;
+            if(odds2==irandom(odds2)){
+                mult=-1;
+            }
+            var xx = x + lengthdir_x(tgt_dist, 45*mult);
+            var yy = y + lengthdir_y(tgt_dist, 45*mult);
+            waypoint_current[0]=xx;
+            waypoint_current[1]=yy;                       
+            alarm[9]=room_speed * choose(.5,1,1.5);
+        }
     }
 
 }
@@ -503,7 +523,7 @@ if(thrusting_rvs){
             <kind>1</kind>
             <string>/// Boosting
 if(boosting){
-    motion_add(image_angle,acc_spd_fwd);
+    //motion_add(image_angle,acc_spd_fwd);
     energy_current--;
 }else if(mode==MODE_JUMPING){
     motion_add(image_angle,acc_spd_fwd);
@@ -546,31 +566,6 @@ var vspd = lengthdir_y(1,dir);
 x+=hspd;
 y+=vspd;
 ***/
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="4">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Play sound
-audio_stop_sound(snd_boost_charging);
-scr_play_sound_at(snd_boost_launch,x,y);
 </string>
           </argument>
         </arguments>

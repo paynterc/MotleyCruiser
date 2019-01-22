@@ -48,7 +48,6 @@ if(!global.planet_seed){
     global.planet_map[0,0] = noone;
     
 
-    var test = 5;
     
 }else{
     

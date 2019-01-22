@@ -181,7 +181,14 @@ event_user(0);// Just add the path
           <argument>
             <kind>1</kind>
             <string>/// Add point to path
-scr_gx_add_nav_pt(gx,gy);
+var rslt = scr_gx_add_nav_pt(gx,gy);
+if(rslt==true){
+    audio_play_sound(snd_confirm1,1,false);
+
+}else{
+    audio_play_sound(snd_confirm3,1,false);
+
+}
 if(instance_exists(obj_galaxy_map)){
     with(obj_galaxy_map){
         event_user(0);// update selected paths

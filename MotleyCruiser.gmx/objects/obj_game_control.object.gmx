@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+show_debug_overlay(true);
 scr_load_player_config();
 application_surface_enable(false);// Better performance this way
 
@@ -33,6 +34,7 @@ application_surface_enable(false);// Better performance this way
 global.paused = false;
 global.game_loaded = noone;
 pauseForce=false;// Use this to force the global.paused status. For cases where you do not want the user to unpause through the "Continue" menu option.
+custom_sprites = scr_new_array();// Keep track of any custom sprites that are created. Delete them at the end of the game.
 
 global.zoomLvl=0;
 
@@ -179,8 +181,6 @@ global.races = scr_races();
 // Accessories
 scr_accessories();
 
-
-
 scr_ships();
 
 // Ship Modules
@@ -203,11 +203,13 @@ scr_npc_traits_library();
 
 scr_npc_occupation_library();
 
+
+
 /****************************************************************/
 /*                      GLOBALS                                 */
 /****************************************************************/
-global.grid = noone;
-
+global.room_return = noone;// Hold the room to return to after visiting galaxy map or some other ui
+global.grid = noone;// A ds_grid for room levels
 
 // Planet side stuff
 global.planet_seed = noone;
@@ -215,6 +217,7 @@ global.planet_map = noone;// 2d array
 global.planet_room_index_x = noone;
 global.planet_room_index_y = noone;
 global.planet_nextdoor = noone;
+
 
 // Ship categorizaion
 enum ship_function {
@@ -256,6 +259,12 @@ enum bulletTypes {
     rail
 }
 
+enum terrains{
+    desert,swamp,rocky,glacier,ocean,forest,jungle,tundra,plains
+}
+enum biolevel{
+    microbe,plant,animal
+}
 // Economy Matrix
 global.e_matrix=noone;// Economy matrix. Provides the value of products based on the current economy and the economy of origin
 global.e_matrix[CC_AGRICULTURE,CC_AGRICULTURE]=1.00;
@@ -480,6 +489,10 @@ if(scr_user_input(pin.test_room)){
     exit;
 }
 
+if(keyboard_check_pressed(ord("K"))){
+    scr_grant_navpath();
+}
+
 
 
 /****
@@ -494,8 +507,18 @@ if(scr_user_input(pin.goto_player_edit)){
 }
 
 if(scr_user_input(pin.goto_galaxy_map)){
-    // shift, control, G
-    room_goto(rm_galaxy_map);
+    // N key
+    if(room!=rm_galaxy_map){
+        global.room_return = room;
+        room_goto(rm_galaxy_map);
+    }else if(room==rm_galaxy_map){
+        if( room_exists(global.room_return) &amp;&amp; global.room_return!=rm_galaxy_map ){
+            room_goto(global.room_return);
+        }else{
+            room_goto(rm_space);
+        }
+    }
+    
 }
 
 
@@ -534,34 +557,10 @@ if(scr_user_input(pin.fullscreen)){
           <argument>
             <kind>1</kind>
             <string>/// Player died - death animation then message
-global.paused = true;
+global.player_dead=true;
+//global.paused = true;
 alarm[0]=room_speed*3;
 // Do something with gui
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="4">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Close menus
-
-// Have obj_gui_control close menus
 </string>
           </argument>
         </arguments>
@@ -663,6 +662,7 @@ for(var i=0; i&lt;array_length_1d(global.crew); i++){
     }
 }
 
+scr_custom_sprite_deleteall();
 </string>
           </argument>
         </arguments>

@@ -293,9 +293,14 @@ if(sent != noone &amp;&amp; sent.name != noone){
         scr_flywriter(txt,sent.sprite_index,true,"0,OK,Nope");
         
                      
+    }else if(sent.tip!=noone){   
+        scr_flywriter(sent.tip,sent.sprite_index,true,"1,OK"); 
     }else{
     
-        var txt = "Buzz off.";    
+        var txt = scr_random_sentence(5);
+        if(txt == noone){
+            txt="Buzz off.";
+        }
         scr_flywriter(txt,sent.sprite_index,true,"1,OK");    
     }
     

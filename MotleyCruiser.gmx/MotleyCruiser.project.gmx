@@ -59,6 +59,9 @@
       <sound>sound\snd_boost_launch</sound>
       <sound>sound\snd_missile1</sound>
       <sound>sound\snd_tpod</sound>
+      <sound>sound\snd_confirm1</sound>
+      <sound>sound\snd_confirm2</sound>
+      <sound>sound\snd_confirm3</sound>
     </sounds>
     <sounds name="_stringbean">
       <sound>sound\snd_beep</sound>
@@ -330,10 +333,51 @@
       <sprite>sprites\spr_gate2</sprite>
       <sprite>sprites\spr_station</sprite>
       <sprite>sprites\spr_planet</sprite>
+      <sprite>sprites\spr_planet_clr</sprite>
+      <sprite>sprites\spr_moon_con</sprite>
+      <sprite>sprites\spr_planet_atmo</sprite>
+      <sprite>sprites\spr_planet_con</sprite>
+      <sprite>sprites\spr_planet_shading</sprite>
+      <sprite>sprites\spr_planet_shading2</sprite>
       <sprite>sprites\spr_sun</sprite>
       <sprite>sprites\spr_asteroid</sprite>
       <sprite>sprites\spr_asteroid2</sprite>
       <sprite>sprites\spr_asteroid3</sprite>
+      <sprite>sprites\spr_station_new</sprite>
+      <sprite>sprites\sprite433</sprite>
+      <sprite>sprites\spr_sign1</sprite>
+      <sprite>sprites\spr_sign2</sprite>
+      <sprite>sprites\spr_sign3</sprite>
+      <sprite>sprites\spr_sign4</sprite>
+      <sprite>sprites\spr_sign5</sprite>
+      <sprite>sprites\spr_stat_mod1</sprite>
+      <sprite>sprites\spr_stat_mod2</sprite>
+      <sprite>sprites\spr_stat_mod3</sprite>
+      <sprite>sprites\spr_stat_mod4</sprite>
+      <sprite>sprites\spr_stat_mod5</sprite>
+      <sprite>sprites\spr_stat_mod6</sprite>
+      <sprite>sprites\spr_stat_mod7</sprite>
+      <sprite>sprites\spr_stat_mod8</sprite>
+      <sprite>sprites\spr_stat_mod9</sprite>
+      <sprite>sprites\spr_stat_mod10</sprite>
+      <sprite>sprites\spr_stat_mod11</sprite>
+      <sprite>sprites\spr_stat_mod12</sprite>
+      <sprite>sprites\spr_stat_mod13</sprite>
+      <sprite>sprites\spr_stat_mod14</sprite>
+      <sprite>sprites\spr_stat_mod15</sprite>
+      <sprite>sprites\spr_stat_mod16</sprite>
+      <sprite>sprites\spr_stat_mod17</sprite>
+      <sprite>sprites\spr_stat_mod20</sprite>
+      <sprite>sprites\spr_stat_mod18</sprite>
+      <sprite>sprites\spr_stat_mod19</sprite>
+      <sprite>sprites\spr_mand_goodfortune</sprite>
+      <sprite>sprites\spr_mand_doublehappy</sprite>
+      <sprite>sprites\spr_mand_dblhappy</sprite>
+      <sprite>sprites\sprite457</sprite>
+      <sprite>sprites\spr_mand_goodfortune2</sprite>
+      <sprite>sprites\spr_mandarin_lucky</sprite>
+      <sprite>sprites\sprite451</sprite>
+      <sprite>sprites\spr_signback</sprite>
     </sprites>
     <sprites name="Glare">
       <sprites name="Icons">
@@ -422,11 +466,6 @@
         <sprite>sprites\spr_flyoption</sprite>
         <sprite>sprites\spr_arrow</sprite>
         <sprite>sprites\spr_arrow_4</sprite>
-        <sprite>sprites\spr_inv_food</sprite>
-        <sprite>sprites\spr_inv_grenade</sprite>
-        <sprite>sprites\spr_inv_fuel</sprite>
-        <sprite>sprites\spr_inv_gold</sprite>
-        <sprite>sprites\spr_inv_meds</sprite>
       </sprites>
       <sprites name="HuleInventorySprites">
         <sprites name="HuleInventoryGUI">
@@ -443,8 +482,14 @@
           <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
           <sprite>sprites\spr_ItemIcon_Grenade</sprite>
           <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
+          <sprite>sprites\spr_inv_fuel</sprite>
+          <sprite>sprites\spr_inv_meds</sprite>
           <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
+          <sprite>sprites\spr_inv_gold</sprite>
           <sprite>sprites\spr_ItemIcon_medkit</sprite>
+          <sprite>sprites\spr_inv_grenade</sprite>
+          <sprite>sprites\spr_inv_food</sprite>
+          <sprite>sprites\spr_star_map</sprite>
           <sprite>sprites\spr_ItemIcon_GasBlue</sprite>
           <sprite>sprites\spr_ItemIcon_Oxygen</sprite>
           <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
@@ -562,6 +607,7 @@
     <sprite>sprites\spr_cargo_drop3</sprite>
     <sprites name="_gxmap">
       <sprite>sprites\spr_gxpoint</sprite>
+      <sprite>sprites\spr_btn_addpath</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -722,12 +768,18 @@
       <script>scripts\scr_ev_crew_died.gml</script>
       <script>scripts\scr_ev_outoffuel.gml</script>
       <script>scripts\scr_ev_refuel_start.gml</script>
+      <script>scripts\scr_ev_player_died_in_space.gml</script>
     </scripts>
     <scripts name="_galaxy">
       <script>scripts\scr_make_galaxy.gml</script>
       <script>scripts\scr_populate_sector.gml</script>
       <script>scripts\scr_make_galaxy_NEW.gml</script>
       <script>scripts\scr_make_galaxy_WEIGHTED.gml</script>
+      <script>scripts\scr_planet_name_generator.gml</script>
+      <script>scripts\scr_planet_description_generator.gml</script>
+      <script>scripts\scr_station_description_generator.gml</script>
+      <script>scripts\scr_planet_imagedata_generator.gml</script>
+      <script>scripts\scr_create_planet_sprite.gml</script>
       <script>scripts\scr_make_sun.gml</script>
       <script>scripts\scr_make_planet.gml</script>
       <script>scripts\scr_make_moon.gml</script>
@@ -745,7 +797,9 @@
       <script>scripts\scr_remove_npc_from_location.gml</script>
       <script>scripts\scr_find_landable_target.gml</script>
       <script>scripts\scr_faction_centers.gml</script>
+      <script>scripts\scr_make_name_string.gml</script>
       <script>scripts\scr_racial_centers.gml</script>
+      <script>scripts\scr_construct_station.gml</script>
       <script>scripts\scr_racial_center_lookup.gml</script>
       <scripts name="_galaxy_admin">
         <script>scripts\scr_save_galaxy.gml</script>
@@ -772,6 +826,8 @@
           <script>scripts\scr_gx_validate_nav_pt.gml</script>
           <script>scripts\scr_gx_make_path.gml</script>
           <script>scripts\scr_gx_popfirstnav.gml</script>
+          <script>scripts\scr_grant_navpath.gml</script>
+          <script>scripts\scr_get_nav_dir.gml</script>
         </scripts>
       </scripts>
       <scripts name="_ships">
@@ -791,14 +847,15 @@
         <script>scripts\scr_board_ship.gml</script>
         <script>scripts\scr_trap_pirate_drones.gml</script>
       </scripts>
+      <script>scripts\scr_make_station_data.gml</script>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_new_game.gml</script>
       <script>scripts\scr_new_game_defaults.gml</script>
       <script>scripts\scr_game_save.gml</script>
-      <script>scripts\scr_game_load.gml</script>
       <script>scripts\scr_game_delete.gml</script>
       <script>scripts\scr_get_saved_games.gml</script>
+      <script>scripts\scr_game_load.gml</script>
       <script>scripts\scr_screen_shake.gml</script>
       <script>scripts\scr_set_gui_vars.gml</script>
       <script>scripts\scr_load_game_menu.gml</script>
@@ -807,6 +864,9 @@
       <script>scripts\scr_dsmap_save.gml</script>
       <script>scripts\scr_dsmap_load.gml</script>
       <script>scripts\scr_instantiate_control_objs.gml</script>
+      <script>scripts\scr_rm_persistence.gml</script>
+      <script>scripts\scr_custom_sprite_store.gml</script>
+      <script>scripts\scr_custom_sprite_deleteall.gml</script>
     </scripts>
     <scripts name="_gui">
       <scripts name="_gui_package">
@@ -901,6 +961,7 @@
       <scripts name="_searches">
         <script>scripts\scr_ship_search.gml</script>
       </scripts>
+      <script>scripts\scr_station_modules.gml</script>
     </scripts>
     <scripts name="_mission">
       <script>scripts\scr_make_mission.gml</script>
@@ -1015,6 +1076,7 @@
     <scripts name="_helper">
       <script>scripts\scr_get_closest.gml</script>
       <script>scripts\scr_get_furthest.gml</script>
+      <script>scripts\scr_string_ucfirst.gml</script>
       <script>scripts\scr_get_closest_notfaction.gml</script>
       <script>scripts\scr_get_closest_hostile.gml</script>
       <script>scripts\scr_gradually_rotate.gml</script>
@@ -1028,6 +1090,7 @@
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
       <script>scripts\scr_draw_dotted_line.gml</script>
+      <script>scripts\scr_rotate_to_angle.gml</script>
     </scripts>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
@@ -1329,6 +1392,10 @@
       <script>scripts\scr_npc_sees_enemy.gml</script>
       <script>scripts\scr_npc_retreat.gml</script>
     </scripts>
+    <scripts name="_ship_control">
+      <script>scripts\scr_jump_input.gml</script>
+      <script>scripts\scr_ship_boost.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1413,6 +1480,7 @@
     <objects name="_galaxy_map">
       <object>objects\obj_galaxy_map</object>
       <object>objects\obj_gxmap_point</object>
+      <object>objects\obj_btn_addpath</object>
     </objects>
     <objects name="_personal_weapons">
       <object>objects\obj_gun</object>
@@ -1463,6 +1531,8 @@
       <objects name="_elements">
         <object>objects\obj_button_text</object>
         <object>objects\obj_button_basic</object>
+        <object>objects\obj_text_basic</object>
+        <object>objects\obj_gui_button</object>
       </objects>
     </objects>
     <objects name="_people_and_places">
@@ -1507,6 +1577,7 @@
       <object>objects\obj_planet</object>
       <object>objects\obj_moon</object>
       <object>objects\obj_station</object>
+      <object>objects\obj_landable_label</object>
       <object>objects\obj_landable</object>
       <object>objects\obj_sun</object>
       <object>objects\obj_spark</object>
@@ -1523,6 +1594,8 @@
         <object>objects\obj_bullet_rail</object>
       </objects>
       <object>objects\obj_cargo_drop</object>
+      <object>objects\obj_sign</object>
+      <object>objects\obj_station_module</object>
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
@@ -1626,9 +1699,16 @@
     <object>objects\obj_flash_timer</object>
     <object>objects\obj_explosion</object>
     <object>objects\obj_impact</object>
+    <objects name="_landing">
+      <object>objects\obj_landing_menu</object>
+      <object>objects\obj_landing_image</object>
+      <object>objects\obj_landing_text</object>
+      <object>objects\obj_btn_port</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
+    <room>rooms\rm_intro</room>
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_ship_deck_rnd</room>
@@ -1636,18 +1716,18 @@
     <room>rooms\rm_galley</room>
     <room>rooms\rm_cantina2</room>
     <room>rooms\rm_arena</room>
-    <rooms name="Glare">
-      <room>rooms\room_glare_init</room>
-    </rooms>
     <room>rooms\rm_ship_edit</room>
     <room>rooms\rm_player_edit</room>
     <room>rooms\rm_inventory</room>
     <room>rooms\rm_planetside</room>
     <room>rooms\rm_bullettest</room>
-    <room>rooms\rm_intro</room>
     <room>rooms\rm_galaxy_map</room>
+    <rooms name="Glare">
+      <room>rooms\room_glare_init</room>
+    </rooms>
+    <room>rooms\rm_landing_menu</room>
   </rooms>
-  <constants number="368">
+  <constants number="379">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -1788,6 +1868,16 @@
     <constant name="LOC_W1">11</constant>
     <constant name="LOC_X1">0</constant>
     <constant name="LOC_Y1">1</constant>
+    <constant name="LOC_DESCRIPTION">15</constant>
+    <constant name="LOC_IMAGE_DATA">16</constant>
+    <constant name="LOC_TEMPERATURE">17</constant>
+    <constant name="LOC_LIFE">18</constant>
+    <constant name="LOC_TERRAIN">19</constant>
+    <constant name="LOC_CONDITION">20</constant>
+    <constant name="LOC_SETTLEMENT">21</constant>
+    <constant name="LOC_ATTITUDE">22</constant>
+    <constant name="LOC_ETHICS">23</constant>
+    <constant name="LOC_ATMOSPHERE">24</constant>
     <constant name="MISSION_DESCRIP">2</constant>
     <constant name="MISSION_END_LOCATION">5</constant>
     <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
@@ -1814,6 +1904,7 @@
     <constant name="MODE_REFUELING">11</constant>
     <constant name="MODE_TRAVELING">7</constant>
     <constant name="MODE_WAITING">3</constant>
+    <constant name="MODE_JUMP_REENTRY">12</constant>
     <constant name="MODULE_ACCBWD_MOD">17</constant>
     <constant name="MODULE_ACCFWD_MOD">16</constant>
     <constant name="MODULE_BUNKS_MOD">26</constant>

@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>/// Fill object pool
+show_debug_message("space level - create");
+
 // I'm not doing this right now and the obj_object_pool instance has been removed
 //scr_add_to_pool(obj_projectile,"projectile",500);
 //surface_resize(application_surface,view_wview[0],view_hview[0]);
@@ -264,6 +266,7 @@ alarm[1] = room_speed * asteroid_rate;
           <argument>
             <kind>1</kind>
             <string>/// Spawn ships
+show_debug_message("space level - spawn ships");
 scr_spawn_npc_ships();
 //scr_spawn_npc_ships_ext(20,FACTION_PIRATE,14,500,500);
 alarm[0] = room_speed * ship_spawn_rate;
@@ -297,9 +300,7 @@ if(scr_user_input(pin.zoom_out)){
 if(scr_user_input(pin.zoom_in)){
     scr_view_zoom(-1,0);
 }
-if(scr_user_input(pin.goto_galaxy_map)){
-    room_goto(rm_galaxy_map);
-}
+
 </string>
           </argument>
         </arguments>
@@ -351,6 +352,7 @@ if(zoom){
           <argument>
             <kind>1</kind>
             <string>/// Delete background
+show_debug_message("space level - room end");
 if(background_exists(stars)){
     background_delete(stars);
 }
@@ -377,8 +379,12 @@ if(background_exists(stars)){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Clear variables
-show_debug_message("start space level");
+            <string>/// Persist Room. Init variables.
+show_debug_message("space level - room start");
+
+// Space room will be perisitent so we can switch to the map room if needed.
+// Perisistence is switched off whenever we go to another sector or land on something.
+// This allows the create step to run again when we return.
 room_persistent = true;
 global.landed_on = noone;
 </string>
@@ -425,7 +431,36 @@ scr_daily_expenses()
           <argument>
             <kind>1</kind>
             <string>/// Close Windows
-scr_gui_close_all();
+//scr_gui_close_all();
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update last_sector vars. Play sound.
+if(global.sector_x != global.last_sector_x || global.sector_y != global.last_sector_y){
+    global.last_sector_x = global.sector_x;
+    global.last_sector_y = global.sector_y;
+    // We just came from a different sector. Do the entry sound.
+    audio_stop_sound(snd_boost_charging);
+    scr_play_sound(snd_boost_launch);   
+}
+
 </string>
           </argument>
         </arguments>

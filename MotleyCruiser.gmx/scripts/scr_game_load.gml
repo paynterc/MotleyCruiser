@@ -1,5 +1,6 @@
 ///Load a saved game from file or create a new one. This would probably be called from a select menu.
 // scr_game_load(GAME_ID)
+room_set_persistent(rm_space,false);
 var game = argument0;
 var rm = noone;//next room
 

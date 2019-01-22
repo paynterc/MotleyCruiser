@@ -116,7 +116,7 @@ if(RandMove == 0 || DestX==noone){
             <string>if(surface_exists(surf)){
     surface_free(surf);
 }
-var test = 1;
+
 instance_destroy();
 </string>
           </argument>

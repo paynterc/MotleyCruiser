@@ -22,5 +22,6 @@ c=scr_push_array(c,51);//blaster rifle
 c=scr_push_array(c,52);//cratemaster
 c=scr_push_array(c,53);//sticky grenade
 c=scr_push_array(c,2);//flash
+c=scr_push_array(c,59);//Star Map
 
 return c;

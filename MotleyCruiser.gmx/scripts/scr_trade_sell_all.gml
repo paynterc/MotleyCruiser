@@ -16,6 +16,6 @@ if(instock>0){
     
 }else{
 
-    scr_display_message("You do not have that item in your cargo.","");
+    scr_display_message("You do not have that item in your cargo.",noone);
 }
 

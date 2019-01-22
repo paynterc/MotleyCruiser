@@ -39,10 +39,18 @@ if(irandom(drop_odds)==drop_odds){
             loot.inv_amount = 1;
         }    
       
+
+        
     }else{
         var credit_amount = irandom_range(1,5);
         loot.credits = credit_amount;    
     }
-
+    
+    /***
+    item_id = 59;
+    loot.inv_id = item_id;
+    loot.inv_amount = 1;
+    loot.credits = 0;
+    ***/
 }
 

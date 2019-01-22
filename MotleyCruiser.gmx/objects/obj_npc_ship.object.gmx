@@ -603,7 +603,15 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
         x=target.x;
         y=target.y;
         // Go into landing animation
-        instance_change(obj_landing_ship,true);
+        //instance_change(obj_landing_ship,true);
+        for(var m=0; m&lt;array_length_1d(modules); m++){
+            m_object = modules[m];
+            if(m_object){
+                instance_deactivate_object(m_object);
+            }
+            
+        }
+        instance_deactivate_object(self);
     }
 }
 </string>
@@ -626,23 +634,21 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Chance to swerve
-if(target!=noone &amp;&amp; shields_current&lt;(shields/2) &amp;&amp; shields_current&gt;0 &amp;&amp; !avoiding){
-    var odds=30;
-    if(odds == irandom(odds)){
-        var odds2=1;
-        var mult=1;
-        if(odds2==irandom(odds2)){
-            mult=-1;
-        }
-        var xx = x + lengthdir_x(tgt_dist, 45*mult);
-        var yy = y + lengthdir_y(tgt_dist, 45*mult);
-        waypoint_current[0]=xx;
-        waypoint_current[1]=yy;
-        
-        avoiding = true;
-        alarm[9]=room_speed * choose(.5,1,1.5);
+            <string>/// Chance to boost
+if(boostable){
+    var odds=noone;
+    if(avoiding){
+        odds=30;
+    }else if(mode==MODE_ATTACKING &amp;&amp; tgt_dist&gt;1000){
+        odds=10;
     }
+    
+    if(odds!=noone){
+        if(odds == irandom(odds)){
+            scr_ship_boost();  
+        }
+    }
+
 }
 </string>
           </argument>

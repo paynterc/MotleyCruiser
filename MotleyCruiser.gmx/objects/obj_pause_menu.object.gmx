@@ -112,6 +112,7 @@ if(panel_pause[4]){
     }else if(pause_menu_button==3){
         // MAIN MENU
         global.paused = false;
+        scr_rm_persistence();
         room_goto(rm_main_menu);
     }
     

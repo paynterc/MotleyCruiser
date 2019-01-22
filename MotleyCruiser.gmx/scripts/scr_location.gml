@@ -18,6 +18,13 @@ loc[LOC_ECON_OFFSET]=noone;
 loc[LOC_W1]=noone;
 loc[LOC_COLOR]=noone;
 loc[LOC_SPRITE]=noone;
-
-
+loc[LOC_DESCRIPTION]="";
+loc[LOC_IMAGE_DATA]=noone;
+loc[LOC_TEMPERATURE]=noone;
+loc[LOC_LIFE]=noone;
+loc[LOC_TERRAIN]=noone;
+loc[LOC_CONDITION]=noone;
+loc[LOC_SETTLEMENT]=noone;
+loc[LOC_ATTITUDE]=noone;
+loc[LOC_ATMOSPHERE]=noone;
 return loc;

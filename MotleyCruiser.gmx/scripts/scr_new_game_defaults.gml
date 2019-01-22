@@ -4,6 +4,8 @@
 /****************************************************************/
 /*                      DYNAMIC PLAYER DATA                     */
 /****************************************************************/
+// PLAYER STATUS
+global.player_dead=false;
 
 // PLAYER SHIP: An array containing current ship state.
 global.player_ship = noone;
@@ -39,6 +41,9 @@ global.sector_x=0;// new galaxy navigation values
 global.sector_y=0;
 global.player_x = noone;// in-room coordinates. default to room_width/2
 global.player_y = noone;
+global.last_sector_x=0;// sector we just came from
+global.last_sector_y=0;
+
 
 /****************************************************************/
 /*                      SUPPLIES                                */

@@ -20,6 +20,7 @@ var sPaths;// Valid paths from the current sector. Use this to validate the sele
 var qLast = scr_array_get_last(global.nav_queue);
 var q2ndLast = scr_get_array_1d( global.nav_queue, destCount-2 );
 var qArray=noone;
+var rslt=false;
 if(qLast!=noone){
     
     if(destString==qLast){
@@ -48,10 +49,11 @@ if(is_array(sPaths)){
     if( scr_in_array(sPaths,destString) ){
         // This is a valid path from the current sector. Add it to the queue
         global.nav_queue = scr_push_array(global.nav_queue, destString);
+        rslt=true;
     }
 }
 
 
     
-return true;
+return rslt;
 

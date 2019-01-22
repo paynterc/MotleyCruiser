@@ -621,6 +621,16 @@ item_add(idx,3,true) //Does have effect?
 item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
 item_add(idx,5,"Fires three bullets simultaneously.") //Description
 item_add(idx,6,obj_shotgun1) //Object to equip
-item_add(idx,10,3)
+item_add(idx,10,3);
+
+idx=59;
+item_add(idx,0,"Star Map")
+item_add(idx,1,10)
+item_add(idx,2,spr_star_map)
+item_add(idx,3,false)
+item_add(idx,4,"scr_grant_navpath")
+item_add(idx,5,"Use this in the map room to reaveal new jump paths.")
+item_add(idx,8,CC_TECH) //CC_MINING (Commodity Class Mining),
+item_add(idx,9,5000) //Base price
 
 global.item_lib_count = idx+1;

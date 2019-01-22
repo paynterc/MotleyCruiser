@@ -47,12 +47,53 @@ mycolor_current = mycolor;
 mytext = "xxx";
 mywidth = noone;
 myheight = noone;
+sizeset=false;//update sprite height and width
+width=0;
+height=0;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
     <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// update size
+if(!sizeset){
+    sizeset = true;
+    if(mywidth!=noone){
+        width = mywidth;
+        image_xscale = mywidth/sprite_width;
+    }else{
+        width = sprite_width;
+    }
+    
+    if(myheight!=noone){
+        height = myheight;
+        image_yscale = myheight/sprite_height;
+    }else{
+        height = sprite_height;
+    }
+
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -124,19 +165,6 @@ if( position_meeting(mouse_x, mouse_y, self) ){
             <kind>1</kind>
             <string>if(sprite_index){
     draw_self();
-}
-var width;
-var height;
-if(mywidth!=noone){
-    width = mywidth;
-}else{
-    width = sprite_width;
-}
-
-if(myheight!=noone){
-    height = myheight;
-}else{
-    height = sprite_height;
 }
 
 /// Set font

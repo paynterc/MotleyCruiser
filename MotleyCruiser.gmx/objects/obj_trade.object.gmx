@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>obj_menu</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -275,6 +275,7 @@ if( gamepad_is_connected(global.pad) ){
     
     exitHover = (guix == median(bexitx, guix, bexitx + bexitw)) &amp;&amp; (guiy == median(bexity, guiy, bexity + 24));
 
+
 }
     
     
@@ -364,7 +365,6 @@ if(show){
     
     if(exitHover){
         scr_gui_return_context();
-        exit;
     }
 }
 </string>

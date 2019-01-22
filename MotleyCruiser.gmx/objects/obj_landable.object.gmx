@@ -30,12 +30,13 @@ disabled = false;
 faction = FACTION_NEUTRAL;
 name = "xxx";
 discovered = false;// used for minimap function
+data = noone;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="73">
+    <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -52,11 +53,13 @@ discovered = false;// used for minimap function
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw name
-draw_set_valign(fa_center);
-draw_set_halign(fa_center);
-draw_set_font(fnt_menus);
-draw_text(x,y,name);
+            <string>/// Create label
+var label = instance_create(x,y-256,obj_landable_label);
+label.text = name;
+label.depth = -10000;
+with(label){
+    event_user(0);
+}
 </string>
           </argument>
         </arguments>
