@@ -65,7 +65,7 @@ if(sx == 0 && sy == 0){
     
 
     planet = scr_make_moon(sx,sy,gxindex);
-    planet[LOC_TYPE]=GX_MOON;
+    planet[LOC_TYPE]=GX_PLANET;
     planet[LOC_X1]=center_x;
     planet[LOC_Y1]=center_y;
     planet[LOC_W1]=sprite_get_width(spr_planet) * 2;
@@ -80,9 +80,7 @@ if(sx == 0 && sy == 0){
     with(planet_obj){
         var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
         image_xscale = psize_mod;
-        image_yscale = psize_mod;
-        //image_blend = [LOC_COLOR];
-        //image_index = [LOC_SPRITE];                
+        image_yscale = psize_mod;                
         depth = curdepth;
         global_index = planet[LOC_INDEX];                  
         global_type = "";
@@ -125,6 +123,7 @@ if(sx == 0 && sy == 0){
     var mainLandable = false;// We will have one landable place at the center of the map. Keep track of whether we have placed it yet using this variable.
     // Add suns
     c = irandom(3);
+    
     for(var i=0; i<c; i++){
       sun = scr_make_sun(sx,sy);
         sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
@@ -141,12 +140,19 @@ if(sx == 0 && sy == 0){
     }
     var LL = 3; //landable limit
     var system_landables = irandom(LL);
-    // There won't be s or moons if there are no suns
+    
+    show_debug_message("total suns: " + string(c));
+    show_debug_message("total landables: " + string(system_landables));
+    
+    var canMakeMoon=false;
+    // There won't be planets or moons if there are no suns
     if(c>0){ 
         // Add planets
         c = irandom(system_landables);
+        canMakeMoon=true;
         for(var i=0; i<c; i++){
             planet = scr_make_planet(sx,sy,gxindex);
+            show_debug_message("make planet");
             if(!mainLandable){
                 mainLandable=true;
                 planet[LOC_X1] = global.sector_width/2;
@@ -179,29 +185,30 @@ if(sx == 0 && sy == 0){
         }
         
         system_landables-=c;      
-        if(system_landables>0){
+        if(system_landables>0 && canMakeMoon){
             // Add moons
             c = irandom(system_landables);
             for(var i=0; i<c; i++){
                 moon = scr_make_moon(sx,sy,gxindex);
+                show_debug_message("make moon");
                 if(!mainLandable){
                     mainLandable=true;
                     moon[LOC_X1] = global.sector_width/2;
                     moon[LOC_Y1] = global.sector_width/2;
                 }
-                moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_moon);
+                // Using obj_planet here because it has code to create the sprite. Basically the same thing as a moon, just different data.
+                moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_planet);
                 moon_obj.data = moon;
                 with(moon_obj){
-                    var msize_mod = moon[LOC_W1] / sprite_get_width(spr_moon); 
-                    image_xscale = msize_mod;
-                    image_yscale = msize_mod;
-                    image_blend = moon[LOC_COLOR];
-                    image_index = moon[LOC_SPRITE];
+                    var psize_mod = moon[LOC_W1] / sprite_get_width(spr_planet); 
+                    image_xscale = psize_mod;
+                    image_yscale = psize_mod;                  
                     depth = curdepth;
-                    global_index = moon[LOC_INDEX];
+                    global_index = moon[LOC_INDEX];                  
                     global_type = "moon";
                     faction = FACTION_NEUTRAL;
                     name = moon[LOC_NAME];
+                    drawReady=true;
                 }
                 global.sector_economy[moon[LOC_ECONOMY]] += 1;
                 gxindex++;
@@ -217,26 +224,28 @@ if(sx == 0 && sy == 0){
         var c = irandom(system_landables);
         for(var i=0; i<c; i++){
             station = scr_make_station(sx,sy,gxindex);
+            show_debug_message("make station");
             if(!mainLandable){
                 mainLandable=true;
                 station[LOC_X1] = global.sector_width/2;
                 station[LOC_Y1] = global.sector_width/2;
+                show_debug_message("make station as main landable");
             }
             station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
             station_obj.data = station;
             with(station_obj){
                 //var ssize_mod = sprite_get_width(spr_station)/station[LOC_W1]; 
-                var ssize_mod = 256/sprite_get_width(spr_station);
-                image_xscale = ssize_mod;
-                image_yscale = ssize_mod;
-                image_blend = station[LOC_COLOR];
-                image_index = station[LOC_SPRITE];
-                depth = curdepth;
-                global_index = station[LOC_INDEX];
+
+                global_index = station[LOC_INDEX];                  
                 global_type = "station";
                 faction = FACTION_NEUTRAL;
                 name = station[LOC_NAME];
+                depth = curdepth;
+                event_user(0);// apply vars
+                event_user(1);
             }
+     
+            
             global.sector_economy[station[LOC_ECONOMY]] += 1;
             
                         
