@@ -423,7 +423,9 @@ var ppcount = irandom(3)+1;
 for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(global.sector_width),irandom(global.sector_width),FACTION_PIRATE,irandom(3)+1);
 }
-
+var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
+ship_obj.disabled = true;
+ship_obj.disposition = DISPOSITION_HOSTILE;
 
 
 /*** TEST ITEMS ***/
@@ -432,9 +434,7 @@ for(var i = 0; i<ppcount; i++){
 var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
 ship_obj.disabled = true;
 
-var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
-ship_obj.disabled = true;
-ship_obj.disposition = DISPOSITION_HOSTILE;
+
 
 //scr_flybark("WHAT UP DOG?",spr_old_salt,3,true);
 

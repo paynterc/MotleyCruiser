@@ -368,6 +368,10 @@ if(global.equipped!=noone){
             <kind>1</kind>
             <string>/// Healthbar
 if(_state==1){
+
+// shadow
+scr_npc_draw_shadow();
+
 draw_self();
 /***
 draw_sprite_ext(spr_human_hair1,0,x,y,image_xscale,image_yscale,0,c_white,1);

@@ -27,4 +27,5 @@ loc[LOC_CONDITION]=noone;
 loc[LOC_SETTLEMENT]=noone;
 loc[LOC_ATTITUDE]=noone;
 loc[LOC_ATMOSPHERE]=noone;
+loc[LOC_SERVICES]=noone;
 return loc;

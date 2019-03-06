@@ -19,7 +19,9 @@ t[10]="tipster";
 t[11]="scholar";
 t[12]="bounty hunter";
 t[11]="musician";
-
+t[12]="bartender";
+t[13]="merchant";
+t[14]="shipwright";
 
 global.npc_occupations=t;
 

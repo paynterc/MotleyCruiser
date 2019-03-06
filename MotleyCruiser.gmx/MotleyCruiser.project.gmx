@@ -200,6 +200,7 @@
       <sprite>sprites\spr_door_reactor</sprite>
       <sprite>sprites\spr_panel_1</sprite>
       <sprite>sprites\spr_crate</sprite>
+      <sprite>sprites\spr_junk</sprite>
       <sprite>sprites\spr_turret_base_large</sprite>
       <sprite>sprites\spr_galley_table</sprite>
       <sprite>sprites\spr_torpedo_pod</sprite>
@@ -207,6 +208,10 @@
       <sprite>sprites\spr_torpedo_pod3</sprite>
       <sprite>sprites\spr_torpedo_pod4</sprite>
       <sprite>sprites\sprite427</sprite>
+      <sprite>sprites\spr_drinks</sprite>
+      <sprite>sprites\spr_stage</sprite>
+      <sprite>sprites\spr_airlock_sm1</sprite>
+      <sprite>sprites\sprite481</sprite>
     </sprites>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
@@ -226,6 +231,9 @@
       <sprite>sprites\spr_blaster2</sprite>
       <sprite>sprites\spr_rifle2</sprite>
       <sprite>sprites\spr_flamer1</sprite>
+      <sprite>sprites\spr_guitar2</sprite>
+      <sprite>sprites\spr_bass</sprite>
+      <sprite>sprites\spr_guitar</sprite>
       <sprite>sprites\spr_singularity_gun</sprite>
       <sprite>sprites\spr_singularity</sprite>
       <sprite>sprites\spr_shotgun1</sprite>
@@ -346,6 +354,8 @@
       <sprite>sprites\spr_station_new</sprite>
       <sprite>sprites\sprite433</sprite>
       <sprite>sprites\spr_sign1</sprite>
+      <sprite>sprites\spr_sign6</sprite>
+      <sprite>sprites\spr_sign7</sprite>
       <sprite>sprites\spr_sign2</sprite>
       <sprite>sprites\spr_sign3</sprite>
       <sprite>sprites\spr_sign4</sprite>
@@ -609,10 +619,14 @@
       <sprite>sprites\spr_gxpoint</sprite>
       <sprite>sprites\spr_btn_addpath</sprite>
     </sprites>
+    <sprite>sprites\spr_npc_icon</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
+    <background>background\bg_gangway</background>
+    <background>background\bg_wall_shadow2</background>
     <background>background\bg_floor_bu</background>
+    <background>background\bg_barshelf</background>
     <background>background\bg_wall</background>
     <background>background\bg_walltiles</background>
     <background>background\background14</background>
@@ -631,9 +645,11 @@
     <backgrounds name="_simdialog">
       <background>background\bg_back1</background>
     </backgrounds>
-    <background>background\bg_intro</background>
-    <background>background\bg_landscape1</background>
     <background>background\bg_farmfields</background>
+    <background>background\bg_bartop</background>
+    <background>background\bg_wall_simple</background>
+    <background>background\bg_wall_simple2</background>
+    <background>background\bg_card_table</background>
   </backgrounds>
   <paths name="paths">
     <path>paths\path_glr_0</path>
@@ -799,7 +815,6 @@
       <script>scripts\scr_faction_centers.gml</script>
       <script>scripts\scr_make_name_string.gml</script>
       <script>scripts\scr_racial_centers.gml</script>
-      <script>scripts\scr_construct_station.gml</script>
       <script>scripts\scr_racial_center_lookup.gml</script>
       <scripts name="_galaxy_admin">
         <script>scripts\scr_save_galaxy.gml</script>
@@ -839,7 +854,7 @@
         <script>scripts\scr_spawn_pirate_drones.gml</script>
         <script>scripts\scr_spawn_patrol.gml</script>
       </scripts>
-      <scripts name="_locations">
+      <scripts name="_locations_space">
         <script>scripts\scr_mining_area.gml</script>
         <script>scripts\scr_spawn_derelict_trap.gml</script>
       </scripts>
@@ -847,7 +862,16 @@
         <script>scripts\scr_board_ship.gml</script>
         <script>scripts\scr_trap_pirate_drones.gml</script>
       </scripts>
-      <script>scripts\scr_make_station_data.gml</script>
+      <scripts name="_starport">
+        <script>scripts\scr_loc_make_starport.gml</script>
+        <script>scripts\scr_loc_add_services.gml</script>
+        <script>scripts\scr_loc_cantina.gml</script>
+        <script>scripts\scr_loc_dock.gml</script>
+      </scripts>
+      <scripts name="_station">
+        <script>scripts\scr_construct_station.gml</script>
+        <script>scripts\scr_make_station_data.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_game_control">
       <script>scripts\scr_new_game.gml</script>
@@ -992,6 +1016,11 @@
         <script>scripts\scr_stamp_rectangle.gml</script>
         <script>scripts\scr_build_room_custom.gml</script>
         <script>scripts\scr_add_wall_tiles.gml</script>
+        <script>scripts\scr_add_tiles.gml</script>
+        <script>scripts\scr_add_wall_tiles_Old4.gml</script>
+        <script>scripts\scr_add_wall_tiles_Old3.gml</script>
+        <script>scripts\scr_add_wall_tiles_Old2.gml</script>
+        <script>scripts\scr_add_wall_tile_Old.gml</script>
       </scripts>
       <scripts name="_grids_and_collision">
         <script>scripts\scr_move.gml</script>
@@ -1012,8 +1041,6 @@
       <script>scripts\scr_check_deck_complete.gml</script>
       <script>scripts\scr_drop_loot.gml</script>
       <script>scripts\scr_make_control_room.gml</script>
-      <script>scripts\scr_npc_map_to_object.gml</script>
-      <script>scripts\scr_set_npc_sprite.gml</script>
       <script>scripts\scr_start_alarm.gml</script>
     </scripts>
     <scripts name="_service">
@@ -1388,9 +1415,13 @@
       <script>scripts\scr_npc_fire_at_target.gml</script>
       <script>scripts\scr_npc_find_move_target.gml</script>
       <script>scripts\scr_npc_target_kill_in_view.gml</script>
+      <script>scripts\scr_set_npc_sprite.gml</script>
       <script>scripts\scr_npc_move_to_target.gml</script>
+      <script>scripts\scr_npc_map_to_object.gml</script>
       <script>scripts\scr_npc_sees_enemy.gml</script>
       <script>scripts\scr_npc_retreat.gml</script>
+      <script>scripts\scr_npc_draw_shadow.gml</script>
+      <script>scripts\scr_npc_draw_icon.gml</script>
     </scripts>
     <scripts name="_ship_control">
       <script>scripts\scr_jump_input.gml</script>
@@ -1463,7 +1494,7 @@
       <font>fonts\f_normal</font>
       <font>fonts\f_options</font>
     </fonts>
-    <font>fonts\font11</font>
+    <font>fonts\fnt_coder</font>
     <font>fonts\font12</font>
     <font>fonts\font14</font>
     <font>fonts\font15</font>
@@ -1486,6 +1517,8 @@
       <object>objects\obj_gun</object>
       <object>objects\obj_singularity</object>
       <object>objects\obj_blaster1</object>
+      <object>objects\obj_instrument</object>
+      <object>objects\obj_bass</object>
       <object>objects\obj_singularity_gun</object>
       <object>objects\obj_heavy_blaster1</object>
       <object>objects\obj_turret</object>
@@ -1536,6 +1569,7 @@
       </objects>
     </objects>
     <objects name="_people_and_places">
+      <object>objects\obj_test_npc</object>
       <object>objects\obj_mortal</object>
       <object>objects\obj_player</object>
       <object>objects\obj_npc</object>
@@ -1556,9 +1590,9 @@
       </objects>
       <object>objects\obj_player_start</object>
       <object>objects\obj_waypoint</object>
-      <object>objects\obj_test_npc</object>
       <object>objects\obj_torpedo_pod</object>
       <object>objects\obj_torpedo_pod_BACKUP</object>
+      <object>objects\obj_npc_icon</object>
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
@@ -1613,6 +1647,7 @@
         <object>objects\obj_workstation</object>
         <object>objects\obj_room_reactor</object>
         <object>objects\obj_crate</object>
+        <object>objects\obj_stage</object>
         <object>objects\obj_cover</object>
         <object>objects\obj_door</object>
         <object>objects\obj_door_exit_spc</object>
@@ -1621,8 +1656,16 @@
         <object>objects\obj_viewscreen_decor</object>
         <object>objects\obj_table</object>
         <object>objects\obj_galley_table</object>
+        <object>objects\obj_drink</object>
+        <object>objects\obj_airlock</object>
+        <object>objects\obj_docked_ship</object>
+        <object>objects\obj_dock_junk</object>
       </objects>
       <object>objects\obj_da_loot</object>
+      <objects name="random_locations">
+        <object>objects\obj_starport</object>
+        <object>objects\obj_starport_test</object>
+      </objects>
     </objects>
     <objects name="_light">
       <object>objects\obj_glare_controller_ORIGINAL</object>
@@ -1726,8 +1769,9 @@
       <room>rooms\room_glare_init</room>
     </rooms>
     <room>rooms\rm_landing_menu</room>
+    <room>rooms\rm_test</room>
   </rooms>
-  <constants number="379">
+  <constants number="383">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -1878,6 +1922,7 @@
     <constant name="LOC_ATTITUDE">22</constant>
     <constant name="LOC_ETHICS">23</constant>
     <constant name="LOC_ATMOSPHERE">24</constant>
+    <constant name="LOC_SERVICES">25</constant>
     <constant name="MISSION_DESCRIP">2</constant>
     <constant name="MISSION_END_LOCATION">5</constant>
     <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
@@ -2107,6 +2152,9 @@
     <constant name="WALL">-6</constant>
     <constant name="GX_GRIDSIZE">128</constant>
     <constant name="GX_MAGNITUDE">2</constant>
+    <constant name="BARBACK">-8</constant>
+    <constant name="BG_BARTOP">-9</constant>
+    <constant name="BG_PLATFORM">-10</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

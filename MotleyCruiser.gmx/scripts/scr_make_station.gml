@@ -37,4 +37,5 @@ map[LOC_ECON_OFFSET] = irandom(global.commodity_lib_count -1);
 map[LOC_CONDITION]=choose("good","bad");
 map[LOC_ATTITUDE]=choose("good","bad","mixed");
 map[LOC_DESCRIPTION]=scr_station_description_generator(map);
+map[LOC_SERVICES]=scr_loc_add_services();
 return map;

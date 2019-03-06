@@ -265,6 +265,15 @@ enum terrains{
 enum biolevel{
     microbe,plant,animal
 }
+enum services{
+    trade,
+    ship_repair,
+    ship_sales,
+    band,
+    gambling,
+    loan_shark,
+    black_market  
+}
 // Economy Matrix
 global.e_matrix=noone;// Economy matrix. Provides the value of products based on the current economy and the economy of origin
 global.e_matrix[CC_AGRICULTURE,CC_AGRICULTURE]=1.00;

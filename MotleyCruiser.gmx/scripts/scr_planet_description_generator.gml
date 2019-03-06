@@ -130,7 +130,7 @@ if(settlement){
     }else if(economy==CC_INDUSTRIAL){
         econ1=choose("This "+ scr_array_random(bodyNames)+" has an industrial economy.","Most industry here involves manufacturing and the refining of fuel and chemicals.");
     }else if(economy==CC_TECH){
-        econ1=choose("This plan"+ scr_array_random(bodyNames)+"et has a tech economy, producing electronics and medicine.");
+        econ1=choose("This "+ scr_array_random(bodyNames)+" has a tech economy, producing electronics and medicine.");
     }else{
         econ1="";
     }

@@ -6,4 +6,4 @@ var yy = argument[1];
 var pspeed = argument[2];
 if( mp_grid_path(global.grid_path, path, x, y, xx, yy, true) ){
     path_start(path, pspeed, path_action_stop, false);
-}
+} 

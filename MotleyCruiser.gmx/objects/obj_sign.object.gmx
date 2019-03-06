@@ -29,6 +29,7 @@
 ww=0;
 hh=0;
 set=false;
+drawbg = true;
 </string>
           </argument>
         </arguments>
@@ -80,7 +81,10 @@ if(!set &amp;&amp; sprite_index!=noone){
           <argument>
             <kind>1</kind>
             <string>/// Draw back
-draw_sprite_ext(spr_signback,0,x,y,ww,hh,0,c_white,1);
+if(drawbg){
+    draw_sprite_ext(spr_signback,0,x,y,ww,hh,0,c_white,1);
+}
+
 draw_self();
 </string>
           </argument>

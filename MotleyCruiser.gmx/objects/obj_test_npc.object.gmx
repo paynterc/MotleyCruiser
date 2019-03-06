@@ -26,6 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+/****
+Place this in a test room to view random npc creation.
+*****/
 
 
 x1 = room_width/2;

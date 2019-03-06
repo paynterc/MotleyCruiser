@@ -6,8 +6,8 @@ var x1=0;
 var y1=0;
 var w1=0;
 var clr=noone;
-var min_width = sprite_get_width(spr_planet) * 2;
-var max_width = sprite_get_width(spr_planet) * 4;
+var min_width = sprite_get_width(spr_planet_clr) * 3;
+var max_width = sprite_get_width(spr_planet_clr) * 6;
 
 var sector = noone;
 sector[0]=argument0;
