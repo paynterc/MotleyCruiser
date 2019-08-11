@@ -34,6 +34,7 @@ faction=FACTION_NEUTRAL;// Bullet collisions ccmpare bullet.type to faction of i
 name="mortal";
 disposition=DISPOSITION_NEUTRAL;
 _state=1;// 1 active, 0 static (not playable)
+
 </string>
           </argument>
         </arguments>
@@ -57,20 +58,47 @@ _state=1;// 1 active, 0 static (not playable)
           <argument>
             <kind>1</kind>
             <string>//Apply damage
-if(_state==1){
-    if(other.type!=faction){
     
-        instance_create(other.x,other.y,obj_impact);
-        hp_current -= other.damage;
-        if(!other.pierce_living){
-            with(other){
-                instance_destroy();
-            }
+if( other.type!=faction &amp;&amp; !other.cooling_down){
+
+    instance_create(other.x,other.y,obj_impact);
+    hp_current -= other.damage;
+    if(!other.pierce_living){
+        with(other){
+            instance_destroy();
+        }
+    }else{
+        with(other){
+            event_user(0);// set cooldown
         }
     }
-
+    event_user(2);
 }
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Extra actions on hit. Ovewrite
 </string>
           </argument>
         </arguments>

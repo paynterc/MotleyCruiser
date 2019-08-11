@@ -1,5 +1,5 @@
 /// scr_loc_add_services()
-var S = scr_array(trade);// Always have trade
+var S = scr_array(services.trade);// Always have trade
 
 var chance=2;
 if(irandom(chance)==chance){

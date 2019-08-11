@@ -72,6 +72,7 @@ path = path_add();
 targetK = noone;// Target to shoot
 targetM = noone;// Target to move to
 targetKtype = obj_mortal;// Look for this object to shoot
+targetKfaction = noone;// exmple: FACTION_PLAYER. Target kill faction. look for this faction within the targetKtype object.
 targetMtype = noone;// Look for this kind of object to move to. obj_player or obj_core
 pxK = noone;// Pathing x
 pyK = noone;// Pathing y
@@ -79,7 +80,7 @@ pxM = noone;// Pathing x
 pyM = noone;// Pathing y
 bullet_width=1; // Use this to add to range. Useful for melee weapons with short range but big bullets.
 ispeed = 0.5;// Animation speed
-dDistance = 50;// Stop at this distance from the object I'm defending.
+dDistance = 64;// Stop at this distance from the object I'm targeting.
 dDistanceSave = dDistance;// We may change dDistance. Use this to hold the original value.
 targetKinView =false;// Can I see my target on screen
 custom_sprite=noone;// Set this so we can delete the sprite if needed
@@ -89,6 +90,21 @@ var wp1 = scr_array(x,y);
 waypoints[0]=wp1;
 wpIndex = 0;
 sprite_set=false;//wait a sec before creating the sprite. doing it at create causes problems.
+
+kb_dir = 0;
+kb_spd = 0;// knockback speed
+
+lng_dir = 0;
+lng_spd = 0;// lunge speed
+
+
+interact_active = true;// Will this do anything when the player approaches?
+interact_ready = false;// switch to true when player gets close enough
+minrange = 32;
+interact_sprite = spr_npc_icon;
+interact_text = "E";
+display_side = "top";// Where to show the icon
+xMod=0;yMod = -1;// Use to position icon
 
 
 default_weapon = obj_gun;
@@ -175,6 +191,32 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
     sprite_delete(custom_sprite);
 }
 ***/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Turn off Knockback
+
+kb_dir = 0;
+kb_spd = 0;
 </string>
           </argument>
         </arguments>
@@ -291,8 +333,7 @@ alarm[2]=room_speed * random(2);
 targetKinView = false;
 
 if(!global.paused){
-
-        
+    
     if(mode=="defend"){
     
         showHealth=true;
@@ -303,7 +344,8 @@ if(!global.paused){
          
         // This should be the target to defend.    
         scr_npc_move_to_target();
-        scr_npc_fire_at_target();         
+        scr_npc_fire_at_target();   
+              
     
     }else if(mode=="follow"){
     
@@ -326,7 +368,7 @@ if(!global.paused){
     }else if(mode=="hunt"){
     
         showHealth=true;
-        scr_npc_find_kill_target();        
+        scr_npc_find_kill_target();   
         if(targetK!=noone){
             targetM=targetK;
         }else{
@@ -338,13 +380,7 @@ if(!global.paused){
         scr_npc_move_to_target();
         scr_npc_fire_at_target();
         
-        if(instance_exists(weapon)){
-            if(weapon.shooting){
-                path_end();
-                image_speed = 0;
-                image_index = 0;
-            }
-        }
+
 
                 
     }else if(mode=="patrol"){
@@ -463,6 +499,13 @@ if(hp_current&lt;1){
         scr_drop_loot(1,3,'npc');
     }
 
+    if(instance_exists(weapon)){
+        with(weapon){
+            parent_obj = noone;
+            instance_destroy();// Remove the old weapon
+        }
+        weapon = noone;
+    }
     
     instance_destroy();
     
@@ -516,12 +559,125 @@ if(mode!="idle" &amp;&amp; mode!="discourse"){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Weapon position
+            <string>/// Debug text
+    draw_set_color(c_lime);
+    
+    if(global.paused){
+        //draw_set_valign(fa_center);
+        //draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
+    }
 
+    
+
+    /***
+    draw_text(96, 64, "D WIDTH: " + string(display_get_width()));
+    draw_text(96, 96, "D height: " + string(display_get_height()));
+    
+    draw_text(96, 128, "G WIDTH: " + string(display_get_gui_width()));
+    draw_text(96, 160, "G height: " + string(display_get_gui_height()));
+    
+    draw_text(96, 192, "W WIDTH: " + string(window_get_width()));
+    draw_text(96, 224, "W height: " + string(window_get_height()));
+    
+    draw_text(96, 256, "VP WIDTH: " + string(view_wport[0]));
+    draw_text(96, 288, "VP height: " + string(view_hport[0]));
+    
+    draw_text(96, 352, "V WIDTH: " + string(view_wview[0]));
+    draw_text(96, 384, "V height: " + string(view_hview[0]));
+***/
+    
+    /***
+    if(instance_exists(obj_planet_surface)){
+            draw_text(48, 64, "Room index x: " + string(global.planet_room_index_x) );
+            draw_text(48, 96, "Room index y: " + string(global.planet_room_index_y) );
+            draw_text(48, 128, "planet seed: " + string(global.planet_seed) );
+            draw_text(48, 160, "room seed: " + string(obj_planet_surface.seed) );
+    }
+    ***/
+/****
+    draw_text(48, 64, "D WIDTH: " + string(display_get_width()));
+    draw_text(48, 96, "D height: " + string(display_get_height()));
+    
+    draw_text(48, 128, "G WIDTH: " + string(display_get_gui_width()));
+    draw_text(48, 160, "G height: " + string(display_get_gui_height()));
+    
+    draw_text(48, 192, "W WIDTH: " + string(window_get_width()));
+    draw_text(48, 224, "W height: " + string(window_get_height()));
+    
+
+    if(instance_exists(obj_player_ship)){
+        draw_text(32, 64, "Decks: " + string(global.decks));
+        draw_text(32, 64, "Current Deck: " + string(global.deck_current));
+        draw_text(32, 96, "Mass: " + string(obj_player_ship.mass));
+        draw_text(32, 128, "MaxFwd: " + string(obj_player_ship.max_spd_fwd));
+        draw_text(32, 140, "EN: " + string(obj_player_ship.energy_regen_points));
+    }
+***/
+   
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Weapon position
+/*** updating this in the weapon now
 if(instance_exists(weapon)){
     weapon.x = x;
     weapon.y = y;
     weapon.depth=depth -1;
+}
+***/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Step movement: Knockback, Lunge
+if(kb_spd&gt;0 &amp;&amp; mode != "lunging"){
+    // Knockback
+    var kbX = lengthdir_x(kb_spd, kb_dir);
+    var kbY = lengthdir_y(kb_spd, kb_dir);
+            
+    scr_move(kbX, kbY,1);// move using mp grid
+    
+}
+if(lng_dir&gt;0){
+    // Knockback
+    var lngX = lengthdir_x(lng_spd, lng_dir);
+    var lngY = lengthdir_y(lng_spd, lng_dir);
+            
+    scr_move(lngX, lngY,1);// move using mp grid
 }
 </string>
           </argument>
@@ -592,10 +748,11 @@ if(global.paused){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set sprite
-if(!sprite_set){
-    sprite_set = true;
-    event_user(1);
+            <string>/// Check player distance to show interact icon
+if(mode == "discourse" &amp;&amp; instance_exists(obj_player)){
+    interact_ready = ( point_distance(x,y,obj_player.x,obj_player.y) &lt;= minrange &amp;&amp; interact_active );
+}else{
+    interact_ready = false;
 }
 </string>
           </argument>
@@ -651,7 +808,7 @@ scr_move(hspd, vspd);
           <argument>
             <kind>1</kind>
             <string>/// Apply damage. Set mode.
-if(other.type!=faction){
+if(other.type!=faction &amp;&amp; !other.cooling_down){
 
     instance_create(other.x,other.y,obj_impact);
     hp_current -= other.damage;
@@ -672,6 +829,20 @@ if(other.type!=faction){
         with(other){
             instance_destroy();
         }
+    }else{
+        with(other){
+            event_user(0);// set bullet cooldown
+        }
+    }
+    
+    // Knockback
+    if(other.kb_pwr &gt; 0 &amp;&amp; kb_spd==0){
+        path_end();
+
+        kb_dir = other.direction;
+        kb_spd = other.kb_pwr;
+        // Set an alarm to turn off knockback
+        alarm[4] = room_speed * .15;  
     }
     
 }
@@ -699,6 +870,7 @@ if(other.type!=faction){
           <argument>
             <kind>1</kind>
             <string>/// Make sprite
+// Doing this in draw step now. Could delete this user event
 sprite_set = true;
 scr_set_npc_sprite();
 
@@ -854,7 +1026,77 @@ if(irandom(odds)==odds){
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="73">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw interact key icon
+if(interact_ready){
+    draw_sprite(interact_sprite,0,x +(sprite_height*xMod),y + (sprite_height*yMod));
+    draw_set_color(c_black);
+    draw_set_valign(fa_middle);
+    draw_set_halign(fa_center);
+    draw_set_font(fnt_menus_med);
+    draw_text(x +(sprite_height*xMod),y + ( (sprite_height+2) *yMod),interact_text);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set sprite
+if(!sprite_set){
+    sprite_set = true;
+
+    scr_set_npc_sprite();
+    
+    /// Make an icon
+    if(is_trader){
+        var merchantIcon = instance_create(x,y-sprite_height,obj_npc_icon);
+        merchantIcon.sprite_index = spr_trade_icon;
+        merchantIcon.myNpc = self;
+        merchantIcon.yOffset = sprite_height * -1;
+    }else if(is_shipwright){
+        var merchantIcon = instance_create(x,y-sprite_height,obj_npc_icon);
+        merchantIcon.sprite_index = spr_shipwright_icon;
+        merchantIcon.myNpc = self;
+        merchantIcon.yOffset = sprite_height * -1;
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>

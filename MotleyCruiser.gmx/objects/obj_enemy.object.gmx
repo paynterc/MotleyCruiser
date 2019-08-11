@@ -51,6 +51,7 @@ bullet_width=1; // Use this to add to range. Useful for melee weapons with short
 
 faction=FACTION_NEUTRAL;
 disposition=DISPOSITION_HOSTILE;
+targetKfaction = noone;
 type = faction;// type is still used in some logic. Usually set to faction.
 weapon = noone;
 
@@ -277,40 +278,6 @@ var dir = point_direction(other.x, other.y, x, y);
 var hspd = lengthdir_x(.5,dir);
 var vspd = lengthdir_y(.5,dir);
 scr_move(hspd, vspd);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="obj_damager">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if(other.type!=type){
-
-    var impact = instance_create(other.x,other.y,obj_impact);
-    //impact.image_blend = c_red;
-    hp_current -= other.damage;
-    if(!other.pierce_living){
-        with(other){
-            instance_destroy();
-        }
-    }
-}
-
 </string>
           </argument>
         </arguments>

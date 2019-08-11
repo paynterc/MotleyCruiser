@@ -34,6 +34,8 @@ drawsprite=true;
 image_speed = .25;
 turn_spd=0;
 stepFrame=0;
+faction=noone;
+
 
 </string>
           </argument>

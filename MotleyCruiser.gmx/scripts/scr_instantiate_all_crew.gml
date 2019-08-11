@@ -23,7 +23,8 @@ for(var i=0; i<array_length_1d(global.crew); i++){
         }  
         faction = FACTION_PLAYER;      
     }
-
+    thiscrew.pspeed=obj_player.spd;
+    thiscrew.pspeed_init = obj_player.spd;
     thiscrew.crew_index = i;//Keep track of which crewmember this is, in case he dies.
     thiscrew.mode="follow";
     thiscrew.targetMtype=obj_player;// Object to move to.

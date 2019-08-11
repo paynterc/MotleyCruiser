@@ -1,5 +1,5 @@
 /***
-Assumes targetKtype, targetK, targetKinView, weapon, pxK, pyK, faction
+Assumes targetKtype, targetK, targetKinView, weapon, pxK, pyK, faction, targetKfaction
 
 CREW NPCS LOOK FOR DISPOSITION HOSTILE, NOT JUST FACTION.
 ***/
@@ -11,10 +11,17 @@ CREW NPCS LOOK FOR DISPOSITION HOSTILE, NOT JUST FACTION.
 if(targetK==noone || !instance_exists(targetK) || point_distance(x,y,targetK.x,targetK.y) > 200){
     
     if(instance_exists(targetKtype)){
-        if(faction!=FACTION_PLAYER){
-            targetK = scr_get_closest_notfaction(targetKtype,self);
+        if(faction != FACTION_PLAYER){
+            // Make sure there is a faction we're looking for, otherwise the NPC could target any other faction.
+            if(targetKfaction!=noone){
+                targetK = scr_get_closest_notfaction(targetKtype,self,-1,targetKfaction);
+            }else{
+                targetK = noone;
+            }
+            
         }else{
             targetK = scr_get_closest_hostile(targetKtype,self);
+            var checkpoint = 1;
         }
     }            
 }

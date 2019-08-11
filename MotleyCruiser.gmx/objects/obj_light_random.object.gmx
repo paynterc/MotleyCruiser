@@ -27,8 +27,7 @@
             <kind>1</kind>
             <string>/// Init
 var clr = choose(c_red,c_green,c_blue,c_yellow,c_orange,c_white,c_lime);
-my_light = glr_light_create(spr_glr_light_mask_point, 0, x, y, clr, random(.5));
-glr_light_set_static(my_light, true);
+my_light = glr_lightsimple_create(spr_glr_light_mask_point, 0, x, y, clr, random(.5), 1);
 </string>
           </argument>
         </arguments>

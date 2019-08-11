@@ -326,7 +326,7 @@ if(zoom){
     global.paused = true;
     //scr_view_zoom(-.10,0);
     if(view_wview[0]&lt;100){
-        room_goto(rm_ship_deck_rnd);
+        //room_goto(rm_ship_deck_rnd);
     }
 }
 </string>

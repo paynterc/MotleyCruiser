@@ -139,10 +139,6 @@ if(path_exists(path)) {
             <kind>1</kind>
             <string>/// Update sublight
 var crewMap = global.crew[crew_index];
-if(crewMap[NPC_RACE_INDEX]==4){
-    //sublight = glr_light_create(spr_androne_eyes,0,x,y,c_red,5);
-    //glr_light_set_static(sublight,true);
-}
 </string>
           </argument>
         </arguments>

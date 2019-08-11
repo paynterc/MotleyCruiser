@@ -23,6 +23,7 @@ var npc_data = scr_gx_make_npc(global.sector_x,global.sector_y);
 newEnemy.npc_data = npc_data;
 with(newEnemy){
     scr_npc_map_to_object();
+    default_weapon = choose(obj_singularity_gun);
 }
 
 // Set a random mode if none given
@@ -31,21 +32,24 @@ if(set_mode== noone){
     var oddsMode = 5;
     var modRnm = irandom(oddsMode);
     if(modRnm==1){
-        set_mode = "hold";                
+        set_mode = "hunt";                
     }else{
         set_mode = "patrol";           
     }
 }
 
-newEnemy.mode = set_mode;
 newEnemy.disposition = DISPOSITION_HOSTILE;
+newEnemy.faction = FACTION_HOSTILE;
+newEnemy.targetKfaction = FACTION_PLAYER;
+newEnemy.mode = set_mode;
 
 if(newEnemy.mode=="defend"){
     newEnemy.targetMtype = obj_core;
 }
 
+
 with(newEnemy){
-    event_user(0);
+    event_user(0);// Draw weapon
 }
 
 return newEnemy;

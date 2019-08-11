@@ -42,6 +42,7 @@
             <string>lifespan=0;
 lifelimit=3;
 
+depth = depths.bullet;
 </string>
           </argument>
         </arguments>
@@ -90,9 +91,8 @@ if(scr_grid_place_meeting(x,y)){
     //image_angle=direction;
 }
 
-
-
-
+// Draw this above the shadow object
+depth = depths.bullet;
 </string>
           </argument>
         </arguments>

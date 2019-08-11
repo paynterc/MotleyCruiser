@@ -33,7 +33,7 @@ if(instance_exists(obj_room_level)){
 ***/
 image_xscale = 0.5;
 image_yscale = 0.5;
-depth=-10000;
+depth= depths.explosion;
 </string>
           </argument>
         </arguments>
@@ -60,6 +60,7 @@ depth=-10000;
 image_xscale+=.15;
 image_yscale+=.15;
 //image_alpha -= .05;
+depth= depths.explosion;
 if(image_xscale&gt;1){
     instance_destroy();
 }

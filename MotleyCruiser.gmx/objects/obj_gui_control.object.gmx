@@ -44,6 +44,8 @@ for(var i=0; i&lt;4; i++){
     btn[BTN_H]=32;
     eButtons[i]=btn;
 }
+
+grotation=0;// Gun rotation. Used for debug text
 </string>
           </argument>
         </arguments>
@@ -473,6 +475,12 @@ if(room == rm_space){
     }
     draw_text(gui_width-32, gui_height-16, string(fps_real) + " :FPS Real");
     draw_set_colour(c_lime);
+    
+    if(debug_mode){
+        draw_text(gui_width-32, gui_height-48, string(global.base_bullet_speed) + " :Base Bullet Speed");
+        draw_text(gui_width-32, gui_height-80, string(global.base_fire_rate) + " :Base Fire Rate");
+        draw_text(gui_width-32, gui_height-112, string(grotation) + " :G Rotation");
+    }
 </string>
           </argument>
         </arguments>

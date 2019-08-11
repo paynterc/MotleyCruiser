@@ -25,10 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>glr_light_set_position(obj_room_level.boom_light, x , y);
-glr_light_set_active(obj_room_level.boom_light,true);
+            <string>
 image_blend = c_orange;
-depth=-10000;
+depth=depths.explosion;
 </string>
           </argument>
         </arguments>
@@ -54,6 +53,7 @@ depth=-10000;
             <string>image_xscale+=.5;
 image_yscale+=.5;
 image_alpha -= .05;
+depth= depths.explosion;
 if(image_xscale&gt;10){
     instance_destroy();
 }

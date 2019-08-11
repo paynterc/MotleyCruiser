@@ -29,18 +29,44 @@
 inv_id = noone;// Inventory id
 inv_amount = noone; // Amount of inventory to grant
 credits = noone; // Credits to grant
+commodity_id = noone;// Commodities like water and fuel go in the cargo hold
 
 sprite_default = spr_ItemIcon_CrystalGoldStone;
 sprite = sprite_default; //default
 sprite_index = sprite;
 image_speed = 0.025;
+sprite_set = false;
 
-r = random(400);
+r = random(400);// used for the float animation in Draw
+//time = 60;
+cooldown = false;// Cooldown if user fails pickup
+cooldownT = 3;// Cooldown time
 
-time = 60;
 
-lootlight = glr_lightsimple_create(spr_glr_light_mask_point,0,x,y,c_white,1,0);
-glr_lightsimple_set_scaling(lootlight,.35,.35);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Unset cooldown
+cooldown = false;
 </string>
           </argument>
         </arguments>
@@ -64,10 +90,19 @@ glr_lightsimple_set_scaling(lootlight,.35,.35);
           <argument>
             <kind>1</kind>
             <string>/// Set sprite
-if (inv_id != noone &amp;&amp; sprite==sprite_default){
-   sprite = item_id_read(inv_id,2);
-   sprite_index = sprite
+if(!sprite_set){
+    sprite_set = true;
+    if (inv_id != noone ){
+       sprite = item_id_read(inv_id,2);
+       sprite_index = sprite
+    }else if(commodity_id!=noone){
+        sprite = scr_commodity_lib_read(commodity_id,2);
+        sprite_index = sprite
+    }else{
+        sprite = sprite_default;
+    }
 }
+
 </string>
           </argument>
         </arguments>
@@ -91,13 +126,14 @@ if (inv_id != noone &amp;&amp; sprite==sprite_default){
           <argument>
             <kind>1</kind>
             <string>/// LOOOT!
-
+if(cooldown){
+    exit;
+}
 if(credits!=noone){
     global.credits += credits;
     audio_play_sound(snd_pickup_credit,2,0);
-}
-
-if(inv_id != noone){
+    instance_destroy();
+}else if(inv_id != noone){
 
     if(inv_id == 42)
     {
@@ -113,11 +149,28 @@ if(inv_id != noone){
     }
       
     audio_play_sound(snd_pickup,2,0);
+    instance_destroy();
+}else if(commodity_id!=noone){
+    var rem = scr_cargo_add(commodity_id, inv_amount);
+    if(rem&lt;1){
+        audio_play_sound(snd_pickup,2,0);
+        instance_destroy();
+    }else if(rem&lt;inv_amount){
+        audio_play_sound(snd_pickup,2,0);
+        cooldown = true;
+        alarm[0]=cooldownT * room_speed;
+    }else{
+        audio_play_sound(snd_fail,2,0);
+        cooldown = true;
+        alarm[0]=cooldownT * room_speed;
+    }
+
+}else{
+    // Do nothing
 }
 
-glr_lightsimple_destroy(lootlight);
 
-instance_destroy();
+
 </string>
           </argument>
         </arguments>

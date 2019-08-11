@@ -2,6 +2,8 @@
 Calculates impact of all economy types in the sector. 
 i.e., Having too many agrarian economies will lower the value
 of agrarian goods.
+
+TODO: I believe we can delete this script as well as all references to global.landed_type. Economy is created when the sector is populated.
 ***********/
 //scr_trade_sector_economy(exclude_landed)
 var exclude_landed = argument0;// boolean

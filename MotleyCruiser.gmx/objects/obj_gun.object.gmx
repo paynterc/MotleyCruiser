@@ -28,23 +28,26 @@
             <string>myBullet = obj_bullet;
 bullet_sprite = spr_bullet_3;
 damage = 1;
-weaponSpeed = .15;
+weaponSpeed = global.base_fire_rate;
 shooting = false;
 cooling_down = false;
 destroy = false; //Destroy myself
 type=0 //SET THIS TO THE OWNERS FACTION
-bullet_speed = 10;
+bullet_speed = global.base_bullet_speed;
 range=400;
 gun_sound=snd_hellfury;
 inventory_id=noone;// Refers to inventory item library
 parent_obj = noone;// Who is holding the weapon
+spread = 5;// Accuracy
+kb_pwr = 3;// Knockback power
 
+my_fire_rate_mod = 1;// Modify stats for gun
+my_bullet_speed_mod = 1;
+
+user_fire_rate_mod = 1;// If player if firing, make this faster
+user_bullet_speed_mod = 1;
 
 image_speed = .05;
-
-llight = glr_light_create(spr_glr_light_mask_9, 0, x, y, c_red, 5);
-glr_light_set_static(llight, true);
-glr_light_set_active(llight,false);
 
 
 
@@ -77,6 +80,35 @@ cooling_down=false;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update position to parent
+if(parent_obj!=noone)
+{
+    x = parent_obj.x;
+    y = parent_obj.y;
+    depth=parent_obj.depth -1;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -94,12 +126,11 @@ cooling_down=false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Set position, destroy
-glr_light_set_position(llight, x + lengthdir_x(0,image_angle), y + lengthdir_y(0,image_angle));
-glr_light_set_rotation(llight,image_angle);
-if(destroy){
-    glr_light_destroy(llight);
-    instance_destroy();
+            <string>/// Shoot
+if(shooting &amp;&amp; !cooling_down &amp;&amp; !global.paused){
+    cooling_down=true;
+    alarm[0] = room_speed * (global.base_fire_rate * my_fire_rate_mod * user_fire_rate_mod);// unset cooldown
+    event_user(0); 
 }
 </string>
           </argument>
@@ -121,24 +152,52 @@ if(destroy){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Shoot
-if(shooting &amp;&amp; !cooling_down &amp;&amp; !global.paused){
-    cooling_down=true;
-    alarm[0] = room_speed * weaponSpeed;// unset cooldown
-    //glr_lightsimple_set_active(llight,true);
-    bullet = instance_create(x,y,myBullet);
-    bullet.type = type;
-    bullet.depth = -200;
-    bullet.direction = image_angle;
-    bullet.image_angle = image_angle;
-    bullet.speed = bullet_speed;    
-    bullet.damage = damage;
-    bullet.firedby = parent_obj; 
-    if(bullet_sprite!=noone){
-        bullet.sprite_index=bullet_sprite;
-    }
-    audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2); 
+            <string>/// Image angle and xscale
+if(image_angle &gt; 90 &amp;&amp; image_angle&lt;270){
+    image_yscale = -1;
+
+}else{
+    image_yscale = 1;
+
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Fire bullets - overwrite
+var ePtX = x + lengthdir_x(sprite_width - 4,image_angle);
+var ePtY = y+ lengthdir_y(sprite_width - 4,image_angle);
+bullet = instance_create(ePtX, ePtY, myBullet)
+bullet.type = type;
+bullet.depth = -200;
+bullet.direction = image_angle + irandom_range(spread * -1, spread);
+bullet.image_angle = bullet.direction;
+bullet.speed = global.base_bullet_speed * my_bullet_speed_mod * user_bullet_speed_mod;    
+bullet.damage = damage;
+bullet.kb_pwr = kb_pwr; // Knockback power
+bullet.firedby = parent_obj; 
+if(bullet_sprite!=noone){
+    bullet.sprite_index=bullet_sprite;
+}
+audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2); 
 </string>
           </argument>
         </arguments>

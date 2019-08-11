@@ -33,7 +33,7 @@ if(question==0){
         
     }else{
         // No
-        alarm[1]=room_speed*2;// Back to question 0.                
+        scr_dlg_end_dialogue();                
     }
 }else if(question==2){
     // Question 2. Manufacture fuel?
@@ -59,7 +59,7 @@ if(question==0){
         
     }else{
         // No
-        alarm[1]=room_speed*2;// Back to question 0.                
+        scr_dlg_end_dialogue();                
     }
 }else if(question==3){
     // Question 3. Abandon ship?
@@ -68,7 +68,7 @@ if(question==0){
         scr_dlg_end_dialogue();
     }else{
         // No
-        alarm[1]=room_speed*2;// Back to question 0.                
+        scr_dlg_end_dialogue();                
     }
 }else{
     scr_dlg_end_dialogue();

@@ -1,286 +1,32 @@
-/// instantiate objects based on SEED
-var sx = global.sector_x;
-var sy = global.sector_y;
-var gxindex = 0; // Use this to generate a dsmap index for each location.
-var gxkey;
+/// scr_populate_sector()
+/*****
+Generate data for the sector if none exists
+Instantiate persistent objects based on data
+Generate new random elements like npc ships
 
+*****/
 
-var sector_key = "x"+string(sx)+"y"+string(sy)+"~seed";
-var sector_seed = ds_map_find_value(global.galaxy,sector_key);
-if(is_undefined(sector_seed)){
-    // We haven't been here yet. Create a new sector and add it to the map.
-    randomize();
-    ds_map_add(global.galaxy, sector_key, random_get_seed());
-                
-}else{
-    random_set_seed(sector_seed);
-}
+scr_generate_sector();
+scr_instantiate_sector();
 
+global.sector_map=scr_galaxy_map_find_sector(global.sector_x,global.sector_y);
 
-
-
-// ECONOMY. Just a count of each type of economy in the sector:
-// agriculture, mining, industrial, tech
-global.sector_economy = noone;
-global.sector_economy = scr_array(0,0,0,0);// Set all counts to zero.
-global.sector_map=scr_galaxy_map_find_sector(sx,sy);
-global.sector_landable_count=0;
-
-
-var curdepth = 1000;
-
-var c;// count of suns
-var sun, moon, planet, station;// data arrays
-var sun_obj, moon_obj, planet_obj, station_obj;// instantiated objects
-
-/*********************
-RANDOM STUFF HAPPENS HERE. CHANGE IT AT YOU'RE OWN RISK!!!!!!!!
-***************/
-
-if(sx == 0 && sy == 0){
-    // Home sector
-    
-    var center_x = global.sector_width/2;
-    var center_y = global.sector_width/2;
-
-    c = irandom(3);
-    // Home system
-    sun = scr_make_sun(sx,sy);
-    var sw = sprite_get_width(spr_sun) * 3;
-    sun[SUN_X1]=center_x-(sw/2);
-    sun[SUN_Y1]=center_y-(sw/2);
-    sun[SUN_W1]=sw;
-
-    sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
-    sun_obj.data = sun;
-    with(sun_obj){
-        var size_mod = data[SUN_W1] / sprite_get_width(spr_sun); 
-        image_xscale = size_mod;
-        image_yscale = size_mod;
-        image_blend = data[SUN_COLOR];
-        depth = curdepth;
-        faction = FACTION_NEUTRAL;
-    }
-    
-    
-
-    planet = scr_make_moon(sx,sy,gxindex);
-    planet[LOC_TYPE]=GX_PLANET;
-    planet[LOC_X1]=center_x;
-    planet[LOC_Y1]=center_y;
-    planet[LOC_W1]=sprite_get_width(spr_planet) * 2;
-    planet[LOC_ECONOMY]=CC_AGRICULTURE;
-    planet[LOC_TERRAIN]=terrains.forest;
-    planet[LOC_IMAGE_DATA]=scr_planet_imagedata_generator(planet);
-    planet[LOC_DESCRIPTION]=scr_planet_description_generator(planet);
-    
-    planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
-    planet_obj.data = planet;
-    
-    with(planet_obj){
-        var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
-        image_xscale = psize_mod;
-        image_yscale = psize_mod;                
-        depth = curdepth;
-        global_index = planet[LOC_INDEX];                  
-        global_type = "";
-        faction = FACTION_NEUTRAL;
-        name = planet[LOC_NAME];
-        drawReady=true;
-    }
-    
-    /***
-    station = scr_make_station(sx,sy,gxindex);
-    station[LOC_TYPE]=GX_STATION;
-    station[LOC_X1]=center_x;
-    station[LOC_Y1]=center_y;
-    station[LOC_W1]=sprite_get_width(spr_) * 2;
-    station[LOC_ECONOMY]=CC_AGRICULTURE;
-    station[LOC_DESCRIPTION]=scr_station_description_generator(station);
-    station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
-    station_obj.data = station;
-    with(station_obj){
-               
-        depth = curdepth;
-        global_index = station[LOC_INDEX];                  
-        global_type = "station";
-        faction = FACTION_NEUTRAL;
-        name = station[LOC_NAME];
-        event_user(0);// apply vars
-        event_user(1);
-    }
-    global.sector_economy[station[LOC_ECONOMY]] += 1;
-    ***/
-    
-    global.sector_economy[CC_AGRICULTURE] += 1;
-    
-    gxindex++;
-    
-    global.sector_landable_count=1;
-    
-}else{
-
-    var mainLandable = false;// We will have one landable place at the center of the map. Keep track of whether we have placed it yet using this variable.
-    // Add suns
-    c = irandom(3);
-    
-    for(var i=0; i<c; i++){
-      sun = scr_make_sun(sx,sy);
-        sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
-        sun_obj.data = sun;
-        with(sun_obj){
-            var size_mod = data[SUN_W1] / sprite_get_width(spr_sun); 
-            image_xscale = size_mod;
-            image_yscale = size_mod;
-            image_blend = data[SUN_COLOR];
-            depth = curdepth;
-            faction = FACTION_NEUTRAL;
-        }
-        gxindex++;
-    }
-    var LL = 3; //landable limit
-    var system_landables = irandom(LL);
-    
-    show_debug_message("total suns: " + string(c));
-    show_debug_message("total landables: " + string(system_landables));
-    
-    var canMakeMoon=false;
-    // There won't be planets or moons if there are no suns
-    if(c>0){ 
-        // Add planets
-        c = irandom(system_landables);
-        canMakeMoon=true;
-        for(var i=0; i<c; i++){
-            planet = scr_make_planet(sx,sy,gxindex);
-            show_debug_message("make planet");
-            if(!mainLandable){
-                mainLandable=true;
-                planet[LOC_X1] = global.sector_width/2;
-                planet[LOC_Y1] = global.sector_width/2;
-            }
-            
-            planet_obj = instance_create(planet[LOC_X1],planet[LOC_Y1],obj_planet);
-            planet_obj.data = planet;
-            
-            /***
-            if(!scr_gx_loc_exists(sx,sy,gxindex)){
-                scr_gx_loc_array_to_map(planet);// Insert to global.gx_locations
-            }
-            ***/
-            
-            with(planet_obj){
-                var psize_mod = planet[LOC_W1] / sprite_get_width(spr_planet); 
-                image_xscale = psize_mod;
-                image_yscale = psize_mod;                  
-                depth = curdepth;
-                global_index = planet[LOC_INDEX];                  
-                global_type = "planet";
-                faction = FACTION_NEUTRAL;
-                name = planet[LOC_NAME];
-                drawReady=true;
-            }
-            global.sector_economy[planet[LOC_ECONOMY]] += 1;
-            gxindex++;
-            
-        }
-        
-        system_landables-=c;      
-        if(system_landables>0 && canMakeMoon){
-            // Add moons
-            c = irandom(system_landables);
-            for(var i=0; i<c; i++){
-                moon = scr_make_moon(sx,sy,gxindex);
-                show_debug_message("make moon");
-                if(!mainLandable){
-                    mainLandable=true;
-                    moon[LOC_X1] = global.sector_width/2;
-                    moon[LOC_Y1] = global.sector_width/2;
-                }
-                // Using obj_planet here because it has code to create the sprite. Basically the same thing as a moon, just different data.
-                moon_obj = instance_create(moon[LOC_X1],moon[LOC_Y1],obj_planet);
-                moon_obj.data = moon;
-                with(moon_obj){
-                    var psize_mod = moon[LOC_W1] / sprite_get_width(spr_planet); 
-                    image_xscale = psize_mod;
-                    image_yscale = psize_mod;                  
-                    depth = curdepth;
-                    global_index = moon[LOC_INDEX];                  
-                    global_type = "moon";
-                    faction = FACTION_NEUTRAL;
-                    name = moon[LOC_NAME];
-                    drawReady=true;
-                }
-                global.sector_economy[moon[LOC_ECONOMY]] += 1;
-                gxindex++;
-                
-            }
-            system_landables-=c;
-        }
-    
-    }
-    
-    if(system_landables>0){
-        // Add stations
-        var c = irandom(system_landables);
-        for(var i=0; i<c; i++){
-            station = scr_make_station(sx,sy,gxindex);
-            show_debug_message("make station");
-            if(!mainLandable){
-                mainLandable=true;
-                station[LOC_X1] = global.sector_width/2;
-                station[LOC_Y1] = global.sector_width/2;
-                show_debug_message("make station as main landable");
-            }
-            station_obj = instance_create(station[LOC_X1],station[LOC_Y1],obj_station);
-            station_obj.data = station;
-            with(station_obj){
-                //var ssize_mod = sprite_get_width(spr_station)/station[LOC_W1]; 
-
-                global_index = station[LOC_INDEX];                  
-                global_type = "station";
-                faction = FACTION_NEUTRAL;
-                name = station[LOC_NAME];
-                depth = curdepth;
-                event_user(0);// apply vars
-                event_user(1);
-            }
-     
-            
-            global.sector_economy[station[LOC_ECONOMY]] += 1;
-            
-                        
-            gxindex++;
-            
-        }
-    }
-}
-global.sector_landable_count = instance_number(obj_landable);
-
-for(var i=0;i<irandom(5);i++){
-    //scr_mining_area(noone,noone);
-}
-
-if(sx==0 && sy==0){
+if(global.sector_x==0 && global.sector_y==0){
     scr_gx_make_path(0,0,-1,-1);
     scr_gx_make_path(0,0,1,0);
     scr_gx_make_path(1,0,2,0);
     scr_gx_make_path(-1,-1,-2,-1);
 }
 
-/*********************
-END SEEDED RANDOMIZATION. ADDING ANYTHING RANDOM ABOVE THIS POINT COULD CHANGE THE SAVED MAP.
-***************/
 
 // Position the player ship.
 var player_x;
 var player_y;
 if(global.player_x!=noone){
     player_x = global.player_x;
-    player_y = global.player_y;
-    
+    player_y = global.player_y;    
     global.player_x = noone;
     global.player_y = noone;
-    
 }else{
     player_x = global.sector_width/2;
     player_y = global.sector_width/2;
@@ -408,6 +154,12 @@ global.player_y = player_y;
 scr_game_save();
 
 
+
+/******************
+NEW RANDOM STUFF
+Different every time you return to the sector.
+
+******************/
 randomize();
 // NPC Ships
 scr_spawn_npc_ships();

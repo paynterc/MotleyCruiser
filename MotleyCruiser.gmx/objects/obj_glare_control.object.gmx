@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -27,11 +27,12 @@
             <kind>1</kind>
             <string>/// Init
 //glr_init(.75,480,272,0);
-glr_init(.75,480,272,0);
-
-glr_set_ambient_daytime(.8);
+//glr_init(.75,640,360,0);
+glr_init(0.75);
+//glr_set_ambient_daytime(.7);
+//glr_set_ambient_daytime_colors(c_blue, c_blue, c_blue, c_blue, c_blue);
 depth = -10000;
-enabled=0;
+enabled=1;
 
 </string>
           </argument>
@@ -82,7 +83,7 @@ glr_clear_all();
             <string>/// Glare draw gamma
 if(instance_exists(obj_room_level)){
     if(enabled==1){
-        glr_draw_gamma(application_surface);
+        //glr_draw_gamma(application_surface);
     }
 }
 </string>
@@ -109,7 +110,7 @@ if(instance_exists(obj_room_level)){
             <kind>1</kind>
             <string>/// Glare  render
     if(enabled==1){
-        glr_render();
+        //glr_render();
     }
 </string>
           </argument>
@@ -134,7 +135,9 @@ if(instance_exists(obj_room_level)){
           <argument>
             <kind>1</kind>
             <string>/// Standard Glare Draw
-//glr_draw(view_xview, view_yview);
+if(enabled==1){
+    glr_draw(view_xview, view_yview);
+}
 </string>
           </argument>
         </arguments>

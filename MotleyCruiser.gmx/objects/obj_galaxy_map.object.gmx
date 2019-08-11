@@ -227,7 +227,6 @@ if(bIdx==0){
             <kind>1</kind>
             <string>/// Update map data
 
-// Iterate over global.galaxy_map for system locations
 with(obj_gxmap_point){
     instance_destroy();
 }

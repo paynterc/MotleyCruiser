@@ -44,6 +44,12 @@ global.paused=false;
 bg_speed = 2;
 background_vspeed[0] = bg_speed;
 drone_spawn_time = 30;
+global.deck_current ++;// Increment the deck at start
+wave_speed = 15;// New wave every 10 seconds
+wave_timer = 0;
+enemy_check_started = false;// Only want to start this timer once
+
+
 </string>
           </argument>
         </arguments>
@@ -80,7 +86,6 @@ if(global.ship_boarded != noone){
     if(global.ship_boarded[SHIP_SCAFFOLD_SIZE]&lt;=3){   
         sizeModifier = .15;
     }
-
 }
 // Create the DS global.grid
 global.grid = ds_grid_create(width, height);
@@ -107,7 +112,11 @@ ds_grid_set_region(global.grid, 0, 0, width-1, height-1, VOID);
 //}
 if(global.room_seed!=noone){
     random_set_seed(global.room_seed);
+}else{
+    randomize();
 }
+// Waves
+waves = irandom(2)+1;
 
 
 // Create the controller in the center of the global.grid
@@ -120,6 +129,24 @@ var cy2 = cy;
 var px1 = cx;
 var py1 = cy;
 
+var ww = choose(5,7);
+var hh = choose(5,7);
+scr_stamp_center(cx,cy,ww,hh);
+
+// Light
+instance_create(x,y,obj_glare_control);
+glr_set_ambient_color(c_blue);
+
+//Mke a light over the door
+var lspace = 3;
+for(var lx = lspace; lx &lt; ww; lx += lspace){
+    for(ly = lspace; ly &lt; hh; ly += lspace){
+        var lxT = (cx - floor(ww/2)) + lx; // Translate lx to a room coordinate
+        var lyT = (cy - floor(hh/2)) + ly;
+        var my_light1 = glr_lightsimple_create(spr_glr_light_mask_point, 0, (lxT * CELL_WIDTH) - (CELL_WIDTH/2), (lyT * CELL_HEIGHT) - (CELL_HEIGHT/2), choose(c_white,c_green), 1, 1);
+        //glr_lightsimple_set_scaling(my_light1,.35,.35);
+    }
+}
 
 
 // Give the controller a random direction
@@ -128,26 +155,25 @@ var cdir = irandom(3);
 // The odds variable for changing direction
 var odds = 1;
 
-// An array to keep track of floor locations.
-var floors = noone;
- 
-var i = 0;
-// Create the level using 1000 steps
-repeat (1000 * sizeModifier){
+
+// stamp out some random floor shapes
+var stampSize = 3;
+
+var numStamps = global.ship_boarded[SHIP_SCAFFOLD_SIZE] + 2; //TODO: Do someting to increase this based on ship size. See SHIP_SCAFFOLD_SIZE
+repeat ( numStamps ){
     // Place a floor tile a the controller position
-    global.grid[# cx,cy]=FLOOR;
+    //global.grid[# cx,cy]=FLOOR;
+    scr_stamp_center(cx,cy,stampSize,stampSize);
+    scr_stamp_center(cx,cy2,stampSize,stampSize);
     //ds_grid_set(global.grid, cx, cy, FLOOR); (alternative)
 
     
     // Mirror the above
-    global.grid[# cx2,cy]=FLOOR;
+    //global.grid[# cx2,cy]=FLOOR;
+    scr_stamp_center(cx2,cy,stampSize,stampSize);
+    scr_stamp_center(cx2,cy2,stampSize,stampSize);
     
-    
-    var fc=noone;
-    fc[0]=cx;
-    fc[1]=cx2;    
-    fc[2]=cy;
-    floors[i]=fc;
+
     
     // Randomize the direction of the controller
     if(irandom(odds) == odds){
@@ -155,16 +181,19 @@ repeat (1000 * sizeModifier){
     }
     
     // Move the controller
-    var xdir = lengthdir_x(1, cdir*90);
-    var ydir = lengthdir_y(1, cdir*90);
+    var nextMove = irandom_range(1,stampSize);
+    var xdir = lengthdir_x(nextMove, cdir*90);
+    var ydir = lengthdir_y(nextMove, cdir*90);
     cx += xdir;
     cx2 -= xdir;
     cy += ydir;
+    cy2 -= ydir;
     
     // Clamp cx and cy so you don't go outside of the global.grid
-    cx = clamp(cx, 1, width-2);
-    cx2 = clamp(cx2, 1, width-2);
-    cy = clamp(cy, 1, height-2);
+    cx = clamp(cx, 1, width-stampSize);
+    cx2 = clamp(cx2, 1, width-stampSize);
+    cy = clamp(cy, 1, height-stampSize);
+    cy2 = clamp(cy2, 1, height-stampSize);
 }
 
 
@@ -177,15 +206,10 @@ global.grid[# px1,py1-2]=FLOOR;
 global.grid[# px1,py1-3]=FLOOR;
 scr_stamp_rectangle(px1-1,py1-6,3,3);
 
-// Stamp a rectangle around the player
-scr_stamp_rectangle(px1-1,py1-1,3,3);
-
 //Make a  door
 door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
 
-//Mke a light over the door
-var my_light1 = glr_light_create(spr_glr_light_mask_point, 0, room_width/2, ((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2), c_white, 0);
-glr_light_set_static(my_light1, true);
+
 
 // This part will depend on the number of decks.
 // Sequence will be: deck, deck, deck, control
@@ -228,99 +252,66 @@ for(var i = 0; i &lt; instance_number(obj_npc); i++) {
 // Place a core
 instance_create(px_start,py_start,obj_core);
 
-// Place enemies
-var mesh_id = noone;
-if(shadows_on){
-    mesh_id = glr_mesh_create(0, 0, false);
-}
-
+floors = noone; // An array to keep track of floor locations.
+var fIndex = 0; // Current index of floor array
 for(var yy = 0; yy &lt; height; yy++){
     for(var xx = 0; xx &lt; width; xx++){
         var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
         var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
         if(global.grid[# xx, yy] == FLOOR){
         
-            // Maybe put an enemy here
-            var odds = 30;
-            
-            if(point_distance(ex,ey,obj_core.x,obj_core.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
-  
-                var race_index = irandom(array_height_2d(global.races)-1);               
-                //scr_instantiate_enemy(ex,ey,race_index);
-                var newEnemy = scr_instantiate_enemy_onship(ex,ey);
-
-
-            }
-            
-            // Drone?
-            odds = 100;          
-            if(point_distance(ex,ey,obj_core.x,obj_core.y) &gt; 80 &amp;&amp; irandom(odds) == odds){
-            
-                //instance_create(ex,ey,obj_drone);
-              
-            }
+            var fc=noone;
+            fc[0]=xx;
+            fc[1]=yy;    
+            floors[fIndex]=fc;
+            fIndex++;
             
 
              
-             var lOdds = 3;
-             if(irandom(lOdds) == lOdds){
-                var cred = instance_create(ex,ey,obj_da_loot);
-                with(cred){
+             // Maybe place some cover
+             var cOdds = 20;
+             if(irandom(cOdds) == cOdds){
+                var cover = instance_create(ex,ey,choose(obj_crate_sm,obj_crate_md1,obj_crate_md2,obj_crate_lg));
+                with(cover){
                     depth = -y;
-                    credits=10;
-                }         
-             }else{
-                // Maybe place some cover
-                 var cOdds = 60;
-                 if(irandom(cOdds) == cOdds){
-                    var cover = instance_create(ex,ey,obj_crate);
-                    with(cover){
-                        depth = -y;
-                    }         
-                 }
+                }
+                     
              }
 
             // Place light
             llods = 10;
             if(irandom(llods)==llods){
                 var clr = choose(c_red,c_green,c_blue,c_yellow,c_orange,c_white,c_lime);
-                var my_light = glr_light_create(spr_glr_light_mask_point, 0, ex, ey, clr, random(.05));
-                glr_light_set_static(my_light, true);
+                glr_lightsimple_create(spr_glr_light_mask_point, 0, ex, ey, clr, 1,1);
             }
         
         
-        }else if(global.grid[# xx, yy] == WALL &amp;&amp; mesh_id != noone){
-            // Add a mesh.
-            
-            glr_mesh_submesh_add_box(mesh_id,CELL_WIDTH,CELL_HEIGHT,xx * CELL_WIDTH,yy * CELL_HEIGHT);
-            glr_mesh_update(mesh_id);
         }
     }
 }
 
-with(obj_npc){
-    // Set waypoints for patrols
-    var wp = scr_get_furthest(obj_crate,self,1200);
-    if(instance_exists(wp)){
-        var wp1=scr_array(wp.x,wp.y);
-        var wp2=scr_array(x,y);
-        waypoints = scr_array(wp1,wp2);
-    }
+// Add the crates to the grid path so enemies will walk around them.
+//mp_grid_add_instances(global.grid_path,obj_crate,0);
 
-}
+// Place enemies
+
 
 // DEACTIVATE OBJECTS
+/***
 with(obj_npc){
     if(faction!=FACTION_PLAYER){
         instance_deactivate_object(id);
     }
 }
+***/
 
 with(obj_gun){
     if(type!=FACTION_PLAYER){
         instance_deactivate_object(id);
     }
 }
+
+
 </string>
           </argument>
         </arguments>
@@ -351,6 +342,90 @@ alarm[4] = room_speed * 2;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="6">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Spawn waves
+
+
+var enemyCount = 0;
+for(var i = 0; i &lt; instance_number(obj_npc); i++) {
+    var this_obj = instance_find(obj_npc,i);
+    if(this_obj.faction!=FACTION_PLAYER){
+        enemyCount++;
+    }
+}
+if(enemyCount&lt;1){
+    wave_timer=0;
+}
+
+if(waves&gt;0){
+    // This can happen even if there are still enemies on the floor
+    if(wave_timer&lt;1){
+        waves --;
+        wave_timer = wave_speed * room_speed;
+        // Place enemies
+        var flrCount = array_length_1d(floors);
+        var numEnemies = irandom_range(2,floor(flrCount/30));
+        //show_debug_message("flrCount: " + string(flrCount));
+        //show_debug_message("numEnemies: " + string(numEnemies));
+        //show_debug_message("wave_timer: " + string(wave_timer));
+        for(var ee = 0; ee&lt;numEnemies; ee++){
+            
+            var eC = scr_array_random(floors);
+            var ex = eC[0] * CELL_WIDTH + CELL_WIDTH/2;
+            var ey = eC[1] * CELL_HEIGHT + CELL_HEIGHT/2;
+            var tpDoor = instance_create(ex,ey,obj_trapdoor);
+            tpDoor.emy = scr_instantiate_enemy_onship(0,0);
+            tpDoor.depth = -ey;
+            
+        }
+        
+
+
+    }
+    alarm[6]=room_speed;//Call this timer again
+    
+}else if(enemyCount&lt;1){
+
+    with(obj_crate){
+        event_user(0);// Open crates  
+    }
+    
+    if(door != noone &amp;&amp; instance_exists(door)){
+         if(global.deck_current &gt;= global.decks){
+             door.room_to = "rm_ship_control";
+         }else{
+             door.room_to = "rm_ship_deck_rnd";
+         }
+         door.open=1;
+         door.image_index = 1;
+         level_complete = true;
+    }
+    
+}else{
+    alarm[6]=room_speed;//Call this timer again
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="5">
       <action>
         <libid>1</libid>
@@ -369,10 +444,10 @@ alarm[4] = room_speed * 2;
           <argument>
             <kind>1</kind>
             <string>/// Activate all. Start more timers
-instance_activate_all();
+//instance_activate_all();
+alarm[6] = room_speed * 2;// spawn enemy crew
 
-// Start checking for victory condition.
-alarm[2]=room_speed;
+
 
 // Spawn drones
 alarm[3] = room_speed * drone_spawn_time;
@@ -398,7 +473,7 @@ alarm[3] = room_speed * drone_spawn_time;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Start Pod
+            <string>/// Start Incursion Pod
 var ppod = instance_create(obj_player.x,obj_player.y,obj_torpedo_pod);
 ppod.myCrewIndex = obj_player;
 with(obj_npc){
@@ -444,7 +519,8 @@ if(instance_number(obj_drone) &lt; 20){
                 if(instance_exists(obj_player)){
                     if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){                  
                         var drone = instance_create(ex,ey,obj_drone);
-                        drone.disposition = DISPOSITION_HOSTILE;                      
+                        drone.disposition = DISPOSITION_HOSTILE;
+                        drone.targetKfaction = FACTION_PLAYER;                    
                     }
                 }
             } 
@@ -483,27 +559,44 @@ for(var i = 0; i &lt; instance_number(obj_npc); i++) {
     var this_obj = instance_find(obj_npc,i);
     if(this_obj.faction!=FACTION_PLAYER){
         enemyCount++;
+        /***
         if(this_obj.hp_current &lt; (this_obj.hp*0.75) &amp;&amp; this_obj.mode != "retreat"){
             this_obj.mode = "retreat";
             this_obj.targetMtype = obj_core;
             this_obj.targetM=noone;         
             this_obj.pspeed *=2;             
-        } 
+        }
+        ***/ 
     }
 }
 
 
 if(enemyCount&lt;1){
    // if done, activate door to next deck.
-   global.decks_remaining -=1;
-   if(door != noone &amp;&amp; instance_exists(door)){
-        if(global.decks_remaining &lt; 1){
-            door.room_to = "rm_ship_control";
+   
+   if(waves&lt;1){
+        with(obj_crate){
+            event_user(0);// Open crates  
         }
-        door.open=1;
-        door.image_index = 1;
-        level_complete = true;
-   }   
+        
+        if(door != noone &amp;&amp; instance_exists(door)){
+             if(global.deck_current &gt;= global.decks){
+                 door.room_to = "rm_ship_control";
+             }else{
+                 door.room_to = "rm_ship_deck_rnd";
+             }
+             door.open=1;
+             door.image_index = 1;
+             level_complete = true;
+        }  
+   }else{
+        // spawn more enemies
+        wave_timer = 0;
+        alarm[6]=room_speed;
+        exit;
+   }
+   
+     
 }else{
     alarm[2]=room_speed;
 }
@@ -544,7 +637,8 @@ if(enemyCount&lt;1){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(global.bullet_time){
+            <string>/// Bullet time
+if(global.bullet_time){
     background_vspeed[0] = bg_speed * global.speed_mod;
 }else{
     background_vspeed[0] = bg_speed * global.speed_mod;
@@ -576,6 +670,48 @@ if(scr_user_input(pin.bugout)){
     // global.ship_boarded should be set to self-destruct in scr_populate_sector
     room_goto(rm_space);
 }
+
+if(debug_mode){
+
+    if( keyboard_check_pressed(vk_up) &amp;&amp; !keyboard_check(vk_shift) ){
+        global.base_bullet_speed += 0.5;
+    }
+    
+    if( keyboard_check_pressed(vk_down) &amp;&amp; !keyboard_check(vk_shift) ){
+        global.base_bullet_speed -= 0.5;
+    }
+    
+    if( keyboard_check_pressed(vk_up) &amp;&amp; keyboard_check(vk_shift) ){
+        global.base_fire_rate += 0.5;
+    }
+    
+    if( keyboard_check_pressed(vk_down) &amp;&amp; keyboard_check(vk_shift) ){
+        global.base_fire_rate -= 0.5;
+    }
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Decrement wave timer
+wave_timer --;
 </string>
           </argument>
         </arguments>
@@ -606,6 +742,35 @@ if(level_complete){
     draw_text(xx, yy, "DECK CLEAR");
     draw_text(xx, yy+16, "Find the door to the next deck.");
 }
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/***
+draw_set_alpha(0.3);
+mp_grid_draw(global.grid_path);
+draw_set_alpha(1);
+***/
+
 
 </string>
           </argument>

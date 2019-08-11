@@ -286,7 +286,7 @@ if(sent != noone &amp;&amp; sent.name != noone){
         txt += sent.npc_data[NPC_NAME_FIRST] + " is a shipwright. Would like them to repair your ships? It will cost " + string(scr_repair_all_ship_cost()) + "C.";  
         scr_flywriter(txt,sent.sprite_index,true,"2,OK,Nope");
         
-    }else if( scr_in_array(global.hirable_occupations,occ) ){
+    }else if( scr_in_array(global.hirable_occupations,sent.npc_data[NPC_OCCUPATION]) ){
         
         var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
         txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be an excellent " + occ + ". Would like them to join your crew? It will cost " + string(sent.npc_data[NPC_HIRE_PRICE]) + "C per day.";  

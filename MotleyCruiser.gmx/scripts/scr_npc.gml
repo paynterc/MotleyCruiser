@@ -3,7 +3,7 @@ var npc = noone;
 
 npc[NPC_RACE_INDEX]=0;
 npc[NPC_NAME]="Slappy Brown";
-npc[NPC_RUN_SPD]=1;
+npc[NPC_RUN_SPD]=BASE_RUN_SPEED;
 npc[NPC_HP]=10;
 npc[NPC_HP_CURRENT]=10;
 npc[NPC_NAME_FIRST]="Slappy";

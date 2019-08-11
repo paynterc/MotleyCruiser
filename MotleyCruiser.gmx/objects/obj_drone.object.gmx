@@ -80,7 +80,7 @@ if(!global.paused){
     Find closest member of the player's boarding team. This includes the player.
     ***/
     if(inview &amp;&amp; instance_exists(obj_mortal) ){      
-        target = scr_get_closest_notfaction(obj_mortal,self);    
+        target = scr_get_closest_notfaction(obj_mortal,self,-1,targetKfaction);    
     }else{
         target = noone;
     }

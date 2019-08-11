@@ -73,33 +73,6 @@ accessories = noone;// This will be set through scripting. Probaly data in npc_d
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Add a light
-llight=noone
-
-llight = glr_light_create(spr_glr_light_mask_point, 0, x, y, c_white, 0);
-glr_light_set_scaling(llight,.35,.35);
-glr_light_set_static(llight, true);/// Light
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Start idle movement
 alarm[0]=room_speed * random_range(3,5);
 </string>
@@ -177,33 +150,6 @@ alarm[0]=room_speed * random_range(3,5);
             <string>/// Idle movement
 image_xscale = -1;
 alarm[1]=room_speed * random(2);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="2">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Delete the object if unused
-if(active == 0){
-    glr_light_destroy(llight);
-    instance_destroy();
-}
 </string>
           </argument>
         </arguments>

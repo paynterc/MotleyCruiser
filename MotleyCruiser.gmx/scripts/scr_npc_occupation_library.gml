@@ -18,18 +18,20 @@ t[9]="scientist";
 t[10]="tipster";
 t[11]="scholar";
 t[12]="bounty hunter";
-t[11]="musician";
-t[12]="bartender";
-t[13]="merchant";
-t[14]="shipwright";
+t[13]="musician";
+t[14]="bartender";
+t[15]="merchant";
+t[16]="shipwright";
 
 global.npc_occupations=t;
-
+/***
 var hirable = noone;
 hireable[0]="fighter";
 hireable[1]="pilot";
 hireable[2]="medic";
 hireable[3]="mechanic";
 hireable[4]="cook";
+***/
+hireable = scr_array(0,1,2,3,4);
 
 global.hirable_occupations = hireable;

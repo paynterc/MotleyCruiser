@@ -47,6 +47,9 @@ if( sprite_exists(global.player_sprite) ){
     sprite_index = global.player_sprite;
 }
 
+llight = glr_lightsimple_create(spr_glr_light_mask_point, 0, x, y, c_white,1,1);
+glr_lightsimple_set_scaling(llight,.5,.5);
+
 // Get player appearance selections
 /***
 var pm = scr_get_player_model();
@@ -79,7 +82,7 @@ hp = 10;
 hp_current = hp;
 ispeed = .25;// Image speed
 image_speed = ispeed;
-spd = 3;
+spd = 2;
 spd_save = spd;//hold max speed here
 hspd=0;
 vspd=0;
@@ -90,6 +93,30 @@ can_move=true;
 weapon=noone;
 weapon_index=noone;
 name="player";
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Cleanup
+glr_lightsimple_destroy(llight);
 </string>
           </argument>
         </arguments>
@@ -112,7 +139,8 @@ name="player";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(_state!=1){
+            <string>/// Get input. Move
+if(_state!=1){
     exit;
 }
 /// Fire weapon and move
@@ -121,9 +149,9 @@ if(instance_exists(weapon)){
     
     // Adjust run speed
     if(weapon.shooting){
-        spd = 1;
+        //spd = 1;
     }else{
-        spd = spd_save;
+        //spd = spd_save;
     }
     
 }
@@ -159,6 +187,8 @@ if(hspd==0 &amp;&amp; vspd==0){
     image_speed=ispeed;
 }
 
+// Light
+glr_lightsimple_set_position(llight,x,y);
 
 </string>
           </argument>
@@ -187,9 +217,6 @@ if(scr_user_input(pin.draw_weapon)){
 
 
 if(instance_exists(weapon)){
-    weapon.x = x;
-    weapon.y = y;
-    weapon.depth=depth -1;
     
     var pdir = noone;
     if( gamepad_is_connected(global.pad) ){
@@ -203,6 +230,7 @@ if(instance_exists(weapon)){
         pdir = point_direction(x,y,mouse_x,mouse_y);
     }
     weapon.image_angle = pdir;
+    obj_gui_control.grotation = weapon.image_angle;
     
     // Slower rotate
     //var dif = angle_difference(pdir, weapon.image_angle);
@@ -280,6 +308,12 @@ audio_listener_position(x, y, 500);
             <kind>1</kind>
             <string>/// Monitor hp
 if(obj_player.hp_current&lt;1){
+    if(instance_exists(weapon)){
+        with(weapon){
+            instance_destroy();// Remove the old weapon
+        }
+        weapon = noone;
+    }
     scr_player_died_in_room();
 }
 </string>
@@ -299,6 +333,30 @@ if(obj_player.hp_current&lt;1){
         <whoName>self</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
+      </action>
+    </event>
+    <event eventtype="7" enumb="12">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Action on damage. OVERLOAD FUNCTION
+audio_play_sound(snd_hitplayer,2,0);
+</string>
+          </argument>
+        </arguments>
       </action>
     </event>
     <event eventtype="7" enumb="10">
@@ -333,11 +391,13 @@ if(global.equipped!=noone){
             weapon_index = scr_inv_item_read(item_id,6);// Slot 6 holds the object name
             if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
             
-                weapon = instance_create(x,y,weapon_index);
+                //weapon = instance_create(x,y,weapon_index);
+                weapon = instance_create(x,y,obj_singularity_pistol);;
                 weapon.type = faction;
                 weapon.parent_obj = id;
                 weapon.inventory_id = item_id;
-            
+                weapon.user_fire_rate_mod = BASE_PLAYER_MOD_FRATE;// Player guns fire faster, bullets go faster
+                weapon.user_bullet_speed_mod = BASE_PLAYER_MOD_BSPEED;
                 scr_ev_player_draws_weapon();
             }  
         }

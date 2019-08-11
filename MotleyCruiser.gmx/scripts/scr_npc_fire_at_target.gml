@@ -6,7 +6,7 @@ Assumes targetK, targetKinView, weapon, pxK, pyK
 /// scr_npc_fire_at_target()
 
 if( instance_exists(targetK) && instance_exists(weapon) ){
-    if(targetKinView && !scr_gridcol_line(weapon.x,weapon.y,targetK.x,targetK.y)){
+    if(targetKinView && !scr_gridcol_line(weapon.x,weapon.y,targetK.x,targetK.y,0)){
         
        
         // Start shooting

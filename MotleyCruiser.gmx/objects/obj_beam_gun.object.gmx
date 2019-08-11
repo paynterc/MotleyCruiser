@@ -37,9 +37,6 @@ d = sprite_get_width(sprite_index)/2;
 
 image_speed = .05;
 
-llight = glr_light_create(spr_glr_light_mask_9, 0, x, y, c_red, 5);
-glr_light_set_static(llight, true);
-glr_light_set_active(llight,false);
 
 alarm[0] = room_speed * weaponSpeed;
 alarm[1]=room_speed * .10;

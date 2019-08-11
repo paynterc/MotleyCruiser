@@ -43,7 +43,7 @@
 mycolor = c_white;
 mycolor_h = c_lime;
 mycolor_current = mycolor;
-mytext = "launch";
+mytext = "depart";
 depth=-1000000;
 </string>
           </argument>

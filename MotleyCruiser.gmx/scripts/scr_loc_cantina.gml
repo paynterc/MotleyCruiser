@@ -101,9 +101,9 @@ with(npcObject){
     mode = "discourse";
 }
 instance_create(cx,cy,obj_player);
+
 // data
 // Add some signage
-
 var sgX;// sign x coord
 var sgY;// sign y coord
 for(var sc=0; sc<irandom( H ); sc++;){

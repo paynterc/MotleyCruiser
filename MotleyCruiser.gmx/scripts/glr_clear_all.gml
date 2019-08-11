@@ -18,3 +18,5 @@ glr_shadowarea_destroy_all()
 glr_shadowdepth_destroy_all();
 glr_occlusion_destroy_all();
 glr_directional_custom_destroy_all();
+
+if(surface_exists(global.GLR_MAIN_SURFACE)) surface_free(global.GLR_MAIN_SURFACE);

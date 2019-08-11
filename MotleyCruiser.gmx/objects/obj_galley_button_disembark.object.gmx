@@ -43,7 +43,7 @@
 mycolor = c_white;
 mycolor_h = c_lime;
 mycolor_current = mycolor;
-mytext = "disembark";
+mytext = "port";
 depth=-1000000;
 </string>
           </argument>
@@ -68,7 +68,7 @@ depth=-1000000;
           <argument>
             <kind>1</kind>
             <string>if(global.landed_on != noone){
-    room_goto(rm_cantina2);
+    room_goto(rm_landing_menu);
 }
 
 </string>

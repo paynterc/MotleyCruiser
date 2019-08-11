@@ -59,6 +59,7 @@ for(var yy = 0; yy < height; yy++){
         }else{
             //This is a wall or void. Add a solid cell to the pathfinding global.grid.
             mp_grid_add_cell(global.grid_path,xx,yy);
+            
         }
     }
 }

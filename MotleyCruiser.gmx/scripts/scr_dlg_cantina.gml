@@ -26,7 +26,7 @@ if(question==0){
         var repairCost = scr_repair_all_ship_cost();
         if(repairCost<=global.credits || repairCost == 0 ){
             scr_repair_all_ships(repairCost);
-            scr_flywriter("Thank you for your business. Your ships will be reapaired by the time you depart.",sent.sprite_index,true,"1,OK");
+            scr_flywriter("Thank you for your business. Your ships will be repaired by the time you depart.",sent.sprite_index,true,"1,OK");
         }else{
             scr_flywriter("You can't afford it. Come back when you've earned enough credits.",sent.sprite_index,true,"1,OK");
         }

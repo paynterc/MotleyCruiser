@@ -71,7 +71,8 @@ if(array_length_1d(names)>1){
     map[NPC_NAME_LAST] = "";
 }
 
-map[NPC_RUN_SPD] =  max(global.min_spd, global.races[race_index,RACE_BASE_SPD] + run_modifier);
+//map[NPC_RUN_SPD] =  max(global.min_spd, global.races[race_index,RACE_BASE_SPD] + run_modifier);
+map[NPC_RUN_SPD] =  BASE_RUN_SPEED;
 map[NPC_HP] =  max(global.min_hp, global.races[race_index,RACE_BASE_HP] + hp_modifier);
 map[NPC_HP_CURRENT] =  map[NPC_HP];
 map[NPC_MISSION]=noone;

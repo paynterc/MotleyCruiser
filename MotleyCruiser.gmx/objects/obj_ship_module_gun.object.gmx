@@ -44,6 +44,7 @@ gundata=noone;
 shooting = false;
 cooling_down = false;
 flash=false;//draw muzzle flash
+target=noone;
 
 // For beams
 hitpoint = noone;
@@ -368,7 +369,7 @@ if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
     bullet.depth = -200;
     bullet.direction = image_angle;
     bullet.image_angle = image_angle;
-    bullet.speed = gundata[GUN_BULLET_SPEED];
+    bullet.speed = gundata[GUN_BULLET_SPEED] * GM_BULLET_SPEED_MULT;
     bullet.range = gundata[GUN_RANGE];
     bullet.damage = gundata[GUN_DAMAGE];
     with(bullet){

@@ -46,7 +46,8 @@ weaponSpeed = .75;
 shooting = false;
 destroy = false; //Destroy myself
 type=0 //1=player, 2=enemy
-bullet_speed = 3;
+my_bullet_speed_mod = 0.35;
+my_fire_rate_mode = 2;
 range=300;
 gun_sound=snd_singularity_launch;
 
@@ -134,10 +135,7 @@ if(shooting &amp;&amp; !global.paused){
             <kind>1</kind>
             <string>/// Charging sound
 if(shooting){
-   if !audio_is_playing(snd_singularity_charge)
-   {
-         audio_play_sound_at(snd_singularity_charge,x,y,0,100,100,1,false,2); 
-   }
+   //audio_play_sound_at(snd_singularity_charge,x,y,0,100,100,1,false,2);
 }
 </string>
           </argument>
