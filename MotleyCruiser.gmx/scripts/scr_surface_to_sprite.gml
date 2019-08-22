@@ -27,12 +27,20 @@ if( !is_array(_spriteData) || !is_array(_spriteData[0]) ){
 
 var _w = args[1];
 var _h = args[2];
+// Currently, the largest npc sprite would be 20x32. bounding boxes should be calculated automatically
+// based on the size and transparency of the sprite.
 if(_w==noone){
-    _w = 16;
+    //_w = 16;
+    _w = 32;
 }
 if(_h==noone){
-    _h=24;
+    //_h=24;
+    _h=32;
 }
+
+_oX=_w/2;
+_oY=_h-8;
+
 
 var spr_custom=noone;
 var surf=noone;
@@ -54,12 +62,12 @@ if(is_array(_spriteData)){
                 }else{
                     spr = spr_default;
                 }
-                draw_sprite_ext( spr, 0, 8, 16, 1, 1, 0, aData[1], 1 );
+                draw_sprite_ext( spr, 0, _oX, _oY, 1, 1, 0, aData[1], 1 );
             }
         }
     }
 }
-spr_custom = sprite_create_from_surface(surf, 0, 0, _w, _h, false, false, 8, 16);
+spr_custom = sprite_create_from_surface(surf, 0, 0, _w, _h, false, false, _oX, _oY);
 if(surface_exists(surf)){
     surface_free(surf);
 }
@@ -84,7 +92,7 @@ if(is_array(_spriteData)){
                 if(sprite_get_number(spr)>1){
                     subimg = 1;
                 }
-                draw_sprite_ext( spr, subimg, 8, 16, 1, 1, 0, aData[1], 1 );
+                draw_sprite_ext( spr, subimg, _oX, _oY, 1, 1, 0, aData[1], 1 );
             }
         }
     }

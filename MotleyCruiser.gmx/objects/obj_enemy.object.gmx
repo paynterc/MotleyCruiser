@@ -49,7 +49,7 @@ hyset = false;
 
 bullet_width=1; // Use this to add to range. Useful for melee weapons with short range but big bullets.
 
-faction=FACTION_NEUTRAL;
+faction=FACTION_HOSTILE;
 disposition=DISPOSITION_HOSTILE;
 targetKfaction = noone;
 type = faction;// type is still used in some logic. Usually set to faction.

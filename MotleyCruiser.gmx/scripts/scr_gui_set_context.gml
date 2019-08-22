@@ -4,7 +4,6 @@ var has_ball = argument0;//object
 if(instance_exists(obj_gui_control)){
 
     if(obj_gui_control.has_ball!=noone){    
-
         with(obj_gui_control){
             ds_stack_push(ui_stack, obj_gui_control.has_ball);
         }

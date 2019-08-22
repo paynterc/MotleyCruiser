@@ -26,6 +26,19 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+
+// STATES
+
+// GUI STATES.
+enum guistates {
+    main,
+    load,
+    spacetravel,
+    onship,
+    onstation
+}
+
+
 show_debug_overlay(true);
 scr_load_player_config();
 application_surface_enable(false);// Better performance this way
@@ -50,8 +63,8 @@ global.ship_min_turn_spd=1;
 global.ship_max_turn_spd=10;
 global.ship_min_spd=0;
 global.ship_max_spd=10;
-global.ship_max_spd_fwd=9;
-global.ship_max_spd_rvs=8;
+global.ship_max_spd_fwd=6;//9
+global.ship_max_spd_rvs=5;//8
 global.ship_min_acc=0;
 global.ship_max_acc=1;
 global.ship_min_shields=0;
@@ -115,6 +128,16 @@ global.player_ship = noone;
 
 // PLAYER MODEL: An array containing player clothing and body selections.
 global.player_model = noone;
+
+// PLAYER STATS: Save between levels.
+enum playerstat {
+    name,
+    hp,
+    hp_current,
+    spd,
+    spd_current
+}
+global.player_data = scr_player();
 
 // PLAYER FLEET: An array of ships in the fleet and their current state.
 global.fleet = noone;

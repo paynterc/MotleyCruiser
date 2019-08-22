@@ -1,4 +1,4 @@
-//scr_gui_return_context();
+/// scr_gui_return_context();
 if( instance_exists(obj_gui_control) ){
     
     with(obj_gui_control){

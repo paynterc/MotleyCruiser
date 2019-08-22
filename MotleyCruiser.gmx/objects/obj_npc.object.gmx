@@ -41,6 +41,9 @@ hp=10;
 hp_current=hp;
 pspeed=2;
 pspeed_init = pspeed;
+dspeed = pspeed;// dodge speed
+ddir = 90;
+dtimer = room_speed;
 global_index = noone;
 name = "Santos L. Halper";
 race_index = 0;
@@ -111,6 +114,7 @@ default_weapon = obj_gun;
 
 // GO!!!
 alarm[0] = room_speed * r_speed;
+alarm[5] = room_speed * 3;// dodge direction
 </string>
           </argument>
         </arguments>
@@ -191,6 +195,31 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
     sprite_delete(custom_sprite);
 }
 ***/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Change dodge direction
+ddir = choose(90,-90,45,-45,0);
+alarm[5] = room_speed * irandom_range(1,5);
 </string>
           </argument>
         </arguments>
@@ -453,6 +482,13 @@ if(!global.paused){
     
 
 }
+if(instance_exists(weapon)){
+    if(weapon.shooting &amp;&amp; !weapon.reloading){
+        pspeed = 0;
+    }else{
+        pspeed = pspeed_init;
+    }
+}
 
 alarm[0] = room_speed * r_speed;
 </string>
@@ -483,31 +519,7 @@ if(_state!=1){
 }
 if(hp_current&lt;1){
 
-    corpse = instance_create(x,y,obj_corpse);
-    corpse.sprite = sprite_index;
-   
-    if(crew_index!=noone){
-        //update data so we know this npc is dead 
-        scr_global_update(global.crew,crew_index,NPC_ACTIVE,false);  
-    }
-    
-    //Set to dead in global index.
-    //scr_global_update(global.npcs,global_index,NPC_ACTIVE,false);
-    
-    if(crew_index==noone){
-        // NPCs will drop loot
-        scr_drop_loot(1,3,'npc');
-    }
-
-    if(instance_exists(weapon)){
-        with(weapon){
-            parent_obj = noone;
-            instance_destroy();// Remove the old weapon
-        }
-        weapon = noone;
-    }
-    
-    instance_destroy();
+    event_user(3);// Death action
     
 }
 </string>
@@ -679,6 +691,18 @@ if(lng_dir&gt;0){
             
     scr_move(lngX, lngY,1);// move using mp grid
 }
+
+if(lng_dir==0){
+    dtimer--;
+    if(dtimer&lt;1 || faction==FACTION_PLAYER)
+    {
+        scr_npc_avoid();
+    }
+}
+if (dtimer &lt; room_speed * -1){
+ dtimer = room_speed;
+}
+
 </string>
           </argument>
         </arguments>
@@ -852,6 +876,54 @@ if(other.type!=faction &amp;&amp; !other.cooling_down){
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="13">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Death action
+corpse = instance_create(x,y,obj_corpse);
+corpse.sprite = sprite_index;
+
+if(crew_index!=noone){
+    //update data so we know this npc is dead 
+    scr_global_update(global.crew,crew_index,NPC_ACTIVE,false);  
+}
+
+//Set to dead in global index.
+//scr_global_update(global.npcs,global_index,NPC_ACTIVE,false);
+
+if(crew_index==noone){
+    // NPCs will drop loot
+    scr_drop_loot(1,3,'npc');
+}
+
+if(instance_exists(weapon)){
+    with(weapon){
+        parent_obj = noone;
+        instance_destroy();// Remove the old weapon
+    }
+    weapon = noone;
+}
+audio_play_sound(snd_death_npc1,2,0);
+instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="11">
       <action>
         <libid>1</libid>
@@ -932,6 +1004,12 @@ if(weapon==noone &amp;&amp; npc_data!=noone){
       
     weapon.type = faction;// The weapon will pass this along to the bullet.
     weapon.parent_obj = id;
+    if(faction == FACTION_PLAYER){
+        weapon.user_fire_rate_mod = BASE_PLAYER_MOD_FRATE;// Player guns fire faster, bullets go faster
+        weapon.user_bullet_speed_mod = BASE_PLAYER_MOD_BSPEED;
+        weapon.reload_speed = weapon.reload_speed/2;
+    }
+
     
     if(faction!=FACTION_PLAYER){
         // Nerf the weapon for npc
@@ -1122,8 +1200,13 @@ scr_npc_draw_shadow();
 
 draw_self();
 if(showHealth){
-    draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
+    //draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
 }
+draw_set_color(c_green);
+draw_set_font(fnt_menus_med);
+draw_set_alpha(1);
+draw_text(x,y-health_y,string(hp_current))
+
 
 var modeClr=c_white;
 if(mode=="defend"){
@@ -1138,6 +1221,8 @@ if(mode=="defend"){
     modeClr=c_orange;
 }
 //draw_circle_colour(x, y-28, 3, modeClr, modeClr, false);
+
+//draw_rectangle_colour(bbox_left,bbox_top,bbox_right,bbox_bottom,c_red,c_red,c_red,c_red,true);
 
 
 

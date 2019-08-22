@@ -11,3 +11,4 @@ gui_height = display_get_gui_height();
 global.gui_width = gui_width;
 global.gui_height = gui_height;
 
+

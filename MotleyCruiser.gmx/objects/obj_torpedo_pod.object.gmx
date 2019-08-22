@@ -26,57 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-myCrewIndex=noone;// Holds the object index number of the crewmember to instantiate
-crewReady=false;
+
 image_speed = .5;
-depth=-10000000;
-image_xscale=1.25;
-image_yscale=1.25;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Check current frame. Instantiate the npc on the 3rd frame (index 2)
-//set the depth so it can overlap wall tiles
-if(myCrewIndex!=noone){
-    
-    if(image_index==2 &amp;&amp; !crewReady){
-        crewReady=true;
-    
-        if(myCrewIndex!=noone){
-            with(myCrewIndex){
-                _state=1;
-                event_user(0);
-            }
-        }
-    
-    }
-    if(image_index&gt;10){
-        depth=myCrewIndex.depth+1;
-    }
-    
-}
-
-
-
+depth=depths.bullet;
+image_xscale=2.5;
+image_yscale=2.5;
 </string>
           </argument>
         </arguments>

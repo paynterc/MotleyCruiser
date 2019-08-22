@@ -123,6 +123,10 @@ scr_populate_sector();
           <argument>
             <kind>1</kind>
             <string>/// Initiate GUI vars
+if(instance_exists(obj_gui_control)){
+    obj_gui_control._state = guistates.spacetravel;
+}
+
 texture_set_interpolation(false);
 asteroid_rate = 3;
 ship_spawn_rate = 20;

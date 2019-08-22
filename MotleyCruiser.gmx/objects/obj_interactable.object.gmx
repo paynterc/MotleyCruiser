@@ -32,7 +32,8 @@ minrange = 32;
 interact_sprite = spr_npc_icon;
 interact_text = "E";
 display_side = "top";// Where to show the icon
-xMod=0;yMod = -1;// Use to position icon
+xMod=0;yMod = -1;// Use to position icon. Just 0, 1 or -1
+xOffset=0;yOffset=0;// Allows more flexible positioning
 </string>
           </argument>
         </arguments>
@@ -56,11 +57,13 @@ xMod=0;yMod = -1;// Use to position icon
           <argument>
             <kind>1</kind>
             <string>/// Player approaches
-if(instance_exists(obj_player)){
-    interact_ready = ( point_distance(x,y,obj_player.x,obj_player.y) &lt;= minrange &amp;&amp; interact_active );
-}else{
-    interact_ready = false;
-}        
+if(interact_active){
+    if(instance_exists(obj_player)){
+        interact_ready = ( point_distance(x,y,obj_player.x,obj_player.y) &lt;= minrange &amp;&amp; interact_active );
+    }else{
+        interact_ready = false;
+    }        
+}
 
 </string>
           </argument>
@@ -113,9 +116,12 @@ if(display_side=="top"){
     xMod=0;yMod = 1;
 }else if(display_side=="left"){
     xMod=-1;yMod = 0;
-}else{
+}else if(display_side=="right"){
     // right
     xMod=1;yMod = 0;
+}else{
+    // middle
+    xMod=0;yMod = 0;
 }
 </string>
           </argument>
@@ -164,12 +170,12 @@ if(display_side=="top"){
             <kind>1</kind>
             <string>/// Draw interact key icon
 if(interact_ready){
-    draw_sprite(interact_sprite,0,x +(sprite_height*xMod),y + (sprite_height*yMod));
+    draw_sprite(interact_sprite,0,x +(sprite_height*xMod)+ xOffset,y + (sprite_height*yMod)+ yOffset);
     draw_set_color(c_black);
     draw_set_valign(fa_middle);
     draw_set_halign(fa_center);
     draw_set_font(fnt_menus_med);
-    draw_text(x +(sprite_height*xMod),y + ( sprite_height * yMod) + 2,interact_text);
+    draw_text(x +(sprite_height*xMod) + xOffset,y + (sprite_height * yMod) + yOffset,interact_text);
 }
 </string>
           </argument>

@@ -2,7 +2,7 @@
 // after the npc_data map has already been copied to it. This should work for crew and cantina npcs
 
 sprite_index=npc_data[NPC_SPRITE];
-hp=npc_data[NPC_HP_CURRENT];
+hp=npc_data[NPC_HP];
 hp_current=npc_data[NPC_HP_CURRENT];
 pspeed=npc_data[NPC_RUN_SPD];
 pspeed_init = pspeed;

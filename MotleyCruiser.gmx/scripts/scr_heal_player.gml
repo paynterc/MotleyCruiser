@@ -12,6 +12,5 @@ if(instance_exists(obj_player)){
         }
   
     }
-    scr_hotbar_update("heal",-1);
 }
 

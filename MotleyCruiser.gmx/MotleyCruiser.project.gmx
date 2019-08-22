@@ -41,6 +41,7 @@
       <sound>sound\snd_singularity_launch</sound>
       <sound>sound\snd_hellfury</sound>
       <sound>sound\snd_blaster1</sound>
+      <sound>sound\snd_reload</sound>
     </sounds>
     <sounds name="Music">
       <sound>sound\snd_space_theme1</sound>
@@ -53,7 +54,10 @@
       <sound>sound\snd_fail</sound>
       <sound>sound\snd_pickup_credit</sound>
       <sound>sound\snd_pickup</sound>
+      <sound>sound\snd_death_npc1</sound>
       <sound>sound\snd_hit1</sound>
+      <sound>sound\snd_grenade</sound>
+      <sound>sound\snd_death1</sound>
       <sound>sound\snd_hitplayer</sound>
       <sound>sound\snd_explosion_ship</sound>
       <sound>sound\snd_boost_charging</sound>
@@ -162,11 +166,13 @@
       <sprite>sprites\spr_cryptolid2</sprite>
       <sprite>sprites\spr_cryptolid3</sprite>
       <sprite>sprites\spr_drone1</sprite>
+      <sprite>sprites\spr_drone2</sprite>
       <sprite>sprites\spr_fion</sprite>
       <sprite>sprites\spr_flowridian</sprite>
       <sprite>sprites\spr_flowridian_fml</sprite>
       <sprite>sprites\spr_gorgan</sprite>
       <sprite>sprites\spr_hairbeast</sprite>
+      <sprite>sprites\spr_hairbeast2</sprite>
       <sprite>sprites\spr_human</sprite>
       <sprite>sprites\sprite484</sprite>
       <sprite>sprites\sprite376</sprite>
@@ -177,6 +183,7 @@
       <sprite>sprites\sprite375</sprite>
       <sprite>sprites\spr_human_helm</sprite>
       <sprite>sprites\spr_hurgan</sprite>
+      <sprite>sprites\spr_hurgan_hg</sprite>
       <sprite>sprites\spr_kren</sprite>
       <sprite>sprites\spr_miota</sprite>
       <sprite>sprites\spr_miota2</sprite>
@@ -193,6 +200,7 @@
       <sprite>sprites\spr_zombie_arm</sprite>
       <sprite>sprites\spr_zombie_brute</sprite>
       <sprite>sprites\spr_zomboid</sprite>
+      <sprite>sprites\spr_hairbeast_eyes</sprite>
     </sprites>
     <sprites name="_furniture">
       <sprite>sprites\spr_room_reactor</sprite>
@@ -201,6 +209,7 @@
       <sprite>sprites\spr_panel_decor</sprite>
       <sprite>sprites\spr_work_station</sprite>
       <sprite>sprites\spr_jefferies</sprite>
+      <sprite>sprites\spr_elevator</sprite>
       <sprite>sprites\spr_viewscreen</sprite>
       <sprite>sprites\spr_table</sprite>
       <sprite>sprites\spr_door_reactor</sprite>
@@ -222,6 +231,8 @@
       <sprite>sprites\spr_airlock_sm1</sprite>
       <sprite>sprites\spr_airlock_sm2</sprite>
       <sprite>sprites\spr_trapdoor</sprite>
+      <sprite>sprites\spr_ladder</sprite>
+      <sprite>sprites\spr_shiptoken</sprite>
     </sprites>
     <sprites name="_healthbar">
       <sprite>sprites\spr_hbackground</sprite>
@@ -242,10 +253,12 @@
         <sprite>sprites\spr_impact_glow_sm</sprite>
         <sprite>sprites\spr_bullet_3</sprite>
         <sprite>sprites\spr_singularity_sm</sprite>
+        <sprite>sprites\spr_sunshot</sprite>
       </sprites>
       <sprite>sprites\spr_rifle1</sprite>
       <sprite>sprites\spr_blaster1</sprite>
       <sprite>sprites\spr_blaster4</sprite>
+      <sprite>sprites\spr_blaster5</sprite>
       <sprite>sprites\spr_blaster3</sprite>
       <sprite>sprites\spr_blaster2</sprite>
       <sprite>sprites\spr_rifle2</sprite>
@@ -254,6 +267,7 @@
       <sprite>sprites\spr_bass</sprite>
       <sprite>sprites\spr_guitar</sprite>
       <sprite>sprites\spr_singularity_gun</sprite>
+      <sprite>sprites\spr_machinegun1</sprite>
       <sprite>sprites\spr_singularity_pistol</sprite>
       <sprite>sprites\spr_shotgun1</sprite>
       <sprite>sprites\spr_laser_sword</sprite>
@@ -777,6 +791,7 @@
       <script>scripts\scr_ship_defaults.gml</script>
       <script>scripts\scr_ship_turret.gml</script>
       <script>scripts\scr_npc.gml</script>
+      <script>scripts\scr_player.gml</script>
       <script>scripts\scr_npc_oldsalt.gml</script>
       <script>scripts\scr_ent_planet.gml</script>
       <script>scripts\scr_ent_moon.gml</script>
@@ -947,6 +962,7 @@
         <script>scripts\scr_gui_has_context.gml</script>
         <script>scripts\scr_gui_resource_bar.gml</script>
       </scripts>
+      <script>scripts\scr_draw_hotbar.gml</script>
     </scripts>
     <scripts name="_inventory">
       <scripts name="Inventory">
@@ -1056,6 +1072,7 @@
       </scripts>
       <scripts name="_grids_and_collision">
         <script>scripts\scr_move.gml</script>
+        <script>scripts\scr_move_to_point.gml</script>
         <script>scripts\scr_get_path_to_point.gml</script>
         <script>scripts\scr_grid_place_meeting.gml</script>
         <script>scripts\scr_mpgrid_place_meeting.gml</script>
@@ -1075,6 +1092,7 @@
       <script>scripts\scr_drop_loot.gml</script>
       <script>scripts\scr_make_control_room.gml</script>
       <script>scripts\scr_start_alarm.gml</script>
+      <script>scripts\scr_npc_avoid.gml</script>
     </scripts>
     <scripts name="_service">
       <script>scripts\scr_global_update.gml</script>
@@ -1151,6 +1169,7 @@
       <script>scripts\scr_random_weighted.gml</script>
       <script>scripts\scr_draw_dotted_line.gml</script>
       <script>scripts\scr_rotate_to_angle.gml</script>
+      <script>scripts\scr_draw_text.gml</script>
     </scripts>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
@@ -1519,6 +1538,8 @@
     <font>fonts\glr_font_debug</font>
     <font>fonts\font3</font>
     <font>fonts\fnt_menus</font>
+    <font>fonts\fnt_menus_lg</font>
+    <font>fonts\fnt_menus_huge</font>
     <font>fonts\fnt_menus_med</font>
     <font>fonts\fnt_menus_sm</font>
     <font>fonts\f_other</font>
@@ -1539,9 +1560,36 @@
     <object>objects\obj_sound_control</object>
     <object>objects\obj_ship_data</object>
     <object>objects\obj_damager</object>
-    <object>objects\obj_object_pool</object>
-    <object>objects\obj_tutorial</object>
     <object>objects\obj_module</object>
+    <object>objects\obj_tutorial</object>
+    <object>objects\obj_object_pool</object>
+    <objects name="_people_and_places">
+      <object>objects\obj_test_npc</object>
+      <object>objects\obj_mortal</object>
+      <object>objects\obj_player</object>
+      <object>objects\obj_npc</object>
+      <object>objects\obj_boss</object>
+      <object>objects\obj_team</object>
+      <object>objects\obj_crew</object>
+      <object>objects\obj_enemy</object>
+      <object>objects\obj_sentient</object>
+      <object>objects\obj_core</object>
+      <object>objects\obj_drone</object>
+      <object>objects\obj_arm</object>
+      <object>objects\obj_wall_invis</object>
+      <object>objects\obj_floor</object>
+      <object>objects\obj_corpse</object>
+      <objects name="_critters">
+        <object>objects\obj_beast2</object>
+        <object>objects\obj_zombie_brute</object>
+        <object>objects\obj_beast_eyes</object>
+      </objects>
+      <object>objects\obj_player_start</object>
+      <object>objects\obj_waypoint</object>
+      <object>objects\obj_torpedo_pod</object>
+      <object>objects\obj_torpedo_pod_BACKUP</object>
+      <object>objects\obj_npc_icon</object>
+    </objects>
     <objects name="_galaxy_map">
       <object>objects\obj_galaxy_map</object>
       <object>objects\obj_gxmap_point</object>
@@ -1550,14 +1598,16 @@
     <objects name="_personal_weapons">
       <object>objects\obj_gun</object>
       <object>objects\obj_plasmaknife</object>
-      <object>objects\obj_blaster1</object>
       <object>objects\obj_singularity_pistol</object>
-      <object>objects\obj_instrument</object>
-      <object>objects\obj_bass</object>
+      <object>objects\obj_machinegun1</object>
+      <object>objects\obj_blaster1</object>
+      <object>objects\obj_shotgun1</object>
       <object>objects\obj_singularity_gun</object>
       <object>objects\obj_heavy_blaster1</object>
+      <object>objects\obj_sungun</object>
+      <object>objects\obj_instrument</object>
+      <object>objects\obj_bass</object>
       <object>objects\obj_turret</object>
-      <object>objects\obj_shotgun1</object>
       <object>objects\obj_melee_animation</object>
       <object>objects\obj_beam_gun</object>
       <object>objects\obj_flamethrower1</object>
@@ -1596,6 +1646,7 @@
         <object>objects\obj_minimap</object>
         <object>objects\obj_pause_menu</object>
         <object>objects\obj_load_game_menu</object>
+        <object>objects\obj_gui_text</object>
       </objects>
       <objects name="_elements">
         <object>objects\obj_button_text</object>
@@ -1603,32 +1654,6 @@
         <object>objects\obj_text_basic</object>
         <object>objects\obj_gui_button</object>
       </objects>
-    </objects>
-    <objects name="_people_and_places">
-      <object>objects\obj_test_npc</object>
-      <object>objects\obj_mortal</object>
-      <object>objects\obj_player</object>
-      <object>objects\obj_npc</object>
-      <object>objects\obj_team</object>
-      <object>objects\obj_crew</object>
-      <object>objects\obj_enemy</object>
-      <object>objects\obj_sentient</object>
-      <object>objects\obj_core</object>
-      <object>objects\obj_drone</object>
-      <object>objects\obj_health_bar</object>
-      <object>objects\obj_arm</object>
-      <object>objects\obj_wall_invis</object>
-      <object>objects\obj_floor</object>
-      <object>objects\obj_corpse</object>
-      <objects name="_critters">
-        <object>objects\obj_beast2</object>
-        <object>objects\obj_zombie_brute</object>
-      </objects>
-      <object>objects\obj_player_start</object>
-      <object>objects\obj_waypoint</object>
-      <object>objects\obj_torpedo_pod</object>
-      <object>objects\obj_torpedo_pod_BACKUP</object>
-      <object>objects\obj_npc_icon</object>
     </objects>
     <objects name="_space_combat">
       <object>objects\obj_space_level</object>
@@ -1675,6 +1700,7 @@
     </objects>
     <objects name="_room">
       <object>objects\obj_lvl_ship_deck_rnd</object>
+      <object>objects\obj_lvl_ship_boss_rnd</object>
       <object>objects\obj_lvl_ship_control</object>
       <object>objects\obj_lvl_cantina</object>
       <object>objects\obj_lvl_arena</object>
@@ -1690,6 +1716,7 @@
         <object>objects\obj_stage</object>
         <object>objects\obj_cover</object>
         <object>objects\obj_door</object>
+        <object>objects\obj_ladder</object>
         <object>objects\obj_door_exit_spc</object>
         <object>objects\obj_jefferies</object>
         <object>objects\obj_panel_decor</object>
@@ -1701,6 +1728,7 @@
         <object>objects\obj_docked_ship</object>
         <object>objects\obj_dock_junk</object>
         <object>objects\obj_trapdoor</object>
+        <object>objects\obj_shiptoken</object>
       </objects>
       <object>objects\obj_da_loot</object>
     </objects>
@@ -1776,8 +1804,8 @@
     </objects>
     <object>objects\obj_laserbolt</object>
     <object>objects\obj_flash_timer</object>
-    <object>objects\obj_explosion</object>
     <object>objects\obj_impact</object>
+    <object>objects\obj_explosion</object>
     <objects name="_landing">
       <object>objects\obj_landing_menu</object>
       <object>objects\obj_landing_image</object>
@@ -1794,6 +1822,7 @@
       </objects>
     </objects>
     <object>objects\obj_interactable</object>
+    <object>objects\obj_floaty</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -1801,6 +1830,7 @@
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_space</room>
     <room>rooms\rm_ship_deck_rnd</room>
+    <room>rooms\rm_ship_boss_rnd</room>
     <room>rooms\rm_ship_control</room>
     <room>rooms\rm_galley</room>
     <room>rooms\rm_cantina1</room>

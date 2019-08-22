@@ -32,7 +32,9 @@ level_complete = false;
 shake=false;
 shake_count = 0;
 depth=-10000;
-
+player_activated = false;// Have we activated player units?
+glareControl = instance_create(x,y,obj_glare_control);
+glr_set_ambient_color(c_silver);
 
 </string>
           </argument>
@@ -257,17 +259,21 @@ alarm[1]=room_speed*.50;//vibrate cancel
           <argument>
             <kind>1</kind>
             <string>/// Draw hotbar
-
+exit;
 // 2 boxes
 var boxes = array_height_2d(global.hotbar);
 var boxw = 40;//box width
 var boxp = 4;//padding
 var boxm = 12;//margin
 
-var _x = (global.gui_width/2) - ( ( (boxes * boxw) + ((boxes-1)* boxm) ) /2 );
-var _y = 0 + boxm;
+//var _x = (global.gui_width/2) - ( ( (boxes * boxw) + ((boxes-1)* boxm) ) /2 );
+//var _y = 0 + boxm;
+var _x = boxm;
+var _y = global.gui_height - boxw - boxm;
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+draw_set_color(c_lime);
+draw_set_font(fnt_menus);
 var spr;
 for(var i=0; i&lt;boxes; i++){
     draw_panel(spr_background,0,_x,_y,boxw,boxw,16);

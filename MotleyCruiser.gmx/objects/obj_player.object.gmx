@@ -78,12 +78,13 @@ if(skincolor != noone){
 type = 1//player team
 faction = FACTION_PLAYER;
 facing = 0;
-hp = 10;
-hp_current = hp;
+
+hp = global.player_data[playerstat.hp];
+hp_current = global.player_data[playerstat.hp_current];
 ispeed = .25;// Image speed
 image_speed = ispeed;
-spd = 2;
-spd_save = spd;//hold max speed here
+spd = global.player_data[playerstat.spd];
+spd_save = spd;//hold max speed here in case spd is modified temporarily
 hspd=0;
 vspd=0;
 health_y = sprite_get_height(sprite_index) - 5;
@@ -146,12 +147,10 @@ if(_state!=1){
 /// Fire weapon and move
 if(instance_exists(weapon)){
     weapon.shooting = scr_user_input(pin.fire);
-    
-    // Adjust run speed
-    if(weapon.shooting){
-        //spd = 1;
-    }else{
-        //spd = spd_save;
+    if(scr_user_input(pin.reload)){
+        with(weapon){
+            event_user(1);
+        }
     }
     
 }
@@ -241,9 +240,9 @@ if(instance_exists(weapon)){
         if(scr_hotbar_count("grenade")&gt;0){
             scr_hotbar_update("grenade",-1);
             var grenade = instance_create(x,y,obj_grenade);
-            grenade.depth = -200;
             grenade.direction = weapon.image_angle;
             grenade.speed = 4;
+            grenade.faction = FACTION_PLAYER;
         }
     }
      
@@ -398,6 +397,7 @@ if(global.equipped!=noone){
                 weapon.inventory_id = item_id;
                 weapon.user_fire_rate_mod = BASE_PLAYER_MOD_FRATE;// Player guns fire faster, bullets go faster
                 weapon.user_bullet_speed_mod = BASE_PLAYER_MOD_BSPEED;
+                weapon.reload_speed = weapon.reload_speed/2;
                 scr_ev_player_draws_weapon();
             }  
         }

@@ -15,6 +15,12 @@ ini_open(SAVE_GAME_FILE);
 if(ini_section_exists(game)){
     // LOAD EXISTING GAME
     var read_list;
+    
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "player_data", "");
+    ds_list_read(read_list,str);
+    global.player_data = read_list[| 0];
+    ds_list_destroy(read_list);
       
     read_list = ds_list_create();
     var str = ini_read_string(game, "player_ship", "");

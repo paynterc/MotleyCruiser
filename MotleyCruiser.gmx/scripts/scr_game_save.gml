@@ -50,7 +50,7 @@ for(var i=0; i<array_length_1d(global.crew); i++){
     
 }
 
-
+scr_write_array(global.player_data,game,"player_data",SAVE_GAME_FILE);
 scr_write_array(global.crew,game,"crew",SAVE_GAME_FILE);
 scr_write_array(global.team,game,"team",SAVE_GAME_FILE);
 //scr_write_array(global.hotbar,game,"hotbar",SAVE_GAME_FILE); this was screwed up. I was saving refrences to sprites

@@ -41,8 +41,8 @@
             <kind>1</kind>
             <string>/// Overwrite as needed
 bullet_sprite = spr_laserbolt;
-my_fire_rate_mod = .5;// Modify stats for gun
 spread = 3;
+damage = 2;
 </string>
           </argument>
         </arguments>

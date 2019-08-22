@@ -130,9 +130,17 @@ if(cooldown){
     exit;
 }
 if(credits!=noone){
+
     global.credits += credits;
     audio_play_sound(snd_pickup_credit,2,0);
+    var floaty = instance_create(x,y,obj_floaty);
+    floaty.myText = "+" + string(credits);
+    floaty.myColor = c_yellow;
+    with(floaty){
+        event_user(0);
+    }
     instance_destroy();
+    
 }else if(inv_id != noone){
 
     if(inv_id == 42)
@@ -149,16 +157,26 @@ if(credits!=noone){
     }
       
     audio_play_sound(snd_pickup,2,0);
-    instance_destroy();
+
+    
 }else if(commodity_id!=noone){
+    
     var rem = scr_cargo_add(commodity_id, inv_amount);
     if(rem&lt;1){
         audio_play_sound(snd_pickup,2,0);
-        instance_destroy();
+        
+        var cargoName = scr_commodity_lib_read(commodity_id,0);
+        var barkTxt = string(inv_amount) + " units of " + string(cargoName) + " picked up!";     
+        scr_crew_bark(barkTxt);
+
+        
     }else if(rem&lt;inv_amount){
         audio_play_sound(snd_pickup,2,0);
         cooldown = true;
         alarm[0]=cooldownT * room_speed;
+        scr_play_sound(snd_pickup);
+        var barkTxt = "Our cargo hold is full! We can't carry any more.";
+        scr_crew_bark(barkTxt);
     }else{
         audio_play_sound(snd_fail,2,0);
         cooldown = true;
@@ -168,7 +186,7 @@ if(credits!=noone){
 }else{
     // Do nothing
 }
-
+        instance_destroy();
 
 
 </string>

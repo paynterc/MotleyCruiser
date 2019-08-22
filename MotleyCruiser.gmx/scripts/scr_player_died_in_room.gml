@@ -2,6 +2,7 @@
 
 corpse = instance_create(x,y,obj_corpse);
 corpse.sprite = sprite_index;
+audio_play_sound(snd_death1,1,0);
 
 if(global.game_loaded!=noone){
     with(obj_game_control){

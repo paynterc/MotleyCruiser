@@ -18,11 +18,15 @@ var center_meeting = false;
 
 // Check for x meeting
 x_meeting = (global.grid[# bbox_right div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR) || 
-            (global.grid[# bbox_left div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR);
+            (global.grid[# bbox_left div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR) ||
+            (global.grid[# bbox_right div CELL_WIDTH, yy div CELL_HEIGHT] != FLOOR) ||
+            (global.grid[# bbox_left div CELL_WIDTH, yy div CELL_HEIGHT] != FLOOR);
             
 // Check for y meeting
 y_meeting = (global.grid[# bbox_right div CELL_WIDTH, bbox_bottom div CELL_HEIGHT] != FLOOR) || 
-            (global.grid[# bbox_left div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR);
+            (global.grid[# bbox_left div CELL_WIDTH, bbox_top div CELL_HEIGHT] != FLOOR) ||
+            (global.grid[# xx div CELL_HEIGHT, bbox_top div CELL_WIDTH ] != FLOOR) ||
+            (global.grid[# xx div CELL_HEIGHT, bbox_bottom div CELL_WIDTH] != FLOOR);
 
 // Check for center meeting                
 center_meeting = (global.grid[# xx div CELL_WIDTH, yy div CELL_HEIGHT] != FLOOR);

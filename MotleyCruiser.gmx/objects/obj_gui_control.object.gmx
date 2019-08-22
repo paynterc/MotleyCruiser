@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Use this object to manage other window interfaces
 scr_set_gui_vars();
-
+_state=noone;// see enum guistates
 has_ball=noone;// Who has the ball?
 ui_stack = ds_stack_create();// Stack previously open menus here so we can get back to them
 pe=instance_exists(obj_player_ship);// player exists
@@ -46,6 +46,7 @@ for(var i=0; i&lt;4; i++){
 }
 
 grotation=0;// Gun rotation. Used for debug text
+hotboxcount  = array_height_2d(global.hotbar);
 </string>
           </argument>
         </arguments>
@@ -388,7 +389,7 @@ if(ds_exists(ui_stack,ds_type_stack)){
             <string>/// Draw Space Gui
 // supplies, credits, location
 
-if(room == rm_space){
+if(_state==guistates.spacetravel){
     var _xStart = 32;
     var _yStart = 16;
     var x1=_xStart;
@@ -419,32 +420,30 @@ if(room == rm_space){
         y2 = scr_gui_resource_bar(rX,y1,obj_player_ship.energy_current,obj_player_ship.energy_current,blinky,c_yellow,"ENERGY",noone,obj_player_ship.energy,-1);
     }
 
-    
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_top);
     x1= gui_width / 2;
     y1=_yStart;
-    draw_set_color(c_lime);
-    draw_text(x1,y1,"GOLD: " + string(global.credits));
+    scr_draw_text("GOLD: " + string(global.credits),x1,y1,fnt_menus,c_yellow,1,fa_center,fa_top);
     
-    draw_set_halign(fa_left);
-    draw_set_valign(fa_bottom);
     x1= _xStart;
     y1 = gui_height - 16;
-    draw_set_color(c_lime);
-    draw_text(x1,y1,"SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_y) );
+    var sectorText = "SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_y);
+    scr_draw_text(sectorText,x1,y1,fnt_menus,c_lime,1,fa_left,fa_bottom);
+    
     
     if(pe){ // player exists
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_bottom);
         x1= gui_width / 2;
-        draw_set_color(c_lime);
-        draw_text(x1,y1,"COORDINATES: x:" + string(round(obj_player_ship.x)) + " | y:" + + string(round(obj_player_ship.y)) );
+        var coordText = "COORDINATES: x:" + string(round(obj_player_ship.x)) + " | y:" + + string(round(obj_player_ship.y));
+        scr_draw_text(coordText,x1,y1,fnt_menus,c_lime,1,fa_center,fa_bottom);
     }
 
     
+}else if(_state==guistates.onship){
+    
+    x1= gui_width / 2;
+    y1=16;
+    scr_draw_text("GOLD: " + string(global.credits),x1,y1,fnt_menus_lg,c_yellow,1,fa_center,fa_top);
+    scr_draw_hotbar(12,gui_height,hotboxcount);
 }
-
 </string>
           </argument>
         </arguments>
@@ -466,6 +465,7 @@ if(room == rm_space){
           <argument>
             <kind>1</kind>
             <string>/// Debug text
+    draw_set_font(fnt_menus_med);
     draw_set_halign(fa_right);
     draw_set_valign(fa_bottom);
     if(fps_real&lt;60){

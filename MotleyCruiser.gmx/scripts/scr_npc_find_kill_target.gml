@@ -21,9 +21,10 @@ if(targetK==noone || !instance_exists(targetK) || point_distance(x,y,targetK.x,t
             
         }else{
             targetK = scr_get_closest_hostile(targetKtype,self);
-            var checkpoint = 1;
         }
-    }            
+    }else{
+        targetK=noone;
+    }           
 }
 
 if( targetK!=noone && instance_exists(targetK) ){

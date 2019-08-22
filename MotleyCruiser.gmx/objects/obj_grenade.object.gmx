@@ -29,6 +29,10 @@
 travelspan=2;
 radius=40;
 damage=20;
+attached_to = noone;// A unit to stick to
+attached = false;
+faction = FACTION_PLAYER;
+depth=depths.bullet;
 alarm[0]=room_speed * lifespan;
 alarm[1]=room_speed * travelspan;
 </string>
@@ -82,10 +86,13 @@ speed = 0;
 for ( var i = 0; i &lt; instance_number(obj_mortal); i += 1 ){
  
     enemy = instance_find( obj_mortal, i );
-
-    var dist=point_distance(x, y, enemy.x, enemy.y); 
-
-    if(dist&lt;=radius){
+    if(enemy.faction == faction) continue;
+    
+    var dist=point_distance(x, y, enemy.x, enemy.y);
+    if(dist&gt;radius) continue;
+    
+    var blocked = scr_gridcol_line(x,y,enemy.x,enemy.y,0); 
+    if(!blocked){
         enemy.hp_current -= damage;
     }  
 
@@ -93,9 +100,10 @@ for ( var i = 0; i &lt; instance_number(obj_mortal); i += 1 ){
 }
 
 var explosion = instance_create(x,y,obj_explosion);
-explosion.depth = depth-1;
+explosion.depth = depths.bullet;
 gamepad_set_vibration(0, 1, 1);
 obj_room_level.shake=true;
+audio_play_sound(snd_grenade,2,0);
 instance_destroy();
 </string>
           </argument>
@@ -121,10 +129,65 @@ instance_destroy();
             <kind>1</kind>
             <string>/// Check for wall collisions
 // Horizonal collisions
-if(scr_grid_place_meeting(x,y)){
+if(!attached &amp;&amp; scr_grid_place_meeting(x,y)){
+    attached=true;
     speed = 0;
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Update postion
+if(attached_to != noone &amp;&amp; instance_exists(attached_to)){
+    speed = 0;
+    x=attached_to.x;
+    y=attached_to.y;
+    depth=other.depth-1;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_mortal">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!attached &amp;&amp; other.faction != faction){
+    attached = true;
+    attached_to = other;
+    speed = 0;
+}
 </string>
           </argument>
         </arguments>

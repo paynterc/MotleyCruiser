@@ -25,32 +25,140 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>myBullet = obj_bullet;
-bullet_sprite = spr_bullet_3;
+            <string>/// Debug text
+    draw_set_color(c_lime);
+    
+    if(global.paused){
+        //draw_set_valign(fa_center);
+        //draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
+    }
+
+    
+
+    /***
+    draw_text(96, 64, "D WIDTH: " + string(display_get_width()));
+    draw_text(96, 96, "D height: " + string(display_get_height()));
+    
+    draw_text(96, 128, "G WIDTH: " + string(display_get_gui_width()));
+    draw_text(96, 160, "G height: " + string(display_get_gui_height()));
+    
+    draw_text(96, 192, "W WIDTH: " + string(window_get_width()));
+    draw_text(96, 224, "W height: " + string(window_get_height()));
+    
+    draw_text(96, 256, "VP WIDTH: " + string(view_wport[0]));
+    draw_text(96, 288, "VP height: " + string(view_hport[0]));
+    
+    draw_text(96, 352, "V WIDTH: " + string(view_wview[0]));
+    draw_text(96, 384, "V height: " + string(view_hview[0]));
+***/
+    
+    /***
+    if(instance_exists(obj_planet_surface)){
+            draw_text(48, 64, "Room index x: " + string(global.planet_room_index_x) );
+            draw_text(48, 96, "Room index y: " + string(global.planet_room_index_y) );
+            draw_text(48, 128, "planet seed: " + string(global.planet_seed) );
+            draw_text(48, 160, "room seed: " + string(obj_planet_surface.seed) );
+    }
+    ***/
+/****
+    draw_text(48, 64, "D WIDTH: " + string(display_get_width()));
+    draw_text(48, 96, "D height: " + string(display_get_height()));
+    
+    draw_text(48, 128, "G WIDTH: " + string(display_get_gui_width()));
+    draw_text(48, 160, "G height: " + string(display_get_gui_height()));
+    
+    draw_text(48, 192, "W WIDTH: " + string(window_get_width()));
+    draw_text(48, 224, "W height: " + string(window_get_height()));
+    
+
+    if(instance_exists(obj_player_ship)){
+        draw_text(32, 64, "Decks: " + string(global.decks));
+        draw_text(32, 64, "Current Deck: " + string(global.deck_current));
+        draw_text(32, 96, "Mass: " + string(obj_player_ship.mass));
+        draw_text(32, 128, "MaxFwd: " + string(obj_player_ship.max_spd_fwd));
+        draw_text(32, 140, "EN: " + string(obj_player_ship.energy_regen_points));
+    }
+***/
+   
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Init
+
+
+// Stats
 damage = 1;
 weaponSpeed = global.base_fire_rate;
+bullet_speed = global.base_bullet_speed;
+range=400;
+spread = 5;// Accuracy
+kb_pwr = 3;// Knockback power
+my_fire_rate_mod = 1;// Modify weaponSpeed stats for gun
+my_bullet_speed_mod = 1;
+user_fire_rate_mod = 1;// If player if firing, make this faster
+user_bullet_speed_mod = 1;
+shot_capacity = 6;// Set this to -1 for unlimited shots
+reload_speed = 1;
+
+// Settings
+myBullet = obj_bullet;
+bullet_sprite = spr_bullet_3;
+gun_sound=snd_hellfury;
+inventory_id=noone;// Refers to inventory item library
+type=0 //SET THIS TO THE OWNERS FACTION
+image_speed = .05;
+shot_remaining = shot_capacity;
+
+// State
 shooting = false;
 cooling_down = false;
 destroy = false; //Destroy myself
-type=0 //SET THIS TO THE OWNERS FACTION
-bullet_speed = global.base_bullet_speed;
-range=400;
-gun_sound=snd_hellfury;
-inventory_id=noone;// Refers to inventory item library
 parent_obj = noone;// Who is holding the weapon
-spread = 5;// Accuracy
-kb_pwr = 3;// Knockback power
+reloading = false;
 
-my_fire_rate_mod = 1;// Modify stats for gun
-my_bullet_speed_mod = 1;
-
-user_fire_rate_mod = 1;// If player if firing, make this faster
-user_bullet_speed_mod = 1;
-
-image_speed = .05;
-
-
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reload
+shot_remaining = shot_capacity;
+reloading=false;
 </string>
           </argument>
         </arguments>
@@ -127,7 +235,18 @@ if(parent_obj!=noone)
           <argument>
             <kind>1</kind>
             <string>/// Shoot
-if(shooting &amp;&amp; !cooling_down &amp;&amp; !global.paused){
+if(shot_capacity &gt; 0 &amp;&amp; shot_remaining&lt;1){
+    // start reload
+    if(!reloading){
+        event_user(1);
+    }
+
+}else if(
+    shooting 
+    &amp;&amp; !cooling_down
+    &amp;&amp; !global.paused
+    &amp;&amp; !reloading
+){
     cooling_down=true;
     alarm[0] = room_speed * (global.base_fire_rate * my_fire_rate_mod * user_fire_rate_mod);// unset cooldown
     event_user(0); 
@@ -165,6 +284,35 @@ if(image_angle &gt; 90 &amp;&amp; image_angle&lt;270){
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="11">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reload
+if(shot_capacity &gt; 0 &amp;&amp; shot_remaining &lt; shot_capacity &amp;&amp; !reloading){
+    reloading = true;
+    alarm[1] = room_speed * reload_speed;
+    audio_play_sound(snd_reload,2,0);
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="10">
       <action>
         <libid>1</libid>
@@ -197,7 +345,8 @@ bullet.firedby = parent_obj;
 if(bullet_sprite!=noone){
     bullet.sprite_index=bullet_sprite;
 }
-audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2); 
+audio_play_sound_at(gun_sound,x,y,0,100,100,1,false,2);
+shot_remaining--;
 </string>
           </argument>
         </arguments>

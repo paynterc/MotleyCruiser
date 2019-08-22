@@ -1,12 +1,13 @@
-/// Abstracting user input
-// scr_user_input(input_name)
-// "fire", "moveleft", "moveup", "interact"
-// Gamepad setup (thresholds, etc.) is done in obj_game_control
-/***
+/*** 
+Abstracting user input
 if(!keyboard_check_pressed(vk_anykey)){
     return false;
 }
+"fire", "moveleft", "moveup", "interact"
+Gamepad setup (thresholds, etc.) is done in obj_game_control
 ***/
+/// scr_user_input(input_name)
+
 
 if(room==rm_ship_edit){
 
@@ -175,7 +176,10 @@ if( scr_gui_has_context() ){
             keyboard_check_pressed(ord("N"))
         case pin.sector_jump:
             return keyboard_check_pressed(ord("J"))
-            break;                  
+            break;
+        case pin.reload:
+            return keyboard_check_pressed(ord("R"))
+            break;                 
         default:
             return false;
     }

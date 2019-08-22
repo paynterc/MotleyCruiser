@@ -40,6 +40,9 @@
           <argument>
             <kind>1</kind>
             <string>/// Init Some variables
+if(instance_exists(obj_gui_control)){
+    obj_gui_control._state = guistates.onship;
+}
 global.paused=false;
 bg_speed = 2;
 background_vspeed[0] = bg_speed;
@@ -48,6 +51,12 @@ global.deck_current ++;// Increment the deck at start
 wave_speed = 15;// New wave every 10 seconds
 wave_timer = 0;
 enemy_check_started = false;// Only want to start this timer once
+entry_object=noone;// incursion pod, ladder or elevator
+entry_frame=0;// frame of entry_object to activate player on
+guiText = instance_create(x,y,obj_gui_text);// uset this so it will be hidden if other menus open
+with(guiText){
+    event_user(1);// Hide
+}
 
 
 </string>
@@ -77,6 +86,9 @@ texture_set_interpolation(false);
 // Resize
 room_width=(CELL_WIDTH/16)*720;
 room_height = (CELL_HEIGHT/16)*720;
+
+view_xview[0]= (room_width/2) - (view_wview[0]/2);
+view_yview[0]= (room_height/2) - (view_hview[0]/2);
 
 // Set the global.grid width and height
 var width = room_width div CELL_WIDTH;
@@ -134,7 +146,7 @@ var hh = choose(5,7);
 scr_stamp_center(cx,cy,ww,hh);
 
 // Light
-instance_create(x,y,obj_glare_control);
+
 glr_set_ambient_color(c_blue);
 
 //Mke a light over the door
@@ -159,6 +171,9 @@ var odds = 1;
 // stamp out some random floor shapes
 var stampSize = 3;
 
+
+
+
 var numStamps = global.ship_boarded[SHIP_SCAFFOLD_SIZE] + 2; //TODO: Do someting to increase this based on ship size. See SHIP_SCAFFOLD_SIZE
 repeat ( numStamps ){
     // Place a floor tile a the controller position
@@ -173,8 +188,7 @@ repeat ( numStamps ){
     scr_stamp_center(cx2,cy,stampSize,stampSize);
     scr_stamp_center(cx2,cy2,stampSize,stampSize);
     
-
-    
+   
     // Randomize the direction of the controller
     if(irandom(odds) == odds){
         cdir = irandom(3);
@@ -196,6 +210,10 @@ repeat ( numStamps ){
     cy2 = clamp(cy2, 1, height-stampSize);
 }
 
+// Player start coordinates
+px_start = px1 * CELL_WIDTH + (CELL_WIDTH/2);
+py_start = py1 * CELL_HEIGHT + (CELL_HEIGHT/2);
+
 
 /**************************
 DOOR TO NEXT DECK OR CONTROL ROOM
@@ -206,25 +224,31 @@ global.grid[# px1,py1-2]=FLOOR;
 global.grid[# px1,py1-3]=FLOOR;
 scr_stamp_rectangle(px1-1,py1-6,3,3);
 
-//Make a  door
-door = instance_create(room_width/2,((py1 - 4) * CELL_HEIGHT) - (CELL_HEIGHT/2),obj_door);
+//Make an interactable to take the player to the next level
 
-
-
+door = instance_create(px_start, (py1 * CELL_HEIGHT) + CELL_HEIGHT,obj_ladder);
 // This part will depend on the number of decks.
 // Sequence will be: deck, deck, deck, control
 // See the Alarm 0 event in this object and the obj_door object for more detail on level progression.
 door.room_to = room_get_name(room);
-door.open = 0;
+door.interact_active = false;
 door.image_speed = 0;
+door.image_alpha = 0;
 
+
+// Stamp out a corridor for the beast
+cx = width div 2;
+cy = height div 2;
+repeat(3){
+    cy+=stampSize;
+    scr_stamp_center(cx,cy,stampSize,stampSize);   
+}
 
 
 // Draw the level
 scr_add_wall_tiles(height,width);
 
-px_start = px1 * CELL_WIDTH + (CELL_WIDTH/2);
-py_start = py1 * CELL_HEIGHT + (CELL_HEIGHT/2);
+
 
 //Create the player
 
@@ -305,6 +329,9 @@ with(obj_npc){
 }
 ***/
 
+
+//instance_create((cx * CELL_WIDTH) + CELL_WIDTH/2, (cy * CELL_HEIGHT) + CELL_HEIGHT/2, obj_beast2);
+
 with(obj_gun){
     if(type!=FACTION_PLAYER){
         instance_deactivate_object(id);
@@ -361,6 +388,7 @@ alarm[4] = room_speed * 2;
             <kind>1</kind>
             <string>/// Spawn waves
 
+if level_complete exit;
 
 var enemyCount = 0;
 for(var i = 0; i &lt; instance_number(obj_npc); i++) {
@@ -381,9 +409,6 @@ if(waves&gt;0){
         // Place enemies
         var flrCount = array_length_1d(floors);
         var numEnemies = irandom_range(2,floor(flrCount/30));
-        //show_debug_message("flrCount: " + string(flrCount));
-        //show_debug_message("numEnemies: " + string(numEnemies));
-        //show_debug_message("wave_timer: " + string(wave_timer));
         for(var ee = 0; ee&lt;numEnemies; ee++){
             
             var eC = scr_array_random(floors);
@@ -395,26 +420,30 @@ if(waves&gt;0){
             
         }
         
-
-
     }
     alarm[6]=room_speed;//Call this timer again
     
 }else if(enemyCount&lt;1){
-
+    // Level Complete
     with(obj_crate){
         event_user(0);// Open crates  
     }
     
     if(door != noone &amp;&amp; instance_exists(door)){
          if(global.deck_current &gt;= global.decks){
-             door.room_to = "rm_ship_control";
+             door.room_to = "rm_ship_boss_rnd";
          }else{
              door.room_to = "rm_ship_deck_rnd";
          }
-         door.open=1;
-         door.image_index = 1;
-         level_complete = true;
+
+        door.image_alpha = 1;
+        door.image_index = 1;
+        door.image_playto = 6;
+        door.image_speed = door.image_dspeed;// default speed
+        level_complete = true;
+        guiText.text = "DECK CLEAR#FIND THE EXIT";
+        guiText.show=true;
+
     }
     
 }else{
@@ -445,7 +474,7 @@ if(waves&gt;0){
             <kind>1</kind>
             <string>/// Activate all. Start more timers
 //instance_activate_all();
-alarm[6] = room_speed * 2;// spawn enemy crew
+alarm[6] = room_speed * 2;// Start waves
 
 
 
@@ -473,14 +502,22 @@ alarm[3] = room_speed * drone_spawn_time;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Start Incursion Pod
-var ppod = instance_create(obj_player.x,obj_player.y,obj_torpedo_pod);
-ppod.myCrewIndex = obj_player;
-with(obj_npc){
-    var pod = instance_create(x,y,obj_torpedo_pod);
-    pod.myCrewIndex = id;
+            <string>/// Start Incursion Pod or Ladder
+if(global.deck_current==1){
+    var ppod = instance_create(obj_player.x,obj_player.y,obj_torpedo_pod);
+    entry_object = ppod;
+    entry_frame = 8;
+    scr_play_sound(snd_explosion_ship);
+}else{
+    entry_object=door;
+    entry_frame = 17;
+    door.image_alpha = 1;
+    door.image_index = 7;
+    door.image_playto = 24;
+    door.image_speed = door.image_dspeed;
+    door.hide_on_stop = true;
 }
-scr_play_sound(snd_explosion_ship);
+
 
 alarm[5]=room_speed*2;
 </string>
@@ -552,21 +589,22 @@ alarm[3] = room_speed * drone_spawn_time;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check to see if all enemies were eliminated. Check hp and set to retreat
-/// See if all enemies defeated on this deck
+            <string>/// Check for Level Complete. NOT CURRENTLY USED. THIS CHECK HAS BEEN MOVED TO ALARM6
+// Check to see if all enemies were eliminated. Check hp and set to retreat
+/***
 var enemyCount = 0;
 for(var i = 0; i &lt; instance_number(obj_npc); i++) {
     var this_obj = instance_find(obj_npc,i);
     if(this_obj.faction!=FACTION_PLAYER){
         enemyCount++;
-        /***
+
         if(this_obj.hp_current &lt; (this_obj.hp*0.75) &amp;&amp; this_obj.mode != "retreat"){
             this_obj.mode = "retreat";
             this_obj.targetMtype = obj_core;
             this_obj.targetM=noone;         
             this_obj.pspeed *=2;             
         }
-        ***/ 
+ 
     }
 }
 
@@ -585,8 +623,11 @@ if(enemyCount&lt;1){
              }else{
                  door.room_to = "rm_ship_deck_rnd";
              }
+             door.image_alpha = 1;
+             door.image_index = 0;
+             door.image_playto = 5;
+             door.image_speed = door.image_dspeed;// default speed
              door.open=1;
-             door.image_index = 1;
              level_complete = true;
         }  
    }else{
@@ -600,6 +641,7 @@ if(enemyCount&lt;1){
 }else{
     alarm[2]=room_speed;
 }
+***/
 
 </string>
           </argument>
@@ -716,6 +758,93 @@ wave_timer --;
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Activate player
+// player_activated is from parent
+if(!player_activated){
+    if(entry_object!=noone){
+        if(entry_object.image_index==entry_frame){
+            player_activated = true;
+            with(obj_player){
+                _state=1;
+                event_user(0);// equip weapon
+            }
+            with(obj_npc){
+                _state=1;
+                event_user(0);
+            }
+        }
+    }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>604</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>1</exetype>
+        <functionname>action_inherited</functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Save player stats
+if(instance_exists(obj_player)){
+    global.player_data[playerstat.hp_current]=obj_player.hp_current;
+    // Save the crew stas
+    for(var i = 0; i &lt; instance_number(obj_npc); i++) {
+        this_obj = instance_find(obj_npc,i);
+        if(this_obj.crew_index != noone){
+            var cData = global.crew[this_obj.crew_index];
+            cData[NPC_HP_CURRENT] = this_obj.hp_current;
+            global.crew[this_obj.crew_index] = cData;
+        }
+    }
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="8" enumb="75">
       <action>
@@ -735,13 +864,16 @@ wave_timer --;
           <argument>
             <kind>1</kind>
             <string>/// Deck Clear message
+/***
 if(level_complete){
     var xx = global.gui_width / 2; var yy = global.gui_height / 2;
     draw_set_color(c_lime);
+    draw_set_font(fnt_menus_huge);
     draw_set_halign(fa_center);
     draw_text(xx, yy, "DECK CLEAR");
-    draw_text(xx, yy+16, "Find the door to the next deck.");
+    draw_text(xx, yy+64, "FIND THE EXIT");
 }
+***/
 
 </string>
           </argument>
