@@ -548,7 +548,7 @@ item_add(idx,9,50) //Base price
 idx=51;
 item_add(51,0,"Blaster Type 1") //Title
 item_add(51,1,1) //Max Stack
-item_add(51,2,spr_rifle1) //Sprite
+item_add(51,2,spr_blaster4) //Sprite
 item_add(51,3,true) //Does have effect?
 item_add(51,4,"scr_equip_weapon,51")  //If yes, put script here on string, if not, just put ""
 item_add(51,5,"Your basic space gun") //Description
@@ -632,5 +632,25 @@ item_add(idx,4,"scr_grant_navpath")
 item_add(idx,5,"Use this in the map room to reaveal new jump paths.")
 item_add(idx,8,CC_TECH) //CC_MINING (Commodity Class Mining),
 item_add(idx,9,5000) //Base price
+
+idx=60;
+item_add(idx,0,"Singularity Pistol") //Title
+item_add(idx,1,1) //Max Stack
+item_add(idx,2,spr_singularity_pistol) //Sprite
+item_add(idx,3,true) //Does have effect?
+item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
+item_add(idx,5,"Fill em full of black holes.") //Description
+item_add(idx,6,obj_singularity_pistol) //Object to equip
+item_add(idx,10,3);
+
+idx=61;
+item_add(idx,0,"Blob Gun") //Title
+item_add(idx,1,1) //Max Stack
+item_add(idx,2,spr_blobgun) //Sprite
+item_add(idx,3,true) //Does have effect?
+item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
+item_add(idx,5,"Fires exploding blobs of goo. Disgusting but effective.") //Description
+item_add(idx,6,obj_blobgun) //Object to equip
+item_add(idx,10,3); // Price
 
 global.item_lib_count = idx+1;

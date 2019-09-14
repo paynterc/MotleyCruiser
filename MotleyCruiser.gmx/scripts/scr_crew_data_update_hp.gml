@@ -15,5 +15,4 @@ if( is_array(global.crew) ){
         }
     }
     
-    
 }

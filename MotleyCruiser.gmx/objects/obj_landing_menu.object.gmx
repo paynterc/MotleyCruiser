@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
+obj_gui_control._state = guistates.onstation;
 nameFont = fnt_menus;
 nameFontSize = font_get_size(nameFont);
 nameFontLS = nameFontSize; // line spacing

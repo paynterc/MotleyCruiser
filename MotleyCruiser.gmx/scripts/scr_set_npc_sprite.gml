@@ -1,7 +1,8 @@
 /***
-Run inside an npc object. Assumes existence of an npc_data array
+Return a sprite with body and accessories
 ***/
-/// scr_set_npc_sprite()
+/// scr_set_npc_sprite(npc_data)
+var npc_data = argument0;
 var _sprite_index=scr_get_array_1d(npc_data,NPC_SPRITE);
 var skincolor = scr_get_array_1d(npc_data,NPC_SKIN_COLOR);
 var accessories = scr_get_array_1d(npc_data,NPC_ACCESSORIES);
@@ -15,6 +16,5 @@ for(var i=0;i<array_length_1d(accessories); i++){
     spriteArray = scr_push_array(spriteArray,accessories[i]);
 }
 
-custom_sprite = scr_surface_to_sprite(spriteArray);
-sprite_index = custom_sprite;
-npc_data[NPC_SPRITE_TEMP] = custom_sprite;
+return scr_surface_to_sprite(spriteArray);
+

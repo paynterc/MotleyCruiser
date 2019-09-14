@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>lifespan=3;
 travelspan=2;
-radius=40;
+radius=80;
 damage=20;
 attached_to = noone;// A unit to stick to
 attached = false;

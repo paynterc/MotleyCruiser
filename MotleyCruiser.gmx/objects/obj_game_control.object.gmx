@@ -35,7 +35,8 @@ enum guistates {
     load,
     spacetravel,
     onship,
-    onstation
+    onstation,
+    cinematic
 }
 
 

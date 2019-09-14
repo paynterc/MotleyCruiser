@@ -39,6 +39,7 @@ var player_mode = MODE_TRAVELING;
 if(global.ship_boarded != noone){
     
     // This should only happen if we are bugging out and failed to capture the ship.
+    /***
     player_x = global.ship_boarded[SHIP_X1];
     player_y = global.ship_boarded[SHIP_Y1]-100 ;
     player_angle = global.ship_boarded[SHIP_ANGLE];
@@ -67,6 +68,7 @@ if(global.ship_boarded != noone){
         alarm[4]=room_speed * 4;//self destruct
         
     } 
+    ***/
     global.ship_boarded=noone;
 }else if(global.landed_on != noone && global.landed_type!=noone){
 
@@ -105,7 +107,7 @@ if(instance_exists(obj_player_ship)){
         }     
         
         if(mode==MODE_JUMP_REENTRY){
-            alarm[10]=room_speed*2;
+            alarm[10]=room_speed*1;
         }
         
     }
@@ -175,8 +177,11 @@ var ppcount = irandom(3)+1;
 for(var i = 0; i<ppcount; i++){
     scr_spawn_patrol(irandom(global.sector_width),irandom(global.sector_width),FACTION_PIRATE,irandom(3)+1);
 }
+
+// Test ship
 var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
 ship_obj.disabled = true;
+ship_obj.boardable = true;
 ship_obj.disposition = DISPOSITION_HOSTILE;
 
 

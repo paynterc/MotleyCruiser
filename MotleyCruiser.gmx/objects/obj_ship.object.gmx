@@ -466,12 +466,14 @@ if(disabled){
     color_s = c_gray;
     color_h = c_white;
     color_e = c_gray;
+    interact_active = true;
 }else{
     can_move = true;
     can_fire = true;
     color_s = c_aqua;
     color_h = c_red;
     color_e = c_yellow;
+
 }
 </string>
           </argument>

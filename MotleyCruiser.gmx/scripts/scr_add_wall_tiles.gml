@@ -118,7 +118,7 @@ for(var yy = 0; yy < height; yy++){
         if(global.grid[# xx, yy] == FLOOR){
                       
             // Check for walls
-            if(global.grid[# xx+1, yy] != FLOOR){
+            if(global.grid[# xx+1, yy] != FLOOR && global.grid[# xx+1, yy] != BG_VACUUM){
                 // RIGHT
 
                 if(global.grid[# xx+1, yy-1] == FLOOR){
@@ -129,7 +129,7 @@ for(var yy = 0; yy < height; yy++){
                 
             }
 
-            if(global.grid[# xx, yy-1] != FLOOR){
+            if(global.grid[# xx, yy-1] != FLOOR && global.grid[# xx, yy-1] != BG_VACUUM){
                 // TOP
 
                 if(global.grid[# xx+1, yy-1] == FLOOR){
@@ -141,7 +141,12 @@ for(var yy = 0; yy < height; yy++){
             }
             
             
-            if(global.grid[# xx+1, yy-1] != FLOOR && global.grid[# xx, yy-1] == FLOOR && global.grid[# xx+1, yy] == FLOOR){
+            if(
+            ( 
+            global.grid[# xx+1, yy-1] != FLOOR && global.grid[# xx+1, yy-1] != BG_VACUUM 
+            && global.grid[# xx, yy-1] == FLOOR 
+            && global.grid[# xx+1, yy] == FLOOR )
+            ){
                 // TOP RIGHT WALL SHADOW
                 tile_add(shadow_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT/2, xx*CELL_WIDTH, yy*CELL_HEIGHT, -1);
             }
@@ -153,7 +158,15 @@ for(var yy = 0; yy < height; yy++){
 // Add special tiles
 for(var yy = 0; yy < height; yy++){
     for(var xx = 0; xx < width; xx++){
-        if(global.grid[# xx, yy] == BARBACK){           
+        if(global.grid[# xx, yy] == BG_VACUUM){
+
+            tile_layer_delete_at(-1, xx*CELL_WIDTH, yy*CELL_HEIGHT);
+            tile_layer_delete_at(-1, xx*CELL_WIDTH, (yy+1)*CELL_HEIGHT);
+            tile_layer_delete_at(0, xx*CELL_WIDTH, yy*CELL_HEIGHT);
+            tile_layer_delete_at(1, xx*CELL_WIDTH, yy*CELL_HEIGHT);
+            
+
+        }else if(global.grid[# xx, yy] == BARBACK){           
             tile_add(bg_barshelf, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, -2);                                 
         }else if(global.grid[# xx, yy] == BG_BARTOP){
             tile_add(bg_bartop, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, -yy*CELL_HEIGHT);

@@ -202,7 +202,7 @@ if(mode==MODE_LANDING){
         exit;
         
     }else if( 
-        scr_user_input(pin.interact_hold) &amp;&amp;
+        //scr_user_input(pin.interact_hold) &amp;&amp;
         instance_exists(closest_landable) &amp;&amp; 
         distance_to_object(closest_landable)&lt;interact_range)
     {
@@ -239,7 +239,7 @@ if(mode==MODE_BOARDING){
     board_count--;
     if(board_count&lt;1){
         
-        // BOARD SHIP
+        // BOARD SHIP. What actually happens when you board a ship can vary. Each ship stores its own boarding script in the boarding_script variable.
         var scriptToCall = asset_get_index(closest_boardable.boarding_script);
         if(scriptToCall){
             script_execute(scriptToCall);
@@ -247,7 +247,7 @@ if(mode==MODE_BOARDING){
         exit;
         
     }else if( 
-        scr_user_input(pin.interact_hold) &amp;&amp;
+        //scr_user_input(pin.interact_hold) &amp;&amp;
         instance_exists(closest_boardable) &amp;&amp; 
         distance_to_object(closest_boardable)&lt;interact_range){
         alarm[3]=room_speed * board_spd;
@@ -433,6 +433,34 @@ if(global.paused){
     }else if(mode==MODE_JUMPING){
         scr_rotate_to_angle(self,tgt_angle,turn_spd);
     
+    }else if(mode==MODE_BOARDING){
+        if(scr_user_input(pin.fire) &amp;&amp; can_fire){
+            shooting = true;
+        }else{
+            shooting = false;
+        }
+        if(scr_user_input(pin.thrust) &amp;&amp; can_move){
+            motion_add(image_angle,acc_spd_fwd);
+            thrusting_fwd=true;
+            if(speed &gt; max_spd_fwd){
+                speed = max_spd_fwd;//clamp
+            }
+        }else{
+            thrusting_fwd=false;
+        }
+        
+        if(can_move){
+            scr_gradually_rotate_5(id,mouse_x,mouse_y,turn_spd);
+        }
+        
+        if(scr_user_input(pin.thrust_reverse) &amp;&amp; can_move){
+            motion_add(image_angle,acc_spd_rvs *-1);
+            if(speed &gt; max_spd_rvs){
+                speed = max_spd_rvs;//clamp
+            }
+        }
+        
+        scr_jump_input();
     }else if(mode==MODE_TRAVELING){
     
         if(scr_user_input(pin.fire) &amp;&amp; can_fire){
@@ -473,19 +501,20 @@ if(global.paused){
     
     
     
-        if( scr_user_input(pin.interact_hold) ){
+        if( scr_user_input(pin.interact) ){
         
             
-                // What is closest
+                // What is closest 
                 var closest = noone;// string
                 var dist=interact_range;
+                show_debug_message("mode: " + string(mode));
                 closest_landable = scr_get_closest(obj_landable,self,dist);
                 if(closest_landable!=noone){
                     closest = "landable";
                     dist = distance_to_point(closest_landable.x, closest_landable.y);
                 }
         
-                closest_boardable = scr_get_closest(obj_npc_ship,self,dist);       
+                closest_boardable = scr_get_closest(obj_npc_ship,self,dist); 
                 if(closest_boardable!=noone){
                     if(closest_boardable.disabled &amp;&amp; closest_boardable.boardable &amp;&amp; closest_boardable.faction!=FACTION_PLAYER){
                         closest = "boardable";
@@ -499,6 +528,8 @@ if(global.paused){
                 if(closest_gate!=noone){
                     closest = "gate";
                 }
+                show_debug_message("distance2: " + string(dist));
+                show_debug_message("closest: " + string(closest));
         
                 switch (closest)
                 {
@@ -611,7 +642,7 @@ if(hull_current &lt; 1){
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="73">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -631,15 +662,19 @@ if(hull_current &lt; 1){
             <string>/// Land or Board text
 if(mode==MODE_LANDING){
     
-    draw_set_color(c_yellow);
-    draw_set_halign(fa_center);
-    draw_text(x, y+32, "DOCKING: " + string(land_count));
 
+    var xx = display_get_gui_width() / 2;
+    var yy = display_get_gui_height() / 2;
+    var txt = "DOCKING IN: " + string(land_count);
+    scr_draw_text(txt,xx,yy,fnt_menus_lg,c_yellow);
+    
 }else if(mode==MODE_BOARDING){
 
-    draw_set_color(c_yellow);
-    draw_set_halign(fa_center);
-    draw_text(x, y+32, "BOARDING: " + string(board_count));
+
+    var xx = display_get_gui_width() / 2;
+    var yy = display_get_gui_height() / 2;
+    var txt = "BOARDING IN : " + string(board_count);
+    scr_draw_text(txt,xx,yy,fnt_menus_lg,c_yellow);
     
 }
 </string>

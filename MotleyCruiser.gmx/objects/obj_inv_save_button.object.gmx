@@ -27,7 +27,12 @@
             <kind>1</kind>
             <string>/// Save team and player equipped arrays
 scr_save_inv_settings();
-room_goto(rm_galley)
+if(global.ship_boarded!=noone){
+    room_goto(rm_podlaunch);
+}else{
+    room_goto(rm_galley);
+}
+
 </string>
           </argument>
         </arguments>

@@ -544,20 +544,26 @@ alarm[5]=room_speed*2;
             <kind>1</kind>
             <string>/// Spawn drones on timer
 
-if(instance_number(obj_drone) &lt; 20){
+if(instance_number(obj_drone) &lt; 2){
     var width = room_width div CELL_WIDTH;
     var height = room_height div CELL_HEIGHT;
     var odds = 20;
+    var maxDrones = 3;
+    var countDrones = 0;
     for(var yy = 0; yy &lt; height; yy++){
         for(var xx = 0; xx &lt; width; xx++){
             var ex = xx * CELL_WIDTH + CELL_WIDTH/2;
             var ey = yy * CELL_HEIGHT + CELL_HEIGHT/2;
             if(global.grid[# xx, yy] == FLOOR){
                 if(instance_exists(obj_player)){
-                    if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds){                  
-                        var drone = instance_create(ex,ey,obj_drone);
+                    if(point_distance(ex,ey,obj_player.x,obj_player.y) &gt; 80 &amp;&amp; irandom(odds) == odds &amp;&amp; countDrones&lt;=maxDrones){                  
+                        var drone = instance_create(0,0,obj_drone);
+                        countDrones++;
                         drone.disposition = DISPOSITION_HOSTILE;
-                        drone.targetKfaction = FACTION_PLAYER;                    
+                        drone.targetKfaction = FACTION_PLAYER;  
+                        var tpDoor = instance_create(ex,ey,obj_trapdoor);
+                        tpDoor.emy = drone;
+                        tpDoor.depth = -ey;                                          
                     }
                 }
             } 

@@ -46,8 +46,41 @@ hp_current=hp;
 pspeed = 3;
 pspeed_init = pspeed;
 image_speed = .85;
-damage=3;
+damage=1;
 name="drone";
+sndPriority = 1;
+
+alarm[1]=room_speed * .25;//play sound
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// play sound
+
+if( instance_exists(target) ){
+    var dist = point_distance(x,y,target.x,target.y);
+    sndPriority = ceil(500/dist);
+}
+audio_play_sound_at(snd_copter1,x,y,500,100,300,1,false,sndPriority);
+alarm[1] = room_speed * .25;
 </string>
           </argument>
         </arguments>
@@ -101,6 +134,30 @@ if(!global.paused){
     }
 }
 alarm[0] = room_speed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// depth
+depth = depths.bullet;
 </string>
           </argument>
         </arguments>

@@ -12,7 +12,7 @@ for(var i=0; i<array_length_1d(global.crew); i++){
     }
     var npc_data = scr_npc();// Do this in case we've added any extra attributes since the last game save.
     npc_data = scr_fill_array(npc_data,global.crew[i]);
-    if(!npc_data[NPC_ACTIVE]) continue;
+    if(!npc_data[NPC_ACTIVE]) continue;// Dead
     thiscrew = instance_create(xx, yy, obj_npc);
     
     thiscrew.npc_data = npc_data;
@@ -21,12 +21,16 @@ for(var i=0; i<array_length_1d(global.crew); i++){
         if(sprite_exists(npc_data[NPC_SPRITE_TEMP])){
             sprite_index = npc_data[NPC_SPRITE_TEMP];
         }  
-        faction = FACTION_PLAYER;      
+        faction = FACTION_PLAYER; 
+        llight = glr_lightsimple_create(spr_glr_light_mask_point, 0, x, y, c_white,1,1);
+        glr_lightsimple_set_scaling(llight,.5,.5)     
     }
     thiscrew.pspeed=obj_player.spd;
     thiscrew.pspeed_init = obj_player.spd;
     thiscrew.crew_index = i;//Keep track of which crewmember this is, in case he dies.
     thiscrew.mode="follow";
     thiscrew.targetMtype=obj_player;// Object to move to.
+    
+
     
 }

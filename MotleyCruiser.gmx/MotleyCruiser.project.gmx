@@ -70,7 +70,9 @@
       <sound>sound\snd_fwip</sound>
       <sound>sound\snd_eatbullet</sound>
       <sound>sound\snd_cratebrake</sound>
+      <sound>sound\scr_dooropen</sound>
       <sound>sound\snd_plasmacharge</sound>
+      <sound>sound\snd_copter1</sound>
     </sounds>
     <sounds name="_stringbean">
       <sound>sound\snd_beep</sound>
@@ -167,6 +169,7 @@
       <sprite>sprites\spr_cryptolid3</sprite>
       <sprite>sprites\spr_drone1</sprite>
       <sprite>sprites\spr_drone2</sprite>
+      <sprite>sprites\sprite502</sprite>
       <sprite>sprites\spr_fion</sprite>
       <sprite>sprites\spr_flowridian</sprite>
       <sprite>sprites\spr_flowridian_fml</sprite>
@@ -226,6 +229,7 @@
       <sprite>sprites\spr_torpedo_pod2</sprite>
       <sprite>sprites\spr_torpedo_pod3</sprite>
       <sprite>sprites\spr_torpedo_pod4</sprite>
+      <sprite>sprites\spr_pod_cinematic</sprite>
       <sprite>sprites\spr_drinks</sprite>
       <sprite>sprites\spr_stage</sprite>
       <sprite>sprites\spr_airlock_sm1</sprite>
@@ -252,12 +256,14 @@
         <sprite>sprites\spr_impact_glow</sprite>
         <sprite>sprites\spr_impact_glow_sm</sprite>
         <sprite>sprites\spr_bullet_3</sprite>
+        <sprite>sprites\spr_blob</sprite>
         <sprite>sprites\spr_singularity_sm</sprite>
         <sprite>sprites\spr_sunshot</sprite>
       </sprites>
       <sprite>sprites\spr_rifle1</sprite>
       <sprite>sprites\spr_blaster1</sprite>
       <sprite>sprites\spr_blaster4</sprite>
+      <sprite>sprites\spr_blobgun</sprite>
       <sprite>sprites\spr_blaster5</sprite>
       <sprite>sprites\spr_blaster3</sprite>
       <sprite>sprites\spr_blaster2</sprite>
@@ -300,13 +306,17 @@
         <sprite>sprites\spr_beam_2</sprite>
         <sprite>sprites\spr_booster_16_1</sprite>
         <sprite>sprites\spr_cargo_16_1</sprite>
+        <sprite>sprites\sprite507</sprite>
         <sprite>sprites\spr_cargo_16_2</sprite>
         <sprite>sprites\spr_cargo_16_3</sprite>
         <sprite>sprites\spr_cargo_16_4</sprite>
         <sprite>sprites\spr_command_16_1</sprite>
+        <sprite>sprites\sprite512</sprite>
         <sprite>sprites\spr_command_16_6</sprite>
         <sprite>sprites\spr_command_16_2</sprite>
+        <sprite>sprites\sprite508</sprite>
         <sprite>sprites\spr_command_16_3</sprite>
+        <sprite>sprites\sprite511</sprite>
         <sprite>sprites\spr_command_16_4</sprite>
         <sprite>sprites\spr_command_16_40_1</sprite>
         <sprite>sprites\spr_command_16_5</sprite>
@@ -316,17 +326,22 @@
         <sprite>sprites\spr_gun_16_32_1</sprite>
         <sprite>sprites\spr_gun_16_32_2</sprite>
         <sprite>sprites\spr_gun_16_48_1</sprite>
+        <sprite>sprites\sprite509</sprite>
         <sprite>sprites\spr_hellfury</sprite>
         <sprite>sprites\spr_missile_launcher_16_48_1</sprite>
         <sprite>sprites\spr_platform</sprite>
         <sprite>sprites\spr_railgun</sprite>
         <sprite>sprites\spr_shield_gen_16_16_1</sprite>
         <sprite>sprites\spr_thrust_16_1</sprite>
+        <sprite>sprites\sprite510</sprite>
         <sprite>sprites\spr_thrust_16_2</sprite>
+        <sprite>sprites\sprite513</sprite>
         <sprite>sprites\spr_thrust_16_3</sprite>
         <sprite>sprites\spr_thrust_16_4</sprite>
         <sprite>sprites\spr_thrust_lat_16_16_1</sprite>
+        <sprite>sprites\sprite514</sprite>
         <sprite>sprites\spr_thrust_lat_16_16_2</sprite>
+        <sprite>sprites\sprite515</sprite>
         <sprite>sprites\spr_thrust_lat_32_32_1</sprite>
         <sprite>sprites\spr_thruster_flame</sprite>
         <sprite>sprites\spr_turret_1</sprite>
@@ -592,8 +607,12 @@
         </sprites>
       </sprites>
     </sprites>
-    <sprite>sprites\spr_boom</sprite>
+    <sprites name="_gxmap">
+      <sprite>sprites\spr_gxpoint</sprite>
+      <sprite>sprites\spr_btn_addpath</sprite>
+    </sprites>
     <sprite>sprites\sprite226</sprite>
+    <sprite>sprites\spr_boom</sprite>
     <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_bolt1</sprite>
     <sprite>sprites\spr_bolt2</sprite>
@@ -609,6 +628,7 @@
     <sprite>sprites\spr_person_tmp</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
     <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\spr_vacuum</sprite>
     <sprite>sprites\spr_melee_swish</sprite>
     <sprite>sprites\sprite242</sprite>
     <sprite>sprites\spr_melee_sword</sprite>
@@ -643,10 +663,6 @@
     <sprite>sprites\spr_cargo_drop</sprite>
     <sprite>sprites\spr_cargo_drop2</sprite>
     <sprite>sprites\spr_cargo_drop3</sprite>
-    <sprites name="_gxmap">
-      <sprite>sprites\spr_gxpoint</sprite>
-      <sprite>sprites\spr_btn_addpath</sprite>
-    </sprites>
     <sprite>sprites\spr_npc_icon</sprite>
   </sprites>
   <backgrounds name="background">
@@ -1123,6 +1139,10 @@
         <script>scripts\scr_play_sound.gml</script>
         <script>scripts\scr_play_sound_at.gml</script>
       </scripts>
+      <scripts name="_team">
+        <script>scripts\scr_team_add.gml</script>
+        <script>scripts\scr_team_remove_ci.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_ship_editor">
       <script>scripts\scr_save_ship.gml</script>
@@ -1145,6 +1165,7 @@
       <script>scripts\scr_module_modify_stats.gml</script>
       <script>scripts\scr_modules_to_ship_data.gml</script>
       <script>scripts\scr_modules_findbyname.gml</script>
+      <script>scripts\scr_draw_ship.gml</script>
     </scripts>
     <scripts name="_traits">
       <script>scripts\scr_npc_traits_library.gml</script>
@@ -1577,13 +1598,14 @@
       <object>objects\obj_drone</object>
       <object>objects\obj_arm</object>
       <object>objects\obj_wall_invis</object>
-      <object>objects\obj_floor</object>
       <object>objects\obj_corpse</object>
       <objects name="_critters">
         <object>objects\obj_beast2</object>
         <object>objects\obj_zombie_brute</object>
         <object>objects\obj_beast_eyes</object>
       </objects>
+      <object>objects\obj_floor</object>
+      <object>objects\obj_vacuum</object>
       <object>objects\obj_player_start</object>
       <object>objects\obj_waypoint</object>
       <object>objects\obj_torpedo_pod</object>
@@ -1599,6 +1621,7 @@
       <object>objects\obj_gun</object>
       <object>objects\obj_plasmaknife</object>
       <object>objects\obj_singularity_pistol</object>
+      <object>objects\obj_blobgun</object>
       <object>objects\obj_machinegun1</object>
       <object>objects\obj_blaster1</object>
       <object>objects\obj_shotgun1</object>
@@ -1620,6 +1643,7 @@
       <object>objects\obj_melee_weapon</object>
       <objects name="_bullets_for_handguns">
         <object>objects\obj_bullet</object>
+        <object>objects\obj_blob</object>
         <object>objects\obj_singularity</object>
       </objects>
     </objects>
@@ -1823,6 +1847,13 @@
     </objects>
     <object>objects\obj_interactable</object>
     <object>objects\obj_floaty</object>
+    <objects name="podlaunch">
+      <object>objects\obj_podlaunch_control</object>
+      <object>objects\obj_pod_cinematic</object>
+      <object>objects\object220</object>
+      <object>objects\obj_ship_cinematic</object>
+      <object>objects\obj_npc_cinematic</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
@@ -1833,6 +1864,7 @@
     <room>rooms\rm_ship_boss_rnd</room>
     <room>rooms\rm_ship_control</room>
     <room>rooms\rm_galley</room>
+    <room>rooms\rm_podlaunch</room>
     <room>rooms\rm_cantina1</room>
     <room>rooms\rm_cantina2</room>
     <room>rooms\rm_arena</room>
@@ -1849,7 +1881,7 @@
     <room>rooms\rm_test</room>
     <room>rooms\rm_dock</room>
   </rooms>
-  <constants number="392">
+  <constants number="393">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -2241,6 +2273,7 @@
     <constant name="BARBACK">-8</constant>
     <constant name="BG_BARTOP">-9</constant>
     <constant name="BG_PLATFORM">-10</constant>
+    <constant name="BG_VACUUM">-11</constant>
     <constant name="GM_BULLET_SPEED_MULT">2</constant>
   </constants>
   <help>

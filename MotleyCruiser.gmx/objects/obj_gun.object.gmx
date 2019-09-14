@@ -125,7 +125,7 @@ gun_sound=snd_hellfury;
 inventory_id=noone;// Refers to inventory item library
 type=0 //SET THIS TO THE OWNERS FACTION
 image_speed = .05;
-shot_remaining = shot_capacity;
+
 
 // State
 shooting = false;
@@ -133,6 +133,7 @@ cooling_down = false;
 destroy = false; //Destroy myself
 parent_obj = noone;// Who is holding the weapon
 reloading = false;
+shot_remaining = shot_capacity;
 
 </string>
           </argument>

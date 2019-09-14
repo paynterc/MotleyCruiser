@@ -14,4 +14,6 @@ view_object[0]=closest_boardable;
 //obj_space_level.zoom=true;
 scr_reset_room_random();
 global.decks = 4;// Override some settings
-room_goto(rm_ship_deck_rnd);
+//room_goto(rm_ship_deck_rnd);
+//room_goto(rm_podlaunch);
+room_goto(rm_inventory);

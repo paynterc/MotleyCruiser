@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>/// Init
+maxScale = 10;
 image_blend = c_orange;
 depth=depths.explosion;
 </string>
@@ -54,7 +55,7 @@ depth=depths.explosion;
 image_yscale+=.5;
 //image_alpha -= .05;
 depth= depths.bullet;
-if(image_xscale&gt;10){
+if(image_xscale&gt;maxScale){
     instance_destroy();
 }
 </string>

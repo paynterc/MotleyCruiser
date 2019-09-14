@@ -477,9 +477,12 @@ if(_state==guistates.spacetravel){
     draw_set_colour(c_lime);
     
     if(debug_mode){
-        draw_text(gui_width-32, gui_height-48, string(global.base_bullet_speed) + " :Base Bullet Speed");
-        draw_text(gui_width-32, gui_height-80, string(global.base_fire_rate) + " :Base Fire Rate");
-        draw_text(gui_width-32, gui_height-112, string(grotation) + " :G Rotation");
+        if(_state==guistates.onship){
+            draw_text(gui_width-32, gui_height-48, string(global.base_bullet_speed) + " :Base Bullet Speed");
+            draw_text(gui_width-32, gui_height-80, string(global.base_fire_rate) + " :Base Fire Rate");
+            draw_text(gui_width-32, gui_height-112, string(grotation) + " :G Rotation");
+        }
+
     }
 </string>
           </argument>

@@ -95,7 +95,7 @@ if(hp_current&lt;1){
             <string>/// Break
 sprite_index = spr_boom;
 scr_drop_loot(0,1,'cargocrate');
-audio_play_sound(snd_cratebrake,1,0);
+scr_play_sound(snd_cratebrake);
 instance_destroy();
 </string>
           </argument>

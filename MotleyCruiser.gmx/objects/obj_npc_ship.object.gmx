@@ -53,6 +53,9 @@ mode = MODE_WAITING;//attack, flee, wait, patrol
 mode_save = mode;
 accuracy = .9;
 boardable = true; // May be boardable in some circumstances
+interact_active = false;// For boarding
+interact_ready = false;
+interact_range = 200;
 
 //Animation speed is zero. Stay on one frame.
 image_speed = 0;
@@ -654,6 +657,32 @@ if(boostable){
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Interact
+if(instance_exists(obj_player_ship)){
+    interact_ready = boardable &amp;&amp; ( point_distance(x,y,obj_player_ship.x,obj_player_ship.y) &lt;= interact_range &amp;&amp; interact_active );
+}else{
+    interact_ready = false;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="7" enumb="11">
       <action>
@@ -780,6 +809,31 @@ if(tgt_dist &gt; weapon_range){
     draw_rectangle(x-16,y-55,x-14,y-53,0);
 }
 ****/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw interact
+if(interact_ready){
+    draw_sprite_ext(spr_npc_icon,0,x,y - 64,2.5,2.5,0,c_white,1);
+    scr_draw_text("E",x,y-64,fnt_menus_lg,c_black);
+}
 </string>
           </argument>
         </arguments>

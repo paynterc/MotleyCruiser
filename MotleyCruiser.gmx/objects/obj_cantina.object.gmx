@@ -40,6 +40,7 @@
           <argument>
             <kind>1</kind>
             <string>/// Instantiate required objects
+obj_gui_control._state = guistates.onstation;
 instance_create(0,0,obj_trade);
 
 if(instance_exists(obj_dialog_control)){

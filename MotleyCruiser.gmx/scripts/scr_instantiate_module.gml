@@ -1,7 +1,7 @@
 /****
 Instantiates and populates a module object.
 ****/
-//scr_instantiate_module(module data, magnitude, drawsprite)
+/// scr_instantiate_module(module data, magnitude, drawsprite, scale)
 var args = noone;
 for (var i=0; i<16; i++)
 {
@@ -14,7 +14,9 @@ for (var i=0; i<16; i++)
 var module_record = args[0];
 var mag = args[1];
 var drawsprite = args[2];
+var scale = args[3];
 if(drawsprite==noone) drawsprite = true;
+if(scale==noone) scale = 1;
 
 var m_object;
 var coords = module_record[I_MODULE_COORDS];//These are the row/column coords on the scaffold
@@ -28,7 +30,7 @@ var c = coords[1];
 var offsets = noone;
 var gunoffsets = noone;
 
-offsets = scr_scaffold_offsets(mag,r,c);     
+offsets = scr_scaffold_offsets(mag,r,c,scale);     
 module_record[I_MODULE_OFFSETS] = offsets;
 
 
@@ -45,8 +47,8 @@ if(m_proto[MODULE_TYPE]=="gun"){
 m_object.offsets = offsets;
 m_object.sprite_index = m_proto[MODULE_SPRITE_INDEX];
 m_object.image_blend = module_record[I_MODULE_COLOR];
-m_object.image_xscale = module_record[I_MODULE_XSCALE];// These are for flipping sprites on their axis, not for scaling the size of the sprite
-m_object.image_yscale = module_record[I_MODULE_YSCALE];// Values should really only be 1 and -1.
+m_object.image_xscale = module_record[I_MODULE_XSCALE] * scale;// These are for flipping sprites on their axis, not for scaling the size of the sprite
+m_object.image_yscale = module_record[I_MODULE_YSCALE] * scale;// Values should really only be 1 and -1.
 
 m_object.depth = depth - module_record[I_MODULE_DEPTH];
 m_object.faction = faction;

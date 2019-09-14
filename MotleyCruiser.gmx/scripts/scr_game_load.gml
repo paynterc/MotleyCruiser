@@ -114,15 +114,20 @@ if(ini_section_exists(game)){
         
     }
     
-
+    // Team is always supposed to have three slots, empty or not.
     read_list = ds_list_create();
     var str = ini_read_string(game, "team", "");
     ds_list_read(read_list,str);
-    global.team = read_list[| 0];
+    global.team = scr_array_size(3);    
+    var teamArray = read_list[| 0];
     ds_list_destroy(read_list);
-    if(!is_array(global.team))
+    if(is_array(teamArray))
     {
-        global.team = scr_array_size(3);
+        for(var t=0; t<array_length_1d(teamArray); t++){
+            if(t>2) break;
+            global.team[t] = teamArray[t];
+        }
+        
     }
     
     read_list = ds_list_create();

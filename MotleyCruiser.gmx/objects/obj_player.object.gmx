@@ -391,7 +391,7 @@ if(global.equipped!=noone){
             if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
             
                 //weapon = instance_create(x,y,weapon_index);
-                weapon = instance_create(x,y,obj_singularity_pistol);;
+                weapon = instance_create(x,y,obj_blobgun);;
                 weapon.type = faction;
                 weapon.parent_obj = id;
                 weapon.inventory_id = item_id;
