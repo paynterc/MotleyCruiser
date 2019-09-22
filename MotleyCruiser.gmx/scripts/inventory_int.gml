@@ -4,8 +4,8 @@ slot_h = argument1;
 
 global.InventorySlot = slot;
 global.InventorySlotH = slot_h;
-global.ItemSelected = 0;
-global.ItemLastSelect = -1;
+global.ItemSelected = 0;// We are hovering over this item
+global.ItemLastSelect = -1;// We clicked on this item previously
 global.MouseItem = false;
 global.MouseIndex = -1;
 global.MouseOutside = true;

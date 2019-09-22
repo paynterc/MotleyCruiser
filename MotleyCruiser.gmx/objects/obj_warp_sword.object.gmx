@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>obj_melee_weapon</parentName>
+  <parentName>obj_gun</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -40,22 +40,105 @@
           <argument>
             <kind>1</kind>
             <string>/// Init
-myBullet = obj_melee_attack;//zero speed. destroys self after draw
+
+// Stats
+damage = 3;
+my_fire_rate_mod = .75;
+user_fire_rate_mod = .5;
+bullet_speed = 0;
+range=16;
+shot_capacity = 3;
+reload_speed = 2;
+
+// Settings
+myBullet = obj_warpsword_attack;//zero speed. destroys self after draw
 bullet_sprite=noone;// sprite defines the hit box of bullet. noone leaves it as default
 area_sprite=spr_melee_area;// highlight the area where enemies will be hit
 animation_spr = spr_melee_sword;// an animation for the weapon
 bullet_alpha=0;//show bullet or not
+opsprite = sprite_index;// original sprite
+rest_speed = 1;// image speed
+swing_speed = 2;
+image_speed = rest_speed;
 
-damage = 3;
-weaponSpeed = .15;
-shooting = false;
-destroy = false; //Destroy myself
-type=0 //1=player, 2=enemy
-bullet_speed = 0;
-range=16;
-opsprite = sprite_index;
+// State
 xdir=x;
 ydir=y;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="10">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Shwing!
+xdir = x+lengthdir_x(range, image_angle);
+ydir = y+lengthdir_y(range, image_angle);
+    
+var bullet = instance_create(xdir,ydir,myBullet);
+if(bullet_sprite!=noone){
+    bullet.sprite_index = bullet_sprite;
+}
+
+bullet.image_alpha = bullet_alpha;
+bullet.type = type;
+bullet.image_angle=image_angle;
+bullet.direction = image_angle;
+depth = depths.bullet;
+bullet.speed = 0;
+bullet.damage = damage;
+bullet.kb_pwr = kb_pwr; // Knockback power
+bullet.firedby = parent_obj; 
+
+audio_play_sound_at(snd_laser3,x,y,0,100,100,1,false,2);
+
+if(animation_spr!=noone){
+    sprite_index = animation_spr;
+    image_speed = swing_speed;
+}
+shot_remaining--;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="7">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(sprite_index == animation_spr){
+    sprite_index = opsprite;
+    image_speed = rest_speed;
+}
 
 </string>
           </argument>

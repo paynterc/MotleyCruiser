@@ -7,7 +7,7 @@ if inventory_read("slot",slot_id) = true{
       var item_amount;
       item_amount = inventory_read("Stack",slot_id)
       item_amount = max(item_amount-amount,0)
-      if item_amount = 0{
+      if item_amount == 0{
          inventory_write("slot",slot_id,false)
          inventory_write("ID",slot_id,-1)
          inventory_write("Stack",slot_id,-1)

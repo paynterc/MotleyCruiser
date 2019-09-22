@@ -93,10 +93,10 @@ depth= (y-64) * -1;
 
 if(image_speed &gt; 0){
     if(image_index==7){
-        scr_play_sound(scr_dooropen);
+        scr_play_sound(snd_dooropen);
     }
     if(image_index==22){
-        scr_play_sound(scr_dooropen);
+        scr_play_sound(snd_dooropen);
     }
                                
     if(image_index &gt;= image_playto){

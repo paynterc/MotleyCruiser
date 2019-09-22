@@ -3,6 +3,9 @@ var ID, stack;
 ID = real(argument0);
 stack = real(argument1);
 
+show_debug_message("inv InventorySlot: " + string(global.InventorySlot));
+show_debug_message("inv InventorySlotH: " + string(global.InventorySlotH));
+
 var inventory_empty;
 inventory_empty = false
 for (i=0; i<(global.InventorySlot*global.InventorySlotH); i+=1)
@@ -16,6 +19,7 @@ for (i=0; i<(global.InventorySlot*global.InventorySlotH); i+=1)
           stack_new = stack
           ds_map_replace(global.inventory,"Stack"+string(i),min(stack_value+stack_new,stack_max))
           stack = max((stack_value+stack_new)-stack_max,0)
+
           if stack = 0{
              break;
           }

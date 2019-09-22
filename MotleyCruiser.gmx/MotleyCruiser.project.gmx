@@ -67,10 +67,13 @@
       <sound>sound\snd_confirm1</sound>
       <sound>sound\snd_confirm2</sound>
       <sound>sound\snd_confirm3</sound>
+      <sound>sound\snd_confirm4</sound>
+      <sound>sound\snd_confirm5</sound>
+      <sound>sound\snd_blip1</sound>
       <sound>sound\snd_fwip</sound>
       <sound>sound\snd_eatbullet</sound>
       <sound>sound\snd_cratebrake</sound>
-      <sound>sound\scr_dooropen</sound>
+      <sound>sound\snd_dooropen</sound>
       <sound>sound\snd_plasmacharge</sound>
       <sound>sound\snd_copter1</sound>
     </sounds>
@@ -230,6 +233,7 @@
       <sprite>sprites\spr_torpedo_pod3</sprite>
       <sprite>sprites\spr_torpedo_pod4</sprite>
       <sprite>sprites\spr_pod_cinematic</sprite>
+      <sprite>sprites\sprite520</sprite>
       <sprite>sprites\spr_drinks</sprite>
       <sprite>sprites\spr_stage</sprite>
       <sprite>sprites\spr_airlock_sm1</sprite>
@@ -526,6 +530,10 @@
           <sprite>sprites\spr_modelframe1</sprite>
           <sprite>sprites\spr_delete</sprite>
           <sprite>sprites\spr_slot_lg</sprite>
+          <sprite>sprites\sprite516</sprite>
+          <sprite>sprites\spr_icon_bullet</sprite>
+          <sprite>sprites\spr_icon_shield</sprite>
+          <sprite>sprites\spr_icon_gear</sprite>
           <sprite>sprites\spr_nav_up</sprite>
           <sprite>sprites\spr_background</sprite>
           <sprite>sprites\spr_background2</sprite>
@@ -1000,6 +1008,7 @@
         <scripts name="Inventory Item Command">
           <script>scripts\inventory_item_add.gml</script>
           <script>scripts\inventory_item_clear.gml</script>
+          <script>scripts\inventory_item_set.gml</script>
           <script>scripts\inventory_item_delete.gml</script>
           <script>scripts\inventory_item_drop.gml</script>
           <script>scripts\inventory_item_exchange.gml</script>
@@ -1032,6 +1041,7 @@
         <script>scripts\scr_player_get_equip.gml</script>
         <script>scripts\scr_inventory_swap.gml</script>
         <script>scripts\scr_save_inv_settings.gml</script>
+        <script>scripts\scr_item_data.gml</script>
       </scripts>
     </scripts>
     <scripts name="_libraries">
@@ -1638,13 +1648,14 @@
       <object>objects\obj_aoe</object>
       <object>objects\obj_master_panel</object>
       <object>objects\obj_grenade</object>
-      <object>objects\obj_melee_attack</object>
       <object>objects\obj_warp_sword</object>
       <object>objects\obj_melee_weapon</object>
       <objects name="_bullets_for_handguns">
         <object>objects\obj_bullet</object>
         <object>objects\obj_blob</object>
         <object>objects\obj_singularity</object>
+        <object>objects\obj_melee_attack</object>
+        <object>objects\obj_warpsword_attack</object>
       </objects>
     </objects>
     <objects name="_dialogue">

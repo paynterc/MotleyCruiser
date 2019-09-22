@@ -25,82 +25,6 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Debug text
-    draw_set_color(c_lime);
-    
-    if(global.paused){
-        //draw_set_valign(fa_center);
-        //draw_text(display_get_gui_width() / 2, 32, "-- PAUSED --");
-    }
-
-    
-
-    /***
-    draw_text(96, 64, "D WIDTH: " + string(display_get_width()));
-    draw_text(96, 96, "D height: " + string(display_get_height()));
-    
-    draw_text(96, 128, "G WIDTH: " + string(display_get_gui_width()));
-    draw_text(96, 160, "G height: " + string(display_get_gui_height()));
-    
-    draw_text(96, 192, "W WIDTH: " + string(window_get_width()));
-    draw_text(96, 224, "W height: " + string(window_get_height()));
-    
-    draw_text(96, 256, "VP WIDTH: " + string(view_wport[0]));
-    draw_text(96, 288, "VP height: " + string(view_hport[0]));
-    
-    draw_text(96, 352, "V WIDTH: " + string(view_wview[0]));
-    draw_text(96, 384, "V height: " + string(view_hview[0]));
-***/
-    
-    /***
-    if(instance_exists(obj_planet_surface)){
-            draw_text(48, 64, "Room index x: " + string(global.planet_room_index_x) );
-            draw_text(48, 96, "Room index y: " + string(global.planet_room_index_y) );
-            draw_text(48, 128, "planet seed: " + string(global.planet_seed) );
-            draw_text(48, 160, "room seed: " + string(obj_planet_surface.seed) );
-    }
-    ***/
-/****
-    draw_text(48, 64, "D WIDTH: " + string(display_get_width()));
-    draw_text(48, 96, "D height: " + string(display_get_height()));
-    
-    draw_text(48, 128, "G WIDTH: " + string(display_get_gui_width()));
-    draw_text(48, 160, "G height: " + string(display_get_gui_height()));
-    
-    draw_text(48, 192, "W WIDTH: " + string(window_get_width()));
-    draw_text(48, 224, "W height: " + string(window_get_height()));
-    
-
-    if(instance_exists(obj_player_ship)){
-        draw_text(32, 64, "Decks: " + string(global.decks));
-        draw_text(32, 64, "Current Deck: " + string(global.deck_current));
-        draw_text(32, 96, "Mass: " + string(obj_player_ship.mass));
-        draw_text(32, 128, "MaxFwd: " + string(obj_player_ship.max_spd_fwd));
-        draw_text(32, 140, "EN: " + string(obj_player_ship.energy_regen_points));
-    }
-***/
-   
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Init
 
 
@@ -111,7 +35,7 @@ bullet_speed = global.base_bullet_speed;
 range=400;
 spread = 5;// Accuracy
 kb_pwr = 3;// Knockback power
-my_fire_rate_mod = 1;// Modify weaponSpeed stats for gun
+my_fire_rate_mod = 1;// Time between shots. Modify weaponSpeed stats for gun
 my_bullet_speed_mod = 1;
 user_fire_rate_mod = 1;// If player if firing, make this faster
 user_bullet_speed_mod = 1;
@@ -129,7 +53,7 @@ image_speed = .05;
 
 // State
 shooting = false;
-cooling_down = false;
+cooling_down = false;// Time between bullets
 destroy = false; //Destroy myself
 parent_obj = noone;// Who is holding the weapon
 reloading = false;

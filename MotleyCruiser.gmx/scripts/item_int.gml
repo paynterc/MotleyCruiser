@@ -1,4 +1,5 @@
 global.item_id = ds_map_create();
+global.item_attribute_count = 12;// Track the total attributes of an item entity
 
 var idx=0;
 item_add(0,0,"Oxygen") //Title
@@ -10,6 +11,9 @@ item_add(0,5,"Compressed gas in a plexisteel bottle.") //Description
 item_add(0,7,"commodity") //Commodity or equipment
 item_add(0,8,CC_MINING) //CC_MINING (Commodity Class Mining),
 item_add(idx,9,10) //Base price
+// item_add(idx,10,2); Image scaling. Used for the inventory UI
+// item_add(idx,11,2);// subtype. 0:weapon, 1:passive
+
 
 idx=1;
 item_add(1,0,"Antibiotics")
@@ -546,15 +550,16 @@ item_add(50,8,CC_TECH) //CC_MINING (Commodity Class Mining),
 item_add(idx,9,50) //Base price
 
 idx=51;
-item_add(51,0,"Blaster Type 1") //Title
-item_add(51,1,1) //Max Stack
-item_add(51,2,spr_blaster4) //Sprite
-item_add(51,3,true) //Does have effect?
-item_add(51,4,"scr_equip_weapon,51")  //If yes, put script here on string, if not, just put ""
-item_add(51,5,"Your basic space gun") //Description
-item_add(51,6,obj_blaster1) //Object to equip
-item_add(51,10,4) //Icon scale for inventory screen
-
+item_add(idx,0,"Blaster Type 1") //Title
+item_add(idx,1,1) //Max Stack
+item_add(idx,2,spr_blaster4) //Sprite
+item_add(idx,3,true) //Does have effect?
+item_add(idx,4,"scr_equip_weapon,51")  //If yes, put script here on string, if not, just put ""
+item_add(idx,5,"Your basic space gun") //Description
+item_add(idx,6,obj_blaster1) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
+item_add(idx,10,4) //Icon scale for inventory screen
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=52;
 item_add(52,0,"Crate Master Card")
@@ -563,6 +568,7 @@ item_add(52,2,spr_keycard)
 item_add(52,3,true)
 item_add(52,4,"scr_break_crates")
 item_add(52,5,"Bust the crates!")
+item_add(idx,7,"commodity") //Commodity or equipment
 
 idx=53;
 item_add(53,0,"Sticky Grenade")
@@ -581,7 +587,9 @@ item_add(54,3,true) //Does have effect?
 item_add(54,4,"scr_equip_weapon,54")  //If yes, put script here on string, if not, just put ""
 item_add(54,5,"An advanced flamethrower") //Description
 item_add(54,6,obj_flamethrower1) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,2)
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=55;
 item_add(55,0,"Warp Sword") //Title
@@ -591,7 +599,9 @@ item_add(55,3,true) //Does have effect?
 item_add(55,4,"scr_equip_weapon,55")  //If yes, put script here on string, if not, just put ""
 item_add(55,5,"A mysterious weapon of unknown origin.") //Description
 item_add(55,6,obj_warp_sword) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,2)
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=56;
 item_add(56,0,"Heavy Blaster Type 1") //Title
@@ -601,7 +611,9 @@ item_add(56,3,true) //Does have effect?
 item_add(56,4,"scr_equip_weapon,56")  //If yes, put script here on string, if not, just put ""
 item_add(56,5,"Larger and heavier than a standard hand blaster.") //Description
 item_add(56,6,obj_heavy_blaster1) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,2)
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=57;
 item_add(57,0,"Singularity Cannon") //Title
@@ -611,7 +623,9 @@ item_add(57,3,true) //Does have effect?
 item_add(57,4,"scr_equip_weapon,57")  //If yes, put script here on string, if not, just put ""
 item_add(57,5,"Fires a miniature black hole. Slow moving but unstoppable, the singularity will suck up all projectiles it comes in contact with.") //Description
 item_add(57,6,obj_singularity_gun) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,2)
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=58;
 item_add(idx,0,"Shotgun 1") //Title
@@ -621,7 +635,9 @@ item_add(idx,3,true) //Does have effect?
 item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
 item_add(idx,5,"Fires three bullets simultaneously.") //Description
 item_add(idx,6,obj_shotgun1) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,3);
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=59;
 item_add(idx,0,"Star Map")
@@ -629,7 +645,8 @@ item_add(idx,1,10)
 item_add(idx,2,spr_star_map)
 item_add(idx,3,false)
 item_add(idx,4,"scr_grant_navpath")
-item_add(idx,5,"Use this in the map room to reaveal new jump paths.")
+item_add(idx,5,"Use this in the map room to reaveal new jump paths.");
+item_add(idx,7,"commodity") //Commodity or equipment
 item_add(idx,8,CC_TECH) //CC_MINING (Commodity Class Mining),
 item_add(idx,9,5000) //Base price
 
@@ -641,7 +658,9 @@ item_add(idx,3,true) //Does have effect?
 item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
 item_add(idx,5,"Fill em full of black holes.") //Description
 item_add(idx,6,obj_singularity_pistol) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,3);
+item_add(idx,11,0);// subtype. 0:weapon
 
 idx=61;
 item_add(idx,0,"Blob Gun") //Title
@@ -651,6 +670,8 @@ item_add(idx,3,true) //Does have effect?
 item_add(idx,4,"scr_equip_weapon,"+string(idx))  //If yes, put script here on string, if not, just put ""
 item_add(idx,5,"Fires exploding blobs of goo. Disgusting but effective.") //Description
 item_add(idx,6,obj_blobgun) //Object to equip
+item_add(idx,7,"equipment") //Commodity or equipment
 item_add(idx,10,3); // Price
+item_add(idx,11,0);// subtype. 0:weapon
 
 global.item_lib_count = idx+1;

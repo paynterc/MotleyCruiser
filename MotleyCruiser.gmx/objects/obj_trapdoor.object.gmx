@@ -28,7 +28,7 @@
             <string>/// Init
 emy = noone;// Set this to an enemy object
 image_speed = .5;
-scr_play_sound(scr_dooropen);
+scr_play_sound(snd_dooropen);
 </string>
           </argument>
         </arguments>

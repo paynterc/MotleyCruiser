@@ -36,7 +36,8 @@ enum guistates {
     spacetravel,
     onship,
     onstation,
-    cinematic
+    cinematic,
+    inventory_equip,
 }
 
 
@@ -172,7 +173,7 @@ scr_cargo_init();
 
 // Inventory
 var cols = 1;
-var rows = 21;
+var rows = 60;
 inventory_int(cols,rows);
 global.base_inventory_cols = cols;
 global.base_inventory_rows = rows;
