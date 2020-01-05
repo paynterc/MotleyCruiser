@@ -6,5 +6,5 @@ scaffold[SCAFFOLD_COLS]=3;
 scaffold[SCAFFOLD_SCALE]=16;
 
 scaffolds[0]=scaffold;
-return scaffolds;
+global.scaffolds = scaffolds;
 

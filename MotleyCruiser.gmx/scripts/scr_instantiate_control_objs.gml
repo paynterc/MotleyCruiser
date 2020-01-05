@@ -10,3 +10,4 @@ instance_create(x,y,obj_load_game_menu);
 instance_create(x,y,obj_tutorial);
 instance_create(x,y,obj_bark_queue);
 instance_create(x,y,obj_dialog_control);
+

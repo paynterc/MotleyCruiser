@@ -221,6 +221,7 @@ if(ini_section_exists(game)){
 }else{
 
     // Make a new player character
+    scr_new_game_defaults(); // Clear game variables
     rm = rm_player_edit;
     
 }

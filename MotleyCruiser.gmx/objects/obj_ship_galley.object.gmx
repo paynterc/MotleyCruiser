@@ -78,6 +78,79 @@ if(instance_exists(obj_player_start)){
     
     instance_create(px,py,obj_player);    
 }
+
+// Instatiate crew
+var thiscrew = noone;
+var crewMap = 0;
+var raceMap = 0;
+var gx;
+var gy;//grid x, grid y
+var xx
+var yy;
+for(var i=0; i&lt;array_length_1d(global.crew); i++){
+    if(!is_array(global.crew[i])){
+        continue;
+    }
+    // Find some place to put them
+    gx = irandom_range(0,width);
+    gy = irandom_range(0,height);
+    while(global.grid[# gx,gy]!=FLOOR){
+        gx = irandom_range(0,width);
+        gy = irandom_range(0,height);
+    }
+    xx = gx * CELL_WIDTH + (CELL_WIDTH/2);
+    yy = gy * CELL_WIDTH + (CELL_WIDTH/2);
+    
+    var npc_data = scr_npc();// Do this in case we've added any extra attributes since the last game save.
+    npc_data = scr_fill_array(npc_data,global.crew[i]);
+    if(!npc_data[NPC_ACTIVE]) continue;// Dead
+    thiscrew = instance_create(xx, yy, obj_npc);
+    
+    thiscrew.npc_data = npc_data;
+    with(thiscrew){
+        scr_npc_map_to_object();
+        if(sprite_exists(npc_data[NPC_SPRITE_TEMP])){
+            sprite_index = npc_data[NPC_SPRITE_TEMP];
+        }  
+        faction = FACTION_PLAYER; 
+        llight = glr_lightsimple_create(spr_glr_light_mask_point, 0, x, y, c_white,1,1);
+        glr_lightsimple_set_scaling(llight,.5,.5);  
+    }
+    thiscrew.pspeed=obj_player.spd;
+    thiscrew.pspeed_init = obj_player.spd;
+    thiscrew.crew_index = i;//Keep track of which crewmember this is, in case he dies.
+    thiscrew.mode="discourse";
+    thiscrew.targetMtype=obj_player;// Object to move to.
+    
+
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Set dialogue state
+if(instance_exists(obj_dialog_control)){
+    with(obj_dialog_control){
+        state = dStates.galley;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -113,7 +186,6 @@ if(!populated){
     
             if( is_array(global.crew) &amp;&amp; i&lt;array_length_1d(global.crew)){
 
-                //var npc = scr_make_npc(global.landed_type + "," + string(global.landed_on) + "," + string(global.current_sector_row) + "," + string(global.current_sector_col));
                 var npc_data = scr_npc();// Do this in case we've added any extra attributes since the last game save.
                 npc_data = scr_fill_array(npc_data,global.crew[i]);
                 if(!npc_data[NPC_ACTIVE]) continue;
@@ -126,7 +198,8 @@ if(!populated){
                     if(sprite_exists(npc_data[NPC_SPRITE_TEMP])){
                         sprite_index = npc_data[NPC_SPRITE_TEMP];
                     }  
-                    faction = FACTION_PLAYER;      
+                    faction = FACTION_PLAYER;
+                    mode = "discourse";
                 }
 
                 if(npc_data[NPC_RACE_INDEX]!=5 &amp;&amp; npc_data[NPC_RACE_INDEX]!=7){

@@ -111,6 +111,7 @@ mode = MODE_TRAVELING;
 if(is_array(jumpSector)){  
     scr_move_to_sector(jumpSector[0],jumpSector[1]);
 }
+
 </string>
           </argument>
         </arguments>

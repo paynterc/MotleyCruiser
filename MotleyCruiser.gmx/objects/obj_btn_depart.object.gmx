@@ -71,7 +71,7 @@ myheight = string_height_ext(mytext,font_size+(font_size/2), 128);
           <argument>
             <kind>1</kind>
             <string>/// Override parent action
-
+global.increment_day=true;
 room_goto(rm_space);
 </string>
           </argument>

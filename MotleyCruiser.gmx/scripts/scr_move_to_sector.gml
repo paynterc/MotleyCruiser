@@ -20,5 +20,6 @@ global.sector_x = new_x;
 global.sector_y = new_y;
 scr_cargo_item_decrement(4,1);
 room_persistent = false;
+global.increment_day=true;
 room_goto(rm_space);
  

@@ -424,7 +424,7 @@ if(_state==guistates.spacetravel){
     y1=_yStart;
     scr_draw_text("GOLD: " + string(global.credits),x1,y1,fnt_menus,c_yellow,1,fa_center,fa_top);
     
-    x1= _xStart;
+    x1 = _xStart;
     y1 = gui_height - 16;
     var sectorText = "SECTOR: " + string(global.sector_x) + "|"  + string(global.sector_y);
     scr_draw_text(sectorText,x1,y1,fnt_menus,c_lime,1,fa_left,fa_bottom);
@@ -436,6 +436,10 @@ if(_state==guistates.spacetravel){
         scr_draw_text(coordText,x1,y1,fnt_menus,c_lime,1,fa_center,fa_bottom);
     }
 
+    x1= gui_width -16;
+    y1=_yStart;
+    scr_draw_text("DAY: " + string(global.day),x1,y1,fnt_menus,c_blue,1,fa_right,fa_top);
+    
     
 }else if(_state==guistates.onship){
     

@@ -130,4 +130,4 @@ races[17,RACE_SPR_FML] = noone;
 races[17,RACE_SEXES] = 1;
 
 
-return races;
+global.races = races;

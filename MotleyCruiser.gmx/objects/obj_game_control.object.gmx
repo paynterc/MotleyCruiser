@@ -25,42 +25,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Init
+            <string>/// This object is placed in rm_init. It is persistant and enables things like game settings
 
-// STATES
-
-// GUI STATES.
-enum guistates {
-    main,
-    load,
-    spacetravel,
-    onship,
-    onstation,
-    cinematic,
-    inventory_equip,
-}
-
-
+/****************************************************************/
+/*                      GAME SETTINGS                           */
+/****************************************************************/
 show_debug_overlay(true);
-scr_load_player_config();
 application_surface_enable(false);// Better performance this way
+scr_load_player_config();
 
-// This object is placed in rm_init. It is persistant and enables things like game settings
+/****************************************************************/
+/*                      GAME CONTROL                            */
+/****************************************************************/
 global.paused = false;
 global.game_loaded = noone;
 pauseForce=false;// Use this to force the global.paused status. For cases where you do not want the user to unpause through the "Continue" menu option.
 custom_sprites = scr_new_array();// Keep track of any custom sprites that are created. Delete them at the end of the game.
-
 global.zoomLvl=0;
 
+/****************************************************************/
+/*                      GAME CONFIG                             */
+/****************************************************************/
 // Baseline npc settings.
 global.min_spd = 1; //minimum run speed for npc
 global.min_hp = 5; //minimum hp for npc
-
 global.min_station_npc = 3; //minimum npcs per station
 global.max_station_npc = 10; //max npcs per station
 
-// Basesline ship settings
+// Baseline ship settings
 global.ship_min_turn_spd=1;
 global.ship_max_turn_spd=10;
 global.ship_min_spd=0;
@@ -78,60 +70,46 @@ global.ship_max_energy = 1000;
 global.ship_min_weapon_spd = 3;
 global.ship_max_weapon_spd = 0.1;
 
-// Defaults can be reduced, but not beneath the min
+// Ship defaults can be reduced, but not beneath the min
 global.ship_default_turn_spd=3;
-
 global.ship_default_hull=5;
-
 global.ship_default_shields=0;
 global.ship_default_shields_regen_speed=1;
 global.ship_default_shields_regen_points=0;
-
 global.ship_default_energy = 50;
 global.ship_default_energy_regen_speed=1;
 global.ship_default_energy_regen_points=5;
-
 global.radar_range=500;
 global.box_height = 100;
 
-
-
-
-/****************************************************************/
-/*                      BASELINE GALAXY SETTINGS                */
-/****************************************************************/
-global.galaxy = ds_map_create();// Destroy at game end
+// Galaxy config
 global.galaxy_width = 20;// Not needed
 global.sector_width = 50000;//width in pixels of space combat room
 global.hull_repair_cost = 10; // Cost per hull unit
-
-global.gx_locations = ds_map_create();// Destroy at game end
-
-scr_new_game_defaults();
-
-scr_faction_centers();
-global.racial_centers = noone;// set this at new game or game load.
-
-global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
-global.sector_map = noone;// An array of locations in this sector
 global.rTSize = 5;//Width in sectors of each racial territory
 
-global.nav_queue = noone;//An array to keep track of the sectors we will travel to, as selected on the map
 
+global.speed_mod = 1;// global bullet speed modifier. make faster or slower
+global.base_bullet_speed = BASE_BULLET_SPEED;// base enemy bullet speed
+global.base_fire_rate = BASE_FIRE_RATE;// base enemy fire rate
+global.base_player_mod_bulletspeed = BASE_PLAYER_MOD_BSPEED;// Player guns fire faster, bullets move faster
+global.base_player_mod_firerate = BASE_PLAYER_MOD_FRATE;
+
+global.galaxy_economy_mod = .2;// This an arbitrary number used to adjust prices globally.
 
 /****************************************************************/
-/*                      DYNAMIC PLAYER DATA                     */
+/*                      GAME INIT                               */
 /****************************************************************/
-
-global.player_sprite = noone;// Overwrite this on game load
-
-// PLAYER SHIP: An array containing current ship state.
-global.player_ship = noone;
-
-// PLAYER MODEL: An array containing player clothing and body selections.
-global.player_model = noone;
-
-// PLAYER STATS: Save between levels.
+// enums
+enum guistates {
+    main,
+    load,
+    spacetravel,
+    onship,
+    onstation,
+    cinematic,
+    inventory_equip,
+}
 enum playerstat {
     name,
     hp,
@@ -139,116 +117,6 @@ enum playerstat {
     spd,
     spd_current
 }
-global.player_data = scr_player();
-
-// PLAYER FLEET: An array of ships in the fleet and their current state.
-global.fleet = noone;
-
-// PLAYER CREW: An array of arrays for crew. Maybe a dsmap or dslist.
-global.crew = noone;
-global.team = scr_array_size(3);
-
-// PLAYER MISSIONS: An array of ds_maps for missions
-global.mission_id = 1000; //A number to start mission ids with. Increment this with each mission granted.
-global.missions = noone;
-global.objective_inc = 100
-
-global.bullet_time=false;
-global.speed_mod = 1;
-
-// Money
-global.credits = 1000;
-
-// Time
-global.day = 0;
-
-// Inventory
-item_int();//Inventory Items
-
-// Commodities
-scr_commoditiy_lib_int();
-
-// Cargo (cargo is commodities)
-scr_cargo_init();
-
-// Inventory
-var cols = 1;
-var rows = 60;
-inventory_int(cols,rows);
-global.base_inventory_cols = cols;
-global.base_inventory_rows = rows;
-// Equipped items
-global.equipped = noone;
-scr_hotbar_init();
-
-
-/****************************************************************/
-/*                      ROOM LEVELS                             */
-/****************************************************************/
-
-scr_reset_room_random();
-
-
-
-/****************************************************************/
-/*                      SPACE LEVELS                            */
-/****************************************************************/
-global.ship_boarded = noone; // Should be an array of ship data from scr_make_ship;
-global.new_ship = false; // Set to true if this is a new game
-
-
-/****************************************************************/
-/*                      LIBRARIES                               */
-/****************************************************************/
-
-
-// RACES
-global.races = scr_races();
-
-// Accessories
-scr_accessories();
-
-scr_ships();
-
-// Ship Modules
-scr_modules();
-
-//Scaffolds
-global.scaffolds = scr_scaffolds();
-
-//Ship Guns
-scr_guns();
-
-//Ship Turrets
-scr_ship_turrets();
-
-//Dialogue
-scr_sentences();
-
-//NPC Traits
-scr_npc_traits_library();
-
-scr_npc_occupation_library();
-
-
-
-/****************************************************************/
-/*                      GLOBALS                                 */
-/****************************************************************/
-global.room_return = noone;// Hold the room to return to after visiting galaxy map or some other ui
-global.grid = noone;// A ds_grid for room levels
-
-// Planet side stuff
-global.planet_seed = noone;
-global.planet_map = noone;// 2d array
-global.planet_room_index_x = noone;
-global.planet_room_index_y = noone;
-global.planet_nextdoor = noone;
-
-global.base_bullet_speed = BASE_BULLET_SPEED;// base enemy bullet speed
-global.base_fire_rate = BASE_FIRE_RATE;// base enemy fire rate
-global.base_player_mod_bulletspeed = BASE_PLAYER_MOD_BSPEED;// Player guns fire faster, bullets move faster
-global.base_player_mod_firerate = BASE_PLAYER_MOD_FRATE;
 
 // Ship categorizaion
 enum ship_function {
@@ -315,6 +183,19 @@ enum depths{
 
 scr_entity_enums();// set some enums to use as entity indexes.
 
+// Libraries. Mostly arrays of data
+scr_races();
+scr_accessories();
+scr_modules();
+scr_guns();
+scr_ship_turrets();
+scr_ships();
+scr_scaffolds();
+scr_sentences();
+scr_npc_traits_library();
+scr_npc_occupation_library();
+scr_grievance_library();
+
 // Economy Matrix
 global.e_matrix=noone;// Economy matrix. Provides the value of products based on the current economy and the economy of origin
 global.e_matrix[CC_AGRICULTURE,CC_AGRICULTURE]=1.00;
@@ -337,13 +218,27 @@ global.e_matrix[CC_TECH,CC_MINING]=1.25;
 global.e_matrix[CC_TECH,CC_INDUSTRIAL]=1.50;
 global.e_matrix[CC_TECH,CC_TECH]=1.00;
 
-global.galaxy_economy_mod = .2;// This an arbitrary number used to adjust prices globally.
+// DS DATA STRUCTURES. destroy at game end
+global.galaxy = ds_map_create();// Destroy at game end
+global.gx_locations = ds_map_create();// Destroy at game end
+global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
+global.cargo_list = ds_map_create();
+global.grievance_map = ds_map_create();// Destroy at game end
+scr_commoditiy_lib_int();
+global.grid = noone;// A ds_grid for room levels
 
-// Supplies
-global.supply_food = 0;
-global.supply_water = 0;
-global.supply_fuel = 0;
-global.supply_oxygen = 0;
+item_int();//Inventory Items Library
+var cols = 1;
+var rows = 60;
+inventory_int(cols,rows);
+global.base_inventory_cols = cols;
+global.base_inventory_rows = rows;
+
+scr_faction_centers();// TODO: Get rid of references to this. Still in NPC setup.
+global.player_sprite = noone;// Overwrite this on game load
+
+scr_new_game_defaults(); // Initialize variables for new game
+
 
 
 </string>
@@ -582,6 +477,10 @@ if(scr_user_input(pin.fullscreen)){
     }
 }
 
+if(scr_user_input(pin.add_grievance)){
+    scr_grievance_test(grievances.money);
+}
+
 
 
 
@@ -613,6 +512,34 @@ global.player_dead=true;
 //global.paused = true;
 alarm[0]=room_speed*3;
 // Do something with gui
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Daily updates
+if(global.increment_day){
+    global.increment_day=false;
+    scr_ev_new_day();
+}
+
 </string>
           </argument>
         </arguments>
@@ -713,6 +640,10 @@ for(var i=0; i&lt;array_length_1d(global.crew); i++){
         sprite_delete(_sprite_index);
     }
 }
+
+scr_grievance_clear_map();
+ds_map_destroy(global.grievance_map);
+
 
 scr_custom_sprite_deleteall();
 </string>

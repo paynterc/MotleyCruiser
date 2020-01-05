@@ -211,6 +211,8 @@ else if(state == "displaying_options")
             op = instance_create(xx,yy,obj_flyoption);
             op.index = i+1;
             op.str = options[i];
+            draw_set_font(op.myfont);
+            op.image_xscale =  (string_width(options[i]) + 10) / (op.sprite_width);
             if(option_target==noone){
                 op.option_target = self;
             }else{

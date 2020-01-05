@@ -67,7 +67,7 @@ skincolorsFlowridian = scr_push_array(skincolorsFlowridian,make_colour_rgb(255, 
 skincolorsFlowridian = scr_push_array(skincolorsFlowridian,make_colour_rgb(0, 250, 115));
 global.skincolors[3]=skincolorsFlowridian;
 
-var races = scr_races();
+var races = global.races;
 // Instantiate array. One index for each race
 for(var i = 0; i<array_height_2d(races); i++){
     global.accessories[i]=noone;

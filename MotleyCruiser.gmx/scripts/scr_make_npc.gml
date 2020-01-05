@@ -1,4 +1,5 @@
-/// Create an array with npc attributes
+// OLD SCRIPT. NOW USING scr_gx_make_npc
+// Create an array with npc attributes
 // Attribute names are contained in Macros/All configurations
 var location = argument0; //string "type,index,sector_row,sector_col"
 var location_array = scr_str_split(location,",");

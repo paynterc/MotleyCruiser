@@ -70,5 +70,6 @@ enum pin
     flip_down,
     goto_galaxy_map,
     sector_jump,
-    reload
+    reload,
+    add_grievance
 }

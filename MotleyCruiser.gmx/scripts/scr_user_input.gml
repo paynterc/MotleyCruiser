@@ -1,5 +1,8 @@
 /*** 
 Abstracting user input
+
+the pin enum is found in scr_load_player_config
+
 if(!keyboard_check_pressed(vk_anykey)){
     return false;
 }
@@ -179,7 +182,13 @@ if( scr_gui_has_context() ){
             break;
         case pin.reload:
             return keyboard_check_pressed(ord("R"))
-            break;                 
+            break;
+        case pin.add_grievance:
+            return  
+            keyboard_check_pressed(ord("G")) 
+            && keyboard_check(vk_shift)
+            && debug_mode;
+            break;             
         default:
             return false;
     }

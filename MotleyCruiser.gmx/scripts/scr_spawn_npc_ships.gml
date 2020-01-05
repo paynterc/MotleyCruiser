@@ -29,7 +29,6 @@ var num_ships = irandom_range(min_ships,max_ships);
 var tgt;
 for(var i=1; i<=num_ships; i++){
     
-    show_debug_message("make npc ship");
     // Find a target for the ships. Either planet, moon or station.
     // Hostile will retarget to player based on rules in obj_npc_ship.alarm3
     

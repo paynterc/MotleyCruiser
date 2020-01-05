@@ -179,11 +179,12 @@ for(var i = 0; i<ppcount; i++){
 }
 
 // Test ship
+/***
 var ship_obj = scr_spawn_npc_ship_single(FACTION_PIRATE,36,player_x + 120,player_y+120);
 ship_obj.disabled = true;
 ship_obj.boardable = true;
 ship_obj.disposition = DISPOSITION_HOSTILE;
-
+***/
 
 /*** TEST ITEMS ***/
 //scr_mining_area(player_x + 500,player_y+500);

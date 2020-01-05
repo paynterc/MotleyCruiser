@@ -41,7 +41,8 @@ enum dStates {
     spaceRefuel,
     spaceNoOxygen,
     spaceNoWater,
-    spaceNoFood
+    spaceNoFood,
+    galley
 }
 state=noone;
 </string>
@@ -157,6 +158,8 @@ if(question != noone){
         scr_dlg_space_no_water();
     }else if(state==dStates.spaceNoFood){
         scr_dlg_space_no_food();
+    }else if(state==dStates.galley){
+        scr_dlg_galley();       
     }
 }
 scr_clear_conditionals();
@@ -267,42 +270,64 @@ for(var i = 0; i &lt; instance_number(obj_npc); i++) {
 
 
 if(sent != noone &amp;&amp; sent.name != noone){
-
-    var occ;
-    if(sent.npc_data[NPC_OCCUPATION]!=noone &amp;&amp; sent.npc_data[NPC_OCCUPATION]&lt;array_length_1d(global.npc_occupations)){
-        occ = global.npc_occupations[sent.npc_data[NPC_OCCUPATION]];   
-    }else{
-        occ = noone;
-    }
-
-
-    if(sent.is_trader){
-        
-        scr_gui_set_context(obj_trade);
     
-    }else if(sent.is_shipwright){
-    
-        var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
-        txt += sent.npc_data[NPC_NAME_FIRST] + " is a shipwright. Would like them to repair your ships? It will cost " + string(scr_repair_all_ship_cost()) + "C.";  
-        scr_flywriter(txt,sent.sprite_index,true,"2,OK,Nope");
-        
-    }else if( scr_in_array(global.hirable_occupations,sent.npc_data[NPC_OCCUPATION]) ){
-        
-        var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
-        txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be an excellent " + occ + ". Would like them to join your crew? It will cost " + string(sent.npc_data[NPC_HIRE_PRICE]) + "C per day.";  
-        scr_flywriter(txt,sent.sprite_index,true,"0,OK,Nope");
-        
-                     
-    }else if(sent.tip!=noone){   
-        scr_flywriter(sent.tip,sent.sprite_index,true,"1,OK"); 
-    }else{
-    
-        var txt = scr_random_sentence(5);
-        if(txt == noone){
-            txt="Buzz off.";
+    if(state==dStates.cantina){
+        var occ;
+        if(sent.npc_data[NPC_OCCUPATION]!=noone &amp;&amp; sent.npc_data[NPC_OCCUPATION]&lt;array_length_1d(global.npc_occupations)){
+            occ = global.npc_occupations[sent.npc_data[NPC_OCCUPATION]];   
+        }else{
+            occ = noone;
         }
-        scr_flywriter(txt,sent.sprite_index,true,"1,OK");    
+    
+    
+        if(sent.is_trader){
+            
+            scr_gui_set_context(obj_trade);
+        
+        }else if(sent.is_shipwright){
+        
+            var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
+            txt += sent.npc_data[NPC_NAME_FIRST] + " is a shipwright. Would like them to repair your ships? It will cost " + string(scr_repair_all_ship_cost()) + "C.";  
+            scr_flywriter(txt,sent.sprite_index,true,"2,OK,Nope");
+            
+        }else if( scr_in_array(global.hirable_occupations,sent.npc_data[NPC_OCCUPATION]) ){
+            
+            var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
+            txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be an excellent " + occ + ". Would like them to join your crew? It will cost " + string(sent.npc_data[NPC_HIRE_PRICE]) + "C per day.";  
+            scr_flywriter(txt,sent.sprite_index,true,"0,OK,Nope");
+            
+                         
+        }else if(sent.tip!=noone){   
+            scr_flywriter(sent.tip,sent.sprite_index,true,"1,OK"); 
+        }else{
+        
+            var txt = scr_random_sentence(5);
+            if(txt == noone){
+                txt="Buzz off.";
+            }
+            scr_flywriter(txt,sent.sprite_index,true,"1,OK");    
+        }
+    }else if(state==dStates.galley){
+            var rnd = irandom(2);
+            /***
+            switch(rnd){
+                case 0:
+                    scr_flywriter("Do you want to hear a story?",sent.sprite_index,true,"0,OK,No Thanks");
+                    break;
+                case 1:
+                    scr_flywriter("Can I tell you about my planet?",sent.sprite_index,true,"1,OK,No Thanks");
+                    break;
+                case 2:
+                    scr_flywriter("I don't want to talk.",sent.sprite_index,true,"2,OK");
+                    break;
+            }
+            ***/
+            scr_dlg_galley_prompts(sent);
+    }else{
+        // Do nothing for now
+        var npcData = sent.npc_data;
     }
+    
     
                
 }
