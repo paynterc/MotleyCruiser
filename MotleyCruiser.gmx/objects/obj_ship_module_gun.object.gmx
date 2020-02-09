@@ -45,6 +45,10 @@ shooting = false;
 cooling_down = false;
 flash=false;//draw muzzle flash
 target=noone;
+capacity=20;
+capacity_current=capacity;
+recharge_rate=1;//seconds to reload
+reloading = false;
 
 // For beams
 hitpoint = noone;
@@ -120,6 +124,32 @@ alarm[3] = room_speed;
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reload
+reloading=false;
+capacity_current = capacity;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -176,6 +206,7 @@ if(gundata==noone){
     if(turn_spd&gt;0){
         alarm[3]=room_speed;// Kick off the target update
     }
+    alarm[1]=room_speed/recharge_rate;
 }
 </string>
           </argument>
@@ -348,39 +379,51 @@ if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
     if(hitobject!=noone &amp;&amp; hitobject.faction != faction){
         hitobject.register_damage += gundata[GUN_DAMAGE];
         hitobject.hitby = parent_obj;
-    }   
+    }
+    parent_obj.energy_current -= gundata[GUN_ENERGY];   
 }else if(gundata[GUN_BULLET_TYPE]==bulletTypes.bullet){
-    var d = sprite_get_width(sprite_index)/2;
     
-    var bullet_obj = scr_get_array_1d(gundata,GUN_BULLET_OBJECT);
-    if(bullet_obj==noone){
-        bullet_obj=obj_laser;
-    }
-    
-    //bullet_obj = obj_bullet_spread;
-    
-    var bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),bullet_obj);
-    //bullet = scr_get_from_pool("projectile",obj_projectile);
-    //bullet.x = x + lengthdir_x(d, image_angle);
-    //bullet.y = y + lengthdir_y(d, image_angle);
-    bullet.type=faction;
-    bullet.firedby = id;
-    bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
-    bullet.depth = -200;
-    bullet.direction = image_angle;
-    bullet.image_angle = image_angle;
-    bullet.speed = gundata[GUN_BULLET_SPEED] * GM_BULLET_SPEED_MULT;
-    bullet.range = gundata[GUN_RANGE];
-    bullet.damage = gundata[GUN_DAMAGE];
-    with(bullet){
-        alarm[1]=range/speed;
-    }
-    audio_sound_pitch(snd_laser4, random_range(.95,1.2));
-    var b_sound = audio_play_sound_at(gundata[GUN_SOUND],x,y,0,100,100,1,false,2);
-
-    //audio_sound_pitch(b_sound, random_range(.85,1.5));
-    flash=true;
+    if(capacity_current&gt;0){
+        var d = sprite_get_width(sprite_index)/2;
         
+        var bullet_obj = scr_get_array_1d(gundata,GUN_BULLET_OBJECT);
+        if(bullet_obj==noone){
+            bullet_obj=obj_laser;
+        }
+        
+        //bullet_obj = obj_bullet_spread;
+        
+        var bullet = instance_create(x + lengthdir_x(d, image_angle),y + lengthdir_y(d, image_angle),bullet_obj);
+        //bullet = scr_get_from_pool("projectile",obj_projectile);
+        //bullet.x = x + lengthdir_x(d, image_angle);
+        //bullet.y = y + lengthdir_y(d, image_angle);
+        bullet.type=faction;
+        bullet.firedby = id;
+        bullet.sprite_index = gundata[GUN_BULLET_SPRITE];
+        bullet.depth = -200;
+        bullet.direction = image_angle;
+        bullet.image_angle = image_angle;
+        bullet.speed = gundata[GUN_BULLET_SPEED] * GM_BULLET_SPEED_MULT;
+        bullet.range = gundata[GUN_RANGE];
+        bullet.damage = gundata[GUN_DAMAGE];
+        with(bullet){
+            alarm[1]=range/speed;
+        }
+        audio_sound_pitch(snd_laser4, random_range(.95,1.2));
+        var b_sound = audio_play_sound_at(gundata[GUN_SOUND],x,y,0,100,100,1,false,2);
+    
+        //audio_sound_pitch(b_sound, random_range(.85,1.5));
+        flash=true;
+            
+        capacity_current --;
+        parent_obj.energy_current -= gundata[GUN_ENERGY];
+    }else{
+        if(!reloading){
+            reloading=true;
+            alarm[1]=room_speed*recharge_rate;
+        }
+    }
+
 }else if(gundata[GUN_BULLET_TYPE]==bulletTypes.rail){
     
 
@@ -415,10 +458,10 @@ if(gundata[GUN_BULLET_TYPE]==bulletTypes.beam){
        }
        
     }
-    
+    parent_obj.energy_current -= gundata[GUN_ENERGY];
 }
 
-parent_obj.energy_current -= gundata[GUN_ENERGY];
+
 </string>
           </argument>
         </arguments>

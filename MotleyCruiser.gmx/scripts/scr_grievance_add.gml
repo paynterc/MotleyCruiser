@@ -1,7 +1,7 @@
 // scr_grievance_add(crewIndex,grievanceId)
 var cIndex = argument0;
 var grievanceId = argument1;
-if(cIndex>=array_length_1d(global.crew)){
+if(cIndex>=array_length_1d(global.crew) || cIndex<0){
     return false;
 }
 var thisCrew = global.crew[cIndex];

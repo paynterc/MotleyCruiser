@@ -28,6 +28,9 @@ global.fleet = noone;
 // PLAYER CREW: An array of arrays for crew. Maybe a dsmap or dslist.
 global.crew = noone;
 global.team = scr_array_size(3);
+
+// PETS
+global.pets = noone;// An array of pet entities
    
 // PLAYER MISSIONS: An array of ds_maps for missions
 global.mission_id = 1000; //A number to start mission ids with. Increment this with each mission granted.
@@ -40,6 +43,7 @@ global.credits = 100;
 // Time
 global.day = 1;
 global.increment_day=false;// Mark true to add one day and perform daily functions
+global.autosave=false;
 
 /****************************************************************/
 /*                      GALAXY VARS                             */

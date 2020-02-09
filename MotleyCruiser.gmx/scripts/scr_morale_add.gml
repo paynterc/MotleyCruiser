@@ -8,9 +8,9 @@ for(var i=0;i<array_length_1d(global.crew);i++){
     }
     thisCrew = global.crew[i];
     if(thisCrew[NPC_CREW_INDEX]==crewIndex){
-        show_debug_message("Adding " + string(amt) + " morale to " + thisCrew[NPC_NAME] + ". Current morale is " + string(thisCrew[NPC_MORALE]) );
+        if(debug_mode) show_debug_message("DEBUG: Adding " + string(amt) + " morale to " + thisCrew[NPC_NAME] + ". Current morale is " + string(thisCrew[NPC_MORALE]) );
         thisCrew[@NPC_MORALE] = clamp(thisCrew[NPC_MORALE]+amt,0,10);
-        show_debug_message("New morale is " + string(thisCrew[NPC_MORALE]));
+        if(debug_mode) show_debug_message("DEBUG: New morale is " + string(thisCrew[NPC_MORALE]));
         rslt = thisCrew[NPC_MORALE];
         break;
     }

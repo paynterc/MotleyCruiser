@@ -5,8 +5,11 @@ stats_modified = false;
 turn_spd = global.ship_default_turn_spd;
 turn_mod = 0;
 max_spd_fwd = global.ship_max_spd_fwd;
+max_spd_fwd_current = max_spd_fwd;
 max_spd_rvs = global.ship_max_spd_rvs;
+
 acc_spd_fwd = 0;//acceleration speed forward
+acc_spd_fwd_current = 0;
 acc_spd_rvs = 0;//acceleration speed reverse
 thrust_fwd = 0;
 thrust_rvs = 0;

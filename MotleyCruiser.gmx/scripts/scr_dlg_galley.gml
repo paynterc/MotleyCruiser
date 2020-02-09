@@ -10,7 +10,10 @@ if(sent != noone){
 }else{
     npcSprite = spr_ship_ai;
 }
-
+if(cIndex==noone){
+    if(debug_mode){show_debug_message("DEBUG: No crew index sent to scr_dlg_galley")}
+    return false;
+}
 if(question==0){
     //  I want more money.
     // "sent" is a sentient character. An obj_npc.
@@ -40,8 +43,9 @@ if(question==0){
         scr_flywriter("Great.",npcSprite,true,"10,Bye.");// Goes to Default Response below
         // This grievance won't be delted until the cook is hired.
     }else{
-        scr_flywriter("Grr.",npcSprite,true,"10,OK."); 
-        scr_morale_add(cIndex,-1);      
+        scr_flywriter("Grr.",npcSprite,true,"10,OK.");
+        scr_grievance_delete(cIndex,grievances.food_quality); 
+        scr_morale_add(cIndex,-1);
     }
     
 }else if(question==2){
@@ -70,6 +74,7 @@ if(question==0){
         
     }else{
         scr_flywriter("You're killing me.",npcSprite,true,"10,OK.");
+        scr_morale_add(cIndex,-2);
         scr_grievance_delete(cIndex,grievances.exhaustion);     
     }
     
@@ -97,6 +102,7 @@ if(question==0){
 
     }else{
         scr_flywriter("You're a slob.",npcSprite,true,"10,OK.");
+        scr_morale_add(cIndex,-2);
         scr_grievance_delete(cIndex,grievances.cleanliness);   
     }
 
@@ -106,15 +112,14 @@ if(question==0){
     if(answer==2){
         // Ok, you can get one.
         scr_flywriter("Great.",npcSprite,true,"10,Bye.");// Goes to Default Response below
-        scr_morale_add(cIndex,1);
-        // Create a pet and assign it to this crew member. Should appear at next stop.
+        // Grievance will be deleted after the user purchases a pet. This should fire the boughtPet event and run a script to improve morale.
     }else{
+        // Grievance has been addressed and can be removed, but at a morale cost.
         scr_flywriter("I'm not happy about this.",npcSprite,true,"10,OK.");
-        scr_morale_add(cIndex,-1);        
+        scr_morale_add(cIndex,-2);
+        scr_grievance_delete(cIndex,grievances.loneliness);      
     }
-    if(is_array(npcData)){
-        scr_grievance_delete(cIndex,grievances.loneliness);
-    }
+
 }else{
     // Default Respose
 }

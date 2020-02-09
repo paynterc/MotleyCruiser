@@ -122,7 +122,29 @@ for(var i=0; i&lt;array_length_1d(global.crew); i++){
     thiscrew.mode="discourse";
     thiscrew.targetMtype=obj_player;// Object to move to.
     
+}
 
+// instantiate pets
+for(var i=0; i&lt;array_length_1d(global.pets); i++){
+    if(!is_array(global.pets[i])){
+        show_debug_message("Not a pet");
+        continue;
+    }
+    var petData = global.pets[i];
+    //Find a spot on the floor
+    gx = irandom_range(0,width);
+    gy = irandom_range(0,height);
+    while(global.grid[# gx,gy]!=FLOOR){
+        gx = irandom_range(0,width);
+        gy = irandom_range(0,height);
+    }
+    xx = gx * CELL_WIDTH + (CELL_WIDTH/2);
+    yy = gy * CELL_WIDTH + (CELL_WIDTH/2);
+    
+    var newPet = instance_create(xx,yy,petData[pet.type]);
+    
+    newPet.data = petData;
+    newPet.state = pet_states.owned;
     
 }
 </string>

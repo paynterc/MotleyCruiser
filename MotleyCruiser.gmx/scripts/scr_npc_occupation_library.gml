@@ -4,24 +4,45 @@
 var t = noone;
 
 // trader,shipwright,fighter,pilot,medic,mechanic
+enum occupation{
+    fighter,
+    pilot,
+    medic,
+    mechanic,
+    cook,
+    trader,
+    scholar,
+    miner,
+    musician,
+    scientist,
+    tipster,
+    smuggler,
+    bountyHunter,
+    blackMarketeer,
+    bartender,
+    merchant,
+    shipwright,
+    LENGTH 
+}
 
-t[0]="fighter";
-t[1]="pilot";
-t[2]="medic";
-t[3]="mechanic";
-t[4]="cook";
-t[5]="trader";
-t[6]="scholar";
-t[7]="miner";
-t[8]="musician";
-t[9]="scientist";
-t[10]="tipster";
-t[11]="scholar";
-t[12]="bounty hunter";
-t[13]="musician";
-t[14]="bartender";
-t[15]="merchant";
-t[16]="shipwright";
+
+t[occupation.fighter]="fighter";
+t[occupation.pilot]="pilot";
+t[occupation.medic]="medic";
+t[occupation.mechanic]="mechanic";
+t[occupation.cook]="cook";
+t[occupation.trader]="trader";
+t[occupation.scholar]="scholar";
+t[occupation.miner]="miner";
+t[occupation.musician]="musician";
+t[occupation.scientist]="scientist";
+t[occupation.tipster]="tipster";
+t[occupation.smuggler]="smuggler";
+t[occupation.bountyHunter]="bounty hunter";
+t[occupation.blackMarketeer]="black marketeer";
+t[occupation.bartender]="bartender";
+t[occupation.merchant]="merchant";
+t[occupation.shipwright]="shipwright";
 
 global.npc_occupations=t;
 /***
@@ -32,6 +53,6 @@ hireable[2]="medic";
 hireable[3]="mechanic";
 hireable[4]="cook";
 ***/
-hireable = scr_array(0,1,2,3,4);
+hireable = scr_array(occupation.fighter,occupation.pilot,occupation.medic,occupation.mechanic,occupation.cook);
 
 global.hirable_occupations = hireable;

@@ -13,6 +13,7 @@ var faction = args[0];
 var ship_index = args[1];
 var x1 = args[2];
 var y1 = args[3];
+var class = args[4];
 
 if(ship_index >= array_length_1d(global.ship_library)){
     return noone;
@@ -26,7 +27,7 @@ with(ship_obj){
          
     if(ship_index==noone){
         //ship_i = irandom(array_length_1d(global.ship_library)-1);
-        var ship_results = scr_ship_search(ship_types.ship,noone,faction);
+        var ship_results = scr_ship_search(ship_types.ship,class,faction);
         if(ship_results != noone){
             ship_data = scr_array_random(ship_results);
         }else{

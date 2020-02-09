@@ -52,7 +52,7 @@ rm[rmm.signs]=signArray;
 
 // NPCs
 var bartender = scr_gx_make_npc(global.sector_x,global.sector_y);
-bartender[NPC_OCCUPATION]=14;// bartender. see scr_npc_occupation_library
+bartender[NPC_OCCUPATION]=occupation.bartender;// bartender. see scr_npc_occupation_library
 rm[rmm.npcs]=scr_array(bartender);
 
 // Band
@@ -69,7 +69,7 @@ if(scr_in_array(svcArrayChosen,services.band)){
        
     while(mm<=mCount){        
         var npc_data = scr_gx_make_npc(global.sector_x,global.sector_y);
-        npc_data[NPC_OCCUPATION]=13;// scr_npc_occupation_library()
+        npc_data[NPC_OCCUPATION]=occupation.musician;// scr_npc_occupation_library()
         scr_push_array_1d(rm[rmm.npcs],npc_data);
         mm++;
     }

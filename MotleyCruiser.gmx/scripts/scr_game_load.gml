@@ -46,6 +46,11 @@ if(ini_section_exists(game)){
     global.crew = read_list[| 0];
     ds_list_destroy(read_list);
     
+    read_list = ds_list_create();
+    var str = ini_read_string(game, "pets", "");
+    ds_list_read(read_list,str);
+    global.pets = read_list[| 0];
+    ds_list_destroy(read_list);
         
     if(!is_array(global.crew))
     {

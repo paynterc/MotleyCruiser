@@ -209,49 +209,152 @@
       <sprite>sprites\spr_hairbeast_eyes</sprite>
     </sprites>
     <sprites name="_furniture">
-      <sprite>sprites\spr_room_reactor</sprite>
-      <sprite>sprites\spr_desk</sprite>
-      <sprite>sprites\spr_panel_2</sprite>
-      <sprite>sprites\spr_panel_decor</sprite>
-      <sprite>sprites\spr_work_station</sprite>
-      <sprite>sprites\spr_jefferies</sprite>
-      <sprite>sprites\spr_elevator</sprite>
-      <sprite>sprites\spr_viewscreen</sprite>
-      <sprite>sprites\spr_table</sprite>
-      <sprite>sprites\spr_door_reactor</sprite>
-      <sprite>sprites\spr_panel_1</sprite>
-      <sprite>sprites\spr_crate</sprite>
-      <sprite>sprites\spr_junk</sprite>
+      <sprites name="_pixel_pack1">
+        <sprite>sprites\spr_barrel1</sprite>
+        <sprite>sprites\spr_computer1</sprite>
+        <sprite>sprites\spr_locker1</sprite>
+        <sprite>sprites\spr_door_sm1</sprite>
+      </sprites>
+      <sprite>sprites\spr_airlock_sm1</sprite>
+      <sprite>sprites\spr_airlock_sm2</sprite>
       <sprite>sprites\spr_allcrates</sprite>
-      <sprite>sprites\spr_crate_sm</sprite>
+      <sprite>sprites\spr_crate</sprite>
+      <sprite>sprites\spr_crate_lg</sprite>
       <sprite>sprites\spr_crate_md1</sprite>
       <sprite>sprites\spr_crate_md2</sprite>
-      <sprite>sprites\spr_crate_lg</sprite>
-      <sprite>sprites\spr_turret_base_large</sprite>
+      <sprite>sprites\spr_crate_sm</sprite>
+      <sprite>sprites\spr_desk</sprite>
+      <sprite>sprites\spr_door_reactor</sprite>
+      <sprite>sprites\spr_doors1</sprite>
+      <sprite>sprites\spr_drinks</sprite>
+      <sprite>sprites\spr_elevator</sprite>
       <sprite>sprites\spr_galley_table</sprite>
+      <sprite>sprites\spr_jefferies</sprite>
+      <sprite>sprites\spr_junk</sprite>
+      <sprite>sprites\spr_ladder</sprite>
+      <sprite>sprites\spr_panel_1</sprite>
+      <sprite>sprites\spr_panel_2</sprite>
+      <sprite>sprites\spr_panel_decor</sprite>
+      <sprite>sprites\spr_pod_cinematic</sprite>
+      <sprite>sprites\spr_room_reactor</sprite>
+      <sprite>sprites\spr_shiptoken</sprite>
+      <sprite>sprites\spr_stage</sprite>
+      <sprite>sprites\spr_table</sprite>
       <sprite>sprites\spr_torpedo_pod2</sprite>
       <sprite>sprites\spr_torpedo_pod3</sprite>
       <sprite>sprites\spr_torpedo_pod4</sprite>
-      <sprite>sprites\spr_pod_cinematic</sprite>
-      <sprite>sprites\sprite520</sprite>
-      <sprite>sprites\spr_drinks</sprite>
-      <sprite>sprites\spr_stage</sprite>
-      <sprite>sprites\spr_airlock_sm1</sprite>
-      <sprite>sprites\spr_airlock_sm2</sprite>
       <sprite>sprites\spr_trapdoor</sprite>
-      <sprite>sprites\spr_ladder</sprite>
-      <sprite>sprites\spr_shiptoken</sprite>
+      <sprite>sprites\spr_turret_base_large</sprite>
+      <sprite>sprites\spr_viewscreen</sprite>
+      <sprite>sprites\spr_work_station</sprite>
+      <sprite>sprites\sprite520</sprite>
     </sprites>
-    <sprites name="_healthbar">
-      <sprite>sprites\spr_hbackground</sprite>
-      <sprite>sprites\spr_hforeground</sprite>
-      <sprite>sprites\spr_hframe</sprite>
-    </sprites>
-    <sprites name="_light">
-      <sprite>sprites\spr_batman</sprite>
-      <sprite>sprites\spr_glr_light_mask_tv</sprite>
-      <sprite>sprites\spr_glr_tv_sml</sprite>
-      <sprite>sprites\spr_tv</sprite>
+    <sprites name="_gui">
+      <sprites name="_buttons">
+        <sprite>sprites\spr_btn</sprite>
+        <sprite>sprites\spr_btn_simple</sprite>
+        <sprite>sprites\spr_btn_play</sprite>
+        <sprite>sprites\spr_btn_small</sprite>
+        <sprite>sprites\spr_textbox</sprite>
+        <sprite>sprites\spr_arrow1</sprite>
+        <sprite>sprites\spr_continue</sprite>
+        <sprite>sprites\spr_label</sprite>
+        <sprite>sprites\spr_field</sprite>
+        <sprite>sprites\sprite337</sprite>
+        <sprite>sprites\spr_flyoption</sprite>
+        <sprite>sprites\spr_arrow</sprite>
+        <sprite>sprites\spr_arrow_4</sprite>
+      </sprites>
+      <sprites name="HuleInventorySprites">
+        <sprites name="HuleInventoryGUI">
+          <sprite>sprites\spr_slot</sprite>
+          <sprite>sprites\spr_modelframe1</sprite>
+          <sprite>sprites\spr_delete</sprite>
+          <sprite>sprites\spr_slot_lg</sprite>
+          <sprite>sprites\sprite516</sprite>
+          <sprite>sprites\spr_icon_bullet</sprite>
+          <sprite>sprites\spr_icon_shield</sprite>
+          <sprite>sprites\spr_icon_gear</sprite>
+          <sprite>sprites\spr_nav_up</sprite>
+          <sprite>sprites\spr_background</sprite>
+          <sprite>sprites\spr_background2</sprite>
+        </sprites>
+        <sprites name="HuleInventoryItem">
+          <sprite>sprites\spr_ItemIcon_Default</sprite>
+          <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_Grenade</sprite>
+          <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
+          <sprite>sprites\spr_inv_fuel</sprite>
+          <sprite>sprites\spr_inv_meds</sprite>
+          <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
+          <sprite>sprites\spr_inv_gold</sprite>
+          <sprite>sprites\spr_ItemIcon_medkit</sprite>
+          <sprite>sprites\spr_inv_grenade</sprite>
+          <sprite>sprites\spr_inv_food</sprite>
+          <sprite>sprites\spr_star_map</sprite>
+          <sprite>sprites\spr_ItemIcon_GasBlue</sprite>
+          <sprite>sprites\spr_ItemIcon_Oxygen</sprite>
+          <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
+          <sprite>sprites\spr_ItemIcon_ShieldBelt</sprite>
+          <sprite>sprites\spr_ItemIcon_BigDefPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_BigHealPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_BloodRed</sprite>
+          <sprite>sprites\spr_ItemIcon_BigManaPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_Water</sprite>
+          <sprite>sprites\spr_ItemIcon_BigRegPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_LiquidPink</sprite>
+          <sprite>sprites\spr_ItemIcon_Bone</sprite>
+          <sprite>sprites\spr_ItemIcon_Bottle</sprite>
+          <sprite>sprites\spr_ItemIcon_Pills</sprite>
+          <sprite>sprites\spr_ItemIcon_Bottle2</sprite>
+          <sprite>sprites\spr_ItemIcon_Claw</sprite>
+          <sprite>sprites\spr_ItemIcon_Coal</sprite>
+          <sprite>sprites\spr_ItemIcon_Copper</sprite>
+          <sprite>sprites\spr_ItemIcon_CrystalGoldStone</sprite>
+          <sprite>sprites\spr_ItemIcon_CutWood</sprite>
+          <sprite>sprites\spr_ItemIcon_DefPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_Diamant</sprite>
+          <sprite>sprites\spr_ItemIcon_Diamonds</sprite>
+          <sprite>sprites\spr_ItemIcon_EmptyBucket</sprite>
+          <sprite>sprites\spr_ItemIcon_Fruit</sprite>
+          <sprite>sprites\spr_ItemIcon_EmptyIronBucket</sprite>
+          <sprite>sprites\spr_ItemIcon_Feather</sprite>
+          <sprite>sprites\spr_keycard</sprite>
+          <sprite>sprites\spr_ItemIcon_Glas</sprite>
+          <sprite>sprites\spr_ItemIcon_Gold</sprite>
+          <sprite>sprites\spr_ItemIcon_HealPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_Iron</sprite>
+          <sprite>sprites\spr_ItemIcon_LavaIronBucket</sprite>
+          <sprite>sprites\spr_ItemIcon_Leaf</sprite>
+          <sprite>sprites\spr_ItemIcon_Leather</sprite>
+          <sprite>sprites\spr_ItemIcon_LegMeat</sprite>
+          <sprite>sprites\spr_ItemIcon_LegMeatCooked</sprite>
+          <sprite>sprites\spr_ItemIcon_ManaPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_Meat</sprite>
+          <sprite>sprites\spr_ItemIcon_MeatCooked</sprite>
+          <sprite>sprites\spr_ItemIcon_Oil</sprite>
+          <sprite>sprites\spr_ItemIcon_OreCopper</sprite>
+          <sprite>sprites\spr_ItemIcon_OreDiamant</sprite>
+          <sprite>sprites\spr_ItemIcon_OreGold</sprite>
+          <sprite>sprites\spr_ItemIcon_OreIron</sprite>
+          <sprite>sprites\spr_ItemIcon_OreSand</sprite>
+          <sprite>sprites\spr_ItemIcon_OreStone</sprite>
+          <sprite>sprites\spr_ItemIcon_RawWood</sprite>
+          <sprite>sprites\spr_ItemIcon_RegPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_Sand</sprite>
+          <sprite>sprites\spr_ItemIcon_Slime</sprite>
+          <sprite>sprites\spr_ItemIcon_SmallBottle</sprite>
+          <sprite>sprites\spr_ItemIcon_PillsSmall</sprite>
+          <sprite>sprites\spr_ItemIcon_SmallHealPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_SmallManaPotion</sprite>
+          <sprite>sprites\spr_ItemIcon_SoulDust</sprite>
+          <sprite>sprites\spr_ItemIcon_Sticky</sprite>
+          <sprite>sprites\spr_ItemIcon_Stone</sprite>
+          <sprite>sprites\spr_ItemIcon_WaterBucket</sprite>
+          <sprite>sprites\spr_ItemIcon_BeerBucket</sprite>
+          <sprite>sprites\spr_ItemIcon_XPTrank</sprite>
+        </sprites>
+      </sprites>
     </sprites>
     <sprites name="_guns">
       <sprites name="_bullets">
@@ -287,6 +390,49 @@
       <sprite>sprites\spr_bullet_2</sprite>
       <sprite>sprites\spr_bullet_4</sprite>
       <sprite>sprites\spr_plasmaknife</sprite>
+    </sprites>
+    <sprites name="_gxmap">
+      <sprite>sprites\spr_gxpoint</sprite>
+      <sprite>sprites\spr_btn_addpath</sprite>
+    </sprites>
+    <sprites name="_healthbar">
+      <sprite>sprites\spr_hbackground</sprite>
+      <sprite>sprites\spr_hforeground</sprite>
+      <sprite>sprites\spr_hframe</sprite>
+    </sprites>
+    <sprites name="_intro">
+      <sprite>sprites\spr_oldgirl</sprite>
+      <sprite>sprites\spr_pirateship1</sprite>
+      <sprite>sprites\spr_intro_child1</sprite>
+      <sprite>sprites\spr_intro_child2</sprite>
+      <sprite>sprites\spr_intro_parent1</sprite>
+      <sprite>sprites\spr_intro_pirate1</sprite>
+      <sprite>sprites\spr_piratejetfire1</sprite>
+      <sprite>sprites\spr_piratefire</sprite>
+      <sprite>sprites\spr_oldgirl2</sprite>
+      <sprite>sprites\spr_og_fire</sprite>
+      <sprite>sprites\spr_house</sprite>
+      <sprite>sprites\spr_intro_house2</sprite>
+      <sprite>sprites\sprite357</sprite>
+      <sprite>sprites\sprite356</sprite>
+      <sprite>sprites\spr_house_bu</sprite>
+      <sprite>sprites\sprite354</sprite>
+      <sprite>sprites\spr_into_window</sprite>
+      <sprite>sprites\spr_horizon</sprite>
+    </sprites>
+    <sprites name="_light">
+      <sprite>sprites\spr_batman</sprite>
+      <sprite>sprites\spr_glr_light_mask_tv</sprite>
+      <sprite>sprites\spr_glr_tv_sml</sprite>
+      <sprite>sprites\spr_tv</sprite>
+    </sprites>
+    <sprites name="_pets">
+      <sprite>sprites\spr_pet1</sprite>
+      <sprite>sprites\spr_pet2</sprite>
+      <sprite>sprites\spr_pet3</sprite>
+      <sprite>sprites\spr_pet4</sprite>
+      <sprite>sprites\spr_pet5</sprite>
+      <sprite>sprites\sprite535</sprite>
     </sprites>
     <sprites name="_ship_modules">
       <sprite>sprites\spr_command</sprite>
@@ -330,6 +476,7 @@
         <sprite>sprites\spr_gun_16_32_1</sprite>
         <sprite>sprites\spr_gun_16_32_2</sprite>
         <sprite>sprites\spr_gun_16_48_1</sprite>
+        <sprite>sprites\sprite538</sprite>
         <sprite>sprites\sprite509</sprite>
         <sprite>sprites\spr_hellfury</sprite>
         <sprite>sprites\spr_missile_launcher_16_48_1</sprite>
@@ -380,6 +527,7 @@
         <sprite>sprites\spr_laser_2</sprite>
         <sprite>sprites\spr_laser</sprite>
         <sprite>sprites\spr_bolt</sprite>
+        <sprite>sprites\spr_bolt3</sprite>
         <sprite>sprites\spr_bullet_rail</sprite>
         <sprite>sprites\spr_laser_red</sprite>
         <sprite>sprites\spr_missile</sprite>
@@ -508,173 +656,46 @@
       <sprite>sprites\spr_glr_light_mask_spot</sprite>
       <sprite>sprites\spr_glr_light_test</sprite>
     </sprites>
-    <sprites name="_gui">
-      <sprites name="_buttons">
-        <sprite>sprites\spr_btn</sprite>
-        <sprite>sprites\spr_btn_simple</sprite>
-        <sprite>sprites\spr_btn_play</sprite>
-        <sprite>sprites\spr_btn_small</sprite>
-        <sprite>sprites\spr_textbox</sprite>
-        <sprite>sprites\spr_arrow1</sprite>
-        <sprite>sprites\spr_continue</sprite>
-        <sprite>sprites\spr_label</sprite>
-        <sprite>sprites\spr_field</sprite>
-        <sprite>sprites\sprite337</sprite>
-        <sprite>sprites\spr_flyoption</sprite>
-        <sprite>sprites\spr_arrow</sprite>
-        <sprite>sprites\spr_arrow_4</sprite>
-      </sprites>
-      <sprites name="HuleInventorySprites">
-        <sprites name="HuleInventoryGUI">
-          <sprite>sprites\spr_slot</sprite>
-          <sprite>sprites\spr_modelframe1</sprite>
-          <sprite>sprites\spr_delete</sprite>
-          <sprite>sprites\spr_slot_lg</sprite>
-          <sprite>sprites\sprite516</sprite>
-          <sprite>sprites\spr_icon_bullet</sprite>
-          <sprite>sprites\spr_icon_shield</sprite>
-          <sprite>sprites\spr_icon_gear</sprite>
-          <sprite>sprites\spr_nav_up</sprite>
-          <sprite>sprites\spr_background</sprite>
-          <sprite>sprites\spr_background2</sprite>
-        </sprites>
-        <sprites name="HuleInventoryItem">
-          <sprite>sprites\spr_ItemIcon_Default</sprite>
-          <sprite>sprites\spr_ItemIcon_AttPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_Grenade</sprite>
-          <sprite>sprites\spr_ItemIcon_BigAttPotion</sprite>
-          <sprite>sprites\spr_inv_fuel</sprite>
-          <sprite>sprites\spr_inv_meds</sprite>
-          <sprite>sprites\spr_ItemIcon_BigBottle</sprite>
-          <sprite>sprites\spr_inv_gold</sprite>
-          <sprite>sprites\spr_ItemIcon_medkit</sprite>
-          <sprite>sprites\spr_inv_grenade</sprite>
-          <sprite>sprites\spr_inv_food</sprite>
-          <sprite>sprites\spr_star_map</sprite>
-          <sprite>sprites\spr_ItemIcon_GasBlue</sprite>
-          <sprite>sprites\spr_ItemIcon_Oxygen</sprite>
-          <sprite>sprites\spr_ItemIcon_BigBottle2</sprite>
-          <sprite>sprites\spr_ItemIcon_ShieldBelt</sprite>
-          <sprite>sprites\spr_ItemIcon_BigDefPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_BigHealPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_BloodRed</sprite>
-          <sprite>sprites\spr_ItemIcon_BigManaPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_Water</sprite>
-          <sprite>sprites\spr_ItemIcon_BigRegPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_LiquidPink</sprite>
-          <sprite>sprites\spr_ItemIcon_Bone</sprite>
-          <sprite>sprites\spr_ItemIcon_Bottle</sprite>
-          <sprite>sprites\spr_ItemIcon_Pills</sprite>
-          <sprite>sprites\spr_ItemIcon_Bottle2</sprite>
-          <sprite>sprites\spr_ItemIcon_Claw</sprite>
-          <sprite>sprites\spr_ItemIcon_Coal</sprite>
-          <sprite>sprites\spr_ItemIcon_Copper</sprite>
-          <sprite>sprites\spr_ItemIcon_CrystalGoldStone</sprite>
-          <sprite>sprites\spr_ItemIcon_CutWood</sprite>
-          <sprite>sprites\spr_ItemIcon_DefPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_Diamant</sprite>
-          <sprite>sprites\spr_ItemIcon_Diamonds</sprite>
-          <sprite>sprites\spr_ItemIcon_EmptyBucket</sprite>
-          <sprite>sprites\spr_ItemIcon_Fruit</sprite>
-          <sprite>sprites\spr_ItemIcon_EmptyIronBucket</sprite>
-          <sprite>sprites\spr_ItemIcon_Feather</sprite>
-          <sprite>sprites\spr_keycard</sprite>
-          <sprite>sprites\spr_ItemIcon_Glas</sprite>
-          <sprite>sprites\spr_ItemIcon_Gold</sprite>
-          <sprite>sprites\spr_ItemIcon_HealPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_Iron</sprite>
-          <sprite>sprites\spr_ItemIcon_LavaIronBucket</sprite>
-          <sprite>sprites\spr_ItemIcon_Leaf</sprite>
-          <sprite>sprites\spr_ItemIcon_Leather</sprite>
-          <sprite>sprites\spr_ItemIcon_LegMeat</sprite>
-          <sprite>sprites\spr_ItemIcon_LegMeatCooked</sprite>
-          <sprite>sprites\spr_ItemIcon_ManaPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_Meat</sprite>
-          <sprite>sprites\spr_ItemIcon_MeatCooked</sprite>
-          <sprite>sprites\spr_ItemIcon_Oil</sprite>
-          <sprite>sprites\spr_ItemIcon_OreCopper</sprite>
-          <sprite>sprites\spr_ItemIcon_OreDiamant</sprite>
-          <sprite>sprites\spr_ItemIcon_OreGold</sprite>
-          <sprite>sprites\spr_ItemIcon_OreIron</sprite>
-          <sprite>sprites\spr_ItemIcon_OreSand</sprite>
-          <sprite>sprites\spr_ItemIcon_OreStone</sprite>
-          <sprite>sprites\spr_ItemIcon_RawWood</sprite>
-          <sprite>sprites\spr_ItemIcon_RegPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_Sand</sprite>
-          <sprite>sprites\spr_ItemIcon_Slime</sprite>
-          <sprite>sprites\spr_ItemIcon_SmallBottle</sprite>
-          <sprite>sprites\spr_ItemIcon_PillsSmall</sprite>
-          <sprite>sprites\spr_ItemIcon_SmallHealPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_SmallManaPotion</sprite>
-          <sprite>sprites\spr_ItemIcon_SoulDust</sprite>
-          <sprite>sprites\spr_ItemIcon_Sticky</sprite>
-          <sprite>sprites\spr_ItemIcon_Stone</sprite>
-          <sprite>sprites\spr_ItemIcon_WaterBucket</sprite>
-          <sprite>sprites\spr_ItemIcon_BeerBucket</sprite>
-          <sprite>sprites\spr_ItemIcon_XPTrank</sprite>
-        </sprites>
-      </sprites>
-    </sprites>
-    <sprites name="_gxmap">
-      <sprite>sprites\spr_gxpoint</sprite>
-      <sprite>sprites\spr_btn_addpath</sprite>
-    </sprites>
-    <sprite>sprites\sprite226</sprite>
-    <sprite>sprites\spr_boom</sprite>
-    <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_bolt1</sprite>
     <sprite>sprites\spr_bolt2</sprite>
-    <sprite>sprites\spr_impact</sprite>
+    <sprite>sprites\spr_boom</sprite>
+    <sprite>sprites\spr_bot1</sprite>
     <sprite>sprites\spr_bullet</sprite>
-    <sprite>sprites\spr_bullet_sm</sprite>
     <sprite>sprites\spr_bullet_enemy</sprite>
+    <sprite>sprites\spr_bullet_sm</sprite>
+    <sprite>sprites\spr_cargo_drop</sprite>
+    <sprite>sprites\spr_cargo_drop2</sprite>
+    <sprite>sprites\spr_cargo_drop3</sprite>
     <sprite>sprites\spr_default</sprite>
+    <sprite>sprites\spr_exit</sprite>
+    <sprite>sprites\spr_exit_inactive</sprite>
+    <sprite>sprites\spr_flame_area</sprite>
     <sprite>sprites\spr_glr_torch</sprite>
+    <sprite>sprites\spr_impact</sprite>
     <sprite>sprites\spr_main_title</sprite>
+    <sprite>sprites\spr_melee_area</sprite>
+    <sprite>sprites\spr_melee_swish</sprite>
+    <sprite>sprites\spr_melee_sword</sprite>
+    <sprite>sprites\spr_npc_icon</sprite>
+    <sprite>sprites\spr_interact_md</sprite>
+    <sprite>sprites\spr_interact_sm</sprite>
     <sprite>sprites\spr_paintbrush</sprite>
     <sprite>sprites\spr_person</sprite>
     <sprite>sprites\spr_person_tmp</sprite>
     <sprite>sprites\spr_questionmark_button</sprite>
-    <sprite>sprites\spr_wall</sprite>
-    <sprite>sprites\spr_vacuum</sprite>
-    <sprite>sprites\spr_melee_swish</sprite>
-    <sprite>sprites\sprite242</sprite>
-    <sprite>sprites\spr_melee_sword</sprite>
-    <sprite>sprites\sprite241</sprite>
-    <sprite>sprites\spr_melee_area</sprite>
-    <sprite>sprites\spr_trade_icon</sprite>
     <sprite>sprites\spr_shipwright_icon</sprite>
-    <sprite>sprites\spr_flame_area</sprite>
-    <sprite>sprites\spr_exit</sprite>
-    <sprite>sprites\spr_exit_inactive</sprite>
-    <sprites name="_intro">
-      <sprite>sprites\spr_oldgirl</sprite>
-      <sprite>sprites\spr_pirateship1</sprite>
-      <sprite>sprites\spr_intro_child1</sprite>
-      <sprite>sprites\spr_intro_child2</sprite>
-      <sprite>sprites\spr_intro_parent1</sprite>
-      <sprite>sprites\spr_intro_pirate1</sprite>
-      <sprite>sprites\spr_piratejetfire1</sprite>
-      <sprite>sprites\spr_piratefire</sprite>
-      <sprite>sprites\spr_oldgirl2</sprite>
-      <sprite>sprites\spr_og_fire</sprite>
-      <sprite>sprites\spr_house</sprite>
-      <sprite>sprites\spr_intro_house2</sprite>
-      <sprite>sprites\sprite357</sprite>
-      <sprite>sprites\sprite356</sprite>
-      <sprite>sprites\spr_house_bu</sprite>
-      <sprite>sprites\sprite354</sprite>
-      <sprite>sprites\spr_into_window</sprite>
-      <sprite>sprites\spr_horizon</sprite>
-    </sprites>
     <sprite>sprites\spr_slot_sm</sprite>
-    <sprite>sprites\spr_cargo_drop</sprite>
-    <sprite>sprites\spr_cargo_drop2</sprite>
-    <sprite>sprites\spr_cargo_drop3</sprite>
-    <sprite>sprites\spr_npc_icon</sprite>
+    <sprite>sprites\spr_trade_icon</sprite>
+    <sprite>sprites\spr_vacuum</sprite>
+    <sprite>sprites\spr_wall</sprite>
+    <sprite>sprites\sprite226</sprite>
+    <sprite>sprites\sprite241</sprite>
+    <sprite>sprites\sprite242</sprite>
+    <sprite>sprites\sprite527</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
+    <background>background\bg_carpet1</background>
     <background>background\bg_gangway</background>
     <background>background\bg_wall_shadow2</background>
     <background>background\bg_floor_bu</background>
@@ -700,13 +721,29 @@
     <background>background\bg_farmfields</background>
     <background>background\bg_bartop</background>
     <background>background\bg_wall_simple</background>
+    <background>background\background29</background>
     <background>background\bg_wall_simple2</background>
     <background>background\bg_card_table</background>
+    <background>background\background27</background>
+    <background>background\bg_shiphead</background>
   </backgrounds>
   <paths name="paths">
     <path>paths\path_glr_0</path>
   </paths>
   <scripts name="scripts">
+    <scripts name="_crew">
+      <script>scripts\scr_instantiate_all_crew.gml</script>
+      <script>scripts\scr_remove_from_crew.gml</script>
+      <script>scripts\scr_add_npc_to_crew.gml</script>
+      <script>scripts\scr_get_active_crew_count.gml</script>
+      <script>scripts\scr_npc_in_crew.gml</script>
+      <script>scripts\scr_daily_expenses.gml</script>
+      <script>scripts\scr_crew_follow_player.gml</script>
+      <script>scripts\scr_crew_data_update_hp.gml</script>
+      <script>scripts\scr_crew_get_random.gml</script>
+      <script>scripts\scr_crew_get_active.gml</script>
+      <script>scripts\scr_crew_instantiate1.gml</script>
+    </scripts>
     <scripts name="_arrays">
       <script>scripts\scr_str_split.gml</script>
       <script>scripts\scr_array_random.gml</script>
@@ -824,6 +861,12 @@
       <script>scripts\scr_critter.gml</script>
       <script>scripts\scr_entity_enums.gml</script>
       <script>scripts\scr_ent_room_sign.gml</script>
+      <script>scripts\scr_pet.gml</script>
+    </scripts>
+    <scripts name="_event_manager">
+      <script>scripts\scr_event_register.gml</script>
+      <script>scripts\scr_event_fire.gml</script>
+      <script>scripts\scr_event_unregister.gml</script>
     </scripts>
     <scripts name="_events">
       <script>scripts\scr_ev_npc_ship_destroyed.gml</script>
@@ -839,6 +882,7 @@
       <script>scripts\scr_ev_refuel_start.gml</script>
       <script>scripts\scr_ev_player_died_in_space.gml</script>
       <script>scripts\scr_ev_new_day.gml</script>
+      <script>scripts\scr_ev_boughtpet.gml</script>
     </scripts>
     <scripts name="_example_scripts">
       <script>scripts\scr_multi_arguments.gml</script>
@@ -1235,6 +1279,7 @@
       <script>scripts\scr_raycast.gml</script>
       <script>scripts\scr_rotate_cycle.gml</script>
       <script>scripts\scr_script_parse.gml</script>
+      <script>scripts\scr_script_parse_array.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
       <script>scripts\scr_draw_dotted_line.gml</script>
       <script>scripts\scr_rotate_to_angle.gml</script>
@@ -1341,21 +1386,9 @@
       <script>scripts\scr_grievance_to_text.gml</script>
       <script>scripts\scr_morale_add.gml</script>
       <script>scripts\scr_morale_update.gml</script>
+      <script>scripts\scr_morale_get_grievance_count.gml</script>
     </scripts>
     <scripts name="_npc">
-      <scripts name="_crew">
-        <script>scripts\scr_instantiate_all_crew.gml</script>
-        <script>scripts\scr_remove_from_crew.gml</script>
-        <script>scripts\scr_add_npc_to_crew.gml</script>
-        <script>scripts\scr_get_active_crew_count.gml</script>
-        <script>scripts\scr_npc_in_crew.gml</script>
-        <script>scripts\scr_daily_expenses.gml</script>
-        <script>scripts\scr_crew_follow_player.gml</script>
-        <script>scripts\scr_crew_data_update_hp.gml</script>
-        <script>scripts\scr_crew_get_random.gml</script>
-        <script>scripts\scr_crew_get_active.gml</script>
-        <script>scripts\scr_crew_instantiate1.gml</script>
-      </scripts>
       <script>scripts\scr_gx_make_npc.gml</script>
       <script>scripts\scr_npc_find_kill_target.gml</script>
       <script>scripts\scr_npc_fire_at_target.gml</script>
@@ -1368,10 +1401,14 @@
       <script>scripts\scr_npc_retreat.gml</script>
       <script>scripts\scr_npc_draw_shadow.gml</script>
       <script>scripts\scr_npc_draw_icon.gml</script>
+      <script>scripts\scr_npc_make_portrait.gml</script>
     </scripts>
     <scripts name="_object_pool">
       <script>scripts\scr_add_to_pool.gml</script>
       <script>scripts\scr_get_from_pool.gml</script>
+    </scripts>
+    <scripts name="_pet">
+      <script>scripts\scr_instantiate_pet.gml</script>
     </scripts>
     <scripts name="_planetside">
       <script>scripts\scr_go_through_door.gml</script>
@@ -1402,10 +1439,7 @@
         <script>scripts\scr_build_room_custom.gml</script>
         <script>scripts\scr_add_wall_tiles.gml</script>
         <script>scripts\scr_add_tiles.gml</script>
-        <script>scripts\scr_add_wall_tiles_Old4.gml</script>
-        <script>scripts\scr_add_wall_tiles_Old3.gml</script>
-        <script>scripts\scr_add_wall_tiles_Old2.gml</script>
-        <script>scripts\scr_add_wall_tile_Old.gml</script>
+        <script>scripts\scr_center_instance_on_cell.gml</script>
       </scripts>
       <scripts name="_grids_and_collision">
         <script>scripts\scr_move.gml</script>
@@ -1596,9 +1630,12 @@
     <font>fonts\font15</font>
     <font>fonts\font16</font>
     <font>fonts\font17</font>
+    <font>fonts\font20</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_game_control</object>
+    <object>objects\obj_eventmanager</object>
+    <object>objects\obj_morale_control</object>
     <object>objects\obj_sound_control</object>
     <object>objects\obj_ship_data</object>
     <object>objects\obj_damager</object>
@@ -1702,28 +1739,6 @@
       </objects>
     </objects>
     <objects name="_space_combat">
-      <object>objects\obj_space_level</object>
-      <object>objects\obj_radar</object>
-      <object>objects\obj_ship_module</object>
-      <object>objects\obj_ship_module_turret</object>
-      <object>objects\obj_ship_module_gun</object>
-      <object>objects\obj_space_solid</object>
-      <objects name="_ships">
-        <object>objects\obj_ship</object>
-        <object>objects\obj_player_ship</object>
-        <object>objects\obj_npc_ship</object>
-        <object>objects\obj_landing_ship</object>
-        <object>objects\obj_mining_drone</object>
-      </objects>
-      <object>objects\obj_planet</object>
-      <object>objects\obj_moon</object>
-      <object>objects\obj_station</object>
-      <object>objects\obj_landable_label</object>
-      <object>objects\obj_landable</object>
-      <object>objects\obj_sun</object>
-      <object>objects\obj_spark</object>
-      <object>objects\obj_gate</object>
-      <object>objects\obj_asteroid</object>
       <objects name="_bullets">
         <object>objects\obj_laser</object>
         <object>objects\obj_bullet_spread</object>
@@ -1734,9 +1749,31 @@
         <object>objects\obj_bullet_barage</object>
         <object>objects\obj_bullet_rail</object>
       </objects>
+      <objects name="_ships">
+        <object>objects\obj_ship</object>
+        <object>objects\obj_player_ship</object>
+        <object>objects\obj_npc_ship</object>
+        <object>objects\obj_landing_ship</object>
+        <object>objects\obj_mining_drone</object>
+      </objects>
+      <object>objects\obj_asteroid</object>
       <object>objects\obj_cargo_drop</object>
+      <object>objects\obj_gate</object>
+      <object>objects\obj_landable</object>
+      <object>objects\obj_landable_label</object>
+      <object>objects\obj_moon</object>
+      <object>objects\obj_planet</object>
+      <object>objects\obj_radar</object>
+      <object>objects\obj_ship_module</object>
+      <object>objects\obj_ship_module_gun</object>
+      <object>objects\obj_ship_module_turret</object>
       <object>objects\obj_sign</object>
+      <object>objects\obj_space_level</object>
+      <object>objects\obj_space_solid</object>
+      <object>objects\obj_spark</object>
+      <object>objects\obj_station</object>
       <object>objects\obj_station_module</object>
+      <object>objects\obj_sun</object>
     </objects>
     <objects name="_inventory">
       <object>objects\obj_drop</object>
@@ -1842,7 +1879,7 @@
     </objects>
     <objects name="_galley">
       <object>objects\obj_ship_galley</object>
-      <object>objects\obj_dialog_galley</object>
+      <object>objects\obj_dialog_galley_DELETE</object>
       <object>objects\obj_gal_button_inv</object>
       <object>objects\obj_gal_button_launch</object>
       <object>objects\obj_galley_button_map</object>
@@ -1851,7 +1888,6 @@
     <object>objects\obj_laserbolt</object>
     <object>objects\obj_flash_timer</object>
     <object>objects\obj_impact</object>
-    <object>objects\obj_explosion</object>
     <objects name="_landing">
       <object>objects\obj_landing_menu</object>
       <object>objects\obj_landing_image</object>
@@ -1866,6 +1902,7 @@
         <object>objects\obj_cantina</object>
         <object>objects\obj_starport_test</object>
       </objects>
+      <object>objects\obj_explosion</object>
     </objects>
     <object>objects\obj_interactable</object>
     <object>objects\obj_floaty</object>
@@ -1875,6 +1912,14 @@
       <object>objects\object220</object>
       <object>objects\obj_ship_cinematic</object>
       <object>objects\obj_npc_cinematic</object>
+    </objects>
+    <objects name="_pet">
+      <object>objects\obj_pet</object>
+      <object>objects\obj_pet1</object>
+      <object>objects\obj_pet2</object>
+      <object>objects\obj_pet3</object>
+      <object>objects\obj_pet4</object>
+      <object>objects\obj_pet5</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -1903,7 +1948,7 @@
     <room>rooms\rm_test</room>
     <room>rooms\rm_dock</room>
   </rooms>
-  <constants number="395">
+  <constants number="397">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -2017,7 +2062,7 @@
     <constant name="FACTION_ZOMBOID">9</constant>
     <constant name="FLOOR">-5</constant>
     <constant name="GLOBAL_SHIP_LIMIT">100</constant>
-    <constant name="GM_BULLET_SPEED_MULT">2</constant>
+    <constant name="GM_BULLET_SPEED_MULT">3</constant>
     <constant name="GUN_BULLET_COLOR">7</constant>
     <constant name="GUN_BULLET_OBJECT">8</constant>
     <constant name="GUN_BULLET_SPEED">5</constant>
@@ -2030,6 +2075,8 @@
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>
     <constant name="GUN_TURN_SPEED">11</constant>
+    <constant name="GUN_CAPACITY">12</constant>
+    <constant name="GUN_RECHARGE">13</constant>
     <constant name="GX_GRIDSIZE">128</constant>
     <constant name="GX_MAGNITUDE">2</constant>
     <constant name="GX_MOON">1</constant>

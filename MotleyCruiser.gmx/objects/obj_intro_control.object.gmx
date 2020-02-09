@@ -549,6 +549,7 @@ if(state="begin"){
     if( fly_conditionals[5]==1 )
     {
         fly_conditionals[5]=noone;
+        global.autosave=true;
         room_goto(rm_space);
     }
     
@@ -557,6 +558,7 @@ if(state="begin"){
     if( fly_conditionals[5]==1 )
     {
         fly_conditionals[5]=noone;
+        global.autosave=true;
         room_goto(rm_space);
     }
 }

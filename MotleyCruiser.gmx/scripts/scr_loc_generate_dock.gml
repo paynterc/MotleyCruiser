@@ -9,9 +9,9 @@ dock[rmm.type]=room_types.dock;
 
 // NPCs
 var trader = scr_gx_make_npc(global.sector_x,global.sector_y);
-trader[NPC_OCCUPATION]=15;// merchant. see scr_npc_occupation_library 
+trader[NPC_OCCUPATION]=occupation.merchant;// merchant. see scr_npc_occupation_library 
 var shipwright = scr_gx_make_npc(global.sector_x,global.sector_y);
-shipwright[NPC_OCCUPATION]=16;
+shipwright[NPC_OCCUPATION]=occupation.shipwright;
 
 dock[rmm.npcs]=scr_array(trader,shipwright);
 

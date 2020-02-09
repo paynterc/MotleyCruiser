@@ -20,7 +20,9 @@ for(var i=0;i<array_length_1d(global.crew);i++){
             continue;
         }
 
-        cIndex = thisCrew[NPC_CREW_INDEX];
+        cIndex = scr_get_array_1d(thisCrew,NPC_CREW_INDEX);
+        if(cIndex == noone) continue;
+        
         M=thisCrew[NPC_MORALE];
         show_debug_message("Morale for crewmember "+ string(cIndex) + " ("+thisCrew[NPC_NAME_FIRST]+")" + " is : " + string(M));
         var G=ds_map_find_value(global.grievance_map,cIndex);// Find greivances by crew index value
@@ -34,7 +36,13 @@ for(var i=0;i<array_length_1d(global.crew);i++){
         show_debug_message("Morale for crewmember "+ string(cIndex) + " is now : " + string(thisCrew[NPC_MORALE]));
         
         // increase morale for each perk (coffee maker, game console, pay bonus, etc)
-
+        var pCount = 0;// TODO: Make perks list
+        
+        // decrease morale for each grievance
+        var gCount = scr_morale_get_grievance_count(cIndex);
+        
+        scr_morale_add(cIndex, pCount-gCount);
+        
         // roll for consequences (leave crew, steal money, attack crewmate, mutiny)
         
         // roll for new grievances on remaining crew. Modify with any outstanding resentments and applicable character traits.

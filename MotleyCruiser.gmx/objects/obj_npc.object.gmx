@@ -87,6 +87,7 @@ dDistance = 64;// Stop at this distance from the object I'm targeting.
 dDistanceSave = dDistance;// We may change dDistance. Use this to hold the original value.
 targetKinView =false;// Can I see my target on screen
 custom_sprite=noone;// Set this so we can delete the sprite if needed
+portrait_sprite=noone;// Used for dialog
 showHealth = false;// Show healthbar
 waypoints=noone;//array of waypoints
 var wp1 = scr_array(x,y);
@@ -104,7 +105,7 @@ lng_spd = 0;// lunge speed
 interact_active = true;// Will this do anything when the player approaches?
 interact_ready = false;// switch to true when player gets close enough
 minrange = 32;
-interact_sprite = spr_npc_icon;
+interact_sprite = spr_interact_sm;
 interact_text = "E";
 display_side = "top";// Where to show the icon
 xMod=0;yMod = -1;// Use to position icon
@@ -1054,6 +1055,10 @@ if(path_exists(path)) {
 if(custom_sprite!=noone &amp;&amp; crew_index==noone){
     sprite_delete(custom_sprite);
 }
+if(portrait_sprite!=noone &amp;&amp; crew_index==noone){
+    sprite_delete(portrait_sprite);
+}
+
 </string>
           </argument>
         </arguments>
@@ -1112,11 +1117,11 @@ if(irandom(odds)==odds){
             <string>/// Draw interact key icon
 if(interact_ready){
     draw_sprite(interact_sprite,0,x +(sprite_height*xMod),y + (sprite_height*yMod));
-    draw_set_color(c_black);
-    draw_set_valign(fa_middle);
-    draw_set_halign(fa_center);
-    draw_set_font(fnt_menus_med);
-    draw_text(x +(sprite_height*xMod),y + ( (sprite_height+2) *yMod),interact_text);
+    //draw_set_color(c_black);
+    //draw_set_valign(fa_middle);
+    //draw_set_halign(fa_center);
+    //draw_set_font(fnt_menus_med);
+    //draw_text(x +(sprite_height*xMod),y + ( (sprite_height+2) * yMod),interact_text);
 }
 </string>
           </argument>
@@ -1147,6 +1152,7 @@ if(!sprite_set){
     custom_sprite = scr_set_npc_sprite(npc_data);
     sprite_index = custom_sprite;
     npc_data[NPC_SPRITE_TEMP] = custom_sprite;
+    portrait_sprite = scr_npc_make_portrait(custom_sprite);
     
     /// Make an icon
     if(is_trader){

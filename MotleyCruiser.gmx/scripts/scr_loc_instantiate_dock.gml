@@ -56,14 +56,14 @@ if(npcs != noone){
         with(npcObject){
             scr_npc_map_to_object();            
         }       
-        if(npc_data[NPC_OCCUPATION]==15){
+        if(npc_data[NPC_OCCUPATION]==occupation.merchant){
         
             npcObject.x = ( (gx+1) * CELL_WIDTH ) + (CELL_WIDTH/2);
             npcObject.y = gy * CELL_HEIGHT + (CELL_HEIGHT/2) + 8;
             npcObject.mode = "discourse";
             npcObject.is_trader = true;
             
-        }else if(npc_data[NPC_OCCUPATION]==16){
+        }else if(npc_data[NPC_OCCUPATION]==occupation.shipwright){
         
             npcObject.x = (gx+W-2) * CELL_WIDTH + (CELL_WIDTH/2);
             npcObject.y = gy * CELL_HEIGHT + (CELL_HEIGHT/2) + 8;
@@ -113,9 +113,54 @@ for(var flX=gx; flX<=gx+W-1; flX++){
                 } 
             }         
         }else{
-            var jnkOdds = 6;
+            var jnkOdds = 15;
             if(irandom(jnkOdds)==jnkOdds){
                 instance_create(flX * CELL_WIDTH + (CELL_WIDTH/2), flY * CELL_HEIGHT, obj_dock_junk);
+            }
+        }
+    }
+}
+
+
+
+var locServices = scr_get_array_1d(global.landed_on,LOC_SERVICES);
+
+if(locServices != noone){
+    if(scr_in_array(locServices,services.pet_store)){
+        // Carpet for pet vendor
+        tile_add(bg_carpet1, 0, 0, CELL_WIDTH*2, CELL_WIDTH*2, (gx+1) * CELL_WIDTH, (gy+H-3) * CELL_HEIGHT, depths.floorTile-1);
+        
+        var pets=array_create(4);
+        for(var i=0;i<4;i++){
+            pets[i]=choose(obj_pet1,obj_pet2,obj_pet3,obj_pet4,obj_pet5);
+        }
+        
+        var petData, thePet;
+        petData = scr_pet(pets[0],'noname',0);
+        thePet = scr_instantiate_pet(0,0,petData);
+        scr_center_instance_on_cell(gx+1,gy+H-3,thePet);
+        
+        petData = scr_pet(pets[1],'noname',0);
+        thePet = scr_instantiate_pet(0,0,petData);
+        scr_center_instance_on_cell(gx+2,gy+H-3,thePet);
+        
+        petData = scr_pet(pets[2],'noname',0);
+        thePet = scr_instantiate_pet(0,0,petData);
+        scr_center_instance_on_cell(gx+1,gy+H-2,thePet);
+        
+        petData = scr_pet(pets[3],'noname',0);
+        thePet = scr_instantiate_pet(0,0,petData);
+        scr_center_instance_on_cell(gx+2,gy+H-2,thePet);
+        
+        with(obj_dock_junk){
+            if(place_meeting(x,y,obj_pet)){
+                instance_destroy();
+            }
+        }
+        
+        with(obj_npc){
+            if(place_meeting(x,y,obj_pet)){
+                scr_center_instance_on_cell(gx+3,gy+H-4,self);
             }
         }
     }

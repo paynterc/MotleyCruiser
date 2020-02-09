@@ -28,8 +28,10 @@ with(closest_sentient){
 
 }
 ***/
+var newCrewIndex = array_length_1d(global.crew);
+closest_sentient.npc_data[NPC_CREW_INDEX] = newCrewIndex;
 global.crew = scr_push_array(global.crew,closest_sentient.npc_data);
-closest_sentient.crew_index = array_length_1d(global.crew)-1;
+closest_sentient.crew_index = newCrewIndex;
 with(closest_sentient){
     scr_crew_follow_player();
 }               

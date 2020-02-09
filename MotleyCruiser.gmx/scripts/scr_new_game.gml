@@ -27,8 +27,15 @@ global.equipped[2]=noone;
 global.equipped[1]=noone;
 global.equipped[0]=51;
 
+var oldSalt = scr_npc_oldsalt();
+oldSalt[NPC_CREW_INDEX]=0;
 global.crew = noone;
-global.crew = scr_push_array( global.crew, scr_npc_oldsalt() );
+global.crew = scr_push_array( global.crew, oldSalt );
+
+// Pet
+global.pets = noone;
+var newPet = scr_pet(obj_pet1,"Cuddles",0);
+global.pets = scr_push_array( global.pets, newPet );
 
 // Cargo
 scr_cargo_add(0,1);// food

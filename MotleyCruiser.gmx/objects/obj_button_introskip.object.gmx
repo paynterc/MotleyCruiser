@@ -68,6 +68,7 @@ depth=-10000;
           <argument>
             <kind>1</kind>
             <string>/// goto room
+global.autosave=true;
 room_goto(rm_space);
 </string>
           </argument>

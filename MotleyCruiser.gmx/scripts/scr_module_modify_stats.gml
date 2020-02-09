@@ -23,9 +23,11 @@ if(is_array(ship_data)){
     energy_current = energy;
     
     acc_spd_fwd = ship_data[SHIP_ACC_FWD] * .5;
+    acc_spd_fwd_current = acc_spd_fwd;
     acc_spd_rvs = ship_data[SHIP_ACC_RVS] * .5;
     turn_spd = ship_data[SHIP_TURN_SPEED];
     max_spd_fwd = ship_data[SHIP_MAX_FWD];
+    max_spd_fwd_current = max_spd_fwd;
     max_spd_rvs = ship_data[SHIP_MAX_RVS];
     
     bunks = ship_data[SHIP_BUNKS];

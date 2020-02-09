@@ -74,9 +74,9 @@ if(svcCount>3){
 
 
 // Place bar. Should be 3rd row from top. Max width = W -2. Min = 3
-scr_stamp_rectangle(gx+2,gy+1,1,W-4,WALL);
+scr_stamp_rectangle(gx+2,gy+1,1,W-4,BG_BARTOP);
 //scr_stamp_rectangle(gx+2,gy-1,1,W-4,BARBACK);
-scr_add_tiles(gx+2,gy+1,bg_bartop,W-4,1);
+//scr_add_tiles(gx+2,gy+1,bg_bartop,W-4,1);
 scr_add_tiles(gx+2,gy-1,bg_barshelf,W-4,1);
 var barX1 = (gx+2) * CELL_WIDTH;
 var barX2 = barX1 + ((W-4) * CELL_WIDTH);
@@ -94,7 +94,7 @@ for(var i=0;i<irandom(W-4)+1;i++){
 // Create a bartender. Should be same every time
 npcObject = instance_create(cx, gy * CELL_HEIGHT + (CELL_HEIGHT/2) + 8, obj_npc);
 npc_data = scr_gx_make_npc(0,0);
-npc_data[NPC_OCCUPATION]="bartender";       
+npc_data[NPC_OCCUPATION]=occupation.bartender;       
 npcObject.npc_data = npc_data;
 with(npcObject){
     scr_npc_map_to_object();
@@ -146,7 +146,7 @@ while(mm<=mCount){
     
     npcObject = instance_create(cx, gy * CELL_HEIGHT + (CELL_HEIGHT/2) + 8, obj_npc);
     npc_data = scr_gx_make_npc(0,0);
-    npc_data[NPC_OCCUPATION]="musician";       
+    npc_data[NPC_OCCUPATION]=occupation.musician;       
     npcObject.npc_data = npc_data;
     npcObject.default_weapon = choose(obj_instrument,obj_instrument,obj_bass);
     with(npcObject){

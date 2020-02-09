@@ -91,8 +91,8 @@ if(instance_exists(obj_player_ship)){
         x=player_x;
         y=player_y;
         image_angle = player_angle;
-        direction = player_angle;
-        speed = player_speed;
+        //direction = player_angle;
+        //speed = player_speed;
         ship_data = global.player_ship;       
         faction = FACTION_PLAYER;
         mode = player_mode;
@@ -150,10 +150,10 @@ for(var i=0; i<array_length_1d(global.fleet); i++){
     } 
 }
 
-// Save the game
+
 global.player_x = player_x;
 global.player_y = player_y;
-scr_game_save();
+
 
 
 

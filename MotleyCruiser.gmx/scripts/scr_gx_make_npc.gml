@@ -80,7 +80,7 @@ map[NPC_LOCATION]=noone;// string "type,index,sector_row,sector_col"
 map[NPC_ACTIVE]=true;
 
 map[NPC_TRAIT]=scr_get_random_traits();//save the index of the the trait
-map[NPC_OCCUPATION]=irandom( array_length_1d(global.npc_occupations)-1 );//save the index of the the trait
+map[NPC_OCCUPATION]=irandom( occupation.LENGTH -1 );//save the index of the the trait
 map[NPC_SEX]=max(0,irandom(global.races[race_index,RACE_SEXES]-1));//Should give zero or one
 
 if(map[NPC_SEX]==1){

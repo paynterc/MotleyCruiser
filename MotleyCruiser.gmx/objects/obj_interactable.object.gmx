@@ -29,8 +29,9 @@
 interact_active = true;// Will this do anything when the player approaches?
 interact_ready = false;// switch to true when player gets close enough
 minrange = 32;
-interact_sprite = spr_npc_icon;
+interact_sprite = spr_interact_md;
 interact_text = "E";
+interact_font = fnt_menus_med
 display_side = "top";// Where to show the icon
 xMod=0;yMod = -1;// Use to position icon. Just 0, 1 or -1
 xOffset=0;yOffset=0;// Allows more flexible positioning
@@ -171,11 +172,11 @@ if(display_side=="top"){
             <string>/// Draw interact key icon
 if(interact_ready){
     draw_sprite(interact_sprite,0,x +(sprite_height*xMod)+ xOffset,y + (sprite_height*yMod)+ yOffset);
-    draw_set_color(c_black);
-    draw_set_valign(fa_middle);
-    draw_set_halign(fa_center);
-    draw_set_font(fnt_menus_med);
-    draw_text(x +(sprite_height*xMod) + xOffset,y + (sprite_height * yMod) + yOffset,interact_text);
+    //draw_set_color(c_black);
+    //draw_set_valign(fa_middle);
+    //draw_set_halign(fa_center);
+    //draw_set_font(interact_font);
+    //draw_text(x +(sprite_height*xMod) + xOffset,y + (sprite_height * yMod) + yOffset,interact_text);
 }
 </string>
           </argument>

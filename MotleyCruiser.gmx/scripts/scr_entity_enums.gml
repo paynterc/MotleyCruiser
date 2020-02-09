@@ -14,3 +14,7 @@ enum rmm{
 enum rm_sign{
     gridX,gridY,sprIdx
 }
+
+enum pet{
+    type,name,owner
+}

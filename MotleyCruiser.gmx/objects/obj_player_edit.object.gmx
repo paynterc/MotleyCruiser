@@ -112,7 +112,7 @@ if(name_field.txt != ''){
     global.player_model = selections;
     scr_new_game();
     scr_game_save();
-    savesprite = true;// Build sprite in the draw step.
+    savesprite = true;// Build sprite in the draw step. This also queues to go to the game intro sequence
 }else{
     scr_display_message_simple("What about a name?");
 }

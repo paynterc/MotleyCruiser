@@ -313,8 +313,10 @@ if(portrait){
     scl = round( pwidth/16 ) - 1;
     var ptop = 8;// This needs to be dynamic. Hurgan faces are higher up.
     if(sprite_exists(portrait)){
-        draw_sprite_part_ext(portrait, 0, (swidth/2)-8, ptop, 16, 16, boxx1+14, boxy1+14, scl, scl, c_white, 1);
+        //draw_sprite_part_ext(portrait, 0, 0, 0, 16, 16, boxx1+14, boxy1+14, scl, scl, c_white, 1);
+        //draw_sprite_part_ext(portrait, 0, (swidth/2)-8, ptop, 16, 16, boxx1+14, boxy1+14, scl, scl, c_white, 1);
         //draw_sprite(portrait,0,boxx1+14, boxy1+14);
+        draw_sprite_ext(portrait,0,boxx1+8, boxy1+12,scl,scl,0,c_white,1);
     }
 }
 

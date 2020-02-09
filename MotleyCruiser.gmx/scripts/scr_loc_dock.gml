@@ -1,5 +1,5 @@
 /// scr_loc_cantina(x,y)
-/***********
+/*********** DEPRECATED. Replaced by scr_generate_dock
 gx,gy are GRID LOCATIONS, NOT room coords. upper left corner
 
 Stations and starports will be modular. The cantina is the central module with npcs
@@ -66,7 +66,7 @@ var npcObject, npc_data;
 // Create a merchant. Should be same character every time
 npcObject = instance_create(( (gx+1) * CELL_WIDTH ) + (CELL_WIDTH/2), gy * CELL_HEIGHT + (CELL_HEIGHT/2) + 8, obj_npc);
 npc_data = scr_gx_make_npc(0,0);
-npc_data[NPC_OCCUPATION]=13;// merchant. see scr_npc_occupation_library      
+npc_data[NPC_OCCUPATION]=occupation.merchant;// merchant. see scr_npc_occupation_library      
 npcObject.npc_data = npc_data;
 with(npcObject){
     scr_npc_map_to_object();
@@ -81,7 +81,7 @@ merchantIcon.myNpc = npcObject;
 // Create a shipwright. Should be same character every time
 npcObject = instance_create((gx+W-2) * CELL_WIDTH+ (CELL_WIDTH/2), gy * CELL_HEIGHT + (CELL_HEIGHT/2) + 8, obj_npc);
 npc_data = scr_gx_make_npc(0,0);
-npc_data[NPC_OCCUPATION]=14;    
+npc_data[NPC_OCCUPATION]=occupation.shipwright;    
 npcObject.npc_data = npc_data;
 with(npcObject){
     scr_npc_map_to_object();

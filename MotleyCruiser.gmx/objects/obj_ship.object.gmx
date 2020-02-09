@@ -54,6 +54,7 @@ boosting=false;
 boost_cooldown=false;
 c=false;
 is_player=false;
+decel_step=.5;//Used to auto decelerate
 // Set defaults
 scr_ship_defaults();
 
@@ -61,8 +62,8 @@ scr_ship_defaults();
 
 shieldSizeMod = (sprite_width/sprite_get_width(spr_shield)) + 0.5;
 modAlpha = 1; // Alpha tranparency for modules. Use for landing.
-max_spd_fwd_hold=0;
-acc_spd_fwd_hold=0;
+
+
 image_speed=0;
 
 
@@ -117,8 +118,8 @@ waypoint_current=noone;
           <argument>
             <kind>1</kind>
             <string>/// Stop boost
-max_spd_fwd = max_spd_fwd_hold;
-acc_spd_fwd = acc_spd_fwd_hold;
+
+acc_spd_fwd_current = acc_spd_fwd;
 boosting=false;
 boost_cooldown = true;
 alarm[7]=room_speed*2;
@@ -294,10 +295,25 @@ if(modules != noone){
 if(global.paused){
     exit;
 }
-if(speed &gt; max_spd_fwd){
-    speed = max_spd_fwd;//clamp
+if(speed &gt; max_spd_fwd_current){
+    speed = max_spd_fwd_current;//clamp
 }
-speed = max(speed - 0.005, 0);
+
+
+if(mode!=MODE_JUMPING){
+    if(max_spd_fwd_current&gt;max_spd_fwd){
+        max_spd_fwd_current-=decel_step;
+        if(max_spd_fwd_current&lt;=max_spd_fwd){
+            max_spd_fwd_current=max_spd_fwd;
+        }
+    }
+    speed = max(speed - 0.005, 0);
+}
+
+
+
+
+
 </string>
           </argument>
         </arguments>

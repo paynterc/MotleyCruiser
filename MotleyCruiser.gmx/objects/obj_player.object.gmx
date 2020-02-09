@@ -390,8 +390,8 @@ if(global.equipped!=noone){
             weapon_index = scr_inv_item_read(item_id,6);// Slot 6 holds the object name
             if(weapon_index!=noone &amp;&amp; object_exists(weapon_index)){
             
-                //weapon = instance_create(x,y,weapon_index);
-                weapon = instance_create(x,y,obj_blobgun);
+                weapon = instance_create(x,y,weapon_index);
+                //weapon = instance_create(x,y,obj_blobgun);
                 weapon.type = faction;
                 weapon.parent_obj = id;
                 weapon.inventory_id = item_id;

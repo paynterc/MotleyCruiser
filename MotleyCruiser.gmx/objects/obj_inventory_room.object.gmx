@@ -1023,7 +1023,7 @@ var bty = bky+bkx_width;
 var crewdata, txt_y, occupation;
 if (selected_crew!=noone){
     crewdata = global.crew[selected_crew];
-    occupation = scr_get_array_1d(global.hirable_occupations, crewdata[NPC_OCCUPATION]);
+    occupation = scr_get_array_1d(global.npc_occupations, crewdata[NPC_OCCUPATION]);
     
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);

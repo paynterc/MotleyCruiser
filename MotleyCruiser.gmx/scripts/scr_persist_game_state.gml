@@ -1,6 +1,8 @@
 /**
-Save game state. Place current ship and fleet state in globals so we can move
-between sectors. Save data to a file so it can be loaded later.
+Persist game state. Place current ship and fleet state in globals so we can move
+between sectors.
+NOT THE SAME AS SAVING THE GAME. This is only to achieve continuity between rooms.
+Use scr_game_save()to save the game to a file.
 **/
 
 // If we're in a space environment, persist space objects.
@@ -34,8 +36,3 @@ if(instance_exists(obj_space_level)){
     // Save the current sector map
     scr_galaxy_map_add(global.sector_x,global.sector_y,global.sector_map);
 }
-
-// If we're in a room, persist npc and crew.
-
-// Write to file
-scr_game_save();

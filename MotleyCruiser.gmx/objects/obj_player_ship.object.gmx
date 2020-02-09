@@ -429,7 +429,7 @@ if(global.paused){
         saved_speed = noone;
     }
     if(mode==MODE_JUMP_REENTRY){
-        motion_add(image_angle,acc_spd_fwd);
+        //motion_add(image_angle,acc_spd_fwd);
         scr_jump_input();
     }else if(mode==MODE_JUMPING){
         scr_rotate_to_angle(self,tgt_angle,turn_spd);
@@ -441,11 +441,8 @@ if(global.paused){
             shooting = false;
         }
         if(scr_user_input(pin.thrust) &amp;&amp; can_move){
-            motion_add(image_angle,acc_spd_fwd);
+            motion_add(image_angle,acc_spd_fwd_current);
             thrusting_fwd=true;
-            if(speed &gt; max_spd_fwd){
-                speed = max_spd_fwd;//clamp
-            }
         }else{
             thrusting_fwd=false;
         }
@@ -478,11 +475,11 @@ if(global.paused){
         }
      
         if(scr_user_input(pin.thrust) &amp;&amp; can_move){
-            motion_add(image_angle,acc_spd_fwd);
+            // You can't disallow thrust just because we are over max speed
+            // Player needs to be able to thrust in the oposite direction to slow down.
+            motion_add(image_angle,acc_spd_fwd_current);
             thrusting_fwd=true;
-            if(speed &gt; max_spd_fwd){
-                speed = max_spd_fwd;//clamp
-            }
+
         }else{
             thrusting_fwd=false;
         }
@@ -493,8 +490,8 @@ if(global.paused){
         
         if(scr_user_input(pin.thrust_reverse) &amp;&amp; can_move){
             motion_add(image_angle,acc_spd_rvs *-1);
-            if(speed &gt; max_spd_rvs){
-                speed = max_spd_rvs;//clamp
+            if(speed &lt; max_spd_rvs){
+                //CHECK SPEED
             }
         }
         
@@ -638,6 +635,28 @@ if(hull_current &lt; 1){
     instance_deactivate_object(self);
     scr_ev_player_died_in_space();
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// debug
+show_debug_message("max_spd_fwd_current: " + string(max_spd_fwd_current));
 </string>
           </argument>
         </arguments>
