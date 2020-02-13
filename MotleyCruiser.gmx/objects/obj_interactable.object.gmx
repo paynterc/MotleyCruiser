@@ -29,6 +29,8 @@
 interact_active = true;// Will this do anything when the player approaches?
 interact_ready = false;// switch to true when player gets close enough
 minrange = 32;
+rangeXoffset=0;
+rangeYoffset=0;
 interact_sprite = spr_interact_md;
 interact_text = "E";
 interact_font = fnt_menus_med
@@ -60,7 +62,7 @@ xOffset=0;yOffset=0;// Allows more flexible positioning
             <string>/// Player approaches
 if(interact_active){
     if(instance_exists(obj_player)){
-        interact_ready = ( point_distance(x,y,obj_player.x,obj_player.y) &lt;= minrange &amp;&amp; interact_active );
+        interact_ready = ( point_distance(x+rangeXoffset,y+rangeYoffset,obj_player.x,obj_player.y) &lt;= minrange  &amp;&amp; interact_active );
     }else{
         interact_ready = false;
     }        

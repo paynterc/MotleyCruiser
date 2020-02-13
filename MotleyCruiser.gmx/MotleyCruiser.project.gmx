@@ -534,6 +534,8 @@
         <sprite>sprites\spr_flak</sprite>
         <sprite>sprites\spr_bolt_sm</sprite>
       </sprites>
+      <sprite>sprites\spr_ship_reentry</sprite>
+      <sprite>sprites\sprite540</sprite>
     </sprites>
     <sprites name="_space_objects">
       <sprite>sprites\spr_moon</sprite>
@@ -883,6 +885,7 @@
       <script>scripts\scr_ev_player_died_in_space.gml</script>
       <script>scripts\scr_ev_new_day.gml</script>
       <script>scripts\scr_ev_boughtpet.gml</script>
+      <script>scripts\scr_ev_hired_cook.gml</script>
     </scripts>
     <scripts name="_example_scripts">
       <script>scripts\scr_multi_arguments.gml</script>
@@ -1387,6 +1390,7 @@
       <script>scripts\scr_morale_add.gml</script>
       <script>scripts\scr_morale_update.gml</script>
       <script>scripts\scr_morale_get_grievance_count.gml</script>
+      <script>scripts\scr_grievance_delete_all.gml</script>
     </scripts>
     <scripts name="_npc">
       <script>scripts\scr_gx_make_npc.gml</script>
@@ -1633,15 +1637,104 @@
     <font>fonts\font20</font>
   </fonts>
   <objects name="objects">
-    <object>objects\obj_game_control</object>
-    <object>objects\obj_eventmanager</object>
-    <object>objects\obj_morale_control</object>
-    <object>objects\obj_sound_control</object>
-    <object>objects\obj_ship_data</object>
-    <object>objects\obj_damager</object>
-    <object>objects\obj_module</object>
-    <object>objects\obj_tutorial</object>
-    <object>objects\obj_object_pool</object>
+    <objects name="_dialogue">
+      <object>objects\obj_dialog_control</object>
+      <object>objects\obj_dialog_control_OLD</object>
+      <objects name="_flywriter">
+        <object>objects\obj_flybox</object>
+        <object>objects\obj_flyoption</object>
+        <object>objects\obj_flytest</object>
+      </objects>
+      <object>objects\obj_message_simple</object>
+      <object>objects\obj_flash_message</object>
+      <object>objects\obj_bark_queue</object>
+    </objects>
+    <objects name="_forms">
+      <object>objects\obj_form_text</object>
+      <object>objects\obj_form_textbox</object>
+      <object>objects\obj_form_button</object>
+    </objects>
+    <objects name="_galaxy_map">
+      <object>objects\obj_galaxy_map</object>
+      <object>objects\obj_gxmap_point</object>
+      <object>objects\obj_btn_addpath</object>
+    </objects>
+    <objects name="_galley">
+      <object>objects\obj_ship_galley</object>
+      <object>objects\obj_dialog_galley_DELETE</object>
+      <object>objects\obj_gal_button_inv</object>
+      <object>objects\obj_gal_button_launch</object>
+      <object>objects\obj_galley_button_map</object>
+      <object>objects\obj_galley_button_disembark</object>
+    </objects>
+    <objects name="_gui">
+      <object>objects\obj_gui_control</object>
+      <objects name="_gui_panels">
+        <object>objects\obj_menu</object>
+        <object>objects\obj_trade</object>
+        <object>objects\obj_mission_log</object>
+        <object>objects\obj_main_menu</object>
+        <object>objects\obj_message_box</object>
+        <object>objects\obj_minimap</object>
+        <object>objects\obj_pause_menu</object>
+        <object>objects\obj_load_game_menu</object>
+        <object>objects\obj_gui_text</object>
+      </objects>
+      <objects name="_elements">
+        <object>objects\obj_button_text</object>
+        <object>objects\obj_button_basic</object>
+        <object>objects\obj_text_basic</object>
+        <object>objects\obj_gui_button</object>
+      </objects>
+    </objects>
+    <objects name="_intro">
+      <object>objects\obj_intro_control</object>
+      <object>objects\obj_intro_oldgirl</object>
+      <object>objects\obj_prop_house</object>
+      <object>objects\obj_horizon</object>
+      <object>objects\obj_pirateship1</object>
+      <object>objects\obj_piratefire</object>
+      <object>objects\obj_ogfire</object>
+      <object>objects\obj_intro_window</object>
+      <object>objects\obj_intro_pirate</object>
+      <object>objects\obj_intro_parent1</object>
+      <object>objects\obj_intro_old_salt</object>
+      <object>objects\obj_intro_player</object>
+      <object>objects\obj_intro_child1</object>
+      <object>objects\obj_intro_child2</object>
+      <object>objects\obj_button_introskip</object>
+    </objects>
+    <objects name="_inventory">
+      <object>objects\obj_drop</object>
+      <object>objects\obj_inventory</object>
+      <object>objects\obj_inventory_room</object>
+      <object>objects\obj_inv_save_button</object>
+    </objects>
+    <objects name="_landing">
+      <object>objects\obj_landing_menu</object>
+      <object>objects\obj_landing_image</object>
+      <object>objects\obj_btn_port</object>
+      <object>objects\obj_btn_cantina</object>
+      <object>objects\obj_btn_galley</object>
+      <object>objects\obj_btn_depart</object>
+      <object>objects\obj_landing_text</object>
+      <objects name="random_locations">
+        <object>objects\obj_starport</object>
+        <object>objects\obj_dock</object>
+        <object>objects\obj_cantina</object>
+        <object>objects\obj_starport_test</object>
+      </objects>
+      <object>objects\obj_explosion</object>
+    </objects>
+    <objects name="_light">
+      <object>objects\obj_glare_controller_ORIGINAL</object>
+      <object>objects\obj_glare_control</object>
+      <object>objects\obj_light</object>
+      <object>objects\obj_light_white</object>
+      <object>objects\obj_light_random</object>
+      <object>objects\obj_light_laser</object>
+      <object>objects\obj_light_tv_random</object>
+    </objects>
     <objects name="_people_and_places">
       <object>objects\obj_test_npc</object>
       <object>objects\obj_mortal</object>
@@ -1669,11 +1762,6 @@
       <object>objects\obj_torpedo_pod</object>
       <object>objects\obj_torpedo_pod_BACKUP</object>
       <object>objects\obj_npc_icon</object>
-    </objects>
-    <objects name="_galaxy_map">
-      <object>objects\obj_galaxy_map</object>
-      <object>objects\obj_gxmap_point</object>
-      <object>objects\obj_btn_addpath</object>
     </objects>
     <objects name="_personal_weapons">
       <object>objects\obj_gun</object>
@@ -1706,37 +1794,78 @@
         <object>objects\obj_warpsword_attack</object>
       </objects>
     </objects>
-    <objects name="_dialogue">
-      <object>objects\obj_dialog_control</object>
-      <object>objects\obj_dialog_control_OLD</object>
-      <objects name="_flywriter">
-        <object>objects\obj_flybox</object>
-        <object>objects\obj_flyoption</object>
-        <object>objects\obj_flytest</object>
-      </objects>
-      <object>objects\obj_message_simple</object>
-      <object>objects\obj_flash_message</object>
-      <object>objects\obj_bark_queue</object>
+    <objects name="_pet">
+      <object>objects\obj_pet</object>
+      <object>objects\obj_pet1</object>
+      <object>objects\obj_pet2</object>
+      <object>objects\obj_pet3</object>
+      <object>objects\obj_pet4</object>
+      <object>objects\obj_pet5</object>
     </objects>
-    <objects name="_gui">
-      <object>objects\obj_gui_control</object>
-      <objects name="_gui_panels">
-        <object>objects\obj_menu</object>
-        <object>objects\obj_trade</object>
-        <object>objects\obj_mission_log</object>
-        <object>objects\obj_main_menu</object>
-        <object>objects\obj_message_box</object>
-        <object>objects\obj_minimap</object>
-        <object>objects\obj_pause_menu</object>
-        <object>objects\obj_load_game_menu</object>
-        <object>objects\obj_gui_text</object>
+    <objects name="_planetside">
+      <object>objects\obj_planet_surface</object>
+      <object>objects\obj_plant</object>
+      <object>objects\obj_bug</object>
+      <object>objects\obj_critter</object>
+    </objects>
+    <objects name="_player_edit">
+      <object>objects\obj_player_edit</object>
+      <object>objects\obj_player_model</object>
+      <object>objects\obj_color_button</object>
+      <object>objects\obj_change_button</object>
+      <object>objects\obj_exit_button</object>
+    </objects>
+    <objects name="_room">
+      <object>objects\obj_lvl_ship_deck_rnd</object>
+      <object>objects\obj_lvl_ship_boss_rnd</object>
+      <object>objects\obj_lvl_ship_control</object>
+      <object>objects\obj_lvl_cantina</object>
+      <object>objects\obj_lvl_arena</object>
+      <object>objects\obj_room_level</object>
+      <objects name="_furniture">
+        <object>objects\obj_workstation</object>
+        <object>objects\obj_room_reactor</object>
+        <object>objects\obj_crate</object>
+        <object>objects\obj_crate_sm</object>
+        <object>objects\obj_crate_md1</object>
+        <object>objects\obj_crate_md2</object>
+        <object>objects\obj_crate_lg</object>
+        <object>objects\obj_stage</object>
+        <object>objects\obj_cover</object>
+        <object>objects\obj_door</object>
+        <object>objects\obj_ladder</object>
+        <object>objects\obj_door_exit_spc</object>
+        <object>objects\obj_jefferies</object>
+        <object>objects\obj_panel_decor</object>
+        <object>objects\obj_viewscreen_decor</object>
+        <object>objects\obj_table</object>
+        <object>objects\obj_galley_table</object>
+        <object>objects\obj_drink</object>
+        <object>objects\obj_airlock</object>
+        <object>objects\obj_docked_ship</object>
+        <object>objects\obj_dock_junk</object>
+        <object>objects\obj_trapdoor</object>
+        <object>objects\obj_shiptoken</object>
       </objects>
-      <objects name="_elements">
-        <object>objects\obj_button_text</object>
-        <object>objects\obj_button_basic</object>
-        <object>objects\obj_text_basic</object>
-        <object>objects\obj_gui_button</object>
-      </objects>
+      <object>objects\obj_da_loot</object>
+    </objects>
+    <objects name="_ship_edit">
+      <object>objects\obj_ship_editor</object>
+      <object>objects\obj_ship_editor_BACKUP</object>
+      <object>objects\obj_menu_module</object>
+      <object>objects\obj_place_module</object>
+      <object>objects\obj_paintbrush</object>
+      <object>objects\obj_paint_drag</object>
+      <object>objects\obj_btn_save</object>
+      <object>objects\obj_btn_exit</object>
+      <object>objects\obj_btn_updateall</object>
+      <object>objects\obj_button_load</object>
+      <object>objects\obj_button_delete</object>
+      <object>objects\obj_btn_update</object>
+      <object>objects\obj_btn_show_settings</object>
+      <object>objects\obj_btn_next</object>
+      <object>objects\obj_btn_prev</object>
+      <object>objects\obj_edit_crew</object>
     </objects>
     <objects name="_space_combat">
       <objects name="_bullets">
@@ -1774,152 +1903,28 @@
       <object>objects\obj_station</object>
       <object>objects\obj_station_module</object>
       <object>objects\obj_sun</object>
+      <object>objects\obj_ship_reentry</object>
     </objects>
-    <objects name="_inventory">
-      <object>objects\obj_drop</object>
-      <object>objects\obj_inventory</object>
-      <object>objects\obj_inventory_room</object>
-      <object>objects\obj_inv_save_button</object>
-    </objects>
-    <objects name="_room">
-      <object>objects\obj_lvl_ship_deck_rnd</object>
-      <object>objects\obj_lvl_ship_boss_rnd</object>
-      <object>objects\obj_lvl_ship_control</object>
-      <object>objects\obj_lvl_cantina</object>
-      <object>objects\obj_lvl_arena</object>
-      <object>objects\obj_room_level</object>
-      <objects name="_furniture">
-        <object>objects\obj_workstation</object>
-        <object>objects\obj_room_reactor</object>
-        <object>objects\obj_crate</object>
-        <object>objects\obj_crate_sm</object>
-        <object>objects\obj_crate_md1</object>
-        <object>objects\obj_crate_md2</object>
-        <object>objects\obj_crate_lg</object>
-        <object>objects\obj_stage</object>
-        <object>objects\obj_cover</object>
-        <object>objects\obj_door</object>
-        <object>objects\obj_ladder</object>
-        <object>objects\obj_door_exit_spc</object>
-        <object>objects\obj_jefferies</object>
-        <object>objects\obj_panel_decor</object>
-        <object>objects\obj_viewscreen_decor</object>
-        <object>objects\obj_table</object>
-        <object>objects\obj_galley_table</object>
-        <object>objects\obj_drink</object>
-        <object>objects\obj_airlock</object>
-        <object>objects\obj_docked_ship</object>
-        <object>objects\obj_dock_junk</object>
-        <object>objects\obj_trapdoor</object>
-        <object>objects\obj_shiptoken</object>
-      </objects>
-      <object>objects\obj_da_loot</object>
-    </objects>
-    <objects name="_light">
-      <object>objects\obj_glare_controller_ORIGINAL</object>
-      <object>objects\obj_glare_control</object>
-      <object>objects\obj_light</object>
-      <object>objects\obj_light_white</object>
-      <object>objects\obj_light_random</object>
-      <object>objects\obj_light_laser</object>
-      <object>objects\obj_light_tv_random</object>
-    </objects>
-    <objects name="_ship_edit">
-      <object>objects\obj_ship_editor</object>
-      <object>objects\obj_ship_editor_BACKUP</object>
-      <object>objects\obj_menu_module</object>
-      <object>objects\obj_place_module</object>
-      <object>objects\obj_paintbrush</object>
-      <object>objects\obj_paint_drag</object>
-      <object>objects\obj_btn_save</object>
-      <object>objects\obj_btn_exit</object>
-      <object>objects\obj_btn_updateall</object>
-      <object>objects\obj_button_load</object>
-      <object>objects\obj_button_delete</object>
-      <object>objects\obj_btn_update</object>
-      <object>objects\obj_btn_show_settings</object>
-      <object>objects\obj_btn_next</object>
-      <object>objects\obj_btn_prev</object>
-      <object>objects\obj_edit_crew</object>
-    </objects>
-    <objects name="_forms">
-      <object>objects\obj_form_text</object>
-      <object>objects\obj_form_textbox</object>
-      <object>objects\obj_form_button</object>
-    </objects>
-    <objects name="_player_edit">
-      <object>objects\obj_player_edit</object>
-      <object>objects\obj_player_model</object>
-      <object>objects\obj_color_button</object>
-      <object>objects\obj_change_button</object>
-      <object>objects\obj_exit_button</object>
-    </objects>
-    <objects name="_planetside">
-      <object>objects\obj_planet_surface</object>
-      <object>objects\obj_plant</object>
-      <object>objects\obj_bug</object>
-      <object>objects\obj_critter</object>
-    </objects>
-    <objects name="_intro">
-      <object>objects\obj_intro_control</object>
-      <object>objects\obj_intro_oldgirl</object>
-      <object>objects\obj_prop_house</object>
-      <object>objects\obj_horizon</object>
-      <object>objects\obj_pirateship1</object>
-      <object>objects\obj_piratefire</object>
-      <object>objects\obj_ogfire</object>
-      <object>objects\obj_intro_window</object>
-      <object>objects\obj_intro_pirate</object>
-      <object>objects\obj_intro_parent1</object>
-      <object>objects\obj_intro_old_salt</object>
-      <object>objects\obj_intro_player</object>
-      <object>objects\obj_intro_child1</object>
-      <object>objects\obj_intro_child2</object>
-      <object>objects\obj_button_introskip</object>
-    </objects>
-    <objects name="_galley">
-      <object>objects\obj_ship_galley</object>
-      <object>objects\obj_dialog_galley_DELETE</object>
-      <object>objects\obj_gal_button_inv</object>
-      <object>objects\obj_gal_button_launch</object>
-      <object>objects\obj_galley_button_map</object>
-      <object>objects\obj_galley_button_disembark</object>
-    </objects>
-    <object>objects\obj_laserbolt</object>
+    <object>objects\obj_damager</object>
+    <object>objects\obj_eventmanager</object>
     <object>objects\obj_flash_timer</object>
-    <object>objects\obj_impact</object>
-    <objects name="_landing">
-      <object>objects\obj_landing_menu</object>
-      <object>objects\obj_landing_image</object>
-      <object>objects\obj_btn_port</object>
-      <object>objects\obj_btn_cantina</object>
-      <object>objects\obj_btn_galley</object>
-      <object>objects\obj_btn_depart</object>
-      <object>objects\obj_landing_text</object>
-      <objects name="random_locations">
-        <object>objects\obj_starport</object>
-        <object>objects\obj_dock</object>
-        <object>objects\obj_cantina</object>
-        <object>objects\obj_starport_test</object>
-      </objects>
-      <object>objects\obj_explosion</object>
-    </objects>
-    <object>objects\obj_interactable</object>
     <object>objects\obj_floaty</object>
+    <object>objects\obj_game_control</object>
+    <object>objects\obj_impact</object>
+    <object>objects\obj_interactable</object>
+    <object>objects\obj_laserbolt</object>
+    <object>objects\obj_module</object>
+    <object>objects\obj_morale_control</object>
+    <object>objects\obj_object_pool</object>
+    <object>objects\obj_ship_data</object>
+    <object>objects\obj_sound_control</object>
+    <object>objects\obj_tutorial</object>
     <objects name="podlaunch">
       <object>objects\obj_podlaunch_control</object>
       <object>objects\obj_pod_cinematic</object>
       <object>objects\object220</object>
       <object>objects\obj_ship_cinematic</object>
       <object>objects\obj_npc_cinematic</object>
-    </objects>
-    <objects name="_pet">
-      <object>objects\obj_pet</object>
-      <object>objects\obj_pet1</object>
-      <object>objects\obj_pet2</object>
-      <object>objects\obj_pet3</object>
-      <object>objects\obj_pet4</object>
-      <object>objects\obj_pet5</object>
     </objects>
   </objects>
   <rooms name="rooms">

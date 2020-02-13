@@ -27,7 +27,8 @@
             <kind>1</kind>
             <string>/// Create ds map and enum
 enum events{
-    boughtPet
+    boughtPet,
+    hiredCook
 }
 eventMap = ds_map_create();
 </string>

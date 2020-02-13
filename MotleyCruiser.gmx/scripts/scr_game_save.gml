@@ -7,10 +7,14 @@ game load.
 // Create an array for all game data
 var game = global.game_loaded;
 
+show_debug_message("Saving game " + string(game) + ". Galaxy coords are " + string(global.sector_x)+ "," + string(global.sector_y));
+
 scr_save_galaxy(game);
+scr_dsmap_save(global.galaxy_map,"gmap");
+
 scr_inv_save(game);
 scr_cargo_save(game);
-scr_dsmap_save(global.galaxy_map,"gmap");
+
 
 
 scr_write_array(global.equipped,game,"equipped",SAVE_GAME_FILE);

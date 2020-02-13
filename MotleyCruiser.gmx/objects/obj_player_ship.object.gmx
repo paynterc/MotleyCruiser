@@ -390,8 +390,11 @@ if( speed &gt; 0 ){
           <argument>
             <kind>1</kind>
             <string>/// Center view on player
-view_xview[0]=x-(view_wview[0]/2);
-view_yview[0]=y-(view_hview[0]/2);
+if(mode!=MODE_JUMP_REENTRY){
+    view_xview[0]=x-(view_wview[0]/2);
+    view_yview[0]=y-(view_hview[0]/2);
+}
+
 </string>
           </argument>
         </arguments>
@@ -656,7 +659,7 @@ if(hull_current &lt; 1){
           <argument>
             <kind>1</kind>
             <string>/// debug
-show_debug_message("max_spd_fwd_current: " + string(max_spd_fwd_current));
+
 </string>
           </argument>
         </arguments>

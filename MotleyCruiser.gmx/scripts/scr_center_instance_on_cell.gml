@@ -1,4 +1,4 @@
-/// scr_center_obj_on_cell(gx,gy,object)
+///scr_center_obj_on_cell(gx,gy,object)
 // Center an object on a grid cell
 var args = noone;
 for (var i=0; i<8; i++)

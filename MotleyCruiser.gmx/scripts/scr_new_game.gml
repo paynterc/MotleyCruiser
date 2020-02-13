@@ -34,7 +34,7 @@ global.crew = scr_push_array( global.crew, oldSalt );
 
 // Pet
 global.pets = noone;
-var newPet = scr_pet(obj_pet1,"Cuddles",0);
+var newPet = scr_pet("obj_pet1","Cuddles",0);
 global.pets = scr_push_array( global.pets, newPet );
 
 // Cargo

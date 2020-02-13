@@ -45,6 +45,8 @@ image_speed=0;
 room_to = noone// Room to load. Must be string text like "rm_galley".
 room_type = noone;
 open = false;
+minrange = 48;
+rangeYoffset = -28;
 
 </string>
           </argument>

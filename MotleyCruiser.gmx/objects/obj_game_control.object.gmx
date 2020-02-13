@@ -497,7 +497,7 @@ if(scr_user_input(pin.fullscreen)){
 }
 
 if(scr_user_input(pin.add_grievance)){
-    scr_grievance_test(grievances.loneliness);
+    scr_grievance_test(grievances.food_quality);
 }
 
 

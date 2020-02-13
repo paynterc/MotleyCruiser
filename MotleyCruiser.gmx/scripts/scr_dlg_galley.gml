@@ -14,6 +14,9 @@ if(cIndex==noone){
     if(debug_mode){show_debug_message("DEBUG: No crew index sent to scr_dlg_galley")}
     return false;
 }
+
+var textNegative = choose("I'm not happy about this","Disapointing","You'll regret this.","You're killing me.","I'm getting tired of this.","You haven't heard the last of this.");
+var textPositive = choose("Great.","Thanks.","I approve.","Good choice.");
 if(question==0){
     //  I want more money.
     // "sent" is a sentient character. An obj_npc.
@@ -22,18 +25,16 @@ if(question==0){
         if(global.credits>=100){
             global.credits -= 100;
             scr_flywriter("Thanks.",npcSprite,true,"10,OK.");// Goes to Default Response below
+            scr_grievance_delete(cIndex,grievances.money);
             scr_morale_add(cIndex,1); 
         }else{
             scr_flywriter("I don't have enough money for that.",global.player_sprite,true,"10,OK.");// Goes to Default Response below
         }
     }else{
-        scr_flywriter("You're cheap.",npcSprite,true,"10,OK.");
-        scr_morale_add(cIndex,-1);       
+        scr_flywriter(textNegative,npcSprite,true,"10,OK.");
+        //scr_morale_add(cIndex,-1);       
     }
-    // Delete the grievance, even if denied. No need to keep repeating it.
-    if(is_array(npcData)){
-        scr_grievance_delete(npcData[NPC_CREW_INDEX],grievances.money);
-    }
+
 
 }else if(question==1){
 
@@ -43,9 +44,7 @@ if(question==0){
         scr_flywriter("Great.",npcSprite,true,"10,Bye.");// Goes to Default Response below
         // This grievance won't be delted until the cook is hired.
     }else{
-        scr_flywriter("Grr.",npcSprite,true,"10,OK.");
-        scr_grievance_delete(cIndex,grievances.food_quality); 
-        scr_morale_add(cIndex,-1);
+        scr_flywriter(textNegative,npcSprite,true,"10,OK.");
     }
     
 }else if(question==2){
@@ -55,27 +54,13 @@ if(question==0){
         // Ok, we'll rest here for a day.
         scr_flywriter("Great.",npcSprite,true,"10,Bye.");// Goes to Default Response below
         // Delete exhaustion for all crew
-        var cidx;
-        for(var i=0;i<array_length_1d(global.crew);i++){
-            if( !is_array(global.crew[i]) ){
-                continue;
-            }
-            thisCrew = global.crew[i];
-            if( !thisCrew[NPC_ACTIVE] ){
-                continue;
-            }
-            cidx = scr_get_array_1d(thisCrew,NPC_CREW_INDEX);
-            scr_grievance_delete(cidx,grievances.exhaustion);
-            scr_morale_add(cidx,1);
-        }
+        scr_grievance_delete_all(grievances.exhaustion);
         // A day goes by
         global.day++;
         scr_daily_expenses();
         
     }else{
-        scr_flywriter("You're killing me.",npcSprite,true,"10,OK.");
-        scr_morale_add(cIndex,-2);
-        scr_grievance_delete(cIndex,grievances.exhaustion);     
+        scr_flywriter(textNegative,npcSprite,true,"10,OK.");    
     }
     
 
@@ -86,24 +71,10 @@ if(question==0){
     
         // Ok, let's clean up.
         scr_flywriter("Much better.",npcSprite,true,"10,Bye.");// Goes to Default Response below 
-        var cidx;
-        for(var i=0;i<array_length_1d(global.crew);i++){
-            if( !is_array(global.crew[i]) ){
-                continue;
-            }
-            thisCrew = global.crew[i];
-            if( !thisCrew[NPC_ACTIVE] ){
-                continue;
-            }
-            cidx = scr_get_array_1d(thisCrew,NPC_CREW_INDEX);
-            scr_grievance_delete(cidx,grievances.cleanliness);
-            scr_morale_add(cidx,1);
-        }
+        scr_grievance_delete_all(grievances.cleanliness);
 
     }else{
-        scr_flywriter("You're a slob.",npcSprite,true,"10,OK.");
-        scr_morale_add(cIndex,-2);
-        scr_grievance_delete(cIndex,grievances.cleanliness);   
+        scr_flywriter(textNegative,npcSprite,true,"10,OK."); 
     }
 
 
@@ -115,9 +86,7 @@ if(question==0){
         // Grievance will be deleted after the user purchases a pet. This should fire the boughtPet event and run a script to improve morale.
     }else{
         // Grievance has been addressed and can be removed, but at a morale cost.
-        scr_flywriter("I'm not happy about this.",npcSprite,true,"10,OK.");
-        scr_morale_add(cIndex,-2);
-        scr_grievance_delete(cIndex,grievances.loneliness);      
+        scr_flywriter(textNegative,npcSprite,true,"10,OK.");   
     }
 
 }else{

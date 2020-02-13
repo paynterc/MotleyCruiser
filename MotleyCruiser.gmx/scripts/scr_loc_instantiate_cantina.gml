@@ -27,9 +27,12 @@ var exX=gx + ceil(W/2) -1;
 var exY=gy + H;
 scr_stamp_rectangle(exX,exY,1,1);
 scr_stamp_rectangle(exX-1,exY+1,3,3);
-var exitDoor = instance_create( exX * CELL_WIDTH + (CELL_WIDTH/2), (exY+4) * CELL_HEIGHT + (CELL_WIDTH/2),obj_airlock);
-exitDoor.room_to = "rm_galley"// Room to load. Must be text.
+var pxX = exX;// Player start
+var pxY = exY+1;
+var exitDoor = instance_create( exX * CELL_WIDTH + (CELL_WIDTH/2), (exY+4) * CELL_HEIGHT + (CELL_HEIGHT*1.5),obj_airlock);
+exitDoor.room_to = "rm_dock"// Room to load. Must be text.
 exitDoor.display_side = "bottom";
+exitDoor.depth = depths.ceilingBottom -1;
 
 // Place bar. Should be 3rd row from top. Max width = W -2. Min = 3
 scr_stamp_rectangle(gx+2,gy+1,1,W-4,BG_BARTOP);
@@ -155,7 +158,8 @@ for(var flX=gx; flX<=gx+W-1; flX++){
 }
 
 // Instantiate player and crew
-instance_create(cx,cy,obj_player);
+var plyr = instance_create(cx,cy,obj_player);
+scr_center_instance_on_cell(pxX,pxY,plyr);
 
 // Center VIEW
 view_xview[0] = cx  - (view_wview[0]/2);

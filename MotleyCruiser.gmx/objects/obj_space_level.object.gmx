@@ -208,6 +208,40 @@ fly_conditionals=scr_array_size(10);
         </arguments>
       </action>
     </event>
+    <event eventtype="2" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// player reentry
+var player_angle = point_direction(global.last_sector_x,global.last_sector_y, global.sector_x,global.sector_y);
+var entryAngle = point_direction(global.sector_x,global.sector_y, global.last_sector_x,global.last_sector_y);
+var re_x = (global.sector_width/2) + lengthdir_x(5000, entryAngle);
+var re_y = (global.sector_width/2) + lengthdir_y(5000, entryAngle);
+view_xview[0]=re_x-(view_wview[0]/2);
+view_yview[0]=re_y-(view_hview[0]/2);
+var reentry = instance_create(re_x,re_y,obj_ship_reentry);
+reentry.shipObject = obj_player_ship;
+reentry.image_angle = player_angle;
+//reentry.image_xscale = 1;
+//reentry.image_yscale = 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="1">
       <action>
         <libid>1</libid>
@@ -413,35 +447,6 @@ global.landed_on = noone;
             <kind>1</kind>
             <string>/// Close Windows
 //scr_gui_close_all();
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Update last_sector vars. Play sound.
-if(global.sector_x != global.last_sector_x || global.sector_y != global.last_sector_y){
-    global.last_sector_x = global.sector_x;
-    global.last_sector_y = global.sector_y;
-    // We just came from a different sector. Do the entry sound.
-    audio_stop_sound(snd_boost_charging);
-    scr_play_sound(snd_boost_launch);   
-}
-
 </string>
           </argument>
         </arguments>

@@ -141,9 +141,7 @@ for(var i=0; i&lt;array_length_1d(global.pets); i++){
     xx = gx * CELL_WIDTH + (CELL_WIDTH/2);
     yy = gy * CELL_WIDTH + (CELL_WIDTH/2);
     
-    var newPet = instance_create(xx,yy,petData[pet.type]);
-    
-    newPet.data = petData;
+    var newPet = scr_instantiate_pet(xx,yy,petData);
     newPet.state = pet_states.owned;
     
 }

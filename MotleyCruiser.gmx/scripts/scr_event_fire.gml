@@ -1,4 +1,4 @@
-// scr_event_fire(event)
+/// scr_event_fire(event)
 if(debug_mode){ show_debug_message("DEBUG: Firing event " + string(argument[0])) }
 with(obj_eventmanager){
     var ev = argument[0];

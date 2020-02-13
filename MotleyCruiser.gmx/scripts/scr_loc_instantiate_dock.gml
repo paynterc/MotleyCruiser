@@ -28,9 +28,10 @@ var exX=gx + ceil(W/2) -1;
 var exY=gy + H;
 scr_stamp_rectangle(exX,exY,1,1);
 scr_stamp_rectangle(exX-1,exY+1,3,3);
-var exitDoor = instance_create( exX * CELL_WIDTH + (CELL_WIDTH/2), (exY+4) * CELL_HEIGHT + (CELL_WIDTH/2),obj_airlock);
+var exitDoor = instance_create( exX * CELL_WIDTH + (CELL_WIDTH/2), (exY+4) * CELL_HEIGHT + (CELL_HEIGHT*1.5),obj_airlock);
 exitDoor.room_to = "rm_galley"// Room to load. Must be text.
 exitDoor.display_side = "bottom";
+exitDoor.depth = depths.ceilingBottom -1;
 // Gangway
 var gngX=gx-7;
 var gngY=gy+(ceil(H/2))-1;
@@ -39,9 +40,9 @@ scr_add_tiles(gngX,gngY,bg_gangway,W+14,1,2);
 // Door 1 - top-center - to cantina
 exX = gx + floor(W/2);
 exY = gy -1;
-var cantinaDoor = instance_create( exX * CELL_WIDTH + (CELL_WIDTH/2), exY * CELL_HEIGHT + (CELL_WIDTH/2),obj_airlock);
+var cantinaDoor = instance_create( exX * CELL_WIDTH + (CELL_WIDTH/2), (exY * CELL_HEIGHT) + (CELL_HEIGHT*1.5),obj_airlock);
 cantinaDoor.interact_active = true;
-
+cantinaDoor.room_to = "rm_cantina1"// Room to load. Must be text.
 // PLAYER
 instance_create(cx,cy,obj_player);
 
@@ -125,14 +126,16 @@ for(var flX=gx; flX<=gx+W-1; flX++){
 
 var locServices = scr_get_array_1d(global.landed_on,LOC_SERVICES);
 
-if(locServices != noone){
-    if(scr_in_array(locServices,services.pet_store)){
+//if(locServices != noone){
+if(1==1){
+//scr_in_array(locServices,services.pet_store)
+    if(1==1){
         // Carpet for pet vendor
         tile_add(bg_carpet1, 0, 0, CELL_WIDTH*2, CELL_WIDTH*2, (gx+1) * CELL_WIDTH, (gy+H-3) * CELL_HEIGHT, depths.floorTile-1);
         
         var pets=array_create(4);
         for(var i=0;i<4;i++){
-            pets[i]=choose(obj_pet1,obj_pet2,obj_pet3,obj_pet4,obj_pet5);
+            pets[i]=choose("obj_pet1","obj_pet2","obj_pet3","obj_pet4","obj_pet5");
         }
         
         var petData, thePet;

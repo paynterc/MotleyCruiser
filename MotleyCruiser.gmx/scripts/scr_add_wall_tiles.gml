@@ -93,7 +93,7 @@ for(var yy = 0; yy < height; yy++){
             }
 
             if(voidAbove){
-                //If floor above, make sure the ceiling is high enough depth to hide the player and shadow partially as it walks by
+
                 tile_add(wall_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), -1);
             }
             

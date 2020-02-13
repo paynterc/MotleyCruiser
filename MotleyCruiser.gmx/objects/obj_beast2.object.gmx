@@ -183,6 +183,7 @@ if(mode=="hunt"){
     image_playto=1;
     eyes_y=eyes_y1;
 }else{
+    // Idle animation
     image_fcur=0;
     image_playfrom=2;
     image_playto=2;

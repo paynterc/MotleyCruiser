@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>/// Register event
 scr_event_register(events.boughtPet, self, scr_ev_boughtpet);
+scr_event_register(events.hiredCook, self, scr_ev_hired_cook);
 </string>
           </argument>
         </arguments>

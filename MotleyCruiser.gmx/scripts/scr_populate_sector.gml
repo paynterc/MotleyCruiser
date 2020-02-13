@@ -18,6 +18,10 @@ if(global.sector_x==0 && global.sector_y==0){
     scr_gx_make_path(-1,-1,-2,-1);
 }
 
+// Save galaxy
+var game = global.game_loaded;
+scr_save_galaxy(game);
+scr_dsmap_save(global.galaxy_map,"gmap");
 
 // Position the player ship.
 var player_x;
@@ -77,12 +81,21 @@ if(global.ship_boarded != noone){
     
 }else if(global.sector_x != global.last_sector_x || global.sector_y != global.last_sector_y){
     // We just came from a different sector. Do the entry animation.
-    player_angle = point_direction(global.last_sector_x,global.last_sector_y, global.sector_x,global.sector_y);
-    player_speed = 1000;
-    var entryAngle = point_direction(global.sector_x,global.sector_y, global.last_sector_x,global.last_sector_y);
-    player_x = (global.sector_width/2) + lengthdir_x(5000, entryAngle);
-    player_y = (global.sector_width/2) + lengthdir_y(5000, entryAngle);
+    //player_angle = point_direction(global.last_sector_x,global.last_sector_y, global.sector_x,global.sector_y);
+    //player_speed = 1000;
+    //player_speed = 0;
+
+    player_x = 0;
+    player_y = 0;
     player_mode = MODE_JUMP_REENTRY;
+    
+    var entryAngle = point_direction(global.sector_x,global.sector_y, global.last_sector_x,global.last_sector_y);
+    var re_x = (global.sector_width/2) + lengthdir_x(5000, entryAngle);
+    var re_y = (global.sector_width/2) + lengthdir_y(5000, entryAngle);
+    view_xview[0]=re_x-(view_wview[0]/2);
+    view_yview[0]=re_y-(view_hview[0]/2);
+    
+    alarm[3]=room_speed/2;// Doo the reentry animation
 }
 
 
@@ -106,9 +119,6 @@ if(instance_exists(obj_player_ship)){
             scr_instantiate_ship(true);
         }     
         
-        if(mode==MODE_JUMP_REENTRY){
-            alarm[10]=room_speed*1;
-        }
         
     }
     

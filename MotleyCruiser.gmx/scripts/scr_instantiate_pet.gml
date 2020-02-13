@@ -5,6 +5,8 @@ var data = argument2;
 if(!is_array(data)){
     return false;
 }
-var thePet = instance_create(xx,yy,data[0]);
+var obj = asset_get_index(data[0]);
+if !obj return false;
+var thePet = instance_create(xx,yy,obj);
 thePet.data = data;
 return thePet;

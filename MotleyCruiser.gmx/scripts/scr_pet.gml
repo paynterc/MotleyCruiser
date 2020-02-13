@@ -1,5 +1,5 @@
 /// Defaults for Pet
-//scr_pet(object,name,owner)
+//scr_pet(string object,string name,int owner)
 var args = noone;
 for (var i=0; i<16; i++)
 {
@@ -11,8 +11,8 @@ for (var i=0; i<16; i++)
 
 var map = noone;
 
-map[pet.type]=args[0];// refereces object
-map[pet.name]=args[1];
+map[pet.type]=args[0];// string name of object
+map[pet.name]=args[1];// string name of pet
 map[pet.owner]=args[2];// The index from crew
 
 return map;
