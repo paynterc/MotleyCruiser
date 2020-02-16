@@ -1,7 +1,8 @@
 ///scr_grievance_test(grievanceId)
 // Add a grievance to the first crewmember
-var newGrv = argument0;
-//var newGrv = grievances.exhaustion;
+//var newGrv = argument0;
+var newGrv = grievances.loneliness;
+
 if(newGrv >= grievances.LENGTH ){
     show_debug_message("Grievance out of range.");
     return false;

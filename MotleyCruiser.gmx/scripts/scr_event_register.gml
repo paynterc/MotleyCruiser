@@ -1,4 +1,5 @@
-// scr_event_register(event, instanceId, script, args)
+/// scr_event_register(eventId, instanceId, script, args)
+// This script allows an object to register as a listener for an event.
 var args = noone;
 for (var i=0; i<16; i++)
 {
@@ -9,10 +10,10 @@ for (var i=0; i<16; i++)
 }
 if(debug_mode){ show_debug_message("DEBUG: Registering event " + string(args[0])) }
 with(obj_eventmanager){
-    var ev=args[0];// This would be a value from the event enum above. Using this as a key.
-    var instanceId = args[1];
-    var script = args[2];
-    var scriptArgs = args[3];//Should be an array
+    var ev=args[0];// This would be a value from the event enum. Using this as a key.
+    var instanceId = args[1];// The object that wants to listen
+    var script = args[2];// Script to run on fire
+    var scriptArgs = args[3];//Script arguments. Should be an array
     if(!ds_map_exists(eventMap,ev)){
         // Add event
         var listenerList = ds_list_create();

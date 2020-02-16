@@ -192,7 +192,7 @@ if(state==pet_states.forsale){
                 scr_flywriter("Ok. You buy.",noone,0,"10,OK");
                 state = pet_states.bought;
                 global.pets = scr_push_array( global.pets, data );
-                scr_event_fire(events.boughtPet);
+                scr_event_fire(events.boughtPet,data);
                 instance_deactivate_object(self);
             }
     

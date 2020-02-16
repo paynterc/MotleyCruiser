@@ -713,7 +713,7 @@ if(kb_spd&gt;0 &amp;&amp; mode != "lunging"){
     
 }
 if(lng_dir&gt;0){
-    // Knockback
+    // Lunge
     var lngX = lengthdir_x(lng_spd, lng_dir);
     var lngY = lengthdir_y(lng_spd, lng_dir);
             
@@ -811,37 +811,6 @@ if(mode == "discourse" &amp;&amp; instance_exists(obj_player)){
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_mortal">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Move away from other
-if(x == other.x &amp;&amp; y == other.y){
-    scr_move(sign(other.id - id),0);
-}
-
-var dir = point_direction(other.x, other.y, x, y);
-var hspd = lengthdir_x(.5,dir);
-var vspd = lengthdir_y(.5,dir);
-scr_move(hspd, vspd);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="4" ename="obj_damager">
       <action>
         <libid>1</libid>
@@ -899,6 +868,37 @@ if(other.type!=faction &amp;&amp; !other.cooling_down){
     
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_mortal">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Move away from other
+if(x == other.x &amp;&amp; y == other.y){
+    scr_move(sign(other.id - id),0);
+}
+
+var dir = point_direction(other.x, other.y, x, y);
+var hspd = lengthdir_x(.5,dir);
+var vspd = lengthdir_y(.5,dir);
+scr_move(hspd, vspd);
 </string>
           </argument>
         </arguments>

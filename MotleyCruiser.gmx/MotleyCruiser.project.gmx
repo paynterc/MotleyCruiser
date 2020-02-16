@@ -697,6 +697,7 @@
   </sprites>
   <backgrounds name="background">
     <background>background\bg_floor</background>
+    <background>background\bg_floor2</background>
     <background>background\bg_carpet1</background>
     <background>background\bg_gangway</background>
     <background>background\bg_wall_shadow2</background>
@@ -838,32 +839,32 @@
       </scripts>
     </scripts>
     <scripts name="_entities">
-      <script>scripts\scr_ship.gml</script>
-      <script>scripts\scr_ship_entity.gml</script>
-      <script>scripts\scr_ship_2.gml</script>
-      <script>scripts\scr_ship_3.gml</script>
-      <script>scripts\scr_ship_module.gml</script>
-      <script>scripts\scr_gun.gml</script>
-      <script>scripts\scr_mission.gml</script>
-      <script>scripts\scr_mission_objective.gml</script>
-      <script>scripts\scr_dialogue_button.gml</script>
-      <script>scripts\scr_ship_module_installed.gml</script>
-      <script>scripts\scr_ship_defaults.gml</script>
-      <script>scripts\scr_ship_turret.gml</script>
-      <script>scripts\scr_npc.gml</script>
-      <script>scripts\scr_player.gml</script>
-      <script>scripts\scr_npc_oldsalt.gml</script>
-      <script>scripts\scr_ent_planet.gml</script>
-      <script>scripts\scr_ent_moon.gml</script>
-      <script>scripts\scr_ent_station.gml</script>
-      <script>scripts\scr_location.gml</script>
-      <script>scripts\scr_plant.gml</script>
-      <script>scripts\scr_ent_room.gml</script>
       <script>scripts\scr_bug.gml</script>
       <script>scripts\scr_critter.gml</script>
-      <script>scripts\scr_entity_enums.gml</script>
+      <script>scripts\scr_dialogue_button.gml</script>
+      <script>scripts\scr_ent_moon.gml</script>
+      <script>scripts\scr_ent_planet.gml</script>
+      <script>scripts\scr_ent_room.gml</script>
       <script>scripts\scr_ent_room_sign.gml</script>
+      <script>scripts\scr_ent_station.gml</script>
+      <script>scripts\scr_entity_enums.gml</script>
+      <script>scripts\scr_gun.gml</script>
+      <script>scripts\scr_location.gml</script>
+      <script>scripts\scr_mission.gml</script>
+      <script>scripts\scr_mission_objective.gml</script>
+      <script>scripts\scr_npc.gml</script>
+      <script>scripts\scr_npc_oldsalt.gml</script>
       <script>scripts\scr_pet.gml</script>
+      <script>scripts\scr_plant.gml</script>
+      <script>scripts\scr_player.gml</script>
+      <script>scripts\scr_ship.gml</script>
+      <script>scripts\scr_ship_2.gml</script>
+      <script>scripts\scr_ship_3.gml</script>
+      <script>scripts\scr_ship_defaults.gml</script>
+      <script>scripts\scr_ship_entity.gml</script>
+      <script>scripts\scr_ship_module.gml</script>
+      <script>scripts\scr_ship_module_installed.gml</script>
+      <script>scripts\scr_ship_turret.gml</script>
     </scripts>
     <scripts name="_event_manager">
       <script>scripts\scr_event_register.gml</script>
@@ -1444,6 +1445,7 @@
         <script>scripts\scr_add_wall_tiles.gml</script>
         <script>scripts\scr_add_tiles.gml</script>
         <script>scripts\scr_center_instance_on_cell.gml</script>
+        <script>scripts\scr_grid_dungeon1.gml</script>
       </scripts>
       <scripts name="_grids_and_collision">
         <script>scripts\scr_move.gml</script>
@@ -1848,6 +1850,7 @@
         <object>objects\obj_shiptoken</object>
       </objects>
       <object>objects\obj_da_loot</object>
+      <object>objects\obj_room_test</object>
     </objects>
     <objects name="_ship_edit">
       <object>objects\obj_ship_editor</object>
@@ -1929,6 +1932,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\room_init</room>
+    <room>rooms\rm_room_test</room>
     <room>rooms\rm_intro</room>
     <room>rooms\rm_main_menu</room>
     <room>rooms\rm_space</room>
