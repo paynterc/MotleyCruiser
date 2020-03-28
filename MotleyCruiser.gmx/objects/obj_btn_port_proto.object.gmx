@@ -41,13 +41,15 @@
             <kind>1</kind>
             <string>/// override
 myfont = fnt_menus_med;
-font_size = font_get_size(_font);
+font_size = font_get_size(myfont);
 mycolor = c_white;
 mycolor_h = c_lime;
 mycolor_current = mycolor;
 mytext = "enter dock";
-mywidth = string_width_ext(mytext,font_size+(font_size/2), 128);
-myheight = string_height_ext(mytext,font_size+(font_size/2), 128);
+
+x = 32;
+y = round(room_height/8);
+sizeset = true;// This should prevent resizing without overriding the parent Step
 </string>
           </argument>
         </arguments>
@@ -73,6 +75,34 @@ myheight = string_height_ext(mytext,font_size+(font_size/2), 128);
             <string>/// Override parent action
 //room_goto(rm_cantina2);
 room_goto(rm_dock);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+draw_set_font(myfont);
+draw_set_color(mycolor_current);
+draw_set_valign(fa_center);
+draw_set_halign(fa_left);
+draw_text(x,y,mytext);
 </string>
           </argument>
         </arguments>

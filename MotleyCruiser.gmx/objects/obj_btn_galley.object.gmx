@@ -40,40 +40,9 @@
           <argument>
             <kind>1</kind>
             <string>/// override
-myfont = fnt_menus_med;
-font_size = font_get_size(_font);
-mycolor = c_white;
-mycolor_h = c_lime;
-mycolor_current = mycolor;
 mytext = "enter ship galley";
-mywidth = string_width_ext(mytext,font_size+(font_size/2), 128);
-myheight = string_height_ext(mytext,font_size+(font_size/2), 128);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="10">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/// Override parent action
-//room_goto(rm_cantina2);
-
-room_goto(rm_galley);
+x = room_width - 32;
+y = round(room_height/8);
 </string>
           </argument>
         </arguments>

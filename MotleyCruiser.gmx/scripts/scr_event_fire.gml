@@ -1,4 +1,4 @@
-/// scr_event_fire(event,arguments)
+/// scr_event_fire(event,argumentsCommaSeparated)
 if(debug_mode){ show_debug_message("DEBUG: Firing event " + string(argument[0])) }
 
 var ev = argument[0];
@@ -8,7 +8,7 @@ for (var i=1; i<argument_count; i++)
     args2[i-1] = argument[i];
 }
 
-var check = 1;
+
 with(obj_eventmanager){
 
     if(ds_map_exists(eventMap, ev)){
@@ -24,15 +24,12 @@ with(obj_eventmanager){
             listener = listenerInfo[0];
             script = listenerInfo[1];
             args1 = listenerInfo[2];
-            check = 1;
-            var args1Length = array_length_1d(args1);
-            check = 1;
+            
             // Add additional arguments from the firing instance
             for(var i = 0; i < array_length_1d(args2); i++) {
                 args1[array_length_1d(args1)] = args2[i];
             }
 
-            check = 1;
             if(instance_exists(listener)){
                 with(listener){
                     scr_script_parse_array(script,args1); 

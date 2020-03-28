@@ -10,6 +10,7 @@ global_index = npc_data[NPC_GLOBAL_INDEX];
 name = npc_data[NPC_NAME];
 race_index = npc_data[NPC_RACE_INDEX];
 hire_price = npc_data[NPC_HIRE_PRICE];
+mission_id = npc_data[NPC_MISSION];// This will contain the id of a mission in global.mission_map
 
 skincolor = scr_get_array_1d(npc_data,NPC_SKIN_COLOR);
 accessories = scr_get_array_1d(npc_data,NPC_ACCESSORIES);

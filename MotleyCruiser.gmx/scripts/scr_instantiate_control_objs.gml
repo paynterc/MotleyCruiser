@@ -12,4 +12,4 @@ instance_create(x,y,obj_tutorial);
 instance_create(x,y,obj_bark_queue);
 instance_create(x,y,obj_dialog_control);
 instance_create(x,y,obj_morale_control);
-
+instance_create(x,y,obj_mission_control);

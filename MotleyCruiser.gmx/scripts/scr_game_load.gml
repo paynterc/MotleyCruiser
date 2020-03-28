@@ -34,12 +34,7 @@ if(ini_section_exists(game)){
     global.fleet = read_list[| 0];
     ds_list_destroy(read_list);
     
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "missions", "");
-    ds_list_read(read_list,str);
-    global.missions = read_list[| 0];
-    ds_list_destroy(read_list);
-        
+    
     read_list = ds_list_create();
     var str = ini_read_string(game, "crew", "");
     ds_list_read(read_list,str);
@@ -135,6 +130,7 @@ if(ini_section_exists(game)){
         
     }
     
+    // Equipment
     read_list = ds_list_create();
     var str = ini_read_string(game, "equipped", "");
     ds_list_read(read_list,str);
@@ -167,19 +163,27 @@ if(ini_section_exists(game)){
 
     }
         
-    /***
-    read_list = ds_list_create();
-    var str = ini_read_string(game, "npcs", "");
-    ds_list_read(read_list,str);
-    global.npcs = read_list[| 0];
-    ds_list_destroy(read_list);
-    ***/
       
     scr_load_galaxy(game);
     scr_inv_load(game);
     scr_cargo_load(game);
     scr_dsmap_load(global.galaxy_map,"gmap");
-
+    scr_dslist_load(global.gx_bodies,"gxbodies");
+    scr_dslist_load(global.gx_people,"gxpeople");
+    //scr_dsmap_json_load(global.mission_map,"missionmap");
+    scr_dsmap_load_secure(global.mission_map,"missionmap");
+    
+    /***
+    ds_map_clear(global.mission_map);
+    var i_string = ini_read_string(global.game_loaded,"missionmap", "{}");
+    if(i_string != ""){
+        var tempMap = json_decode(i_string);
+        global.mission_map = ds_map_find_value(tempMap, "default");
+        ds_map_destroy(tempMap);
+    }
+    ***/
+    
+    var check=1;
     global.current_sector_row =  ini_read_real(game, "current_sector_row", 10);//TODO: remove
     global.current_sector_col =  ini_read_real(game, "current_sector_col", 10);//TODO: remove
     

@@ -18,8 +18,9 @@ if(!is_undefined(bodies)){
     var obj1, size_mod;
     for(var i=0;i<array_length_1d(bodies);i++){
         
-        var body = bodies[i];
-        if(body==-1 || body==noone){
+        var bodyIndx = bodies[i];
+        var body = global.gx_bodies[| bodyIndx];
+        if(body==-1 || body==noone || is_undefined(body)){
             continue;
         }
         if(body[LOC_TYPE]==GX_SUN){
@@ -44,7 +45,7 @@ if(!is_undefined(bodies)){
                 image_xscale = size_mod;
                 image_yscale = size_mod;                
                 depth = curdepth;
-                global_index = body[LOC_INDEX];                  
+                //global_index = body[LOC_INDEX];                  
                 global_type = "";
                 faction = FACTION_NEUTRAL;
                 name = body[LOC_NAME];
@@ -57,7 +58,7 @@ if(!is_undefined(bodies)){
             obj1 = instance_create(body[LOC_X1],body[LOC_Y1],obj_station);
             obj1.data = body;
             with(obj1){
-                global_index = body[LOC_INDEX];                  
+                //global_index = body[LOC_INDEX];                  
                 global_type = "station";
                 faction = FACTION_NEUTRAL;
                 name = body[LOC_NAME];

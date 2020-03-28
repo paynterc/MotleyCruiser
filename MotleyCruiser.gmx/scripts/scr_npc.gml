@@ -29,4 +29,6 @@ npc[NPC_SPRITE_STRING]=noone;// Set this when saving the game
 npc[NPC_CREW_INDEX]=noone;// Set this when an NPC becomes a member of crew. Reset it when loading the game.
 npc[NPC_MORALE]=10;
 npc[NPC_GRIEVANCES]=noone;
+npc[NPC_RESTRICTIONS]=noone;// An array of restrictions
+npc[NPC_IS_PASSENGER]=false;// An array of restrictions
 return npc;

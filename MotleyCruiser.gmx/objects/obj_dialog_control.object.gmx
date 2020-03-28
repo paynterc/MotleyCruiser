@@ -249,7 +249,9 @@ global.paused=true;
 var this_sentient = noone;
 var closest_range = 0;
 var this_range = 0;
+var check;
 sent = noone;
+var txt;
 
 for(var i = 0; i &lt; instance_number(obj_npc); i++) {
     this_sentient = instance_find(obj_npc,i);
@@ -267,11 +269,10 @@ for(var i = 0; i &lt; instance_number(obj_npc); i++) {
     }
 }
 
-
-
 if(sent != noone &amp;&amp; sent.name != noone){
     
     if(state==dStates.cantina){
+        
         var occ;
         if(sent.npc_data[NPC_OCCUPATION]!=noone &amp;&amp; sent.npc_data[NPC_OCCUPATION]&lt;array_length_1d(global.npc_occupations)){
             occ = global.npc_occupations[sent.npc_data[NPC_OCCUPATION]];   
@@ -284,29 +285,115 @@ if(sent != noone &amp;&amp; sent.name != noone){
             
             scr_gui_set_context(obj_trade);
         
-        }else if(sent.is_shipwright){
-        
-            var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
-            txt += sent.npc_data[NPC_NAME_FIRST] + " is a shipwright. Would like them to repair your ships? It will cost " + string(scr_repair_all_ship_cost()) + "C.";  
-            scr_flywriter(txt,sent.portrait_sprite,true,"2,OK,Nope");
-            
         }else if( scr_in_array(global.hirable_occupations,sent.npc_data[NPC_OCCUPATION]) ){
             
-            var txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
+            txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
             txt += sent.npc_data[NPC_NAME_FIRST] + " claims to be an excellent " + occ + ". Would like them to join your crew? It will cost " + string(sent.npc_data[NPC_HIRE_PRICE]) + "C per day.";  
             scr_flywriter(txt,sent.portrait_sprite,true,"0,OK,Nope");
             
                          
-        }else if(sent.tip!=noone){   
-            scr_flywriter(sent.tip,sent.portrait_sprite,true,"1,OK"); 
-        }else{
-        
-            var txt = scr_random_sentence(5);
+        }else if(sent.tip!=noone){
+            
+            txt = scr_random_sentence(5);
             if(txt == noone){
                 txt="Buzz off.";
             }
-            scr_flywriter(txt,sent.portrait_sprite,true,"1,OK");    
+            scr_flywriter(txt,sent.portrait_sprite,true,"1,OK"); 
+
+             
+        }else if(sent.is_shipwright){
+        
+            txt = "This individual goes by the name of " + sent.npc_data[NPC_NAME_FIRST] + " " + sent.npc_data[NPC_NAME_LAST] + ". ";   
+            txt += sent.npc_data[NPC_NAME_FIRST] + " is a shipwright. Would like them to repair your ships? It will cost " + string(scr_repair_all_ship_cost()) + "C.";  
+            scr_flywriter(txt,sent.portrait_sprite,true,"2,OK,Nope");
+            
+        }else if(sent.mission_id != noone ){
+        
+            var mission = ds_map_find_value(global.mission_map,sent.mission_id);
+
+            if(!is_undefined(mission)){
+                
+                if(mission[? "complete"]==false){
+                    var objective = scr_mission_objective_current(mission);
+                    if(!is_undefined(objective)){
+
+                        if(objective[? "type"] == missionTypes.speakToName){
+                            var objNpcIdx = objective[? "npc"];// Should be a number                            
+                            if(!is_undefined(objNpcIdx)){
+
+                                sentIdx = scr_get_array_1d(sent.npc_data,NPC_GLOBAL_INDEX);
+
+                                if(objNpcIdx == sentIdx){
+                                    // This is the current objective and we are speaking to the right person
+                                    objective[? "complete"] = true;
+                                    
+                                    if(mission[? "stage"] == mission[? "stageCount"] -1){
+                                        // Mission is complete. Grant the reward.
+                                       scr_mission_complete(mission[? "id"]);
+                                        
+                                        // Don't let the NPC grant another mission yet.
+                                        sent.mission_id = noone;
+                                    
+                                    }else{
+                                        mission[? "stage"] = min(mission[? "stage"]+1,mission[? "stageCount"]-1);
+                                    }
+                                    
+                                    txt = objective[? "npcText"];
+                                    if(is_undefined(txt)){
+                                        txt = "Hello.";
+                                    }
+                                    scr_flywriter(txt,sent.portrait_sprite,true,"1,OK");
+                                    
+                                }else{
+                                    txt = "I'm not ready to speak with you yet.";
+                                    scr_flywriter(txt,sent.portrait_sprite,true,"1,OK");
+                                }
+                            
+                            
+                            }
+                            
+                        }else{
+                            // We have a mission involving this person, but we're not on the right step yet
+                            txt = objective[? "description"];
+                            if(is_undefined(txt)){
+                                txt = "You're not done.";
+                            }
+                            scr_flywriter(txt,sent.portrait_sprite,true,"1,OK");
+                        }
+                    }
+                }                  
+            }
+            
+        }else if(sent.mission != noone &amp;&amp; !is_undefined(sent.mission)){
+            
+            // Should only offer missions that have not been accepted yet. Accepted missions will have an ID.
+            if(is_undefined(sent.mission[? "id"])){
+                var check = 1;
+                txt = sent.npc_data[NPC_NAME] + ": " + sent.mission[? "text"];
+                scr_flywriter(txt,sent.portrait_sprite,true,"3,OK,Nope");
+            }else{
+                txt = scr_random_sentence(5);
+                if(txt == noone){
+                    txt="Buzz off.";
+                }
+                scr_flywriter(txt,sent.portrait_sprite,true,"1,OK");
+            }
+
+            
+        }else if(sent.tip!=noone){
+         
+            scr_flywriter(sent.tip,sent.portrait_sprite,true,"4,OK,No Thanks");
+             
+        }else{
+        
+            txt = scr_random_sentence(5);
+            if(txt == noone){
+                txt="Buzz off.";
+            }
+            scr_flywriter(txt,sent.portrait_sprite,true,"1,OK");
         }
+        
+        
     }else if(state==dStates.galley){
             var rnd = irandom(2);
             /***

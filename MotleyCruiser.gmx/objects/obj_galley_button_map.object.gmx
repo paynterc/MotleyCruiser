@@ -67,7 +67,8 @@ depth=-1000000;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_goto(rm_galaxy_map);
+            <string>/// Toggle nav map
+scr_toggle_nav_map();
 </string>
           </argument>
         </arguments>

@@ -184,7 +184,7 @@ if(mode==MODE_LANDING){
     if(land_count&lt;1){
         
         // LAND 
-        //global.landed_on = closest_landable.global_index;
+
         global.landed_on = closest_landable.data;
         global.landed_type = closest_landable.global_type;
         global.landed_name = closest_landable.name;
@@ -196,6 +196,10 @@ if(mode==MODE_LANDING){
         
         // ship_data should now be updated and persisted in the next step.
         scr_persist_game_state();
+        
+        // Fire landed event
+        scr_event_fire(events.landAtLocation);
+        
         room_persistent = false;// unpersist the space room
         //room_goto(rm_galley);
         room_goto(rm_landing_menu);

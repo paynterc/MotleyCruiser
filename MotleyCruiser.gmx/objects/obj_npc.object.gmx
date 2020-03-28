@@ -113,6 +113,9 @@ llight = noone; // For a light
 
 default_weapon = obj_gun;
 
+mission=noone;// A mission to offer
+mission_id = noone;// An outstanding mission ID that the player has accepted.
+
 // GO!!!
 alarm[0] = room_speed * r_speed;
 alarm[5] = room_speed * 3;// dodge direction
@@ -1058,7 +1061,13 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
 if(portrait_sprite!=noone &amp;&amp; crew_index==noone){
     sprite_delete(portrait_sprite);
 }
-
+if(mission!=noone){
+    var missionId = mission[? "id"];
+    // If this mission was chosen, it will now have an ID. Leave it alone.
+    if(is_undefined(missionId)){
+        ds_map_destroy(mission);
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -1122,6 +1131,15 @@ if(interact_ready){
     //draw_set_halign(fa_center);
     //draw_set_font(fnt_menus_med);
     //draw_text(x +(sprite_height*xMod),y + ( (sprite_height+2) * yMod),interact_text);
+}else{
+    
+    if(mission_id!=noone){
+        draw_sprite(spr_npc_mission,0,x +(sprite_height*xMod),y + (sprite_height*yMod));
+    }else if(mission!=noone){
+        draw_sprite(spr_npc_mission,1,x +(sprite_height*xMod),y + (sprite_height*yMod));
+    }
+
+
 }
 </string>
           </argument>
@@ -1198,10 +1216,14 @@ draw_self();
 if(showHealth){
     //draw_healthbar(x-10,y-health_y,x+10,y-health_y, (hp_current/hp) * 100,c_black,c_red,c_green,0,false,false);
 }
-draw_set_color(c_green);
-draw_set_font(fnt_menus_med);
-draw_set_alpha(1);
-draw_text(x,y-health_y,string(hp_current))
+
+if(crew_index!=noone){
+    draw_set_color(c_green);
+    draw_set_font(fnt_menus_med);
+    draw_set_alpha(1);
+    draw_text(x,y-health_y,string(hp_current))
+}
+
 
 
 var modeClr=c_white;

@@ -544,6 +544,10 @@ if(hull_current &lt; 1){
     }
     
     scr_play_sound_at(snd_explosion_ship,x,y);
+    
+    if(faction == FACTION_PIRATE){
+        scr_event_fire(events.killedPirateShip);
+    }
     event_user(1);// Dead action
     instance_deactivate_object(self);
 }

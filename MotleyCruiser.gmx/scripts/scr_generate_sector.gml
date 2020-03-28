@@ -63,8 +63,12 @@ if(is_undefined(bodies)){
         var sw = sprite_get_width(spr_sun) * 3;
         sun[SUN_X1]=center_x-(sw/2);
         sun[SUN_Y1]=center_y-(sw/2);
-        sun[SUN_W1]=sw;          
-        scr_push_array_1d(bodies,sun);
+        sun[SUN_W1]=sw;
+        sun[LOC_DISCOVERED]=false;
+        sun[LOC_LANDABLE]=false;
+        sun[LOC_HAS_PORT]=false;         
+        scr_push_array_1d(bodies,scr_gx_bodies_add(sun));
+        
           
         planet = scr_make_moon(sx,sy,gxindex);
         planet[LOC_TYPE]=GX_PLANET;
@@ -74,9 +78,13 @@ if(is_undefined(bodies)){
         planet[LOC_ECONOMY]=CC_AGRICULTURE;
         planet[LOC_TERRAIN]=terrains.forest;
         planet[LOC_IMAGE_DATA]=scr_planet_imagedata_generator(planet);
-        planet[LOC_DESCRIPTION]=scr_planet_description_generator(planet);        
-        scr_push_array_1d(bodies,planet);
-          
+        planet[LOC_DESCRIPTION]=scr_planet_description_generator(planet);
+        planet[LOC_DISCOVERED]=true;
+        planet[LOC_LANDABLE]=true;
+        planet[LOC_HAS_PORT]=true;        
+        //scr_push_array_1d(bodies,planet);
+        scr_push_array_1d(bodies,scr_gx_bodies_add(planet)); 
+         
         global.sector_economy[CC_AGRICULTURE] += 1;
         
         gxindex++;
@@ -96,7 +104,8 @@ if(is_undefined(bodies)){
         for(var i=0; i<c; i++){
           sun = scr_make_sun(sx,sy);
           sun_obj = instance_create(sun[SUN_X1],sun[SUN_Y1],obj_sun);
-          scr_push_array_1d(bodies,sun);
+          scr_push_array_1d(bodies,scr_gx_bodies_add(sun));
+          //scr_gx_bodies_add(sun);
           gxindex++;           
         }
              
@@ -120,7 +129,8 @@ if(is_undefined(bodies)){
                     planet[LOC_Y1] = global.sector_width/2;
                 }
                 // global.sector_economy[planet[LOC_ECONOMY]] += 1;// Maybe generate the economy when you instantiate the object
-                scr_push_array_1d(bodies,planet);
+            
+                scr_push_array_1d(bodies,scr_gx_bodies_add(planet));
                 gxindex++;
                 canMakeMoon=true;               
             }
@@ -139,7 +149,7 @@ if(is_undefined(bodies)){
                     }
                     
                     //global.sector_economy[moon[LOC_ECONOMY]] += 1;
-                    scr_push_array_1d(bodies,moon);
+                    scr_push_array_1d(bodies,scr_gx_bodies_add(moon));
                     gxindex++;
                     
                 }
@@ -162,7 +172,7 @@ if(is_undefined(bodies)){
                 }
                 
                 global.sector_economy[station[LOC_ECONOMY]] += 1;
-                scr_push_array_1d(bodies,station);
+                scr_push_array_1d(bodies,scr_gx_bodies_add(station));
                             
                 gxindex++;
                 

@@ -33,7 +33,37 @@ if(question==0){
         
         sent=noone;
         
-    }
+    }      
+}else if(question==3){
+
+    // Mission
+    if(answer==1){
 
         
+        // Add passenger to crew
+        if(sent.mission[? "type"]==missionTypes.deliverPassenger){
+            var bunks = obj_ship_data.bunks;
+        
+            if( obj_ship_data.bunks <= scr_get_active_crew_count()+1 ){     
+                scr_flywriter("You don't have enough bunks on your ship to hire more crew.",noone,0,"10,OK");
+            }else{
+                var newMissionId = scr_add_mission(sent.mission);
+                sent.mission_id = newMissionId;// Flags the NPC as the return point for an active mission.
+                scr_add_npc_to_crew(sent);
+                sent.npc_data[NPC_IS_PASSENGER] = true;
+                sent.npc_data[NPC_MISSION] = newMissionId;
+                          
+               
+            }
+        
+            
+        }else{
+            var newMissionId = scr_add_mission(sent.mission);
+            sent.mission_id = newMissionId;// Flags the NPC as the return point for an active mission.
+        }
+              
+    }
+
+}else{
+    sent=noone;
 }

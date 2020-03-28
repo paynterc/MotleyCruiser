@@ -681,6 +681,7 @@
     <sprite>sprites\spr_npc_icon</sprite>
     <sprite>sprites\spr_interact_md</sprite>
     <sprite>sprites\spr_interact_sm</sprite>
+    <sprite>sprites\spr_npc_mission</sprite>
     <sprite>sprites\spr_paintbrush</sprite>
     <sprite>sprites\spr_person</sprite>
     <sprite>sprites\spr_person_tmp</sprite>
@@ -734,19 +735,6 @@
     <path>paths\path_glr_0</path>
   </paths>
   <scripts name="scripts">
-    <scripts name="_crew">
-      <script>scripts\scr_instantiate_all_crew.gml</script>
-      <script>scripts\scr_remove_from_crew.gml</script>
-      <script>scripts\scr_add_npc_to_crew.gml</script>
-      <script>scripts\scr_get_active_crew_count.gml</script>
-      <script>scripts\scr_npc_in_crew.gml</script>
-      <script>scripts\scr_daily_expenses.gml</script>
-      <script>scripts\scr_crew_follow_player.gml</script>
-      <script>scripts\scr_crew_data_update_hp.gml</script>
-      <script>scripts\scr_crew_get_random.gml</script>
-      <script>scripts\scr_crew_get_active.gml</script>
-      <script>scripts\scr_crew_instantiate1.gml</script>
-    </scripts>
     <scripts name="_arrays">
       <script>scripts\scr_str_split.gml</script>
       <script>scripts\scr_array_random.gml</script>
@@ -771,6 +759,7 @@
       <script>scripts\scr_array_size.gml</script>
       <script>scripts\scr_array_nodupes.gml</script>
       <script>scripts\scr_array_onenull.gml</script>
+      <script>scripts\scr_create_ds_grid_from_array.gml</script>
     </scripts>
     <scripts name="_cargo">
       <script>scripts\scr_cargo_add.gml</script>
@@ -784,6 +773,22 @@
       <script>scripts\scr_cargo_update_fuel.gml</script>
       <script>scripts\scr_cargo_update_oxygen.gml</script>
       <script>scripts\scr_cargo_drop.gml</script>
+    </scripts>
+    <scripts name="_crew">
+      <script>scripts\scr_instantiate_all_crew.gml</script>
+      <script>scripts\scr_instantiate_team.gml</script>
+      <script>scripts\scr_remove_from_crew.gml</script>
+      <script>scripts\scr_add_npc_to_crew.gml</script>
+      <script>scripts\scr_get_active_crew_count.gml</script>
+      <script>scripts\scr_npc_in_crew.gml</script>
+      <script>scripts\scr_daily_expenses.gml</script>
+      <script>scripts\scr_crew_follow_player.gml</script>
+      <script>scripts\scr_crew_data_update_hp.gml</script>
+      <script>scripts\scr_crew_get_random.gml</script>
+      <script>scripts\scr_crew_get_active.gml</script>
+      <script>scripts\scr_crew_instantiate1.gml</script>
+      <script>scripts\scr_crew_set_inactive.gml</script>
+      <script>scripts\scr_crew_findby.gml</script>
     </scripts>
     <scripts name="_dialogue">
       <script>scripts\scr_make_dialogue_tree.gml</script>
@@ -896,7 +901,6 @@
       <script>scripts\scr_make_galaxy.gml</script>
       <scripts name="_sector_admin">
         <script>scripts\scr_populate_sector.gml</script>
-        <script>scripts\scr_populate_sector_BACKUP.gml</script>
         <script>scripts\scr_instantiate_sector.gml</script>
         <script>scripts\scr_generate_sector.gml</script>
       </scripts>
@@ -907,7 +911,6 @@
       <script>scripts\scr_planet_imagedata_generator.gml</script>
       <script>scripts\scr_create_planet_sprite.gml</script>
       <script>scripts\scr_make_sun.gml</script>
-      <script>scripts\scr_make_sun_BACKUP.gml</script>
       <script>scripts\scr_make_planet.gml</script>
       <script>scripts\scr_make_moon.gml</script>
       <script>scripts\scr_make_station.gml</script>
@@ -941,6 +944,13 @@
         </scripts>
         <script>scripts\scr_gx_get_by_key.gml</script>
         <script>scripts\scr_gx_save_by_key.gml</script>
+        <scripts name="gx_loc">
+          <script>scripts\scr_gx_loc_get_landables.gml</script>
+        </scripts>
+        <scripts name="_galaxy_lists">
+          <script>scripts\scr_gx_bodies_add.gml</script>
+          <script>scripts\scr_gx_people_add.gml</script>
+        </scripts>
       </scripts>
       <scripts name="_galaxy_map">
         <script>scripts\scr_galaxy_map_add.gml</script>
@@ -955,6 +965,7 @@
           <script>scripts\scr_gx_popfirstnav.gml</script>
           <script>scripts\scr_grant_navpath.gml</script>
           <script>scripts\scr_get_nav_dir.gml</script>
+          <script>scripts\scr_toggle_nav_map.gml</script>
         </scripts>
       </scripts>
       <scripts name="_ships">
@@ -1002,7 +1013,13 @@
       <script>scripts\scr_pause_menu.gml</script>
       <script>scripts\scr_main_menu.gml</script>
       <script>scripts\scr_dsmap_save.gml</script>
+      <script>scripts\scr_dsmap_save_secure.gml</script>
+      <script>scripts\scr_dslist_save.gml</script>
+      <script>scripts\scr_dsmap_json_save.gml</script>
       <script>scripts\scr_dsmap_load.gml</script>
+      <script>scripts\scr_dsmap_load_secure.gml</script>
+      <script>scripts\scr_dslist_load.gml</script>
+      <script>scripts\scr_dsmap_json_load.gml</script>
       <script>scripts\scr_instantiate_control_objs.gml</script>
       <script>scripts\scr_rm_persistence.gml</script>
       <script>scripts\scr_custom_sprite_store.gml</script>
@@ -1285,6 +1302,7 @@
       <script>scripts\scr_script_parse.gml</script>
       <script>scripts\scr_script_parse_array.gml</script>
       <script>scripts\scr_random_weighted.gml</script>
+      <script>scripts\scr_random_range_exclude.gml</script>
       <script>scripts\scr_draw_dotted_line.gml</script>
       <script>scripts\scr_rotate_to_angle.gml</script>
       <script>scripts\scr_draw_text.gml</script>
@@ -1381,6 +1399,34 @@
         <script>scripts\scr_passenger.gml</script>
       </scripts>
     </scripts>
+    <scripts name="_mission2">
+      <scripts name="_mission_types">
+        <script>scripts\scr_kill_x_pirates.gml</script>
+        <script>scripts\scr_mission_type_killxy.gml</script>
+        <script>scripts\scr_mission_type_test1.gml</script>
+        <script>scripts\scr_mission_type_deliver_cargo.gml</script>
+        <script>scripts\scr_mission_type_deliver_passenger.gml</script>
+      </scripts>
+      <scripts name="_mission_updates">
+        <script>scripts\scr_kill_pirate_mission_update.gml</script>
+        <script>scripts\scr_mission_update_killxy.gml</script>
+        <script>scripts\scr_mission_update_deliver_cargo.gml</script>
+        <script>scripts\scr_mission_update_deliver_passenger.gml</script>
+      </scripts>
+      <script>scripts\scr_add_mission.gml</script>
+      <script>scripts\scr_get_mission_contacts_for_location.gml</script>
+      <script>scripts\scr_mission_grant_rewards.gml</script>
+      <script>scripts\scr_mission_objective_current.gml</script>
+      <script>scripts\scr_mission_objective_get.gml</script>
+      <script>scripts\scr_mission_complete.gml</script>
+      <script>scripts\scr_mission_add_objective.gml</script>
+    </scripts>
+    <scripts name="_mission3">
+      <scripts name="_mission_types">
+        <script>scripts\scr_msn_type_killxy.gml</script>
+      </scripts>
+      <script>scripts\scr_msn_add_mission.gml</script>
+    </scripts>
     <scripts name="_morale">
       <script>scripts\scr_grievance_add.gml</script>
       <script>scripts\scr_grievance_clear_map.gml</script>
@@ -1407,6 +1453,10 @@
       <script>scripts\scr_npc_draw_shadow.gml</script>
       <script>scripts\scr_npc_draw_icon.gml</script>
       <script>scripts\scr_npc_make_portrait.gml</script>
+      <scripts name="_restrictions">
+        <script>scripts\scr_add_restriction.gml</script>
+        <script>scripts\scr_remove_restriction.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_object_pool">
       <script>scripts\scr_add_to_pool.gml</script>
@@ -1561,6 +1611,7 @@
       <script>scripts\scr_load_player_config.gml</script>
       <script>scripts\scr_get_config_string.gml</script>
     </scripts>
+    <script>scripts\script644.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1715,7 +1766,8 @@
     <objects name="_landing">
       <object>objects\obj_landing_menu</object>
       <object>objects\obj_landing_image</object>
-      <object>objects\obj_btn_port</object>
+      <object>objects\obj_btn_port_proto</object>
+      <object>objects\obj_btn_dock</object>
       <object>objects\obj_btn_cantina</object>
       <object>objects\obj_btn_galley</object>
       <object>objects\obj_btn_depart</object>
@@ -1796,14 +1848,6 @@
         <object>objects\obj_warpsword_attack</object>
       </objects>
     </objects>
-    <objects name="_pet">
-      <object>objects\obj_pet</object>
-      <object>objects\obj_pet1</object>
-      <object>objects\obj_pet2</object>
-      <object>objects\obj_pet3</object>
-      <object>objects\obj_pet4</object>
-      <object>objects\obj_pet5</object>
-    </objects>
     <objects name="_planetside">
       <object>objects\obj_planet_surface</object>
       <object>objects\obj_plant</object>
@@ -1816,6 +1860,14 @@
       <object>objects\obj_color_button</object>
       <object>objects\obj_change_button</object>
       <object>objects\obj_exit_button</object>
+      <objects name="_pet">
+        <object>objects\obj_pet</object>
+        <object>objects\obj_pet1</object>
+        <object>objects\obj_pet2</object>
+        <object>objects\obj_pet3</object>
+        <object>objects\obj_pet4</object>
+        <object>objects\obj_pet5</object>
+      </objects>
     </objects>
     <objects name="_room">
       <object>objects\obj_lvl_ship_deck_rnd</object>
@@ -1916,6 +1968,7 @@
     <object>objects\obj_impact</object>
     <object>objects\obj_interactable</object>
     <object>objects\obj_laserbolt</object>
+    <object>objects\obj_mission_control</object>
     <object>objects\obj_module</object>
     <object>objects\obj_morale_control</object>
     <object>objects\obj_object_pool</object>
@@ -1957,7 +2010,7 @@
     <room>rooms\rm_test</room>
     <room>rooms\rm_dock</room>
   </rooms>
-  <constants number="397">
+  <constants number="402">
     <constant name="ACC_SPR_COLOR">1</constant>
     <constant name="ACC_SPR_INDEX">0</constant>
     <constant name="ACC_SPR_STRING">2</constant>
@@ -2077,15 +2130,15 @@
     <constant name="GUN_BULLET_SPEED">5</constant>
     <constant name="GUN_BULLET_SPRITE">3</constant>
     <constant name="GUN_BULLET_TYPE">6</constant>
+    <constant name="GUN_CAPACITY">12</constant>
     <constant name="GUN_DAMAGE">0</constant>
     <constant name="GUN_ENERGY">9</constant>
     <constant name="GUN_RANGE">4</constant>
+    <constant name="GUN_RECHARGE">13</constant>
     <constant name="GUN_SOUND">10</constant>
     <constant name="GUN_SPEED">1</constant>
     <constant name="GUN_SPRITE">2</constant>
     <constant name="GUN_TURN_SPEED">11</constant>
-    <constant name="GUN_CAPACITY">12</constant>
-    <constant name="GUN_RECHARGE">13</constant>
     <constant name="GX_GRIDSIZE">128</constant>
     <constant name="GX_MAGNITUDE">2</constant>
     <constant name="GX_MOON">1</constant>
@@ -2126,6 +2179,9 @@
     <constant name="LOC_W1">11</constant>
     <constant name="LOC_X1">0</constant>
     <constant name="LOC_Y1">1</constant>
+    <constant name="LOC_LANDABLE">27</constant>
+    <constant name="LOC_DISCOVERED">28</constant>
+    <constant name="LOC_HAS_PORT">29</constant>
     <constant name="MISSION_DESCRIP">2</constant>
     <constant name="MISSION_END_LOCATION">5</constant>
     <constant name="MISSION_GRANT_INVENTORY_START">10</constant>
@@ -2197,9 +2253,11 @@
     <constant name="NPC_CREW_INDEX">22</constant>
     <constant name="NPC_EQUIPMENT">16</constant>
     <constant name="NPC_GLOBAL_INDEX">10</constant>
+    <constant name="NPC_GRIEVANCES">24</constant>
     <constant name="NPC_HIRE_PRICE">14</constant>
     <constant name="NPC_HP_CURRENT">4</constant>
     <constant name="NPC_HP">3</constant>
+    <constant name="NPC_IS_PASSENGER">26</constant>
     <constant name="NPC_LOCATION">8</constant>
     <constant name="NPC_MISSION">7</constant>
     <constant name="NPC_MORALE">23</constant>
@@ -2208,6 +2266,7 @@
     <constant name="NPC_NAME">1</constant>
     <constant name="NPC_OCCUPATION">12</constant>
     <constant name="NPC_RACE_INDEX">0</constant>
+    <constant name="NPC_RESTRICTIONS">25</constant>
     <constant name="NPC_RUN_SPD">2</constant>
     <constant name="NPC_SEX">13</constant>
     <constant name="NPC_SKIN_COLOR">19</constant>
@@ -2354,7 +2413,6 @@
     <constant name="TURRET_TURN_SPEED">0</constant>
     <constant name="VOID">-7</constant>
     <constant name="WALL">-6</constant>
-    <constant name="NPC_GRIEVANCES">24</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

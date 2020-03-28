@@ -26,6 +26,8 @@ sun[LOC_W1]=w1;
 sun[LOC_COLOR]=make_colour_rgb(irandom(255),irandom(255),irandom(255));
 sun[LOC_SECTOR]=sector;
 sun[LOC_TYPE]=GX_SUN;
+sun[LOC_LANDABLE]=false;
+sun[LOC_HAS_PORT]=false;
 
 
 return sun;

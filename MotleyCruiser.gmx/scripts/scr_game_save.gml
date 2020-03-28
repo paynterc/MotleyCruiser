@@ -10,18 +10,16 @@ var game = global.game_loaded;
 show_debug_message("Saving game " + string(game) + ". Galaxy coords are " + string(global.sector_x)+ "," + string(global.sector_y));
 
 scr_save_galaxy(game);
-scr_dsmap_save(global.galaxy_map,"gmap");
-
 scr_inv_save(game);
 scr_cargo_save(game);
-
-
+scr_dsmap_save(global.galaxy_map,"gmap");
+scr_dslist_save(global.gx_bodies,"gxbodies");
+scr_dslist_save(global.gx_people,"gxpeople");
 
 scr_write_array(global.equipped,game,"equipped",SAVE_GAME_FILE);
 scr_write_array(global.player_ship,game,"player_ship",SAVE_GAME_FILE);
 scr_write_array(global.player_model,game,"player_model",SAVE_GAME_FILE);
 scr_write_array(global.fleet,game,"fleet",SAVE_GAME_FILE);
-scr_write_array(global.missions,game,"missions",SAVE_GAME_FILE);
 
 var spriteString=noone;
 var accSpriteString=noone;
@@ -75,3 +73,8 @@ ini_write_real(game,"supply_water",global.supply_water);// Current supply.
 ini_write_real(game,"supply_fuel",global.supply_fuel);// Current supply.
 ini_write_real(game,"supply_oxygen",global.supply_oxygen);// Current supply.
 ini_close();
+
+//scr_dsmap_json_save(global.mission_map,"missionmap");
+scr_dsmap_save_secure(global.mission_map,"missionmap");
+var check=1;
+

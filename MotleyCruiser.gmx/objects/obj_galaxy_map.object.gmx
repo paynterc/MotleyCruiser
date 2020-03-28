@@ -201,7 +201,7 @@ if(bIdx==0){
     }
 }else if(bIdx==1){
     // Exit map room
-    room_goto(rm_space);
+    scr_toggle_nav_map()
 }
 </string>
           </argument>

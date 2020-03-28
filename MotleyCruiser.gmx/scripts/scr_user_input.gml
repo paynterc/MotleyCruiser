@@ -135,6 +135,7 @@ if( scr_gui_has_context() ){
             return  
             keyboard_check_pressed(ord("E")) 
             && keyboard_check(vk_shift)
+            && keyboard_check(vk_control)
             && debug_mode;
             break;
         case pin.goto_player_edit:
@@ -188,7 +189,13 @@ if( scr_gui_has_context() ){
             keyboard_check_pressed(ord("G")) 
             && keyboard_check(vk_shift)
             && debug_mode;
-            break;             
+            break;
+        case pin.test_event:
+            return  
+            keyboard_check_pressed(ord("E")) 
+            && keyboard_check(vk_shift)
+            && debug_mode;
+            break;          
         default:
             return false;
     }

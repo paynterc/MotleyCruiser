@@ -67,7 +67,10 @@ depth=-1000000;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_goto(rm_space);
+            <string>// Launch
+global.increment_day=true;
+global.autosave=true;
+room_goto(rm_space);
 </string>
           </argument>
         </arguments>

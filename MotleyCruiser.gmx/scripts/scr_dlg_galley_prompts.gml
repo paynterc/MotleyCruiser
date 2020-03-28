@@ -50,7 +50,18 @@ if(grv==grievances.money){
 }else if(grv==grievances.loneliness){
     scr_flywriter("<" + moraleText + "> I'm lonely. I want a pet.",npc.sprite_index,true,"4,What? No.,Ok.");
 }else{
-    scr_flywriter("<" + moraleText + "> I've got nothing to talk about right now.",npc.sprite_index,true,"10,Ok.");
+    var resp = choose(
+    "I'm ok",
+    "How's it hangin",
+    "Everything's fine rigt now.",
+    "Not much going on.",
+    "You don't have to check in with me.",
+    "Just lost in my own thoughts.",
+    "I'm ready for something to happen.",
+    "Don't you have anything better to do?"
+    );
+
+    scr_flywriter("<" + moraleText + "> "+resp,npc.sprite_index,true,"10,Ok.");
 }
 
 // ask to be taken to a planet

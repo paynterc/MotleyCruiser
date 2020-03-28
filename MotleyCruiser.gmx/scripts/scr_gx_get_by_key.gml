@@ -1,6 +1,7 @@
 /// scr_gx_get_by_key(gx,gy,key)
 /****
 Get data from global.galaxy dsmap
+ex: scr_gx_get_by_key(1,0,"bodies")
 ****/
 var gx = argument0;
 var gy = argument1;

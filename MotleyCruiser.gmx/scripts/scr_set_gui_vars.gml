@@ -1,3 +1,4 @@
+/// scr_set_gui_vars()
 /****
 Set reference variables for gui width, center, etc
 ****/

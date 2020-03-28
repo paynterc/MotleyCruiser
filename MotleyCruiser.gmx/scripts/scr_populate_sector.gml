@@ -8,7 +8,6 @@ Generate new random elements like npc ships
 
 scr_generate_sector();
 scr_instantiate_sector();
-
 global.sector_map=scr_galaxy_map_find_sector(global.sector_x,global.sector_y);
 
 if(global.sector_x==0 && global.sector_y==0){

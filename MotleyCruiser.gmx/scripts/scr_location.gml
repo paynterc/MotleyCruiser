@@ -29,4 +29,7 @@ loc[LOC_ATTITUDE]=noone;
 loc[LOC_ATMOSPHERE]=noone;
 loc[LOC_SERVICES]=noone;
 loc[LOC_ROOMS]=noone;
+loc[LOC_LANDABLE]=true;
+loc[LOC_DISCOVERED]=false;
+lod[LOC_HAS_PORT]=true;
 return loc;

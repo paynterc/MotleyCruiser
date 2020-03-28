@@ -28,6 +28,15 @@ switch(acount){
     case 5:
         script_execute(script,split[0],split[1],split[2],split[3],split[4]);
         break;
+    case 6:
+        script_execute(script,split[0],split[1],split[2],split[3],split[4],split[5]);
+        break;
+    case 7:
+        script_execute(script,split[0],split[1],split[2],split[3],split[4],split[5],split[6]);
+        break;
+    case 8:
+        script_execute(script,split[0],split[1],split[2],split[3],split[4],split[5],split[6],split[7]);
+        break;
         
 }
 

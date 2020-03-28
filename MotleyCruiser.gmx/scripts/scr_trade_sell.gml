@@ -15,6 +15,7 @@ if(instock>=amount){
     for(var i=0;i<amount;i++){
         scr_cargo_item_decrement(item_id,1);
         global.credits += price;
+        scr_event_fire(events.soldItem,item_id,amount)
     }
     
 }else{

@@ -200,6 +200,11 @@ enum depths{
     floorTile = 0
 }
 
+enum npcRestrictions{
+    willNotFight,
+    willNotSpeak
+}
+
 scr_entity_enums();// set some enums to use as entity indexes.
 
 // Libraries. Mostly arrays of data
@@ -239,7 +244,9 @@ global.e_matrix[CC_TECH,CC_TECH]=1.00;
 
 // DS DATA STRUCTURES. destroy at game end
 global.galaxy = ds_map_create();// Destroy at game end
-global.gx_locations = ds_map_create();// Destroy at game end
+global.gx_bodies = ds_list_create();
+global.gx_people = ds_list_create();// Contacts
+global.gx_locations = noone;// Formerly a ds_map_create(). Now an array.
 global.galaxy_map = ds_map_create();//Use this to store found locations in each sector
 global.cargo_list = ds_map_create();
 global.grievance_map = ds_map_create();// Destroy at game end
@@ -474,17 +481,7 @@ if(scr_user_input(pin.goto_player_edit)){
 
 if(scr_user_input(pin.goto_galaxy_map)){
     // N key
-    if(room!=rm_galaxy_map){
-        global.room_return = room;
-        room_goto(rm_galaxy_map);
-    }else if(room==rm_galaxy_map){
-        if( room_exists(global.room_return) &amp;&amp; global.room_return!=rm_galaxy_map ){
-            room_goto(global.room_return);
-        }else{
-            room_goto(rm_space);
-        }
-    }
-    
+    scr_toggle_nav_map();
 }
 
 
@@ -496,9 +493,15 @@ if(scr_user_input(pin.fullscreen)){
     }
 }
 
-if(scr_user_input(pin.add_grievance)){
-    scr_grievance_test(grievances.food_quality);
+if(debug_mode){
+    if(scr_user_input(pin.add_grievance)){
+        scr_grievance_test(grievances.food_quality);
+    }
+    if(scr_user_input(pin.test_event)){
+        scr_event_fire(events.killedPirateShip);
+    }
 }
+
 
 
 
@@ -622,9 +625,9 @@ if(ds_exists(global.galaxy,ds_type_map)){
     ds_map_destroy(global.galaxy);
 }
 
-if(ds_exists(global.gx_locations,ds_type_map)){
-    ds_map_destroy(global.gx_locations);
-}
+//if(ds_exists(global.gx_locations,ds_type_map)){
+  //  ds_map_destroy(global.gx_locations);
+//}
 
 
 
@@ -654,6 +657,14 @@ if(ds_exists(global.cargo_list,ds_type_map)){
 if(ds_exists(global.galaxy_map,ds_type_map)){
     ds_map_destroy(global.galaxy_map);
 }
+
+if(ds_exists(global.gx_bodies,ds_type_list)){
+    ds_list_destroy(global.gx_bodies);
+}
+if(ds_exists(global.gx_people,ds_type_list)){
+    ds_list_destroy(global.gx_people);
+}
+
 
 // Crew temp sprites
 for(var i=0; i&lt;array_length_1d(global.crew); i++){

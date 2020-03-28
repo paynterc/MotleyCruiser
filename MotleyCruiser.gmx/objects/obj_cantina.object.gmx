@@ -69,7 +69,7 @@ if(instance_exists(obj_dialog_control)){
           <argument>
             <kind>1</kind>
             <string>/// SET UP THE MAP
-// Run this in the create step of a child of obj_room. That way the grids should be automatically cleaned up at room end.
+// Run this in the create step of a child of obj_room_level. That way the grids should be automatically cleaned up at room end.
 view_visible[0] = true;
 view_enabled = true;
 view_wview[0]=640;

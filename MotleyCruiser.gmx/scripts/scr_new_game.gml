@@ -2,6 +2,7 @@
 room_set_persistent(rm_space,false);
 
 scr_clear_galaxy();//Empty the galaxy ds_map
+ds_map_clear(global.mission_map);
 
 randomize();
 // Galaxy

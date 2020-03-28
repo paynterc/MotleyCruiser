@@ -71,5 +71,6 @@ enum pin
     goto_galaxy_map,
     sector_jump,
     reload,
-    add_grievance
+    add_grievance,
+    test_event
 }
