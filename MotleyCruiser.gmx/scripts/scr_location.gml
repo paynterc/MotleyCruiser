@@ -31,5 +31,5 @@ loc[LOC_SERVICES]=noone;
 loc[LOC_ROOMS]=noone;
 loc[LOC_LANDABLE]=true;
 loc[LOC_DISCOVERED]=false;
-lod[LOC_HAS_PORT]=true;
+loc[LOC_HAS_PORT]=true;
 return loc;

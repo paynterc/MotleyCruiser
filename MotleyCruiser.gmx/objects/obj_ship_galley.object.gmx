@@ -175,6 +175,35 @@ if(instance_exists(obj_dialog_control)){
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>player_ship = instance_create(room_width/2 + CELL_WIDTH/2,room_height/2,obj_ship_cinematic);
+player_ship.ship_data = global.player_ship;
+player_ship.scale = 20;
+player_ship.depth = 10000;
+with(player_ship){
+    event_user(0);// create modules
+}
+player_ship.image_angle = 90;
+player_ship.direction = image_angle;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>

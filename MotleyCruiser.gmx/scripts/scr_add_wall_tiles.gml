@@ -71,19 +71,19 @@ for(var yy = 0; yy < height; yy++){
             
             var voidAbove = global.grid[# xx, yy-1] == VOID;
             var voidBelow = global.grid[# xx, yy+1] == VOID;
-            var floorAbove = global.grid[# xx, yy-1] == FLOOR;
+            var floorAbove = global.grid[# xx, yy-1] == FLOOR || global.grid[# xx+1, yy-1]== FLOOR || global.grid[# xx-1, yy-1]== FLOOR;
             var floorBelow = global.grid[# xx, yy+1] == FLOOR;
             
             if(voidBelow){
-                tile_add(wall_tile, CELL_WIDTH,0, CELL_WIDTH, CELL_HEIGHT*2, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), -1);
-            
+                //tile_add(wall_tile, CELL_WIDTH,0, CELL_WIDTH, CELL_HEIGHT*2, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), -1);
+                tile_add(wall_tile, CELL_WIDTH,0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), depths.ceilingBottom);
             }else if(floorBelow){
                 // Draw a room wall tile
                 tile_add(wall_tile, 0,0, CELL_WIDTH, CELL_HEIGHT*2, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), -1);
                 
             }else{
                 // draw a ceiling tile
-                tile_add(wall_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, -1);
+                tile_add(wall_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT, depths.ceilingBottom);
             }
             
             
@@ -94,12 +94,13 @@ for(var yy = 0; yy < height; yy++){
 
             if(voidAbove){
 
-                tile_add(wall_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), -1);
+                tile_add(wall_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT - (CELL_HEIGHT/2), depths.ceilingBottom);
             }
             
 
             
             // Room bg. A separate tile layer bellow the wall tile that provides a border around the entire room
+            /*****
             var bgOffset=3;
             if(global.grid[# xx, yy+1] == VOID){
                 tile_add(wall_tile2, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, bgOffset+yy*CELL_HEIGHT, 1);
@@ -129,6 +130,7 @@ for(var yy = 0; yy < height; yy++){
                 // BOTTOM LEFT
                 tile_add(wall_tile2, 0, 0, CELL_WIDTH, CELL_HEIGHT, (xx*CELL_WIDTH)-bgOffset, (yy*CELL_HEIGHT)+bgOffset, 1);
             }
+            *****/
                                             
         }
     }
@@ -144,19 +146,21 @@ for(var yy = 0; yy < height; yy++){
                 // WALL ON THE RIGHT
                 if(global.grid[# xx+1, yy-1] == FLOOR){
                     // Corner piece
-                    tile_add(shadow_tile, CELL_WIDTH, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT+(CELL_HEIGHT/2), -1);
-                }else{
-                    // Shadow to left of wall
-                    tile_add(shadow_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT+(CELL_HEIGHT), -1);
+                    tile_add(shadow_tile, CELL_WIDTH, 0, CELL_WIDTH, CELL_HEIGHT/2, xx*CELL_WIDTH, yy*CELL_HEIGHT , -1);
                 }
+                // Shadow to left of wall
+                tile_add(shadow_tile, 0, 0, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT + (CELL_HEIGHT/2), -1);
                 
             }
 
             if(global.grid[# xx, yy-1] != FLOOR && global.grid[# xx, yy-1] != BG_VACUUM){
                 // WALL ABOVE
                 if(global.grid[# xx+1, yy-1] == FLOOR){
-                    
+                    // Corner peice
                     tile_add(shadow_tile, CELL_WIDTH, CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT+(CELL_HEIGHT/2), -1);
+                }else if(global.grid[# xx+1, yy] != FLOOR){
+                    // Wall to the right and shadow to the right. Make a half shadow so they don't overlap
+                    tile_add(shadow_tile, 0, CELL_HEIGHT, CELL_WIDTH/2, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT+(CELL_HEIGHT/2), -1);
                 }else{
                     tile_add(shadow_tile, 0, CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, xx*CELL_WIDTH, yy*CELL_HEIGHT+(CELL_HEIGHT/2), -1);
                 }

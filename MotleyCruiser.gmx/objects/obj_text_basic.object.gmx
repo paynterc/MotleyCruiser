@@ -114,6 +114,7 @@ draw_set_font(_font);
           <argument>
             <kind>1</kind>
             <string>/// Draw text
+draw_set_font(_font);
 draw_set_color(font_color);
 draw_set_alpha(1);
 draw_set_halign(text_halign);

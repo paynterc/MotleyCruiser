@@ -211,7 +211,7 @@ if(faction == FACTION_PLAYER){
 if(disposition == DISPOSITION_HOSTILE){
     
 
-        // If i'm hostile and I'm close enough to see, go on attack.    
+    // If i'm hostile and I'm close enough to see, go on attack.    
 
     if( inView ){
       
@@ -506,10 +506,11 @@ if(can_move){
     }               
 }
 
-
+/***
 if(speed &gt; max_spd_fwd){
     speed = max_spd_fwd;
 }
+***/
 
 </string>
           </argument>
@@ -643,19 +644,23 @@ if(can_move &amp;&amp; mode==MODE_TRAVELING){
             <kind>1</kind>
             <string>/// Chance to boost
 if(boostable){
+    /***
     var odds=noone;
     if(avoiding){
         odds=30;
     }else if(mode==MODE_ATTACKING &amp;&amp; tgt_dist&gt;1000){
         odds=10;
     }
-    
-    if(odds!=noone){
-        if(odds == irandom(odds)){
-            scr_ship_boost();  
+    ***/
+    if( mode==MODE_ATTACKING &amp;&amp; !disabled){
+        odds = 10;
+        if(odds!=noone){
+            if(odds == irandom(odds)){
+                scr_ship_boost();  
+            }
         }
     }
-
+    
 }
 </string>
           </argument>
