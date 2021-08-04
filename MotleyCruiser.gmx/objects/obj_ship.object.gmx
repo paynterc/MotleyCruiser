@@ -357,8 +357,11 @@ if inst != noone
     
     if(inst.type != faction){
         
-        var impact = instance_create(inst.x,inst.y,obj_impact);
-        impact.image_blend = c_aqua;
+        //var impact = instance_create(inst.x,inst.y,obj_impact);
+        //impact.image_blend = c_aqua;
+        with(inst){
+            event_user(1);// hit spark
+        }
         audio_play_sound_at(snd_hit1,x,y,0,100,100,1,false,2);
         hitby = inst.firedby;
         register_damage += inst.damage;

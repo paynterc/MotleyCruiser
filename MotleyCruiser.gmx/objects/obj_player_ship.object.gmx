@@ -468,10 +468,7 @@ if(global.paused){
         scr_jump_input();
     }else if(mode==MODE_TRAVELING){
     
-        if( keyboard_check_pressed(ord("X")) ){
-            room_goto(rm_ship_deck_rnd);
-        }
-    
+
         if(scr_user_input(pin.fire) &amp;&amp; can_fire){
             shooting = true;
         }else{

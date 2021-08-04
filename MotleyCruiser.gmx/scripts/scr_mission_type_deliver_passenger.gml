@@ -14,6 +14,10 @@ var loc = args[1];
 var illegal = args[2];
 var sectorX, sectorY;
 
+if(loc==noone){
+    loc = scr_array_random(global.passengerLocs);
+}
+
 
 if(loc == noone){
     return undefined

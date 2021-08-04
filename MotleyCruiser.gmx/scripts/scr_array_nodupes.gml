@@ -1,7 +1,7 @@
 /****
 Remove duplicates from array
 ****/
-/// scr_push_array(array)
+/// scr_array_nodupes(array)
 var a = argument0;
 
 var b = noone;

@@ -155,7 +155,31 @@ if(room==rm_space){
         }
     }
 }
-
+    if(scr_user_input(pin.mission_log)){
+        if(debug_mode){
+            show_debug_message("clicked log button");
+            var map = global.mission_map;
+            for (var k = ds_map_find_first(map); !is_undefined(k); k = ds_map_find_next(map, k)) {
+              var v = map[? k];
+                  var mission = global.mission_map[? k];
+                 show_debug_message("DEBUG: Checking mission: " + string(mission[? "name"]) );
+                 var currentObjective = scr_mission_objective_current(mission);
+                 if(is_undefined(currentObjective)) continue;
+                 show_debug_message("DEBUG: Checking objective: " + string(currentObjective[? "description"]) );
+              /* Use k, v here */
+            }
+        }
+                
+        if(!instance_exists(obj_mission_log)){
+            instance_create(0,0,obj_mission_log);
+        }
+            show_debug_message("log exists");
+            if(!obj_mission_log.show){
+                scr_gui_set_context(obj_mission_log);
+            }else{
+                scr_gui_return_context();
+            } 
+    }
 </string>
           </argument>
         </arguments>

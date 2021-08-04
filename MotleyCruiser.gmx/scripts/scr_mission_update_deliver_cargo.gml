@@ -42,7 +42,7 @@ for (var k = ds_map_find_first(global.mission_map); !is_undefined(k); k = ds_map
                 if(msnCommodityKey==commodityKey){
                     currentObjective[? "commodityQtyRemaining"] = max(0, currentObjective[? "commodityQtyRemaining"]-qty);
                     if(debug_mode){ show_debug_message("DEBUG: Mission commodityQtyRemaining set to: " + string(currentObjective[? "commodityQtyRemaining"]) ) }
-                    
+                    scr_flybark("MISSION UPDATE: " + mission[? "name"] + ". " + string(currentObjective[? "commodityQty"] - currentObjective[? "commodityQtyRemaining"]) + " of " + string(currentObjective[? "commodityQty"]) + ".");
                     if(currentObjective[? "commodityQtyRemaining"] <= 0){
                         currentObjective[? "complete"]=true;        
                         if(mission[? "stageCount"] > 1 ){

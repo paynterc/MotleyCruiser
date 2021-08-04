@@ -49,7 +49,7 @@ maxlines = 20;
 alltext = noone;
 
 event_user(0);
-instance_deactivate_object(id);
+//instance_deactivate_object(id);
 </string>
           </argument>
         </arguments>
@@ -100,6 +100,9 @@ if(scr_user_input(pin.mission_log)){
 // STEP
 var alength = array_length_1d(alltext);
 if(show){
+
+
+
     if (keyboard_check_pressed(vk_anykey) == true)
     {
         switch (keyboard_key)

@@ -6,6 +6,7 @@ for (var k = ds_map_find_first(global.mission_map); !is_undefined(k); k = ds_map
 
     var mission = global.mission_map[? k];
     if(debug_mode){ show_debug_message("DEBUG: Checking mission: " + string(mission[? "id"]) ) }
+    var showBark = false;
     if(!mission[? "complete"]){
         
         // Get the current objective
@@ -24,13 +25,18 @@ for (var k = ds_map_find_first(global.mission_map); !is_undefined(k); k = ds_map
                     if(is_undefined(sectorX)){
                         // increment kill count
                         currentObjective[? "killedCurrent"] = min(currentObjective[? "killedCurrent"] + 1, currentObjective[? "killedRequired"]);
+                        showBark = true;
                     }else{
                         if(sectorX == global.sector_x && sectorY ==global.sector_y){
                             // increment kill count
                             currentObjective[? "killedCurrent"] = min(currentObjective[? "killedCurrent"] + 1, currentObjective[? "killedRequired"]);
+                            showBark = true;
                             if(debug_mode){ show_debug_message("DEBUG: MISSION UPDATED. KILL COUNT SET TO: " + string(currentObjective[? "killedCurrent"])) }
                         }
                     }
+                    
+                    if(showBark) scr_flybark("MISSION UPDATED: " + mission[? "name"] + ". " + string(currentObjective[? "killedCurrent"]) + " of " + string(currentObjective[? "killedRequired"]));
+                     
                     // Check status                   
                     if(currentObjective[? "killedCurrent"] >= currentObjective[? "killedRequired"]){
                         currentObjective[? "complete"]=true;

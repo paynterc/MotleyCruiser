@@ -6,4 +6,6 @@ if(is_undefined(mission)) return false;
 mission[? "complete"]=true;
 // Grant rewards
 scr_mission_grant_rewards(mission[? "rewards"]);
+// Run scripts
+scr_mission_run_script(mission[? "completionScript"]);
 

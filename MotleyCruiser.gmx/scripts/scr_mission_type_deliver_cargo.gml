@@ -17,11 +17,13 @@ if(!qty){
 
 var mission = ds_map_create();
 
+var needTxt = choose("We're in desperate need of","We really need","We're almost out of");
+
 //ds_map_add(mission,"id", "xxx");// Set the id and add to main map if the player accepts mission
 ds_map_add(mission,"type", missionTypes.deliverCargo);//smuggle, deliver, bounty, hit, escort, obtain
 ds_map_add(mission,"name", "Deliver " + string(commodityName) + " to " + global.landed_on[LOC_NAME] + " in sector " + string(global.sector_x) + "," + string(global.sector_y) + ".");
 ds_map_add(mission,"complete", false);
-ds_map_add(mission,"text", "We're in desperate need of " + string(commodityName) + " here. Sell "+ string(qty) + " units to our merchant and then come talke to me.");
+ds_map_add(mission,"text", needTxt + " " + string(commodityName) + ". Sell "+ string(qty) + " units to our merchant and then come talke to me.");
 ds_map_add(mission,"description", "Deliver " + string(commodityName) + " to " + global.landed_on[LOC_NAME] + " in sector " + string(global.sector_x) + "," + string(global.sector_y) + ".");// array[x,y];
 ds_map_add(mission,"illegal", false);// keep track of objective stages
 ds_map_add(mission,"rewards", scr_array(scr_array("G",300),scr_array("I",59,1)));//credits, item, crew, ship, map

@@ -60,7 +60,7 @@ with(guiText){
 shipScale=18;
 
 // TESTING!!!
-global.ship_boarded = scr_array_random(global.ship_library);
+//global.ship_boarded = scr_array_random(global.ship_library);
 
 </string>
           </argument>

@@ -31,7 +31,8 @@ enum events{
     hiredCook,
     killedPirateShip,
     soldItem,
-    landAtLocation
+    landAtLocation,
+    soldSlave
 }
 eventMap = ds_map_create();
 </string>

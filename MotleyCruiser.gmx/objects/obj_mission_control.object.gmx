@@ -52,6 +52,9 @@ ds_map_add_map(global.mission_map, missionKey, newMap)
 global.mission_map = ds_map_create();
 
 
+storyArc1 = 1;// Set this to 1 when you are ready to begin.
+
+
 enum msnKillxy{
     mId,
     type,
@@ -139,6 +142,8 @@ scr_event_register(events.soldItem, self, scr_mission_update_deliver_cargo);
 
 //landAtLocation
 scr_event_register(events.landAtLocation, self, scr_mission_update_deliver_passenger);
+
+scr_event_register(events.soldSlave, self, scr_ev_sold_slave);
 </string>
           </argument>
         </arguments>

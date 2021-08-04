@@ -37,6 +37,7 @@ if(question==0){
             scr_flywriter("Fine. Slaves fetch a decent price around here.",npcSprite,true,"10,Bye " +unCrew[NPC_NAME_FIRST]);
             
             scr_queue_bark( string(unCrew[NPC_NAME_FIRST]) + ": You'll regret this!",unCrew[NPC_SPRITE_TEMP]);
+            scr_event_fire(events.soldSlave,unCrew);
             scr_global_update(global.crew,unCrew[NPC_CREW_INDEX],NPC_ACTIVE,false);
 
             

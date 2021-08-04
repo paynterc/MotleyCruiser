@@ -25,7 +25,7 @@ for (var k = ds_map_find_first(global.mission_map); !is_undefined(k); k = ds_map
 
                     var npcData = scr_crew_findby(NPC_GLOBAL_INDEX,mission[? "npc"]);// Find first crewmember with this global index
                     scr_crew_set_inactive(scr_get_array_1d(npcData,NPC_CREW_INDEX));
-                    
+                    scr_flybark("MISSION UPDATE: " + mission[? "name"]);
                     var check=1;
                     if(mission[? "stageCount"] > 1 ){
                         mission[? "stage"] = min(mission[? "stage"] +1, mission[? "stageCount"]);

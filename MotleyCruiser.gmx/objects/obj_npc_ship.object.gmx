@@ -534,7 +534,7 @@ if(speed &gt; max_spd_fwd){
             <kind>1</kind>
             <string>/// Check for dead
 if(hull_current &lt; 1){
-    scr_ev_npc_ship_destroyed();
+
     // Destroy modules
     for(var m=0; m&lt;array_length_1d(modules); m++){
         var m_object = modules[m];
@@ -545,12 +545,14 @@ if(hull_current &lt; 1){
     }
     
     scr_play_sound_at(snd_explosion_ship,x,y);
+    scr_explosion_ship(x,y);
     
     if(faction == FACTION_PIRATE){
         scr_event_fire(events.killedPirateShip);
     }
     event_user(1);// Dead action
     instance_deactivate_object(self);
+    
 }
 </string>
           </argument>

@@ -279,10 +279,11 @@ if(parent_obj!=noone
             (
             parent_obj.mode == MODE_ATTACKING || parent_obj.mode == MODE_DEFENDING)
             &amp;&amp; target!=noone
+            &amp;&amp; target.faction != undefined
+            &amp;&amp; target.disabled != undefined
             &amp;&amp; target.faction != faction
-            &amp;&amp; abs(angleDiff) &lt; 2
-            &amp;&amp; target.disabled != undefined 
             &amp;&amp; !target.disabled
+            &amp;&amp; abs(angleDiff) &lt; 2
             &amp;&amp; parent_obj.tgt_dist&lt;=gundata[GUN_RANGE]
             ){
                 shooting = true;

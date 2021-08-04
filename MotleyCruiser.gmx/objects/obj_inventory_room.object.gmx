@@ -42,6 +42,7 @@ inventory_item_add(57,1);// singularity canon
 inventory_item_add(52,1);// card
 inventory_item_add(58,1);// shotgun
 inventory_item_add(59,1);// map
+/***
 inventory_item_add(60,1);// singularity pistol
 inventory_item_add(55,1);// sword
 inventory_item_add(61,1);// blob pistol
@@ -71,6 +72,7 @@ inventory_item_add(55,1);// sword
 inventory_item_add(61,1);// blob pistol
 inventory_item_add(55,1);// sword
 inventory_item_add(61,1);// blob pistol
+***/
 
 show_debug_message("inv rows: " + string(global.base_inventory_rows));
 // Init menu
@@ -163,14 +165,14 @@ bunks = noone;
 var in_team=false;
 for(var i=0; i&lt;array_length_1d(global.crew); i++){
     var C = global.crew[i];
-    if(!C[NPC_ACTIVE]) continue;// Dead
-    if(C[NPC_IS_PASSENGER]) continue;
-    // Check to see if crew member is already on the strike team
     in_team = scr_in_array(global.team,i);
+    if(!C[NPC_ACTIVE] || C[NPC_IS_PASSENGER]){
+        if(in_team) scr_team_remove_ci(i);
+        continue;
+    }
     if(!in_team){
         bunks = scr_push_array(bunks,i);
-    }
-    
+    }    
 }
 
 bunks_index = 0;// Move this up and down for pagination

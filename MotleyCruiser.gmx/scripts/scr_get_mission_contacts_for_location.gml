@@ -40,4 +40,5 @@ for (var k = ds_map_find_first(global.mission_map); !is_undefined(k); k = ds_map
 
 }
 
+locNpcs = scr_array_nodupes(locNpcs);
 return locNpcs;

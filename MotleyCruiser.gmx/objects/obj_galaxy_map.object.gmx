@@ -34,6 +34,9 @@ view_yview[0]=0;
 view_wview[0] = view_wview[0] * GX_MAGNITUDE;
 view_hview[0] = view_hview[0] * GX_MAGNITUDE;
 
+if(instance_exists(obj_gui_control)){
+    obj_gui_control._state = guistates.nav_map;
+}
 
 // Add the "add path" button
 btn_addpath = instance_create(32,gui_height-64-32,obj_btn_addpath);

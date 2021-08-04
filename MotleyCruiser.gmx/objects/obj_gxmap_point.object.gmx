@@ -200,7 +200,7 @@ if(instance_exists(obj_galaxy_map)){
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -219,11 +219,11 @@ if(instance_exists(obj_galaxy_map)){
             <kind>1</kind>
             <string>/// Draw text on hover
 if(hover){
-    draw_set_font(fnt_menus_med);
+    draw_set_font(fnt_menus);
     draw_set_color(c_lime);
     draw_set_valign(fa_bottom);
     draw_set_halign(fa_center);
-    draw_text(GUIx,GUIy-(4*GX_MAGNITUDE),string(gx)+","+string(gy));
+    draw_text(x,y-16,string(gx)+","+string(gy));
 }
 </string>
           </argument>

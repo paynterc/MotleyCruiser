@@ -28,9 +28,7 @@
             <string>/// Fill object pool
 show_debug_message("space level - create");
 
-// I'm not doing this right now and the obj_object_pool instance has been removed
-//scr_add_to_pool(obj_projectile,"projectile",500);
-//surface_resize(application_surface,view_wview[0],view_hview[0]);
+instance_create(x,y,obj_pool);
 </string>
           </argument>
         </arguments>
@@ -419,6 +417,9 @@ if(background_exists(stars)){
             <kind>1</kind>
             <string>/// Persist Room. Init variables.
 show_debug_message("space level - room start");
+if(instance_exists(obj_gui_control)){
+    obj_gui_control._state = guistates.spacetravel;
+}
 
 // Space room will be perisitent so we can switch to the map room if needed.
 // Perisistence is switched off whenever we go to another sector or land on something.

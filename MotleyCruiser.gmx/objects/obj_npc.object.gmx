@@ -1061,8 +1061,8 @@ if(custom_sprite!=noone &amp;&amp; crew_index==noone){
 if(portrait_sprite!=noone &amp;&amp; crew_index==noone){
     sprite_delete(portrait_sprite);
 }
-if(mission!=noone){
-    var missionId = mission[? "id"];
+if(mission!=noone &amp;&amp; !is_undefined(mission)){
+    var missionId = ds_map_find_value(mission, "id");
     // If this mission was chosen, it will now have an ID. Leave it alone.
     if(is_undefined(missionId)){
         ds_map_destroy(mission);

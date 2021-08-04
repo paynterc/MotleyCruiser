@@ -125,10 +125,8 @@ if(npcs != noone){
                     y=irandom_range(stYy1,stYy2);
                 }
                 event_user(0);//Equip instrument!
-            }
-            
-        }
-        
+            }           
+        }      
     }
 }
 
@@ -142,18 +140,19 @@ with(obj_table){
 
 // See if there are an locations for passengers
 var gxLocs = scr_gx_loc_get_landables();
-var passengerLocs = noone;
+global.passengerLocs = noone;
 var lgx, lgy;
 for(var j=0;j<array_length_1d(gxLocs);j++){
     var thisLoc = gxLocs[j];  
     var locSec = scr_get_array_1d(thisLoc,LOC_SECTOR);
     if(is_array(locSec)){
         if( locSec[0]==global.sector_x && locSec[1]==global.sector_y ) continue;
-        passengerLocs = scr_push_array(passengerLocs,thisLoc);
+        global.passengerLocs = scr_push_array(global.passengerLocs,thisLoc);
     }
 }
 
 // Rifraf
+var assignedStoryMission = false;
 for(var flX=gx; flX<=gx+W-1; flX++){
     for(var flY = gy+2; flY<=gy+H-1; flY++){
 
@@ -165,21 +164,14 @@ for(var flX=gx; flX<=gx+W-1; flX++){
             with(npcObject){
                 scr_npc_map_to_object();
                 mode = "discourse";
-                scr_gx_people_add(npc_data);// npc_data[NPC_GLOBAL_INDEX] should now be set
-                var check = 1;
-                //mission = scr_mission_type_test1(npc_data);
-                //mission = scr_mission_type_killxy(npc_data,2,false);
-                //mission = scr_mission_type_deliver_cargo(npc_data,6,10,false);
-                
-
-                if(array_length_1d(passengerLocs)>0){
-                    
-                    mission = scr_mission_type_deliver_passenger(npc_data, scr_array_random(passengerLocs));
-                    var check=1;
-                    if(is_undefined(mission)){
-                        mission = noone;
-                    }
-                }            
+                // && obj_mission_control.storyArc1==1
+                if(!assignedStoryMission && scr_mission_findbyvalue("name","The Old Pirate.")==noone){
+                    assignedStoryMission = true;
+                    mission = scr_mission_find_captain();
+                }else{
+                    mission = scr_mission_make_random(npc_data);// Could return nothing.
+                }
+                   
             }          
         }
     }

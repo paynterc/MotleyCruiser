@@ -184,6 +184,7 @@
       <sprite>sprites\sprite376</sprite>
       <sprite>sprites\spr_human_BU</sprite>
       <sprite>sprites\spr_old_salt</sprite>
+      <sprite>sprites\spr_otock_grieves</sprite>
       <sprite>sprites\spr_old_salt_ghost</sprite>
       <sprite>sprites\spr_human_fml</sprite>
       <sprite>sprites\sprite375</sprite>
@@ -537,6 +538,12 @@
       </sprites>
       <sprite>sprites\spr_ship_reentry</sprite>
       <sprite>sprites\sprite540</sprite>
+      <sprites name="_sparks_explosions">
+        <sprite>sprites\spr_hitspark1</sprite>
+        <sprite>sprites\spr_hitspark2</sprite>
+        <sprite>sprites\spr_explosion1</sprite>
+        <sprite>sprites\spr_explosion2</sprite>
+      </sprites>
     </sprites>
     <sprites name="_space_objects">
       <sprite>sprites\spr_moon</sprite>
@@ -736,6 +743,7 @@
     <path>paths\path_glr_0</path>
   </paths>
   <scripts name="scripts">
+    <script>scripts\_0ToDo.gml</script>
     <scripts name="_arrays">
       <script>scripts\scr_str_split.gml</script>
       <script>scripts\scr_array_random.gml</script>
@@ -893,6 +901,7 @@
       <script>scripts\scr_ev_new_day.gml</script>
       <script>scripts\scr_ev_boughtpet.gml</script>
       <script>scripts\scr_ev_hired_cook.gml</script>
+      <script>scripts\scr_ev_sold_slave.gml</script>
     </scripts>
     <scripts name="_example_scripts">
       <script>scripts\scr_multi_arguments.gml</script>
@@ -1021,7 +1030,6 @@
       <script>scripts\scr_dsmap_load_secure.gml</script>
       <script>scripts\scr_dslist_load.gml</script>
       <script>scripts\scr_dsmap_json_load.gml</script>
-      <script>scripts\scr_instantiate_control_objs.gml</script>
       <script>scripts\scr_rm_persistence.gml</script>
       <script>scripts\scr_custom_sprite_store.gml</script>
       <script>scripts\scr_custom_sprite_deleteall.gml</script>
@@ -1414,19 +1422,23 @@
         <script>scripts\scr_mission_update_deliver_cargo.gml</script>
         <script>scripts\scr_mission_update_deliver_passenger.gml</script>
       </scripts>
+      <scripts name="_mission_story">
+        <script>scripts\scr_mission_find_captain.gml</script>
+        <script>scripts\scr_mission_what_otock_wants.gml</script>
+        <script>scripts\scr_mission_otocks_heist.gml</script>
+        <script>scripts\scr_mission_grant_s1_2.gml</script>
+      </scripts>
       <script>scripts\scr_add_mission.gml</script>
       <script>scripts\scr_get_mission_contacts_for_location.gml</script>
+      <script>scripts\scr_mission_find_by_npc.gml</script>
       <script>scripts\scr_mission_grant_rewards.gml</script>
+      <script>scripts\scr_mission_run_script.gml</script>
       <script>scripts\scr_mission_objective_current.gml</script>
       <script>scripts\scr_mission_objective_get.gml</script>
       <script>scripts\scr_mission_complete.gml</script>
       <script>scripts\scr_mission_add_objective.gml</script>
-    </scripts>
-    <scripts name="_mission3">
-      <scripts name="_mission_types">
-        <script>scripts\scr_msn_type_killxy.gml</script>
-      </scripts>
-      <script>scripts\scr_msn_add_mission.gml</script>
+      <script>scripts\scr_mission_make_random.gml</script>
+      <script>scripts\scr_mission_findbyvalue.gml</script>
     </scripts>
     <scripts name="_morale">
       <script>scripts\scr_grievance_add.gml</script>
@@ -1458,10 +1470,9 @@
         <script>scripts\scr_add_restriction.gml</script>
         <script>scripts\scr_remove_restriction.gml</script>
       </scripts>
-    </scripts>
-    <scripts name="_object_pool">
-      <script>scripts\scr_add_to_pool.gml</script>
-      <script>scripts\scr_get_from_pool.gml</script>
+      <scripts name="_specials">
+        <script>scripts\scr_npc_otock_grieves.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_pet">
       <script>scripts\scr_instantiate_pet.gml</script>
@@ -1483,6 +1494,11 @@
       <script>scripts\scr_make_player_sprite.gml</script>
       <script>scripts\scr_get_player_sprite_filename.gml</script>
       <script>scripts\scr_load_player_sprite.gml</script>
+    </scripts>
+    <scripts name="_pools">
+      <scripts name="_spark_pool">
+        <script>scripts\scr_pool_get.gml</script>
+      </scripts>
     </scripts>
     <scripts name="_powerups">
       <script>scripts\scr_heal_player.gml</script>
@@ -1620,7 +1636,9 @@
       <script>scripts\scr_load_player_config.gml</script>
       <script>scripts\scr_get_config_string.gml</script>
     </scripts>
-    <script>scripts\script644.gml</script>
+    <scripts name="_explosions">
+      <script>scripts\scr_explosion_ship.gml</script>
+    </scripts>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\sh_simple_vertex.shader</shader>
@@ -1697,6 +1715,7 @@
     <font>fonts\font16</font>
     <font>fonts\font17</font>
     <font>fonts\font20</font>
+    <font>fonts\font21</font>
   </fonts>
   <objects name="objects">
     <objects name="_dialogue">
@@ -1716,7 +1735,7 @@
       <object>objects\obj_form_textbox</object>
       <object>objects\obj_form_button</object>
     </objects>
-    <objects name="_galaxy_map">
+    <objects name="_nav_map">
       <object>objects\obj_galaxy_map</object>
       <object>objects\obj_gxmap_point</object>
       <object>objects\obj_btn_addpath</object>
@@ -1968,6 +1987,12 @@
       <object>objects\obj_station_module</object>
       <object>objects\obj_sun</object>
       <object>objects\obj_ship_reentry</object>
+      <objects name="_sparks_explosions">
+        <object>objects\obj_hitspark</object>
+        <object>objects\obj_sparkpool</object>
+        <object>objects\obj_pool</object>
+        <object>objects\obj_explosion2</object>
+      </objects>
     </objects>
     <object>objects\obj_damager</object>
     <object>objects\obj_eventmanager</object>
@@ -1980,7 +2005,6 @@
     <object>objects\obj_mission_control</object>
     <object>objects\obj_module</object>
     <object>objects\obj_morale_control</object>
-    <object>objects\obj_object_pool</object>
     <object>objects\obj_ship_data</object>
     <object>objects\obj_sound_control</object>
     <object>objects\obj_tutorial</object>
@@ -1990,6 +2014,9 @@
       <object>objects\object220</object>
       <object>objects\obj_ship_cinematic</object>
       <object>objects\obj_npc_cinematic</object>
+    </objects>
+    <objects name="_particle">
+      <object>objects\obj_particle_edit</object>
     </objects>
   </objects>
   <rooms name="rooms">
